@@ -62,4 +62,4 @@ end
 
 before "deploy", "rvm:install_ruby", "deploy:migrations"
 after "deploy", "deploy:cleanup", "deploy:passenger_symlink"#, "cache:clear", "cache:tmp_clear"
-after "deploy:update", "newrelic:notice_deployment"
+#after "deploy:update", "newrelic:notice_deployment"

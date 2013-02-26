@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
  
   # Is borrower type included in authorized borrower types
   def is_authorized
-    (auth_types.include? current_user.user_attributes[:bor_type])
+    (!current_user.nil? and auth_types.include? current_user.user_attributes[:bor_type])
   end
   alias :is_authorized? :is_authorized
   helper_method :is_authorized?

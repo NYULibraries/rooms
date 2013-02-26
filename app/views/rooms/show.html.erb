@@ -1,0 +1,45 @@
+
+<p>
+  <b>Title:</b>
+  <%=h @room.title %>
+</p>
+
+<% unless @room.type_of_room.blank? %>
+<p>
+  <b>Type:</b>
+  <%=h @room.type_of_room %>
+</p>
+<% end %>
+
+<% unless @room.description.blank? %>
+<p>
+  <b>Description:</b><br />
+  <%= simple_format(sanitize(@room.description, :tags => %w(b strong i em br p a ul li))) %>
+</p>
+<% end %>
+
+<% unless @room.size_of_room.blank? %>
+<p>
+  <b>Size:</b>
+  <%=h @room.size_of_room %>
+</p>
+<% end %>
+
+<% unless @room.image_link.blank? %>
+<p>
+  <b>Image URL:</b><br />
+  <%= link_to image_tag(@room.image_link, :width => "100"), @room.image_link %>
+</p>
+<% end %>
+
+<% unless @room.hours.blank? %>
+<p>
+  <b>Hours:</b><br />
+  <%=display_hours%>
+</p>
+<% end %>
+
+<%= icon_tag :edit %>
+<%= link_to 'Edit', edit_room_path(@room), :class => "nyulibrary_icons_wrench" %> |
+<%= icon_tag :back %>
+<%= link_to 'Back', rooms_path, :class => "nyulibrary_icons_arrow_undo" %>

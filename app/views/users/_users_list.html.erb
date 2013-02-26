@@ -1,0 +1,65 @@
+<%= paginate @users, theme: "bootstrap" %>
+
+<p><%= page_entries_info @users %></p>
+
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Action
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to new_user_url do %><i class="icon-user"></i> Add user<% end -%></li>
+    <li><%= link_to users_url(:format => :csv) do %><i class="icon-download-alt"></i> Download as CSV<% end -%></li>
+  </ul>
+</div>
+
+<div class="btn-group">
+  <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+    Delete
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to clear_user_data_url, :data => {:confirm => 'This will delete all non-admin users and cannot be undone. Are you sure?'} do %><i class="icon-ban-circle"></i> Clear all user data<% end -%></li>
+  </ul>
+</div>
+
+<br /><br />
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>
+        <%= link_to_sorted "Username", :username %>
+      </th>
+      <th>
+        <%= link_to_sorted "First name", :firstname %>
+      </th>
+      <th>
+        <%= link_to_sorted "Last name", :lastname %>
+      </th>
+      <th>
+        <%= link_to_sorted "Email", :email %>
+      </th>
+      <th>Graduate Student?</th>
+      <th>Admin?</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <% h = user.user_attributes %>
+    <tr>
+      <td><%=h user.username %></td>
+      <td><%=h user.firstname %></td>
+      <td><%=h user.lastname %></td>
+      <td><%=h user.email %></td>
+      <td><%= (!h[:bor_type].nil?) ? is_authorized? : "<strong>not found</strong>".html_safe %></td>
+      <td><%=h h[:room_reserve_admin] %></td>
+      <td><%= link_to 'Show', user %></td>
+      <td><%= link_to_if(user.username != current_user.username, 'Destroy', user, :confirm => 'Are you sure?', :method => :delete) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users, theme: "bootstrap" %>

@@ -1,0 +1,14 @@
+You have successfully reserved a library room. See details below.
+
+===================================================
+
+Name: <%= @reservation.user.firstname %> <%= @reservation.user.lastname %>
+
+Date/time: <%= @reservation.start_dt.strftime('%a. %b %d, %Y %I:%M %p') %> -- <%= @reservation.end_dt.strftime('%a. %b %d, %Y %I:%M %p') %>
+
+Location: <%= @reservation.room.title %>
+
+===================================================
+
+To adjust or cancel your reservation(s) please visit: https://rooms.library.nyu.edu
+To report a problem, email us at gswg@library.nyu.edu

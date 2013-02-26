@@ -1,0 +1,22 @@
+<h1>Listing users</h1>
+
+<%= form_tag users_path, :class => "form-inline clearfix", :method => :get do %>
+  <p>
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <%= hidden_field_tag :sort, params[:sort] %>
+    <div class="input-append pull-left">
+      <%= label_tag :q, "Search...", :class => "hide-text" %>
+      <%= text_field_tag :q, nil, :class => "search_q q", :placeholder => "Search..." %>
+      <%= button_tag(:type => 'button', :id => "search", :class => "btn btn-primary search-btn") do
+        content_tag(:span, 'Search', :class => "submit-search-text")+"     "+
+        content_tag(:i, nil, :class => "icon-search icon-white")
+      end %>
+    </div>
+  </p>
+<% end %>
+
+<div id="sortable_table">
+<%= render "users_list" %>
+</div>
+
+<br />

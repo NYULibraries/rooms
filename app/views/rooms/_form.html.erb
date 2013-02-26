@@ -1,0 +1,52 @@
+<%= form_for @room do |f| %>
+  <% if @room.errors.any? %>  
+    <div id="error_explanation" class="alert alert-error">  
+      <h2><%= pluralize(@room.errors.count, "error") %> prohibited this record from being saved:</h2>  
+      <ul>  
+      <% @room.errors.full_messages.each do |msg| %>  
+        <li><%= msg %></li>  
+      <% end %>  
+      </ul>  
+    </div>  
+  <% end %>
+
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :type_of_room %>
+    <%= f.text_field :type_of_room %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 3 %>
+  </p>
+  <p>
+    <%= f.label :size_of_room %>
+    <%= f.text_field :size_of_room %>
+  </p> 
+
+  <p>
+    <%= f.label :image_link, "Use image from the Web (URL)" %>
+    <%= f.text_field :image_link %>
+  </p>
+
+  <p>
+    <%= f.label :hours, "Hours of operation (leave as default if 24 hours)" %> 
+    
+    Opening:
+    <%= select_tag "hours_start[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_start_hour), :class => "span2" %>
+    <%= select_tag "hours_start[minute]", options_for_select([['00',0],['30',30]], default_start_minute), :class => "span2" %>	
+    <%= select_tag "hours_start[ampm]", options_for_select(['am','pm'], default_start_ampm), :class => "span2" %>
+	  <br />
+	  Closing:
+	  <%= select_tag "hours_end[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_end_hour), :class => "span2" %>
+	  <%= select_tag "hours_end[minute]", options_for_select([['00',0],['30',30]], default_end_minute), :class => "span2" %>	
+	  <%= select_tag "hours_end[ampm]", options_for_select(['am','pm'], default_end_ampm), :class => "span2" %>
+  </p>
+
+  <p>
+    <%= f.submit 'Save changes' %>
+  </p>
+<% end %>

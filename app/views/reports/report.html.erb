@@ -1,0 +1,83 @@
+<% get_times_array(false) %>
+<% room_id = (@room.nil?) ? "all" : @room.id %>
+
+<h1>Report</h1>
+
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Action
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to reports_url(params.merge({:format => :csv, :page => nil})) do %><i class="icon-download-alt"></i> Download as CSV<% end -%></li>
+  </ul>
+</div>
+
+<dl class="dl-horizontal">
+
+  <dt>Date/time range:</dt>
+  <dd>&nbsp;<%= prettify_date(@start_dt) %> &mdash; <%= prettify_date(@end_dt) %></dd></dd>
+
+	<dt>Room:</dt>
+	<dd>&nbsp; <%= (@room.nil?) ? "All" : @room.title %></dd>
+
+	<dt>Type of room:</dt>
+	<dd>&nbsp; <%= (@type_of_room.nil?) ? "All" : @type_of_room %></dd>
+
+	<dt>College Name:</dt>
+	<dd>&nbsp; <%= (@college_name.nil?) ? "All" : @college_name %></dd>
+
+	<dt>College Code:</dt>
+	<dd>&nbsp; <%= (@college_code.nil?) ? "All" : @college_code %></dd>
+
+	<dt>Dept Affiliation:</dt>
+	<dd>&nbsp; <%= (@affiliation.nil?) ? "All" : @affiliation %></dd>
+
+	<dt>Major:</dt>
+	<dd>&nbsp; <%= (@major.nil?) ? "All" : @major %></dd>
+
+	<dt>Patron status:</dt>
+	<dd>&nbsp; <%= (@user_status.nil?) ? "All" : @user_status %></dd>
+</dl>
+
+<%= paginate @reservations, theme: "bootstrap" %>
+
+<p><%= page_entries_info @reservations %></p>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>User</th>
+      <th>College Name</th>
+      <th>College Code</th>
+      <th>Dept Affiliation</th>
+      <th>Major</th>
+      <th>Patron Status</th>
+      <th>Room Name</th>
+      <th>Room Type</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% @reservations.each_with_index do |res, index| %>
+    <tr>
+    	<td><%= prettify_simple_date(res.start_dt)%> <%= prettify_time(res.start_dt) %></td>
+    	<td><%= prettify_simple_date(res.end_dt)%> <%= prettify_time(res.end_dt) %></td>
+    	<td><%= link_to "#{res.user.lastname}, #{res.user.firstname} (#{res.user.username})", res.user %></td>	
+    	<td><%= res.user.user_attributes[:college_name] %></td>
+    	<td><%= res.user.user_attributes[:college_code] %></td>
+    	<td><%= (res.user.user_attributes[:dept_name]) ? res.user.user_attributes[:dept_code] : res.user.user_attributes[:dept_name] %></td>
+    	<td><%= (res.user.user_attributes[:major]) ? res.user.user_attributes[:major_code] : res.user.user_attributes[:major] %></td>
+    	<td><%= res.user.user_attributes[:bor_status] %></td>
+    	<td><%= res.room.title %></td>
+    	<td><%= res.room.type_of_room %></td>
+    </tr>
+	<% end %>
+  </tbody>
+</table>
+
+<%= paginate @reservations, theme: "bootstrap" %>
+
+<%= icon_tag :back %>
+<%= link_to 'Back', reports_path %>

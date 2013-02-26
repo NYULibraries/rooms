@@ -1,0 +1,23 @@
+<%= form_for @reservation, :html => {:class => "form-horizontal"} do |f| %>
+  <% if @reservation.errors.any? %>  
+    <div id="error_explanation" class="alert alert-error">  
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>  
+      <ul>  
+      <% @reservation.errors.full_messages.each do |msg| %>  
+        <li><%= msg %></li>  
+      <% end %>  
+      </ul>  
+    </div>  
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :title, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :title %>
+    </div>
+  </div>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

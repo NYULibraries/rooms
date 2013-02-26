@@ -1,0 +1,10 @@
+<% if @reservation.title? %>
+<h1>Name your event</h1>
+<% else %>
+<h1>Rename your event</h1>
+<% end %>
+
+<%= render "edit"%>
+
+<%= icon_tag :back %>
+<%= link_to 'Back', reservations_path %>

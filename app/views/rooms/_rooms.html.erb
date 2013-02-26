@@ -1,0 +1,19 @@
+<blockquote>	
+  <%= form_tag({:controller => "rooms", :action => "update_order"}, :method => :post, :remote => true) do |f| %>
+
+  <ul id="list_rooms" class="sortable_list">
+  <% @rooms.each do |room| %>
+  	<%= content_tag_for :li, room do %>
+  	  <%= hidden_field_tag "rooms[]", room.id %>
+      <h4 id="room_span_<%=room.id%>" class="room_header"><i class="icon-move"></i>&nbsp;<%=h room.title %></h4>
+      <%= link_to 'Show', room %> | 
+      <%= link_to 'Edit', edit_room_path(room) %> | 
+      <%= link_to 'Destroy', room, :confirm => 'Are you sure?', :method => :delete %>
+  	<% end %>
+  <% end %>
+  </ul>
+
+  <button class="btn" type="submit" data-remote="true">Save changes</button>
+  
+  <% end %>
+</blockquote>

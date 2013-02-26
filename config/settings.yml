@@ -1,0 +1,29 @@
+# Default public settings
+  
+databases: 
+  password: 
+  username: root
+  database: nyu_reserve_test
+  host: localhost
+
+capistrano:
+  server: 
+  user: 
+  path: 
+  scm_username: 
+
+newrelic:
+  api_key: 
+  app_name: 'Room Reservation'
+
+login:
+  default_admins: []
+  pds_url: "https://login.library.nyu.edu"
+  calling_system: "primo"
+  
+# A dummy secret token for dev sessions and public consumption 
+
+secret_token: 'dd6f1b6faf2511a744f3f08644e76edcb6be01d7019a6e62947e3a76a2c5f1ea7f3206af6bd0409ed222a56b2a53788da8de1d3528547889cc59c7dbc27f4503'
+  
+cookie: 
+  domain: ".local"

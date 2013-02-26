@@ -1,0 +1,39 @@
+  <% get_past_reservations({ :how_far_back => lambda {return 1.week} }) %>
+  <% if !@reservations_past.blank? %>
+  <h2>Your past reservations (up to 1 week)</h2>
+  <ul id="past_reservations">
+      <% @reservations_past.each do |res| %>
+      <li>
+        <% unless res.title.blank? %>
+          <strong>Name:</strong> <%= res.title %> <br />
+        <% end %>
+        <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />
+        <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
+        <strong>Location:</strong> <%= res.room.title %>
+      </li>
+      <% end %>
+  </ul>
+  <% end %>
+
+  <h2>Your current reservations</h2>
+  <ul id="current_reservations">
+    <% if @reservations.blank? %>
+      <li>None.</li>
+    <% else %>
+      <% @reservations.each do |res| %>
+        <li>
+          <%= (res.title?) ? "<strong>Name:</strong> #{res.title}<br />".html_safe : '' %>
+          <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />
+          <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
+          <strong>Location:</strong> <%= res.room.title %><br />
+          <% if res.title.blank? %>
+           <%= icon_tag :add %> <%= link_to 'name your event', edit_reservation_path(res) %><br />
+          <% else %>
+            <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res) %><br />
+          <% end %>
+          <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id } %> <br />	
+          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :confirm => 'Are you sure?', :method => :delete %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>

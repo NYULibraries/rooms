@@ -1,0 +1,56 @@
+<h1 class="page_title">Reserve a room</h1>
+
+  <div class="alert alert-block">
+  <h4>Policies:</h4>
+  <ul>
+  	<li>You must be a graduate student</li>
+  	<li>You can reserve up to 3 hours/day</li>
+  	<li>You can make only one reservation/day</li>
+  </ul>
+  </div>
+
+  <h4>Specify your desired timeslot below for a list of available rooms.</h4>
+  
+  <%= form_for :reservation, :url => { :action => :new }, :html => {:class => "form-horizontal"}, :method => :get do |f| %>
+
+  <% if @reservation.errors.any? %>  
+    <div id="error_explanation" class="alert alert-error">  
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>  
+      <ul>  
+      <% @reservation.errors.full_messages.each do |msg| %>  
+        <li><%= msg %></li>  
+      <% end %>  
+      </ul>  
+    </div>  
+  <% end %>
+  
+  <div class="well well-small">
+  
+    <div class="control-group">
+      <label class="control-label" for="inputDate">Select a date:</label>
+      <div class="controls">
+        <input type="text" name="reservation[which_date]" id="room_reservation_which_date" /> 
+        <%= icon_tag :date %>
+  			<span id="date_example" class="js_hide">YYYY-MM-DD</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputStartTime">Select start time:</label>
+      <div class="controls">
+        <%= select_tag "reservation[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], set_default_hour), :class => "span2" %>
+        <%= select_tag "reservation[minute]", options_for_select([['00',0],['30',30]], set_default_minute), :class => "span2" %>	
+        <%= select_tag "reservation[ampm]", options_for_select(['am','pm'], Time.now.strftime("%p").downcase), :class => "span2" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputStartTime">Select length:</label>
+      <div class="controls">
+        <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), :class => "span6"%>
+      </div>
+    </div>
+  
+  </div>
+
+  <button type="submit" class="btn launch_ajax" id="generate_grid" data-remote="true">Determine availability</button>
+
+<% end %>

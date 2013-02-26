@@ -1,0 +1,70 @@
+<h1>Generate report</h1>
+
+<%= form_for :report, :html => {:class => "form-horizontal"}, :method => :get  do |f| %>
+
+<div class="control-group">
+  <%= f.label :start_dt, "Start date:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.text_field :start_dt, :class => "report_datetime" %>
+     <%= icon_tag :date %>
+		<span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :end_dt, "End date:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.text_field :end_dt, :class => "report_datetime" %>
+		 <%= icon_tag :date %>
+		<span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :room_id, "Room:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :room_id, "<option value=\"all\">All</option>".html_safe + options_from_collection_for_select(Room.all, 'id', 'title', (@room) ? @room.id : '')%>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :college_name, "College Name:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :college_name, "<option value=\"all\">All</option>".html_safe + options_for_select(college_name_options, @college_name)%>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :college_code, "College Code:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :college_code, "<option value=\"all\">All</option>".html_safe + options_for_select(college_code_options, @college_code)%>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :affiliation, "Dept Affiliation:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :affiliation, "<option value=\"all\">All</option>".html_safe + options_for_select(dept_options, @affiliation)%>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :major, "Major:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :major, "<option value=\"all\">All</option>".html_safe + options_for_select(major_options, @major)%>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :patron_status, "Patron Status:", :class => "control-label" %>
+  <div class="controls">
+    <%= f.select :patron_status, "<option value=\"all\">All</option>".html_safe + options_for_select(user_status_options, @patron_status)%>
+  </div>
+</div>
+
+<br />
+
+<%= f.submit "Generate" %>
+
+<% end %>
+

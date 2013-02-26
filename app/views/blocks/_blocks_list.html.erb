@@ -1,0 +1,28 @@
+<%= paginate @blocks, theme: "bootstrap" %>
+
+<p><%= page_entries_info @blocks %></p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th><%= link_to_sorted "Title", :title %></th>
+      <th><%= link_to_sorted "Start", :start_dt %></th>
+      <th><%= link_to_sorted "End", :end_dt %></th>
+      <th><%= link_to_sorted "Room", 'rooms.title' %></th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @blocks.each do |block| %>
+  	<tr class="<%= cycle("even","odd") %>">
+    	<td><%=h block.title %></td>
+    	<td><%=h prettify_date(block.start_dt) %></td>
+    	<td><%=h prettify_date(block.end_dt) %></td>
+    	<td><%=h block.room.title %></td>
+    	<td><%= link_to 'Destroy', destroy_block_path(block), :confirm => 'Are you sure?', :method => :delete, :title => "Delete block" %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @blocks, theme: "bootstrap" %>

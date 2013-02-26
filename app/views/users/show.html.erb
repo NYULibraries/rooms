@@ -1,0 +1,126 @@
+<% h = @user.user_attributes 
+get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to helper function
+%>
+
+<h2>User: <%=h @user.username %></h2>
+<div id="show_user">
+  
+<dl class="dl-horizontal">
+<dt>NetID</dt>
+<dd>&nbsp;<%=h @user.username %></dd>
+
+<dt>First name</dt>
+<dd>&nbsp;<%=h @user.firstname %></dd>
+
+<dt>Last name:</dt>
+<dd>&nbsp;<%=h @user.lastname %></dd>
+
+<dt>E-mail:</dt>
+<dd>&nbsp;<%=h @user.email %></dd>
+
+<dt>College name:</dt>
+<dd>&nbsp;<%=h h[:college_name]%></dd>
+
+<dt>College code:</dt>
+<dd>&nbsp;<%=h h[:college_code]%></dd>
+
+<dt>Departmental affiliation:</dt>
+<dd>&nbsp;<%=h h[:dept_name]%></dd>
+
+<dt>Major:</dt>
+<dd>&nbsp;<%=h h[:major]%></dd>
+
+<dt>Patron status:</dt>
+<dd>&nbsp;<%=h h[:bor_status]%></dd>
+
+<dt>Graduate Student?</dt>
+<dd>
+  <% if !h[:bor_type].nil? %>
+	<%=h is_authorized? %>
+	<% else %>
+	<strong>not found</strong>
+	<% end %>
+</dd>
+
+<%= form_for @user, :remote => true, :class => "form-inline clearfix" do |f| %>
+  <dt>Admin?</dt>
+  <dd>
+  <%= f.check_box :room_reserve_admin, :checked => h[:room_reserve_admin], :disabled => (current_user.username == @user.username) %>
+  </dd>
+<% end -%>
+
+</dl>
+
+<p>
+	<b>Deleted Reservations (up to 1 month):</b>
+	<table class="table table-bordered table-striped">
+		<thead>
+		<tr>
+			<th>Date/time</th>
+			<th>Location</th>
+			<th>Deleted by</th>
+			<th>Date created</th>
+		</tr>
+		</thead>
+		<tbody>
+		<% @reservations_deleted.each do |r| %>
+		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
+			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
+			<td><%= r.room.title %></td>
+			<td><%= get_deleted_by(r,@user)%></td>
+			<td><%= prettify_date(r.created_at)%></td>
+		</tr>
+		<% end %>
+		</tbody>
+	</table>
+</p>	
+
+<p>
+	<b>Past Reservations (up to 1 month):</b>
+	<table class="table table-bordered table-striped">
+		<thead>
+		<tr>
+			<th>Date/time</th>
+			<th>Location</th>
+			<th>Date created</th>
+		</tr>
+		</thead>
+		<tbody>
+		<% @reservations_past.each do |r| %>
+		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
+			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
+			<td><%= r.room.title %></td>
+			<td><%= prettify_date(r.created_at)%></td>
+		</tr>
+		<% end %>
+		</tbody>
+	</table>
+</p>
+
+<p>
+	<b>Current Reservations:</b>
+	<table class="table table-bordered table-striped">
+		<thead>
+		<tr>
+			<th>Date/time</th>
+			<th>Location</th>
+			<th>Date created</th>
+		</tr>
+		</thead>
+		<tbody>
+		<% @reservations.each do |r| %>
+		<tr id="<%= r.id %>" class="<%= highlight(r)%>">
+			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
+			<td><%= r.room.title %></td>
+			<td><%= prettify_date(r.created_at)%></td>
+			<td><%= link_to "Destroy", admin_reservation_destroy_path(r), :confirm => "Are you sure?", :method => :delete %>
+		</tr>
+		<% end %>
+		</tbody>
+	</table>
+</p>
+
+<br />
+<%= icon_tag :back %>
+<%= link_to 'Back', users_path %>
+</div>

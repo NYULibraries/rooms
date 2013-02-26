@@ -1,0 +1,125 @@
+<% get_times_array %>
+
+<p>Select a room with your preferred timeslot, or <%= link_to_unless_current('adjust your timeslot', root_url, :class => "close_dialog")%> for more availability.</p>
+
+<div class="legend">
+  <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
+  <div class="legend_available"></div><div class="legend_text">Available</div>
+  <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
+</div>
+
+<%= paginate @rooms, theme: "bootstrap" %>
+
+<div class="availability_grid_content">
+
+<%= form_for @reservation do |f| %>
+<% if @reservation.errors.any? %>  
+  <div id="error_explanation" class="alert alert-error">  
+    <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>  
+    <ul>  
+    <% @reservation.errors.full_messages.each do |msg| %>  
+      <li><%= msg %></li>  
+    <% end %>  
+    </ul>  
+  </div>  
+<% end %>
+
+<table class="table table-bordered">
+		<tr>
+			<td colspan="5"></td>
+			<td colspan="<%=(@times.size.to_f / 2.0).floor %>">
+				<div class="reservation_timeslot_hunt" id="backOptions">
+				<div id="back_one_day">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 1.day, :end_dt =>  @end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe}%>
+				</div>
+				<div id="back_thirty_mins">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 30.minutes, :end_dt => @end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe}%>
+				</div>
+				</div>
+			</td>
+			<td colspan="<%=(@times.size.to_f / 2.0).ceil %>">
+				<div class="reservation_timeslot_hunt" id="forwardOptions">
+				<div id="forward_one_day">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 1.day, :end_dt => @end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe}%>
+				</div>
+				<div id="forward_thirty_mins">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 30.minutes, :end_dt => @end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe}%>
+				</div>
+				</div>
+			</td>
+		</tr>
+	<tr>
+		<th></th>
+		<th><div class="sort_by_field">
+		  <%= link_to_sorted "Room", :title %>
+		</div></th>
+		<th><div class="sort_by_field">
+		  <%= link_to_sorted "Type", :type_of_room %>
+		</div></th>
+		<th>Details</th>
+		<th><div class="sort_by_field">
+		  <%= link_to_sorted "Size", :sort_size_of_room %>
+		</div></th>
+		<%= construct_grid_headers %>
+	</tr>
+	
+<% @rooms.each do |r| %>
+	<tr>
+		<td><%= radio_button :reservation, :room_id, r.id, :disabled => disable_reservation_button(r) %></td>
+		<td style="width:60px;">
+		<b><%= r.title %></b>
+		</td>
+		<td style="width:60px;">
+		<b><%= r.type_of_room %></b>
+		</td>
+		<td>
+		<% unless r.description.blank? %><b><%= get_formatted_text(r.description) %></b><br /><% end %>
+		<%= icon_tag :photo %><%= link_to "See image", r.image_link, :target => :blank, :class => "previewImage preview" if !r.image_link.blank? %>
+		</td>
+		<td style="width:60px;">
+		<b><%= r.size_of_room %></b>
+		</td>
+		<%= construct_grid_data(r) %>
+	</tr>
+<% end %>
+	<tr>
+		<td></td>
+		<td colspan="2" class="extra_fields">
+			<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>:".html_safe %> </div>
+		</td>
+		<td colspan="<%= @times.size + 2%>" class="extra_fields">
+			<div id="res_title_div"><%= text_field :reservation, :title %></div>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2" class="extra_fields">
+			<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em>: <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
+		</td>
+		<td colspan="<%= @times.size + 2%>" class="extra_fields">
+			<div id="res_cc_div"><%= text_field :reservation, :cc %></div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="<%= @times.size + 5%>">
+			<%= f.hidden_field "user_id", :value => @user.id %>
+			<%= f.hidden_field "start_dt", :value => @start_dt %>
+			<%= f.hidden_field "end_dt", :value => @end_dt %>
+			<%= f.submit "Reserve selected timeslot" %>
+		</td>
+	</tr>
+</table>
+<% end %>
+
+</div>
+
+<%= paginate @rooms, theme: "bootstrap" %>
+
+<div class="legend">
+  <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
+  <div class="legend_available"></div><div class="legend_text">Available</div>
+  <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
+</div>
+
+
+

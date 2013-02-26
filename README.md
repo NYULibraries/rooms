@@ -1,5 +1,7 @@
 # Graduate Collaborative Room Reservation System
 
+[![Dependency Status](https://gemnasium.com/NYULibraries/room_reservation.png)](https://gemnasium.com/NYULibraries/room_reservation)
+
 The Graduate Collaborative Room Reservation System is a Rails 3 application that allows authorized user to view available graduate rooms and book them for private or collaborative study.
 
 ## To-do

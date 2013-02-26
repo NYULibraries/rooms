@@ -54,7 +54,7 @@ gem 'nyulibraries_assets', :git => 'git://github.com/NYULibraries/nyulibraries_a
 gem 'mustache-rails', "~> 0.2.3", :require => 'mustache/railtie'
 
 # memcached
-gem 'dalli', "~> 2.5.0"
+gem 'dalli', "~> 2.6"
 
 gem "comma", "~> 3.0"
 

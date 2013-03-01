@@ -60,23 +60,35 @@ ul#list_rooms {
   margin: 10px 0;
 }
 
-/* PREVIEW THUMBS STYLES */
-
-#preview{
-	position:absolute;
-	border:1px solid #ccc;
-	background:#333;
-	padding:5px;
-	display:none;
-	color:#fff;
-	z-index: 1100;
-}
-
-#preview img {
-	max-width: 240px;
-}
-
 .field_with_errors input {
   border-color: rgb(185, 74, 72) !important;
 }
 
+#top_of_page { position: absolute; }
+
+.modal.fullscreen {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  width: auto;
+  margin: 0;
+
+}
+
+#ajax-modal {
+  .ajax-loader { padding-bottom: 5px; }
+  .modal-footer .extra_fields {
+    & {
+      float: left;
+    }
+    .extra_field, label { float: left; }
+    #res_title_div, #res_cc_div {
+      padding: 5px;
+    }
+  }
+}
+
+@media only screen and (min-height: 850px) {
+  .modal.fullscreen .modal-body { max-height: 550px; }
+}

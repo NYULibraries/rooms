@@ -20,8 +20,8 @@ module ReservationsHelper
 	    html += " timeslot_selected" if t >= @start_dt && t < @end_dt
 	    html += "\">"
 	    html += "<a href=\"#{user_path(existing_res.user_id)}?highlight[]=#{existing_res.id}\##{existing_res.id}\" class=\"reservation_whois\" target=\"_blank\">#{icon_tag :info}</a>" if is_admin? and !@status.empty? and !existing_res.is_block
-	    html += "<a class=\"preview previewLink\" target=\"_blank\" title=\"Room is closed\" alt=\"Room is closed\">#{icon_tag :warning}</a>" if !r_is_open
-	    html += "<a class=\"preview previewLink\" target=\"_blank\" title=\"#{existing_res.title unless existing_res.title.blank?}\" alt=\"#{existing_res.title unless existing_res.title.blank?}\">#{icon_tag :warning}</a>" if r_is_open and !@status.empty? and existing_res.is_block
+	    html += "<a class=\"preview_link\" target=\"_blank\" title=\"Room is closed\" alt=\"Room is closed\">#{icon_tag :warning}</a>" if !r_is_open
+	    html += "<a class=\"preview_link\" target=\"_blank\" title=\"#{existing_res.title unless existing_res.title.blank?}\" alt=\"#{existing_res.title unless existing_res.title.blank?}\">#{icon_tag :warning}</a>" if r_is_open and !@status.empty? and existing_res.is_block
 	    html += "</td>"
 	  end
 	

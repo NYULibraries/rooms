@@ -1,9 +1,7 @@
 //= require jquery
-//= require jquery_ujs
 //= require jquery-ui
+//= require jquery_ujs
 //= require nyulibraries
 //= require bootstrap-modal
-//= require bootstrap-modal/bootstrap-modalmanager
 //= require jquery-ui-timepicker-addon.js
-//= require popupPreview.js
 //= require room_reservation

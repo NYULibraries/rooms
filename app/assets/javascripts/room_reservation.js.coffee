@@ -1,76 +1,68 @@
 $ ->
   $(".js_hide").hide()
-  popupPreview()
 
+  # Set up date picker objects
   $(".report_datetime, .block_datetime").datetimepicker {
     stepMinute: 30,
     minuteMax: 30,
     dateFormat: 'yy-mm-dd'
-  }
-  $('ul#list_rooms').sortable { 
-    handle: "i.icon-move"
-    update: -> $(this).closest("form").submit()
-    opacity: 0.4
-    cursor: 'move'
   }
   $( "#room_reservation_which_date" ).datepicker {
     numberOfMonths: 2,
     minDate: 0,
     dateFormat: 'yy-mm-dd'
   }
-  $('input#room_reservation_submit').attr("disabled","true")
+  
+  # Set up sortable list for rooms
+  $('ul#list_rooms').sortable { 
+    handle: "i.icon-move"
+    update: -> $(this).closest("form").submit()
+    opacity: 0.4
+    cursor: 'move'
+  }
+  
+  # Disable main form submit if no date was selected
+  # And then enable once it is
+  $('button#generate_grid').attr("disabled","true")
   $(document).on "change", 'input#room_reservation_which_date', ->
-    $('input#room_reservation_submit').removeAttr("disabled")
-  $("#new_reservation input#reservation_submit").hide()
-  $("form.edit_reservation input#reservation_submit").removeAttr('disabled')
-  $("*[type='submit'][data-remote='true']").hide()
-  $("button#generate_grid").show()
+    $('button#generate_grid').removeAttr("disabled")
+    
+  # Submit edit user form when admin checkbox is changed
   $("#show_user").on 'change', "input[type='checkbox']", ->
     $(this).closest("form").submit()
+  
+  # Initialize modal dialog boxes
+  $(document).on 'click', ".launch_modal", ->
+    $("#ajax-modal").removeClass("fullscreen")
+    $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
+    $("#ajax-modal").find(".modal-title").html("Loading...")
+    $("#ajax-modal").find(".modal-header").find(".legend, p").remove()  
+    $("#ajax-modal").find(".modal-body-content").html('')
+    $("#ajax-modal").find(".modal-body").removeAttr("style")
+    $("#ajax-modal").find(".ajax-loader").show()
+    $("#ajax-modal").modal('show')
+  
+  $(document).on 'click', "#ajax-modal a.close_dialog", (e) ->
+    e.preventDefault()
+    $("#ajax-modal").modal('hide')
+    $("#room_reservation_which_date").focus()
+    $("#room_reservation_which_date").effect("highlight", {}, 3000)
+    false
+  
+  $(document).on 'mouseenter', ".preview_image", ->
+    $(this).popover {
+      placement: 'right',
+      title: null,
+      html: true,
+      content: '<img src="' +this+ '" />',
+      trigger: 'hover',
+    }
+    $(this).popover('show')
     
-  #$modal = $('#ajax-modal')
-  #$('.launch_ajax').on 'click', ->
-  #  $('body').modalmanager('loading')
-  #
-  #  setTimeout( ->
-  #    $modal.load $(this).closest("form").attr "action", '', ->
-  #      modal.modal()
-  #  , 1000)
-  #
-  #$modal.on 'click', '.update', ->
-  #  $modal.modal('loading')
-  #  setTimeout( ->
-  #    $modal
-  #      .modal('loading')
-  #      .find('.modal-body')
-  #        .prepend('<div class="alert alert-info fade in">' +
-  #          'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-  #        '</div>')
-  #  , 1000)
-    
-  #populate_modal = (data, textStatus, jqXHR) -> 
-  #  data = $(data)
-  #  heading = data.find("h1, h2, h3, h4, h5, h6").eq(0).remove()
-  #  $("#modal .modal-header h3").text(heading.text()) if heading
-  #  submit = data.find("form input[type=submit]").eq(0).remove()
-  #  $("#modal .modal-body").html(data.html())
-  #  $("#modal .modal-footer input[type=submit]").remove()
-  #  $("#modal .modal-footer").prepend(submit) if submit
-  #  $("#modal").modal("show")
-  #
-  #display_modal = (event) ->
-  #  $('body').modalmanager('loading')
-  #  event.preventDefault()
-  #  $.get(this.href, "", populate_modal, "html")
-  #  false
-  #  
-  #ajax_form_catch = (event) ->
-  #  event.preventDefault()
-  #  form =  $("#modal form")
-  #  $.post(form.attr("action"), form.serialize(), populate_modal, "html")
-  #  false
-  #
-  #$(document).on "click", ".launch_ajax", display_modal
-  #$(document).on "click", "#modal .modal-footer input[type=submit]", ajax_form_catch
-  #$(document).on "submit", "#modal form", ajax_form_catch
-
+  $(document).on 'mouseenter', ".preview_link", ->
+    $(this).tooltip {
+      placement: 'bottom',
+      trigger: 'hover',
+    }
+    $(this).tooltip('show')
+  

@@ -27,12 +27,12 @@
           <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
           <strong>Location:</strong> <%= res.room.title %><br />
           <% if res.title.blank? %>
-           <%= icon_tag :add %> <%= link_to 'name your event', edit_reservation_path(res) %><br />
+           <%= icon_tag :add %> <%= link_to 'name your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
           <% else %>
-            <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res) %><br />
+            <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
           <% end %>
-          <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id } %> <br />	
-          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :confirm => 'Are you sure?', :method => :delete %>
+          <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id }, :remote => true %> <br />	
+          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :method => :delete, :confirm => "Are you sure?" %>
         </li>
       <% end %>
     <% end %>

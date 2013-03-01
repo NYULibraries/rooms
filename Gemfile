@@ -24,7 +24,7 @@ group :development do
 end
 
 group :test do
-  gem 'sunspot_solr'
+  #gem 'sunspot_solr'
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
@@ -35,7 +35,7 @@ gem 'json', '~> 1.7.7'
 
 gem 'debugger', :groups => [:development, :test]
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.2.1'
 
 # Authenticate gem
 gem 'authpds-nyu', "~> 0.2.9"

@@ -31,17 +31,17 @@
       <th>
         <%= link_to_sorted "Username", :username %>
       </th>
-      <th>
+      <th class="hidden-phone">
         <%= link_to_sorted "First name", :firstname %>
       </th>
-      <th>
+      <th class="hidden-phone">
         <%= link_to_sorted "Last name", :lastname %>
       </th>
-      <th>
+      <th class="hidden-phone">
         <%= link_to_sorted "Email", :email %>
       </th>
-      <th>Graduate Student?</th>
-      <th>Admin?</th>
+      <th class="hidden-phone">Graduate Student?</th>
+      <th class="hidden-phone">Admin?</th>
       <th>Options</th>
     </tr>
   </thead>
@@ -50,11 +50,11 @@
     <% h = user.user_attributes %>
     <tr>
       <td><%=h user.username %></td>
-      <td><%=h user.firstname %></td>
-      <td><%=h user.lastname %></td>
-      <td><%=h user.email %></td>
-      <td><%= (!h[:bor_type].nil?) ? is_authorized? : "<strong>not found</strong>".html_safe %></td>
-      <td><%=h h[:room_reserve_admin] %></td>
+      <td class="hidden-phone"><%=h user.firstname %></td>
+      <td class="hidden-phone"><%=h user.lastname %></td>
+      <td class="hidden-phone"><%=h user.email %></td>
+      <td class="hidden-phone"><%= (!h[:bor_type].nil?) ? is_authorized? : "<strong>not found</strong>".html_safe %></td>
+      <td class="hidden-phone"><%=h h[:room_reserve_admin] %></td>
       <td><%= link_to 'Show', user %></td>
       <td><%= link_to_if(user.username != current_user.username, 'Destroy', user, :confirm => 'Are you sure?', :method => :delete) %></td>
     </tr>

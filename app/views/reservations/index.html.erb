@@ -11,7 +11,7 @@
 
   <h4>Specify your desired timeslot below for a list of available rooms.</h4>
   
-  <%= form_for :reservation, :url => { :action => :new }, :html => {:class => "form-horizontal"}, :method => :get do |f| %>
+  <%= form_for :reservation, :url => { :action => :new }, :html => {:class => "form-horizontal" }, :remote => true, :method => :get do |f| %>
 
   <% if @reservation.errors.any? %>  
     <div id="error_explanation" class="alert alert-error">  
@@ -51,6 +51,8 @@
   
   </div>
 
-  <button type="submit" class="btn launch_ajax" id="generate_grid" data-remote="true">Determine availability</button>
+  <%= button_tag(:type => "submit", :class => "btn launch_modal", :id => "generate_grid") do %>
+    Determine availability
+  <% end -%>
 
 <% end %>

@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @reservation = Reservation.new
-    @rooms = Room.sorted(params[:sort], "sort_order ASC").page(params[:page]).per(10)
+    @rooms = Room.order(sort_column + " " + sort_direction).page(params[:page]).per(30)
     @user = current_user
     @start_dt = DateTime.parse(params[:reservation][:start_dt]) unless params[:reservation][:start_dt].nil?
     @end_dt = DateTime.parse(params[:reservation][:end_dt]) unless params[:reservation][:end_dt].nil?
@@ -60,11 +60,11 @@ class ReservationsController < ApplicationController
   end
 
   # GET /reservations
-  def create
+  def create   
     @reservation = Reservation.new(params[:reservation])
     @user = @reservation.user
     @room = @reservation.room
-    @rooms = Room.sorted(params[:sort], "sort_order ASC").page(params[:page]).per(10)
+    @rooms = Room.order(sort_column + " " + sort_direction).page(params[:page]).per(30)
    
     @start_dt = DateTime.parse(params[:reservation][:start_dt]) unless params[:reservation][:start_dt].nil?
     @end_dt = DateTime.parse(params[:reservation][:end_dt]) unless params[:reservation][:end_dt].nil?
@@ -75,8 +75,10 @@ class ReservationsController < ApplicationController
         ReservationMailer.confirmation_email(@reservation).deliver
         flash[:success] = 'Reservation was successful. You will be sent an e-mail confirming your reservation.'
         format.html { render :index }
+        format.js { render :layout => false }
       else
         format.html { render :new, params: params }
+        format.js { render :new, params: params, :layout => false }
       end
     end
   end
@@ -85,7 +87,9 @@ class ReservationsController < ApplicationController
   def edit
     @reservation = Reservation.find(params[:id])
     @user = current_user
-    respond_with(@reservation)
+    respond_with(@reservation) do |format|
+      format.js { render :layout => false }
+    end
   end
 
   # PUT /reservations/1
@@ -133,9 +137,17 @@ class ReservationsController < ApplicationController
     ReservationMailer.confirmation_email(@reservation).deliver
     
     respond_with(@reservation, :location => root_url) do |format|
+      flash[:success] = "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
+      format.html { render :index }
       format.js { render :layout => false }
     end
   end
+  
+  # Implement sort column function for this model
+  def sort_column
+    super "Room", "sort_order"
+  end
+  helper_method :sort_column
   
 private 
   

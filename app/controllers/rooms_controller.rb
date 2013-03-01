@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   
   # GET /rooms
   def index
-    @rooms = Room.all
+    @rooms = Room.sorted(params[:sort], "sort_order ASC")
   end
 
   # GET /rooms/1

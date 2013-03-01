@@ -107,14 +107,14 @@ module ApplicationHelper
   end
   
   # Generate link to sorting action
-  def sortable(column, title = nil)
+  def sortable(column, title = nil, url_options = {}, remote = false)
     title ||= column.titleize
-    css_class = column == sort_column ? "current #{sort_direction}" : nil
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    css_class = column == sort_column.to_sym ? "current #{sort_direction}" : nil
+    direction = column == sort_column.to_sym && sort_direction == "asc" ? "desc" : "asc"
     direction_icon = (direction.eql? "desc") ? :sort_desc : :sort_asc
-    search = params[:search]  
-    html = link_to title, params.merge(:sort => column, :direction => direction, :page => nil, :id => ""), {:class => css_class}
-    html << icon_tag(direction_icon) if column == sort_column
+    search = params[:search]
+    html = link_to title, params.merge(:sort => column, :direction => direction, :id => "").merge(url_options), {:data => {:remote => true}, :class => css_class}
+    html << icon_tag(direction_icon) if column == sort_column.to_sym
     return html
   end
   
@@ -149,5 +149,5 @@ module ApplicationHelper
   def icon_tag key
     content_tag :i, "", :class => icons(key)
   end
-  
+    
 end

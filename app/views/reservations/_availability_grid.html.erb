@@ -1,18 +1,18 @@
 <% get_times_array %>
 
-<p>Select a room with your preferred timeslot, or <%= link_to_unless_current('adjust your timeslot', root_url, :class => "close_dialog")%> for more availability.</p>
+<p class="hidden-phone">Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot', root_url, :class => "close_dialog")%> for more availability.</p>
 
-<div class="legend">
+<div class="legend hidden-phone">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
   <div class="legend_available"></div><div class="legend_text">Available</div>
   <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
 </div>
 
-<%= paginate @rooms, theme: "bootstrap" %>
+<a href="#" id="top_of_page" title="top_of_page">&nbsp;</a><%= paginate @rooms, theme: "bootstrap", remote: true, :params => {:controller => 'reservations', :action => 'new'} %>
 
 <div class="availability_grid_content">
 
-<%= form_for @reservation do |f| %>
+<%= form_for @reservation, :remote => true, :html => {:class => "ajax_form"} do |f| %>
 <% if @reservation.errors.any? %>  
   <div id="error_explanation" class="alert alert-error">  
     <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>  
@@ -51,21 +51,24 @@
 	<tr>
 		<th></th>
 		<th><div class="sort_by_field">
-		  <%= link_to_sorted "Room", :title %>
+		  <%#= link_to_sorted "Room", :title, remote: true %>
+		  <%= sortable :title, "Room", {:action => "new"}, true %>
 		</div></th>
 		<th><div class="sort_by_field">
-		  <%= link_to_sorted "Type", :type_of_room %>
+		  <%#= link_to_sorted "Type", :type_of_room, remote: true  %>
+		  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 		</div></th>
 		<th>Details</th>
 		<th><div class="sort_by_field">
-		  <%= link_to_sorted "Size", :sort_size_of_room %>
+		  <%#= link_to_sorted "Size", :sort_size_of_room, remote: true %>
+		  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
 		</div></th>
 		<%= construct_grid_headers %>
 	</tr>
 	
 <% @rooms.each do |r| %>
 	<tr>
-		<td><%= radio_button :reservation, :room_id, r.id, :disabled => disable_reservation_button(r) %></td>
+		<td><%= radio_button :reservation, :room_id, r.id, :disabled => disable_reservation_button(r), :class => "new_reservation_radio_select" %></td>
 		<td style="width:60px;">
 		<b><%= r.title %></b>
 		</td>
@@ -74,7 +77,7 @@
 		</td>
 		<td>
 		<% unless r.description.blank? %><b><%= get_formatted_text(r.description) %></b><br /><% end %>
-		<%= icon_tag :photo %><%= link_to "See image", r.image_link, :target => :blank, :class => "previewImage preview" if !r.image_link.blank? %>
+		<% unless r.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", r.image_link, :target => :blank, :class => "preview_image" %><% end %>
 		</td>
 		<td style="width:60px;">
 		<b><%= r.size_of_room %></b>
@@ -105,7 +108,9 @@
 			<%= f.hidden_field "user_id", :value => @user.id %>
 			<%= f.hidden_field "start_dt", :value => @start_dt %>
 			<%= f.hidden_field "end_dt", :value => @end_dt %>
-			<%= f.submit "Reserve selected timeslot" %>
+      <button type="submit" class="btn">
+        Reserve selected timeslot
+      </button>
 		</td>
 	</tr>
 </table>
@@ -113,7 +118,7 @@
 
 </div>
 
-<%= paginate @rooms, theme: "bootstrap" %>
+<%= paginate @rooms, theme: "bootstrap", remote: true %>
 
 <div class="legend">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>

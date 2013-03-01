@@ -41,7 +41,7 @@ private
   end
 
   def doesnt_overlap
-    unless Reservation.where("room_id = ? AND ((start_dt >= ? AND  start_dt < ?) OR (end_dt > ? AND end_dt <= ?) OR (start_dt <= ? AND end_dt >= ?))", room.id, start_dt, start_dt, end_dt, end_dt, start_dt, end_dt).empty?
+    unless Reservation.active_with_blocks.where("room_id = ? AND ((start_dt >= ? AND  start_dt < ?) OR (end_dt > ? AND end_dt <= ?) OR (start_dt <= ? AND end_dt >= ?))", room.id, start_dt, start_dt, end_dt, end_dt, start_dt, end_dt).empty?
       errors.add(:base, "Sorry, your selected reservation slot was just taken. Please check the availability again.")
     end
   end

@@ -89,7 +89,7 @@ get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to hel
 		<% @reservations_past.each do |r| %>
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
-			<td><%= r.room.title %></td>
+			<td><%= r.room.title.html_safe %></td>
 			<td><%= prettify_date(r.created_at)%></td>
 		</tr>
 		<% end %>

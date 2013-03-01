@@ -79,10 +79,10 @@ module ReservationsHelper
         if deleted_by == user.id
           h += "User"
         else
-          h += "Admin (<a href=\"#{user_path(deleted_by)}\">#{User.find(deleted_by).username}</a>)"
+          h += "Admin (<a href=\"#{user_path(deleted_by)}\">#{User.find(deleted_by).username}</a>)".html_safe
         end
       elsif !deleted[:by_block].nil? and deleted[:by_block]
-        h += "<a href=\"#{blocks_path}\">Block</a>"
+        h += "<a href=\"#{blocks_path}\">Block</a>".html_safe
       end
     end
     return h

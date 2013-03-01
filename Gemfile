@@ -59,4 +59,4 @@ gem 'dalli', "~> 2.6"
 gem "comma", "~> 3.0"
 
 # New Relic
-gem 'newrelic_rpm', "~> 3.5.3"
+gem 'newrelic_rpm', "~> 3.5.8"

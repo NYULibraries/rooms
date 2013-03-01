@@ -1,8 +1,7 @@
-  <% get_past_reservations({ :how_far_back => lambda {return 1.week} }) %>
-  <% if !@reservations_past.blank? %>
+  <% unless @user.reservations.active_non_blocks.past.one_week.blank? %>
   <h2>Your past reservations (up to 1 week)</h2>
   <ul id="past_reservations">
-      <% @reservations_past.each do |res| %>
+      <% @user.reservations.active_non_blocks.past.one_week.each do |res| %>
       <li>
         <% unless res.title.blank? %>
           <strong>Name:</strong> <%= res.title %> <br />
@@ -17,10 +16,10 @@
 
   <h2>Your current reservations</h2>
   <ul id="current_reservations">
-    <% if @reservations.blank? %>
+    <% if @user.reservations.active_non_blocks.current.blank? %>
       <li>None.</li>
     <% else %>
-      <% @reservations.each do |res| %>
+      <% @user.reservations.active_non_blocks.current.each do |res| %>
         <li>
           <%= (res.title?) ? "<strong>Name:</strong> #{res.title}<br />".html_safe : '' %>
           <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />

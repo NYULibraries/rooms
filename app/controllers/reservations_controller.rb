@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
   def index
     @reservation = Reservation.new
     @user = current_user
-    @reservations = @user.reservations
+    @reservations = @user.reservations.active_non_blocks.current
     
     respond_with(@reservations)
   end
@@ -47,14 +47,18 @@ class ReservationsController < ApplicationController
     if @start_dt.blank? || @start_dt < DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 0,0)
       flash[:error] = "Please select a valid future date in the format YYYY-MM-DD."
     elsif rr_made_today?
-      flash[:error] = "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"
+      flash[:error] = "Sorry, you are only allowed <strong>to create one reservation per day.</strong>".html_safe
     elsif rr_for_same_day?
-      flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>"
+      flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>".html_safe
     end
 
     respond_with(@reservation) do |format|
-      format.html { render :index } unless flash[:error].blank?
-      format.js { render :layout => false }
+      if flash[:error].blank?
+        format.js { render :layout => false }
+      else
+        format.html { render :index } 
+        format.js { render :index, :layout => false }
+      end
     end
     
   end

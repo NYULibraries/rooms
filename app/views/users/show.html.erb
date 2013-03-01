@@ -1,6 +1,4 @@
-<% h = @user.user_attributes 
-get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to helper function
-%>
+<% h = @user.user_attributes %>
 
 <h2>User: <%=h @user.username %></h2>
 <div id="show_user">
@@ -63,7 +61,7 @@ get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to hel
 		</tr>
 		</thead>
 		<tbody>
-		<% @reservations_deleted.each do |r| %>
+		<% @user.reservations.deleted.one_month.each do |r| %>
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
@@ -86,7 +84,7 @@ get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to hel
 		</tr>
 		</thead>
 		<tbody>
-		<% @reservations_past.each do |r| %>
+		<% @user.reservations.active_non_blocks.past.one_month.each do |r| %>
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title.html_safe %></td>
@@ -108,7 +106,7 @@ get_past_reservations({ :how_far_back => lambda {return 1.month} }) #call to hel
 		</tr>
 		</thead>
 		<tbody>
-		<% @reservations.each do |r| %>
+		<% @user.reservations.active_non_blocks.current.each do |r| %>
 		<tr id="<%= r.id %>" class="<%= highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>

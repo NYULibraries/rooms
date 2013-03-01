@@ -1,6 +1,6 @@
 <% 
-@body_text.gsub!(/:room/,"#{@reservation.room.title}")
-@body_text.gsub!(/:start/,"#{@reservation.start_dt.strftime('%a. %b %d, %Y %I:%M %p')}")
-@body_text.gsub!(/:end/,"#{@reservation.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}")
+body = @body_text.gsub(/:room/,"#{@reservation.room.title}")
+body = body.gsub(/:start/,"#{@reservation.start_dt.strftime('%a. %b %d, %Y %I:%M %p')}")
+body = body.gsub(/:end/,"#{@reservation.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}")
 %>
-<%= @body_text %>
+<%= body %>

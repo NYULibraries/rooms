@@ -27,14 +27,7 @@ module ReservationsHelper
 	
 	  return html.html_safe
   end
-  
-  def get_past_reservations(config)
-    t_now = DateTime.now
-    @reservations_deleted = Reservation.deleted.where("user_id = ? AND start_dt > ?", @user.id, t_now - config[:how_far_back].call)
-    @reservations_past = Reservation.active_non_blocks.where("user_id = ? AND end_dt <= ? AND start_dt > ?", @user.id, t_now, t_now - config[:how_far_back].call)
-    @reservations = Reservation.active_non_blocks.where("user_id = ? AND end_dt > ?", @user.id, t_now)
-  end
-  
+    
   def get_times_array(padding = true)
     # create an array of times starting one hour before the selected start hour
     @times = (padding) ? [@start_dt - 1.hour] : [@start_dt]
@@ -72,20 +65,18 @@ module ReservationsHelper
   
   def get_deleted_by(r,user)
     deleted = r.deleted_by.to_hash
-    h = ""
     unless deleted.nil?
       if !deleted[:by_user].nil?
         deleted_by = deleted[:by_user]
         if deleted_by == user.id
-          h += "User"
+          "User"
         else
-          h += "Admin (<a href=\"#{user_path(deleted_by)}\">#{User.find(deleted_by).username}</a>)".html_safe
+          "Admin (<a href=\"#{user_path(deleted_by)}\">#{User.find(deleted_by).username}</a>)".html_safe
         end
       elsif !deleted[:by_block].nil? and deleted[:by_block]
-        h += "<a href=\"#{blocks_path}\">Block</a>".html_safe
+        link_to "Block", blocks_path
       end
     end
-    return h
   end
   
   def room_type_options

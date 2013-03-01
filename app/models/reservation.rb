@@ -6,15 +6,18 @@ class Reservation < ActiveRecord::Base
   validate :dates_are_valid?
   validate :end_comes_after_start
   
-  default_scope :order => 'start_dt ASC' 
   serialize :config_option, Hash
   serialize :deleted_by, Hash
   
-  scope :active_with_blocks, :conditions => { :deleted => false }
-  scope :active_non_blocks, :conditions => { :deleted => false, :is_block => false }
-  scope :blocks, :conditions => { :is_block => true }
-  scope :deleted, :conditions => { :is_block => false, :deleted => true }
-  
+  scope :active_with_blocks, :conditions => { :deleted => false }, :order => "start_dt ASC"
+  scope :active_non_blocks, :conditions => { :deleted => false, :is_block => false }, :order => "start_dt ASC"
+  scope :blocks, :conditions => { :is_block => true }, :order => "start_dt ASC"
+  scope :deleted, :conditions => { :is_block => false, :deleted => true }, :order => "start_dt ASC"
+  scope :current, where("end_dt > ?", DateTime.now.strftime("%Y-%m-%d %H:%M"))
+  scope :past, where("end_dt <= ?", DateTime.now.strftime("%Y-%m-%d %H:%M"))
+  scope :one_week, where("start_dt > ?", 1.week.ago.strftime("%Y-%m-%d %H:%M"))
+  scope :one_month, where("start_dt > ?", 1.month.ago.strftime("%Y-%m-%d %H:%M"))
+
   belongs_to :room
   belongs_to :user
   

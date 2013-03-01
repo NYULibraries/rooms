@@ -21,6 +21,6 @@ class ReservationMailer < ActionMailer::Base
   def block_cancellation_email(res, cc, body)
     @reservation = res
     @body_text = body
-    mail(:to => @reservation.user.email, :cc => @reservation.cc, :subject => "NYU Libraries- Room reservation cancellation")
+    mail(:to => @reservation.user.email, :cc => @reservation.cc, :subject => "NYU Libraries- Room reservation cancellation") unless @body_text.nil?
   end
 end

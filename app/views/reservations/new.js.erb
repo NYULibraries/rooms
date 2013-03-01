@@ -55,10 +55,10 @@ if (!$("#ajax-modal").find(".modal-header .legend").is("*")) {
   $("#ajax-modal").find(".modal-header").append($("#ajax-modal").find(".modal-body .legend:first"));
 }
 if (!$("#ajax-modal").find(".modal-header p").is("*")) {
-  $("#ajax-modal").find(".modal-header").append($("#ajax-modal").find(".modal-body p:first"));
+  $("#ajax-modal").find(".modal-header").append($("#ajax-modal").find(".modal-body .availability_grid_desc"));
 }
 $("#ajax-modal").find(".modal-body .legend").hide();
-$("#ajax-modal").find(".modal-body p:first").hide();
+$("#ajax-modal").find(".modal-body .availability_grid_desc").hide();
 if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) {
 	$('#ajax-modal').find(".modal-footer .extra_fields").show();
 }

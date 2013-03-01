@@ -12,7 +12,7 @@ class ReservationMailer < ActionMailer::Base
   end
 
   def block_cancellation_admin_email(res, formatted_reservations, admin_email, cancel_request)
-    @reservation = res
+    @block = res
     @formatted_reservations = formatted_reservations
     @cancel_request = cancel_request
     mail(:to => admin_email, :subject => "NYU Libraries- Room reservation cancellation")

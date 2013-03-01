@@ -13,11 +13,14 @@ class ReservationMailer < ActionMailer::Base
 
   def block_cancellation_admin_email(res, formatted_reservations, admin_email, cancel_request)
     @reservation = res
-    mail(:to => admin_email, :subject => "NYU Libraries- Room reservation cancellation", :formatted_reservations => formatted_reservations, :cancel_request => cancel_request)
+    @formatted_reservations = formatted_reservations
+    @cancel_request = cancel_request
+    mail(:to => admin_email, :subject => "NYU Libraries- Room reservation cancellation")
   end
   
   def block_cancellation_email(res, cc, body)
     @reservation = res
-    mail(:to => @reservation.user.email, :cc => @reservation.cc, :subject => "NYU Libraries- Room reservation cancellation", :body_text => body)
+    @body_text = body
+    mail(:to => @reservation.user.email, :cc => @reservation.cc, :subject => "NYU Libraries- Room reservation cancellation")
   end
 end

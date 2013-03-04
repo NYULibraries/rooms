@@ -51,8 +51,8 @@ class ReservationsController < ApplicationController
     elsif rr_for_same_day?
       flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>".html_safe
     end
-
-    respond_to do |format|
+    
+    respond_with(@reservation) do |format|
       if flash[:error].blank?
         format.js { render :layout => false }
         format.html { render :new }

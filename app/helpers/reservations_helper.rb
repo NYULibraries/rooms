@@ -1,35 +1,47 @@
 module ReservationsHelper
   
+  # Display each 1/2 slot as a table data cell
+  # * Show as red if room is booked (by user or block), in the past or closed (according to hours)
+  # * Show as green if a valid time to book with no restrictions
   def construct_grid_data(room)
-    
     html = ""
-    @times.each do |t|
-	    t_today = Time.now.strftime('%Y%m%d').to_i #today's date
-	    t_now = Time.now.strftime('%H%M').to_i #local time
-	    t_this_date = t.strftime('%Y%m%d').to_i #this iteration's date
-	    t_this_time = t.strftime('%H%M').to_i #this iteration's time
-	    t_next = t + 30.minutes #next iteration's time
-	    is_in_past = (t_today == t_this_date && t_this_time < t_now)
-	    r_is_open = room_is_open(room,t)
+    @times.each do |timeslot|
+	    t_next = timeslot + 30.minutes #next iteration's time
 	    
-	    @status = Reservation.active_with_blocks.find(:all, :conditions => ["room_id = ? AND ((start_dt >= ? AND end_dt <= ?) OR (start_dt <= ? AND end_dt >= ?))", room.id, t, t_next, t, t_next], :limit => 1)
-      existing_res = @status.first
-
-	    html += "<td valign=\"top\" class=\""
-	    (!@status.blank? or is_in_past or !r_is_open) ? html += "timeslot_unavailable" : html += "timeslot_available"	  
-	    html += " timeslot_selected" if t >= @start_dt && t < @end_dt
-	    html += "\">"
-	    html += "<a href=\"#{user_path(existing_res.user_id)}?highlight[]=#{existing_res.id}\##{existing_res.id}\" class=\"reservation_whois\" target=\"_blank\">#{icon_tag :info}</a>" if is_admin? and !@status.empty? and !existing_res.is_block
-	    html += "<a class=\"preview_link\" target=\"_blank\" title=\"Room is closed\" alt=\"Room is closed\">#{icon_tag :warning}</a>" if !r_is_open
-	    html += "<a class=\"preview_link\" target=\"_blank\" title=\"#{existing_res.title unless existing_res.title.blank?}\" alt=\"#{existing_res.title unless existing_res.title.blank?}\">#{icon_tag :warning}</a>" if r_is_open and !@status.empty? and existing_res.is_block
-	    html += "</td>"
+	    reservation = Reservation.active_with_blocks.where("room_id = ? AND ((start_dt >= ? AND end_dt <= ?) OR (start_dt <= ? AND end_dt >= ?))", room.id, timeslot, t_next, timeslot, t_next).first
+      html += content_tag(:td, :class => timeslot_class(reservation, room, timeslot)) do 
+        if is_admin? and !reservation.nil? and !reservation.is_block
+          link_to(icon_tag(:info), user_path(reservation.user_id, :params => {:highlight => [reservation.id]}, :anchor => reservation.id), :title => "Room is booked", :alt => "Room is booked", :class => "preview_link reservation_whois", :target => "_blank") 
+        elsif !room_is_open?(room, timeslot)
+          link_to(icon_tag(:warning), "#", :title => "Room is closed", :alt => "Room is closed", :class => "preview_link", :target => "_blank")
+        elsif room_is_open?(room, timeslot) and !reservation.nil? and reservation.is_block
+          link_to(icon_tag(:warning), "#", :title => reservation.title, :alt => reservation.title, :class => "preview_link", :target => "_blank") 
+        end
+      end
 	  end
 	
 	  return html.html_safe
   end
-    
+  
+  # Get the css classes to color-code availability grid
+  def timeslot_class(reservation, room, timeslot)
+    timeslot_class = (!reservation.blank? or is_in_past?(timeslot) or !room_is_open?(room, timeslot)) ? "timeslot_unavailable" : "timeslot_available"	  
+    timeslot_class += " timeslot_selected" if timeslot >= @start_dt && timeslot < @end_dt
+    return timeslot_class
+  end
+  
+  # Return true if the :timeslot: is in the past, and false otherwise
+  def is_in_past?(timeslot)
+    t_today = Time.now.strftime('%Y%m%d').to_i #today's date
+    t_now = Time.now.strftime('%H%M').to_i #local time
+    t_this_date = timeslot.strftime('%Y%m%d').to_i #this iteration's date
+    t_this_time = timeslot.strftime('%H%M').to_i #this iteration's time
+    return ((t_today == t_this_date and t_this_time <= t_now) or (t_this_date < t_today))
+  end
+  
+  # Generate an instance variable with and array of times starting one hour before the selected start hour
+  # if padding is true. If padding is false, just return array of selected times.
   def get_times_array(padding = true)
-    # create an array of times starting one hour before the selected start hour
     @times = (padding) ? [@start_dt - 1.hour] : [@start_dt]
    
     # and including every 1/2 hour until one hour after the selected end time
@@ -39,41 +51,23 @@ module ReservationsHelper
       @times.push(tmp)
     end
   end
-  
-  def construct_grid_headers 
-    html = ""
-    previous_day = nil
-    @times.each do |t|
-      html += "<th class=\" date-cell\">"
-      html += prettify_dayofweek(t)
-      html += "<br />"
-      html += "<span class=\"same_day\">" if t.day == previous_day
-      html += prettify_simple_date(t).to_s
-      html += "</span>" if t.day == previous_day
-      html += "<br />"
-      html += prettify_time(t).to_s
-      html += "</th>"
-      previous_day = t.day
-    end
-    
-    return html.html_safe
-  end
-  
+
+  # Set a class to highlight item if this ID is selected in query string parameters
   def highlight(reservation)
     (!params[:highlight].blank? and params[:highlight].include? reservation.id.to_s) ? 'warning' : ''
   end
   
-  def get_deleted_by(r,user)
-    deleted = r.deleted_by.to_hash
-    unless deleted.nil?
-      if !deleted[:by_user].nil?
-        deleted_by = deleted[:by_user]
-        if deleted_by == user.id
+  # Get information about who deleted the given reservation
+  def get_deleted_by(reservation)
+    if reservation.deleted?
+      if !reservation.deleted_by[:by_user].nil?
+        deleted_by = reservation.deleted_by[:by_user]
+        if deleted_by == reservation.user.id
           "User"
         else
-          "Admin (<a href=\"#{user_path(deleted_by)}\">#{User.find(deleted_by).username}</a>)".html_safe
+          link_to "Admin", user_path(deleted_by)
         end
-      elsif !deleted[:by_block].nil? and deleted[:by_block]
+      elsif reservation.deleted_by[:by_block]
         link_to "Block", blocks_path
       end
     end
@@ -85,7 +79,7 @@ module ReservationsHelper
   
   def college_name_options
     colleges = []
-    users = User.find(:all, :conditions => "user_attributes LIKE '%college_name%'")
+    users = User.where("user_attributes LIKE '%college_name%'")
     users.each do |p|
       user_attributes = p.user_attributes
       colleges.push(user_attributes[:college_name]) unless colleges.include? user_attributes[:college_name] or user_attributes[:college_name].blank?
@@ -95,7 +89,7 @@ module ReservationsHelper
   
   def college_code_options
     college_codes = []
-    users = User.find(:all, :conditions => "user_attributes LIKE '%college_code%'")
+    users = User.where("user_attributes LIKE '%college_code%'")
     users.each do |p|
       user_attributes = p.user_attributes
       college_codes.push(user_attributes[:college_code]) unless college_codes.include? user_attributes[:college_code] or user_attributes[:college_code].blank?
@@ -105,7 +99,7 @@ module ReservationsHelper
   
   def dept_options
     depts = []
-    users = User.find(:all, :conditions => "user_attributes LIKE '%dept_name%'")
+    users = User.where("user_attributes LIKE '%dept_name%'")
     users.each do |p|
       user_attributes = p.user_attributes
       depts.push(user_attributes[:dept_name]) unless depts.include? user_attributes[:dept_name] or user_attributes[:dept_name].blank?
@@ -115,7 +109,7 @@ module ReservationsHelper
   
   def major_options
     majors = []
-    users = User.find(:all, :conditions => "user_attributes LIKE '%major%'")
+    users = User.where("user_attributes LIKE '%major%'")
     users.each do |p|
       user_attributes = p.user_attributes
       majors.push(user_attributes[:major]) unless majors.include? user_attributes[:major] or user_attributes[:major].blank?
@@ -125,7 +119,7 @@ module ReservationsHelper
   
   def user_status_options
     user_statuses = []
-    users = User.find(:all, :conditions => "user_attributes LIKE '%bor_status%'")
+    users = User.where("user_attributes LIKE '%bor_status%'")
     users.each do |p|
       user_attributes = p.user_attributes
       user_statuses.push(user_attributes[:bor_status]) unless user_statuses.include? user_attributes[:bor_status] or user_attributes[:bor_status].blank?

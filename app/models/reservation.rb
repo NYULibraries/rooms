@@ -8,15 +8,15 @@ class Reservation < ActiveRecord::Base
   
   serialize :config_option, Hash
   serialize :deleted_by, Hash
-  
+    
   scope :active_with_blocks, :conditions => { :deleted => false }, :order => "start_dt ASC"
   scope :active_non_blocks, :conditions => { :deleted => false, :is_block => false }, :order => "start_dt ASC"
   scope :blocks, :conditions => { :is_block => true }, :order => "start_dt ASC"
   scope :deleted, :conditions => { :is_block => false, :deleted => true }, :order => "start_dt ASC"
-  scope :current, where("end_dt > ?", DateTime.now.strftime("%Y-%m-%d %H:%M"))
-  scope :past, where("end_dt <= ?", DateTime.now.strftime("%Y-%m-%d %H:%M"))
-  scope :one_week, where("start_dt > ?", 1.week.ago.strftime("%Y-%m-%d %H:%M"))
-  scope :one_month, where("start_dt > ?", 1.month.ago.strftime("%Y-%m-%d %H:%M"))
+  scope :current, lambda { where("end_dt > ?", Time.now.strftime("%Y-%m-%d %H:%M")) }
+  scope :past, lambda { where("end_dt <= ?", Time.now.strftime("%Y-%m-%d %H:%M")) }
+  scope :one_week, lambda { where("start_dt > ?", (Time.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
+  scope :one_month, lambda { where("start_dt > ?", (Time.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
 
   belongs_to :room
   belongs_to :user

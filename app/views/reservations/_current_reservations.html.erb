@@ -31,7 +31,7 @@
             <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
           <% end %>
           <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id }, :remote => true %> <br />	
-          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :method => :delete, :confirm => "Are you sure?" %>
+          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :method => :delete, :confirm => "Are you sure?", :remote => true %>
         </li>
       <% end %>
     <% end %>

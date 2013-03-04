@@ -4,7 +4,7 @@ class BlocksController < ApplicationController
   
   # GET /blocks
   def index
-    @blocks = Reservation.blocks.joins(:room).sorted(params[:sort], "start_dt ASC").page(params[:page]).per(30)
+    @blocks = Reservation.blocks.joins(:room).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
     @rooms = Room.all
     respond_with(@blocks)
   end
@@ -65,8 +65,7 @@ class BlocksController < ApplicationController
    
     respond_with(@block) do |format|
       if @block.save
-        flash[:success] = 'Block successfully created.'
-        format.html { redirect_to blocks_url }
+        format.html { redirect_to blocks_url, notice: "Block successfully created." }
       else
         flash[:error] = "Could not save block. If this problem persists please report to administrator."
         format.html { render :new }
@@ -79,9 +78,8 @@ class BlocksController < ApplicationController
     @block = Reservation.find(params[:id])
     @block.destroy
 
-    flash[:notice] = "Block was successfully deleted."    
     respond_with(@block) do |format|
-      format.html { redirect_to blocks_url }
+      format.html { redirect_to blocks_url, notice: "Block was successfully deleted." }
     end
   end
   

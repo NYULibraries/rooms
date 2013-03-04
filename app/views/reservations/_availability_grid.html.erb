@@ -63,7 +63,13 @@
 		  <%#= link_to_sorted "Size", :sort_size_of_room, remote: true %>
 		  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
 		</div></th>
-		<%= construct_grid_headers %>
+    <% @times.each do |timeslot| %>
+    <th class="date-cell">
+      <%= prettify_dayofweek(timeslot) %><br />
+      <%= prettify_simple_date(timeslot) %><br />
+      <%= prettify_time(timeslot) %>
+    </th>
+    <% end -%>
 	</tr>
 	
 <% @rooms.each do |r| %>

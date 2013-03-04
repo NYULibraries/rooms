@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   before_filter :authorize_patron
   respond_to :html, :js
-  respond_to :xml, :json, :except => [:new, :edit]
+  respond_to :xml, :json, :csv, :except => [:new, :edit]
 
   # GET /reservations
   def index
@@ -52,15 +52,15 @@ class ReservationsController < ApplicationController
       flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>".html_safe
     end
 
-    respond_with(@reservation) do |format|
+    respond_to do |format|
       if flash[:error].blank?
         format.js { render :layout => false }
+        format.html { render :new }
       else
-        format.html { render :index } 
-        format.js { render :index, :layout => false }
+        format.js { render :layout => false }
+        format.html { render :index }
       end
     end
-    
   end
 
   # GET /reservations
@@ -114,9 +114,10 @@ class ReservationsController < ApplicationController
   def destroy
     # TODO: This is not RESTful and should probably be a PUT
     @reservation = Reservation.find(params[:id])
+    @user = current_user
     
     if @reservation.update_attributes(:deleted => true, :deleted_by => { :by_user => current_user.id })
-      flash[:notice] = "Reservation was successfully deleted."
+      flash[:success] = "Reservation was successfully deleted."
       # Send email
       ReservationMailer.cancellation_email(@reservation).deliver
     else 

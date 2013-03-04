@@ -1,5 +1,5 @@
 class ReservationMailer < ActionMailer::Base
-  default from: "gswg@library.nyu.edu"
+  default from: "Bobst Library Graduate Room Reservation System <gswg@library.nyu.edu>"
   
   def confirmation_email(res)
     @reservation = res

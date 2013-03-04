@@ -10,7 +10,7 @@
 </div>
 <% end %>
 
-<% unless @user.nil? %>
+<% unless @user.nil? or is_in_admin_view? %>
 <div class="sidebar-section" id="reservations_sidebar">
 <%= render :partial => "reservations/current_reservations"%>
 </div>

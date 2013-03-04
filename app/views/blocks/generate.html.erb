@@ -3,7 +3,7 @@
 <% else %>
   <h1>No conflicting reservations found.</h1>
   <%= form_for :block, :url => {:controller => "blocks", :action => "create"}, :html => {:class => "form-inline"} do |f| %>
-    <%= f.hidden_field "title", :value => params[:block][:title] %>
+    <%= f.hidden_field "title", :value => @block.title %>
 	  <%= f.hidden_field "start_dt", :value => params[:block][:start_dt] %>
 	  <%= f.hidden_field "end_dt", :value => params[:block][:end_dt] %>
 	  <%= f.hidden_field "room_id", :value => params[:block][:room_id] %>

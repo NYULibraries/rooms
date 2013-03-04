@@ -12,6 +12,10 @@ module ApplicationHelper
     d.strftime('%a. %b %d, %Y %I:%M %p')    
   end
   
+  def prettify_created_at_date(d)
+    d.in_time_zone("EST").strftime('%a. %b %d, %Y %I:%M %p')    
+  end
+  
   def prettify_simple_date(d)
     d.strftime('%m/%d/%y')    
   end
@@ -64,22 +68,19 @@ module ApplicationHelper
     	t_time = t.strftime('%H%M%S').to_i
       sql_date = "%Y%m%d%H%i%S";
       
-      #Return false if the room is closed during this hour and forgo search for existing reservations
-      r_status = room_is_open(room,t)
-      return true unless r_status
+      #Return true if the room is closed during this hour and forgo search for existing reservations
+      return true if is_in_past?(t) or !room_is_open?(room,t)
       
   		status = Reservation.active_with_blocks.where("room_id = ? AND ((DATE_FORMAT(start_dt,'#{sql_date}') >= ? AND DATE_FORMAT(end_dt,'#{sql_date}') <= ?) OR (DATE_FORMAT(start_dt,'#{sql_date}') <= ? AND DATE_FORMAT(end_dt,'#{sql_date}') >= ?))",room.id,t_comparable,t_next_comparable,t_comparable,t_next_comparable)
 
   		#disable radio button if classroom is in use at this time
   		return true if !status.blank? 
-  		#disable radio button if this time is in the past
-  		return true if (t_today == t_date && t_time < t_now)	
     end
     return false
   end
   
   # Find if the room (r) is open during the timeslot (t)
-  def room_is_open(r,t)
+  def room_is_open?(r,t)
     t_as_time = t.strftime('%H%M').to_i
     unless r.hours.nil? or r.hours[:hours_start].nil? or r.hours[:hours_end].nil?
       #Parse our start and end hour and add 12 to the hour if in PM

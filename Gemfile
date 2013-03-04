@@ -2,16 +2,18 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 
-gem 'mysql2'
+gem 'mysql2', "~> 0.3.11"
+
+# Move this out here to use coffee in views
+gem 'coffee-rails', '~> 3.2.1'
+gem 'uglifier', '>= 1.0.3'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', "~> 0.10.0"
 
-  gem 'uglifier', '>= 1.0.3'
   gem 'compass', '~> 0.12.1'
   gem 'compass-rails', "~> 1.0.3"
   gem 'yui-compressor', "~> 0.9.6"
@@ -24,7 +26,6 @@ group :development do
 end
 
 group :test do
-  #gem 'sunspot_solr'
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false

@@ -39,7 +39,7 @@
       <div class="controls">
         <%= select_tag "reservation[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], set_default_hour), :class => "span2" %>
         <%= select_tag "reservation[minute]", options_for_select([['00',0],['30',30]], set_default_minute), :class => "span2" %>	
-        <%= select_tag "reservation[ampm]", options_for_select(['am','pm'], Time.now.strftime("%p").downcase), :class => "span2" %>
+        <%= select_tag "reservation[ampm]", options_for_select(['am','pm'], set_default_ampm), :class => "span2" %>
       </div>
     </div>
     <div class="control-group">

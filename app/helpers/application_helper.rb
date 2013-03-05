@@ -42,6 +42,14 @@ module ApplicationHelper
    end
   end
   
+  def set_default_ampm
+    if Time.now.strftime("%H") == 11 and Time.now.strftime("%M").to_i >= 30 
+      (Time.now.strftime("%p").downcase == "am") ? "pm" : "am"
+    else
+      Time.now.strftime("%p").downcase
+    end
+  end
+  
   # Logic for when to disable the reservation radio button in the availability form
   #
   # * Return true if the room is closed during selected hour and skip search for existing reservations

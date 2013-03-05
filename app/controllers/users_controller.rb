@@ -74,13 +74,6 @@ class UsersController < ApplicationController
     end
   end
   
-  # Delete all non-admin users
-  def clear_user_data
-    User.destroy_all("user_attributes not like '%:room_reserve_admin: true%'")
-    flash[:success] = "Successfully cleared inactive users."
-    redirect_to users_url
-  end
-  
   # Implement sort column function for this model
   def sort_column
     super "User", "lastname"

@@ -14,7 +14,6 @@ RoomReservation::Application.routes.draw do
     match 'rooms/refresh_images_list' => "rooms#refresh_images_list"
    
     match 'reports' => "reservations#generate_report"
-    match "clear_user_data", :to => "users#clear_user_data"
   end
   
   match 'reservations/generate_grid' => "reservations#generate_grid", :as => 'generate_grid'

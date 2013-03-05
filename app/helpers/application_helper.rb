@@ -27,7 +27,7 @@ module ApplicationHelper
   def set_default_hour
     if Time.now.strftime("%I").to_i != 12 and Time.now.strftime("%M").to_i >= 30
       return Time.now.strftime("%I").to_i + 1
-    elsif Time.now.strftime("%I").to_i != 12 and Time.now.strftime("%M").to_i < 30
+    elsif Time.now.strftime("%M").to_i < 30
       return Time.now.strftime("%I").to_i
     else
       return 1

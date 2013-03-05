@@ -43,10 +43,10 @@ module ApplicationHelper
   end
   
   def set_default_ampm
-    if Time.now.strftime("%H") == 11 and Time.now.strftime("%M").to_i >= 30 
-      (Time.now.strftime("%p").downcase == "am") ? "pm" : "am"
+    if Time.now.strftime("%H").to_i == 11 and Time.now.strftime("%M").to_i >= 30 
+      return (Time.now.strftime("%p").downcase == "am") ? "pm" : "am"
     else
-      Time.now.strftime("%p").downcase
+      return Time.now.strftime("%p").downcase
     end
   end
   

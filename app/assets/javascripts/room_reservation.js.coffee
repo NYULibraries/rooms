@@ -21,6 +21,12 @@ $ ->
     cursor: 'move'
   }
   
+  # Set date picker for reservation date to readonly and autocomplete off
+  $("#room_reservation_which_date").attr {
+    "readonly": "true",
+    "autocomplete": "off"
+  }
+  
   # Disable main form submit if no date was selected
   # And then enable once it is
   $('button#generate_grid').attr("disabled","true")

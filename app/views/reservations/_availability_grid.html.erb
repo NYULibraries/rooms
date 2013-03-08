@@ -25,47 +25,47 @@
 <% end %>
 
 <table class="table table-bordered">
-		<tr>
-			<td colspan="5"></td>
-			<td colspan="<%=(@times.size.to_f / 2.0).floor %>">
-				<div class="reservation_timeslot_hunt" id="backOptions">
-				<div id="back_one_day">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 1.day, :end_dt =>  @end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe}%>
-				</div>
-				<div id="back_thirty_mins">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 30.minutes, :end_dt => @end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe}%>
-				</div>
-				</div>
-			</td>
-			<td colspan="<%=(@times.size.to_f / 2.0).ceil %>">
-				<div class="reservation_timeslot_hunt" id="forwardOptions">
-				<div id="forward_one_day">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 1.day, :end_dt => @end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe}%>
-				</div>
-				<div id="forward_thirty_mins">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 30.minutes, :end_dt => @end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe}%>
-				</div>
-				</div>
-			</td>
-		</tr>
+	<tr class="hidden-phone">
+		<td colspan="5"></td>
+		<td colspan="<%=(@times.size.to_f / 2.0).floor %>">
+			<div class="reservation_timeslot_hunt" id="backOptions">
+			<div id="back_one_day">
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 1.day, :end_dt =>  @end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe}%>
+			</div>
+			<div id="back_thirty_mins">
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 30.minutes, :end_dt => @end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe}%>
+			</div>
+			</div>
+		</td>
+		<td colspan="<%=(@times.size.to_f / 2.0).ceil %>">
+			<div class="reservation_timeslot_hunt" id="forwardOptions">
+			<div id="forward_one_day">
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 1.day, :end_dt => @end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe}%>
+			</div>
+			<div id="forward_thirty_mins">
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 30.minutes, :end_dt => @end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe}%>
+			</div>
+			</div>
+		</td>
+	</tr>
 	<tr>
 		<th></th>
 		<th><div class="sort_by_field">
 		  <%#= link_to_sorted "Room", :title, remote: true %>
 		  <%= sortable :title, "Room", {:action => "new"}, true %>
 		</div></th>
-		<th><div class="sort_by_field">
+		<th class="hidden-phone"><div class="sort_by_field">
 		  <%#= link_to_sorted "Type", :type_of_room, remote: true  %>
 		  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 		</div></th>
-		<th>Details</th>
-		<th><div class="sort_by_field">
+		<th class="hidden-phone">Details</th>
+		<th class="hidden-phone"><div class="sort_by_field">
 		  <%#= link_to_sorted "Size", :sort_size_of_room, remote: true %>
 		  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
 		</div></th>
     <% @times.each do |timeslot| %>
     <th class="date-cell">
-      <%= prettify_dayofweek(timeslot) %><br />
+      <span class="hidden-phone"><%= prettify_dayofweek(timeslot) %><br /></span>
       <%= prettify_simple_date(timeslot) %><br />
       <%= prettify_time(timeslot) %>
     </th>
@@ -78,14 +78,14 @@
 		<td style="width:60px;">
 		<b><%= r.title %></b>
 		</td>
-		<td style="width:60px;">
+		<td class="hidden-phone" style="width:60px;">
 		<b><%= r.type_of_room %></b>
 		</td>
-		<td>
+		<td class="hidden-phone">
 		<% unless r.description.blank? %><b><%= get_formatted_text(r.description) %></b><br /><% end %>
 		<% unless r.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", r.image_link, :target => :blank, :class => "preview_image" %><% end %>
 		</td>
-		<td style="width:60px;">
+		<td class="hidden-phone" style="width:60px;">
 		<b><%= r.size_of_room %></b>
 		</td>
 		<%= construct_grid_data(r) %>

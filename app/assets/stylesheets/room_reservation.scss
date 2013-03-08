@@ -88,3 +88,9 @@ ul#list_rooms {
   }
 }
 
+@media (max-width: 480px) {
+  .table-bordered {
+    border-top: none !important;
+    border-right: none !important;
+  }
+}

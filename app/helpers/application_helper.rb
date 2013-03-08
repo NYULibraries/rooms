@@ -5,7 +5,8 @@ module ApplicationHelper
     t_ampm = if t.hour >= 12 then "pm" else "am" end
     t_hour = if t.hour == 0 then 12 elsif t.hour > 12 then t.hour - 12 else '%02d' % t.hour  end
     t_min = '%02d' % t.min 
-    return t_hour.to_s + ":" + t_min.to_s + " " + t_ampm
+    t_time =  "<span class=\"hidden-phone\">#{t_hour.to_s}:#{t_min.to_s} #{t_ampm}</span><span class=\"visible-phone\">#{t_hour.to_s}:#{t_min.to_s}</span>"
+    return t_time.html_safe
   end
   
   def prettify_date(d)
@@ -17,7 +18,7 @@ module ApplicationHelper
   end
   
   def prettify_simple_date(d)
-    d.strftime('%m/%d/%y')    
+    d.strftime('%m/%d<span class="hidden-phone">/%y</span>').html_safe  
   end
   
   def prettify_dayofweek(d)

@@ -88,9 +88,33 @@ ul#list_rooms {
   }
 }
 
+/* Mobile look for modal */ 
 @media (max-width: 480px) {
   .table-bordered {
     border-top: none !important;
     border-right: none !important;
+  }
+  .modal-header h1 {
+    margin: 0;
+    padding: 0;
+  }
+  .modal-boder {
+    padding-top: 0;
+    nav.pagination {
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+  }
+  .modal-footer {
+    padding: 5px;
+    button {
+      padding: 5px;
+      font-size: 12px;
+    }
+  }
+  .modal.fullscreen { 
+    top: 5px !important;
+    left: 5px;
+    right: 5px;
   }
 }

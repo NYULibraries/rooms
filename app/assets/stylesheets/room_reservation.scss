@@ -68,12 +68,11 @@ ul#list_rooms {
 
 .modal.fullscreen {
   position: fixed;
-  top: 20px;
+  top: 20px !important;
   left: 20px;
   right: 20px;
   width: auto;
   margin: 0;
-
 }
 
 #ajax-modal {
@@ -89,6 +88,3 @@ ul#list_rooms {
   }
 }
 
-@media only screen and (min-height: 850px) {
-  .modal.fullscreen .modal-body { max-height: 550px; }
-}

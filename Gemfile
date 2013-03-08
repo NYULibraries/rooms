@@ -50,7 +50,7 @@ gem 'rvm-capistrano', "~> 1.2.7"
 gem "rails_config", "~> 0.3.2"
 
 #gem 'nyulibraries_assets', :path => '/apps/nyulibraries_assets'
-gem 'nyulibraries_assets', :git => 'git://github.com/NYULibraries/nyulibraries_assets.git', :branch => "development"
+gem 'nyulibraries_assets', :git => 'git://github.com/NYULibraries/nyulibraries_assets.git'
 
 gem 'mustache-rails', "~> 0.2.3", :require => 'mustache/railtie'
 

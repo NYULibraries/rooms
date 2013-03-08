@@ -63,4 +63,6 @@ $("#ajax-modal").find("a[data-remote='true'], .modal-footer button[type='submit'
   $("#ajax-modal").find(".modal-body").animate {
     height: '+=' + $("#ajax-modal").find(".modal-footer .extra_fields").height()
   }, 200
+# Fit modal to screen size after all other resizings have been done
+fit_modal_body($("#ajax-modal"))
 <% end %>

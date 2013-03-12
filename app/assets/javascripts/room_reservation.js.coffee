@@ -89,34 +89,6 @@ $ ->
     body.css("max-height", "#{height}px")
 
   # Bind resize event with the modal
-  $(window).resize( -> 
+  $(window).resize -> 
     fit_modal_body($("#ajax-modal"))
-    mobile_submit_action()
-  )
-  
-  mobile_submit_action = ->
-    if parseInt($(window).width()) <= 480
-      $("#generate_grid").closest("form").append($("<input />").attr({'type':'hidden', 'name':'pass-thru', 'value':'true'}))
-      
-  mobile_submit_action()
-    
-  #mobile_submit_action = ->
-  #  $('.launch_modal').unbind('click')
-  #  $('.launch_modal').click ->
-  #    console.log($(this).closest("form"))
-  #    $(this).closest("form").submit()
-  #
-  #decide_submit_action = ->
-  #  console.log ($(window).width())
-  #  if parseInt($(window).width()) > 480
-  #    console.log ("initalize modal form")
-  #    $("#generate_grid").closest("form").attr("data-remote","true")
-  #    initialize_modal_form()
-  #  else
-  #    console.log ("mobile submit action")
-  #    $("#generate_grid").closest("form").removeAttr("data-remote")
-  #    mobile_submit_action()
-  #  
-  #$(window).resize( -> decide_submit_action())
-  #decide_submit_action()
   

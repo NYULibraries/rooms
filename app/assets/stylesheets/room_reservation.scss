@@ -90,9 +90,11 @@ ul#list_rooms {
 
 /* Mobile look for modal */ 
 @media (max-width: 480px) {
-  .table-bordered {
-    border-top: none !important;
-    border-right: none !important;
+  .nyu-breadcrumbs {
+    float: none;
+  }
+  .nyu-container {
+    clear: left;
   }
   .modal-header h1 {
     margin: 0;

@@ -2,6 +2,7 @@ class Reservation < ActiveRecord::Base
   attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
   validate :doesnt_overlap, :if => Proc.new { |room_id| room_id? }, :unless => Proc.new { |is_block| is_block? }, :on => :create
+  validate :validate_cc
   validate :collaborative_requires_ccs, :if => Proc.new { |room_id| room_id? and room.type_of_room.eql? "Collaborative" }, :unless => Proc.new { |is_block| is_block? }
   validate :dates_are_valid?
   validate :end_comes_after_start
@@ -49,11 +50,17 @@ private
     end
   end
   
+  # If CC are present, make sure they're valid emails
+  def validate_cc
+    if cc? and !is_valid_email? cc
+      errors.add(:base, "One or more of the e-mails you entered is invalid.")
+    end
+  end
+  
+  # If collaborative room, valid CCs are required, and it can't jsut be the user's email
   def collaborative_requires_ccs
-    if cc?
-      if !is_valid_email? cc
-        errors.add(:base, "One or more of the e-mails you entered is invalid.")
-      elsif !current_user_is_only_email? cc
+    if cc? 
+      if current_user_is_only_email? cc
         errors.add(:base, "For collaborative rooms, please add at least one other e-mail besides your own.")
       end
     else
@@ -61,6 +68,7 @@ private
     end
   end
   
+  # Verify end date is after start date
   def end_comes_after_start
     errors.add(:base, "Please select a valid end date that is after your selected start date.") if !start_dt.blank? and !end_dt.blank? and start_dt > end_dt
   end
@@ -81,17 +89,8 @@ private
   
   # Perform a check to make sure the CC email submitted is not only their own email address
   def current_user_is_only_email?(cc_emails)
-    cc_emails_arr = cc_emails.split(",")
-    if cc_emails_arr.size > 1
-      cc_emails_arr.each do |email|
-        br = current_user_is_only_email? email.strip
-        return true if br
-      end
-    else
-      return false if cc_emails_arr.first.downcase.eql? user.email.downcase
-      return true unless cc_emails_arr.first.downcase.eql? user.email.downcase
-    end
-    return false
+    cc_emails_arr = cc_emails.split(",").uniq
+    return (cc_emails_arr.size == 1 and cc_emails_arr.include? user.email)
   end
   
 end

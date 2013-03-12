@@ -94,7 +94,7 @@
 	<tr>
 		<td></td>
 		<td colspan="2" class="extra_fields">
-			<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>:".html_safe %> </div>
+			<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
 		</td>
 		<td colspan="<%= @times.size + 2%>" class="extra_fields">
 			<div id="res_title_div"><%= text_field :reservation, :title %></div>
@@ -103,7 +103,7 @@
 	<tr>
 		<td></td>
 		<td colspan="2" class="extra_fields">
-			<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em>: <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
+			<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
 		</td>
 		<td colspan="<%= @times.size + 2%>" class="extra_fields">
 			<div id="res_cc_div"><%= text_field :reservation, :cc %></div>
@@ -115,7 +115,7 @@
 			<%= f.hidden_field "start_dt", :value => @start_dt %>
 			<%= f.hidden_field "end_dt", :value => @end_dt %>
       <button type="submit" class="btn">
-        Reserve selected timeslot
+        Reserve<span class="hidden-phone"> selected timeslot</span>
       </button>
 		</td>
 	</tr>

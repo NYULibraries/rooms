@@ -29,16 +29,18 @@ if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*"))
   $("#ajax-modal").find(".modal-footer div").wrapAll($("<div />").addClass("extra_fields"))
   $("#ajax-modal").find(".modal-footer").find("#res_title_label_div, #res_title_div").wrapAll($("<div />").addClass("extra_field"))
   $("#ajax-modal").find(".modal-footer").find("#res_cc_label_div, #res_cc_div").wrapAll($("<div />").addClass("extra_field"))
+  # Set labels as placeholder text inside inputs
+  $("#ajax-modal").find("#reservation_cc").attr("placeholder", $("#ajax-modal").find("#res_cc_label_div").text())
+  $("#ajax-modal").find("#reservation_title").attr("placeholder", $("#ajax-modal").find("#res_title_label_div").text())
+  $("#ajax-modal").find("#res_title_label_div, #res_cc_label_div").hide()
 $("#ajax-modal").find(".modal-footer .extra_fields").hide();
-# When a room is selected, show the extra fields with animation and highlight
+# When a room is selected, show the extra fields with highlight
 $('#ajax-modal').find('.ajax_form input[name="reservation[room_id]"]').on "change", (event) ->
   if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) 
     $('#ajax-modal').find(".modal-footer .extra_fields").show()
-    $("#ajax-modal").find(".modal-body").animate {
-      height: '-=' + $("#ajax-modal").find(".modal-footer .extra_fields").height()
-    }, 200, ->
     $('#ajax-modal').find(".modal-footer input#reservation_title").focus()
     $('#ajax-modal').find(".modal-footer input#reservation_title").effect("highlight", {}, 3000)
+    fit_modal_body($("#ajax-modal"))
 # Make loading bar reappear and animate when remote links or forms are called
 $("#ajax-modal").find("a[data-remote='true'], .modal-footer button[type='submit']").on "click", ->
   if (!$("#ajax-modal #remote_progress").is("*")) 
@@ -55,14 +57,6 @@ $("#ajax-modal").find(".modal-body").find(".legend, .availability_grid_desc").hi
 # Show extra fields in footer if the form was reloaded and there is a room checked
 if $('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')
 	$('#ajax-modal').find(".modal-footer .extra_fields").show()
-# Resize the modal dialog back to original size when remote form or links are submitted
-# This stops the dialog from continuous shrinking after this is rerendered without changing 
-# the size and another room is selected calling the above animation code to adjust size for extra fields
-$("#ajax-modal").find("a[data-remote='true'], .modal-footer button[type='submit']").on 'click', ->
-  $('#ajax-modal').find(".modal-footer .extra_fields").hide()
-  $("#ajax-modal").find(".modal-body").animate {
-    height: '+=' + $("#ajax-modal").find(".modal-footer .extra_fields").height()
-  }, 200
 # Fit modal to screen size after all other resizings have been done
 fit_modal_body($("#ajax-modal"))
 <% end %>

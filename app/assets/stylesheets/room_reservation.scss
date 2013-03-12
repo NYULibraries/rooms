@@ -88,15 +88,16 @@ ul#list_rooms {
   }
 }
 
+
 /* Mobile look for modal */ 
 @media (max-width: 480px) {
-  .nyu-breadcrumbs {
+  ul.nyu-breadcrumbs {
     float: none;
   }
-  .nyu-login {
+  ul.nyu-login {
     clear: right;
   }
-  .nyu-container {
+  div.nyu-container {
     clear: left;
   }
   .modal-header h1 {
@@ -115,6 +116,11 @@ ul#list_rooms {
     button {
       padding: 5px;
       font-size: 12px;
+    }
+    .extra_fields { width: 300px; }
+    #reservation_cc, #reservation_title {
+      width: auto;
+      margin: 0;
     }
   }
   .modal.fullscreen { 

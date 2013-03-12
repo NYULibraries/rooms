@@ -21,13 +21,12 @@ module Views
         catalog_javascripts = javascript_include_tag "application"
       end
       
-      def title
+      def application
        "Reserve a room"
       end
-
-      # Generate link to application root
-      def application
-        application = link_to title, root_path
+      
+      def title
+        application
       end
       
       # Using Gauges?

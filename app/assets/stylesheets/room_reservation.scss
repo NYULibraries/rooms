@@ -88,18 +88,8 @@ ul#list_rooms {
   }
 }
 
-
 /* Mobile look for modal */ 
 @media (max-width: 480px) {
-  ul.nyu-breadcrumbs {
-    float: none;
-  }
-  ul.nyu-login {
-    clear: right;
-  }
-  div.nyu-container {
-    clear: left;
-  }
   .modal-header h1 {
     margin: 0;
     padding: 0;

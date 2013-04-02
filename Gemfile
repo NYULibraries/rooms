@@ -12,7 +12,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', "~> 0.10.0"
+  gem 'therubyracer', "~> 0.11.4"
 
   gem 'compass', '~> 0.12.1'
   gem 'compass-rails', "~> 1.0.3"
@@ -22,7 +22,7 @@ end
 group :development do
   gem 'progress_bar'
   # To use debugger
-  gem 'reek'
+  #gem 'reek'
 end
 
 group :test do
@@ -39,7 +39,7 @@ gem 'debugger', :groups => [:development, :test]
 gem 'jquery-rails', '~> 2.2.1'
 
 # Authenticate gem
-gem 'authpds-nyu', "~> 0.2.9"
+gem 'authpds-nyu', "~> 0.2.12"
 
 gem 'kaminari', "~> 0.13"
 gem 'sorted', '~> 0.4.3'
@@ -60,4 +60,4 @@ gem 'dalli', "~> 2.6"
 gem "comma", "~> 3.0"
 
 # New Relic
-gem 'newrelic_rpm', "~> 3.5.8"
+gem 'newrelic_rpm', "~> 3.6.0"

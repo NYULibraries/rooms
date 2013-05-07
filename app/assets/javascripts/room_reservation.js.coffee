@@ -40,7 +40,7 @@ $ ->
   
   # Initialize modal dialog boxes
   #initialize_modal_form = ->
-  $(".launch_modal").click ->
+  $(document).on 'click', ".launch_modal" ->
     $("#ajax-modal").removeClass("fullscreen")
     $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
     $("#ajax-modal").find(".modal-title").html("Loading...")

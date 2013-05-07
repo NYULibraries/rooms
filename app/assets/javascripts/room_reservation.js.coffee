@@ -1,3 +1,15 @@
+# Fit modal body to the screen size
+window.fit_modal_body = (modal) ->
+  header = $(".modal-header", modal)
+  body = $(".modal-body", modal)
+  footer = $(".modal-footer", modal)
+  windowheight = parseInt($(window).height())
+  headerheight = parseInt(header.css("height")) + parseInt(header.css("padding-top")) + parseInt(header.css("padding-bottom"))
+  bodypaddings = parseInt(body.css("padding-top")) + parseInt(body.css("padding-bottom"))
+  footerheight = parseInt(footer.css("height")) + parseInt(footer.css("padding-top")) + parseInt(footer.css("padding-bottom"))
+  height = windowheight - headerheight - bodypaddings - footerheight - 40 # Top and bottom spacings
+  body.css("max-height", "#{height}px")
+
 $ ->
 	# Hide objects not important for JS
   $(".js_hide").hide()
@@ -75,18 +87,6 @@ $ ->
       trigger: 'hover',
     }
     $(this).tooltip('show')
-
-  # Fit modal body to the screen size
-  window.fit_modal_body = (modal) ->
-    header = $(".modal-header", modal)
-    body = $(".modal-body", modal)
-    footer = $(".modal-footer", modal)
-    windowheight = parseInt($(window).height())
-    headerheight = parseInt(header.css("height")) + parseInt(header.css("padding-top")) + parseInt(header.css("padding-bottom"))
-    bodypaddings = parseInt(body.css("padding-top")) + parseInt(body.css("padding-bottom"))
-    footerheight = parseInt(footer.css("height")) + parseInt(footer.css("padding-top")) + parseInt(footer.css("padding-bottom"))
-    height = windowheight - headerheight - bodypaddings - footerheight - 40 # Top and bottom spacings
-    body.css("max-height", "#{height}px")
 
   # Bind resize event with the modal
   $(window).resize -> 

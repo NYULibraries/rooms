@@ -6,7 +6,7 @@ gem 'mysql2', "~> 0.3.11"
 
 # Move this out here to use coffee in views
 gem 'coffee-rails', '~> 3.2.1'
-gem 'uglifier', '>= 1.0.3'
+gem 'uglifier', '~> 2.0.1'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -30,6 +30,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'ruby-prof' #For Benchmarking
+  gem 'coveralls', "~> 0.6.2", :require => false
 end
 
 gem 'json', '~> 1.7.7'
@@ -45,7 +46,7 @@ gem 'kaminari', "~> 0.13"
 gem 'sorted', '~> 0.4.3'
 
 # Deploy with Capistrano
-gem 'rvm-capistrano', "~> 1.2.7"
+gem 'rvm-capistrano', "~> 1.3.0"
   
 gem "rails_config", "~> 0.3.2"
 

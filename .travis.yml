@@ -1,0 +1,16 @@
+language: ruby
+
+services:
+  - memcached
+
+before_script:
+  - mysql -e 'create database nyu_reserve_test;'
+  - bundle exec rake db:schema:load RAILS_ENV=test
+
+rvm:
+  - "1.9.3"
+  - "1.9.2"
+  - "2.0.0"
+  
+git:
+  submodules: false

@@ -14,12 +14,12 @@ capistrano:
 
 newrelic:
   api_key: 
-  app_name: 'Room Reservation'
+  app_name: 'Res'
 
 login:
   default_admins: []
-  pds_url: "https://login.library.nyu.edu"
-  calling_system: "primo"
+  pds_url: ""
+  calling_system: ""
   
 # A dummy secret token for dev sessions and public consumption 
 

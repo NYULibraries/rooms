@@ -88,6 +88,8 @@ ul#list_rooms {
   }
 }
 
+a.preview { max-width: 300px ; }
+
 /* Mobile look for modal */ 
 @media (max-width: 480px) {
   .modal-header h1 {

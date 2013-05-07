@@ -63,7 +63,7 @@ $ ->
       placement: 'right',
       title: null,
       html: true,
-      content: '<img src="' +this+ '" />',
+      content: '<img class="preview" src="' +this+ '" />',
       trigger: 'hover',
     }
     $(this).popover('show')

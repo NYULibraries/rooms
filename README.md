@@ -14,4 +14,4 @@ This application is in production and has recently been upgraded to Rails 3. How
 * Many things are not done 'the rails way'
 * Expanded roles
 * Full RESTful implementation
-* Sunspot indexing or ElasticSearchg
+* Sunspot indexing or ElasticSearch

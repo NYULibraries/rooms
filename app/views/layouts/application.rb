@@ -21,7 +21,7 @@ module Views
         catalog_javascripts = javascript_include_tag "application"
       end
       
-      def application
+      def application_title
        "Reserve a room"
       end
       

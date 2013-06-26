@@ -1,9 +1,9 @@
 # Graduate Collaborative Room Reservation System
 
-[![Build Status](https://travis-ci.org/NYULibraries/room_reservation.png)](https://travis-ci.org/NYULibraries/room_reservation)
-[![Dependency Status](https://gemnasium.com/NYULibraries/room_reservation.png)](https://gemnasium.com/NYULibraries/room_reservation)
-[![Code Climate](https://codeclimate.com/github/NYULibraries/room_reservation.png)](https://codeclimate.com/github/NYULibraries/room_reservation)
-[![Coverage Status](https://coveralls.io/repos/NYULibraries/room_reservation/badge.png?branch=master)](https://coveralls.io/r/NYULibraries/room_reservation)
+[![Build Status](https://travis-ci.org/NYULibraries/rooms.png?branch=master)](https://travis-ci.org/NYULibraries/rooms)
+[![Dependency Status](https://gemnasium.com/NYULibraries/rooms.png)](https://gemnasium.com/NYULibraries/rooms)
+[![Code Climate](https://codeclimate.com/github/NYULibraries/rooms.png)](https://codeclimate.com/github/NYULibraries/rooms)
+[![Coverage Status](https://coveralls.io/repos/NYULibraries/rooms/badge.png)](https://coveralls.io/r/NYULibraries/rooms)
 
 The Graduate Collaborative Room Reservation System is a Rails 3 application that allows authorized user to view available graduate rooms and book them for private or collaborative study.
 

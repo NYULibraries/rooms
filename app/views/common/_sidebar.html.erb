@@ -1,19 +1,16 @@
 <% if is_admin? %>
-<div class="sidebar-section">
-    <h2>Admin Panel</h2>
-    <ul class="admin_options">
-      <li><%= link_to "Manage Rooms", rooms_url %></li>
-      <li><%= link_to "Manage Users", users_url %></li>
-      <li><%= link_to "Manage Blocks", blocks_url %></li>
-      <li><%= link_to "Reporting", reports_url %></li>
-    </ul>
-</div>
+	<%= sidebar_section("admin_panel", content_tag(:h2, "Admin Panel"), true) do %>
+	    <ul class="admin_options">
+	      <li><%= link_to "Manage Rooms", rooms_url %></li>
+	      <li><%= link_to "Manage Users", users_url %></li>
+	      <li><%= link_to "Manage Blocks", blocks_url %></li>
+	      <li><%= link_to "Reporting", reports_url %></li>
+	    </ul>
+	<% end -%>
 <% end %>
 
 <% unless @user.nil? or is_in_admin_view? %>
-<div class="sidebar-section" id="reservations_sidebar">
 <%= render :partial => "reservations/current_reservations"%>
-</div>
 <% end %>
 
 <%= render "blocks/help" if request.url.match(/blocks/) %>

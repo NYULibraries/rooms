@@ -1,5 +1,5 @@
   <% unless @user.reservations.active_non_blocks.past.one_week.blank? %>
-  <h2>Your past reservations (up to 1 week)</h2>
+  <%= sidebar_section("reservations_sidebar_past", content_tag(:h2, "Your past reservations (up to 1 week)"), true) do %>
   <ul id="past_reservations">
       <% @user.reservations.active_non_blocks.past.one_week.each do |res| %>
       <li>
@@ -12,9 +12,10 @@
       </li>
       <% end %>
   </ul>
+  <% end -%>
   <% end %>
 
-  <h2>Your current reservations</h2>
+  <%= sidebar_section("reservations_sidebar_current", content_tag(:h2, "Your current reservations"), true) do %>
   <ul id="current_reservations">
     <% if @user.reservations.active_non_blocks.current.blank? %>
       <li>None.</li>
@@ -36,3 +37,4 @@
       <% end %>
     <% end %>
   </ul>
+  <% end -%>

@@ -25,10 +25,6 @@ module Views
        "Reserve a room"
       end
       
-      def title
-        application
-      end
-      
       # Using Gauges?
       def gauges?
         (Rails.env.eql?("production") and (not gauges_tracking_code.nil?))

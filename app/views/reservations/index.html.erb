@@ -1,7 +1,7 @@
 <h1 class="page_title">Reserve a room</h1>
 
   <div class="alert alert-block">
-  <h4>Policies:</h4>
+  <h3>Policies:</h3>
   <ul>
   	<li>You must be a graduate student</li>
   	<li>You can reserve up to 3 hours/day</li>
@@ -9,7 +9,7 @@
   </ul>
   </div>
 
-  <h4>Specify your desired timeslot below for a list of available rooms.</h4>
+  <h3>Specify your desired timeslot below for a list of available rooms.</h3>
   
   <%= form_for :reservation, :url => { :action => :new }, :html => {:class => "form-horizontal" }, :remote => true, :method => :get do |f| %>
 

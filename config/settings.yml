@@ -14,7 +14,7 @@ capistrano:
 
 newrelic:
   api_key: 
-  app_name: 'Res'
+  app_name: ''
 
 login:
   default_admins: []

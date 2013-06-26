@@ -37,7 +37,7 @@ module Views
       # Print breadcrumb navigation
       def breadcrumbs
         breadcrumbs = super
-        breadcrumbs << link_to_unless_current(title, root_url)
+        breadcrumbs << link_to_unless_current(application_title, root_url)
         breadcrumbs << link_to('Admin', admin_url) if is_in_admin_view?
         breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if is_in_admin_view?
         return breadcrumbs

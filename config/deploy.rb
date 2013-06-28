@@ -8,8 +8,8 @@ require "rvm/capistrano"
 require 'new_relic/recipes'
 
 set :ssh_options, {:forward_agent => true}
-set(:app_title, 'rooms') unless exists?(:app_title)
-set :application, "#{app_title}_repos"
+set(:app_title) { "rooms" } unless exists?(:app_title)
+set(:application) { "#{app_title}_repos" }
 
 # RVM  vars
 set :rvm_ruby_string, "1.9.3-p125"
@@ -31,6 +31,8 @@ set :default_stage, "staging"
 set :keep_releases, 5
 set :use_sudo, false
 
+# Configure app_settings from rails_config
+# Defer processing until we have rails environment
 set(:app_settings) { eval(run_locally("rails runner -e #{rails_env} 'p Settings.capistrano.to_hash'")) }
 set(:scm_username) { app_settings[:scm_username] }
 set(:app_path) { app_settings[:path] }
@@ -42,7 +44,6 @@ set :normalize_asset_timestamps, false
 
 # Rake variables
 # set :rake, "#{rake} --trace"
-# 
 
 namespace :rails_config do
   desc "Set RailsConfig servers"
@@ -92,13 +93,6 @@ namespace :deploy do
   end
   task :passenger_symlink do
     run "rm -rf /apps/#{app_title} && ln -s #{current_path}/public /apps/#{app_title}"
-  end
-end
-
-namespace :cache do
-  desc "Clear rails cache"
-  task :tmp_clear, :roles => :app do
-    run "cd #{current_release} && rake tmp:clear RAILS_ENV=#{rails_env}"
   end
 end
 

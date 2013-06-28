@@ -8,7 +8,7 @@ require "rvm/capistrano"
 require 'new_relic/recipes'
 
 set :ssh_options, {:forward_agent => true}
-set :app_title, "rooms"
+set(:app_title, 'rooms') unless exists?(:app_title)
 set :application, "#{app_title}_repos"
 
 # RVM  vars

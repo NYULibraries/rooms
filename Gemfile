@@ -48,7 +48,7 @@ gem 'sorted', '~> 0.4.3'
 # Deploy with Capistrano
 gem "capistrano", "~> 2.15.0"
 gem "capistrano-ext", "~> 1.2.1"
-gem 'rvm-capistrano', "1.3.0"
+gem 'rvm-capistrano', "~> 1.3.0"
   
 gem "rails_config", "~> 0.3.2"
 gem "rake_nyu", :git => "git://github.com/NYULibraries/rake_nyu.git"

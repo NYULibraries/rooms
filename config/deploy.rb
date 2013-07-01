@@ -8,11 +8,11 @@ require "rvm/capistrano"
 require 'new_relic/recipes'
 
 set :ssh_options, {:forward_agent => true}
-set :app_title, "rooms"
-set :application, "#{app_title}_repos"
+set(:app_title) { "rooms" } unless exists?(:app_title)
+set(:application) { "#{app_title}_repos" }
 
 # RVM  vars
-set :rvm_ruby_string, "1.9.3-p125"
+set :rvm_ruby_string, "1.9.3-p448"
 set :rvm_type, :user
 
 # Bundle vars
@@ -26,25 +26,29 @@ set(:branch, 'master') unless exists?(:branch)
 set :git_enable_submodules, 1
 
 # Environments
-set :stages, ["staging", "production"]
+set :stages, ["staging", "production", "qa"]
 set :default_stage, "staging"
 set :keep_releases, 5
 set :use_sudo, false
-
-set(:app_settings) { eval(run_locally("rails runner -e #{rails_env} 'p Settings.capistrano.to_hash'")) }
-set(:scm_username) { app_settings[:scm_username] }
-set(:app_path) { app_settings[:path] }
-set(:user) { app_settings[:user] }
-set(:deploy_to) {"#{app_path}#{application}"}
 
 # Rails specific vars
 set :normalize_asset_timestamps, false
 
 # Rake variables
 # set :rake, "#{rake} --trace"
-# 
 
 namespace :rails_config do
+  desc "Set stage variables"
+  task :set_variables do
+    # Configure app_settings from rails_config
+    # Defer processing until we have rails environment
+    set(:app_settings) { eval(run_locally("rails runner -e #{rails_env} 'p Settings.capistrano.to_hash'")) }
+    set(:scm_username) { app_settings[:scm_username] }
+    set(:app_path) { app_settings[:path] }
+    set(:user) { app_settings[:user] }
+    set(:deploy_to) {"#{app_path}#{application}"}
+  end
+  
   desc "Set RailsConfig servers"
   task :set_servers do
     server "#{app_settings[:servers].first}", :app, :web, :db, :primary => true
@@ -95,15 +99,9 @@ namespace :deploy do
   end
 end
 
-namespace :cache do
-  desc "Clear rails cache"
-  task :tmp_clear, :roles => :app do
-    run "cd #{current_release} && rake tmp:clear RAILS_ENV=#{rails_env}"
-  end
-end
-
 # Set the servers from rails config before we see
 # what's in the rails config environment
+before "rails_config:set_servers", "rails_config:set_variables" 
 before "rails_config:see", "rails_config:set_servers"
 # After multistage is set, load up the rails config environment
 after "multistage:ensure", "rails_config:see"

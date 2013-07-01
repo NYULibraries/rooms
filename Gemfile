@@ -46,6 +46,8 @@ gem 'kaminari', "~> 0.13"
 gem 'sorted', '~> 0.4.3'
 
 # Deploy with Capistrano
+gem "capistrano", "~> 2.15.0"
+gem "capistrano-ext", "~> 1.2.1"
 gem 'rvm-capistrano', "1.3.0"
   
 gem "rails_config", "~> 0.3.2"

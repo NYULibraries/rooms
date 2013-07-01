@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RoomReservation::Application.load_tasks
+Rooms::Application.load_tasks

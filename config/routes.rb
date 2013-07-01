@@ -1,4 +1,4 @@
-RoomReservation::Application.routes.draw do
+Rooms::Application.routes.draw do
   scope "admin" do
     resources :user_sessions
     resources :users

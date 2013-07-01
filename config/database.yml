@@ -13,7 +13,11 @@ test:
   database: <%= Settings.databases.database %>
   username: <%= Settings.databases.username %>
   password: <%= Settings.databases.password %>
-  
+
+qa:
+  <<: *development
+  host: <%= Settings.databases.host %>
+
 staging:
   <<: *development
   host: <%= Settings.databases.host %>

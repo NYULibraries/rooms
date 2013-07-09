@@ -25,11 +25,6 @@ module Views
        "Reserve a room"
       end
       
-      # Using Gauges?
-      def gauges?
-        (Rails.env.eql?("production") and (not gauges_tracking_code.nil?))
-      end
-
       def gauges_tracking_code
         Settings.gauges.tracking_code
       end
@@ -41,11 +36,6 @@ module Views
         breadcrumbs << link_to('Admin', admin_url) if is_in_admin_view?
         breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if is_in_admin_view?
         return breadcrumbs
-      end
-      
-      # Render footer partial
-      def footer
-        render :partial => "common/footer"
       end
       
       # Prepend modal dialog elements to the body

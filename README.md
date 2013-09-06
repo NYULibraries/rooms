@@ -7,6 +7,10 @@
 
 The Graduate Collaborative Room Reservation System is a Rails 3 application that allows authorized user to view available graduate rooms and book them for private or collaborative study.
 
+## Scheduled Jobs
+
+Every year at **4am on September 1st** the cleanup script runs to clear out users who have been inactive for over a year. The definition of an inactive user is a user who hasn't made a reservation.
+
 ## To-do
 
 This application is in production and has recently been upgraded to Rails 3. However, the next version of the application is in development and will expand authorization to all students and have tiers of reservation access.

@@ -55,19 +55,14 @@ class ApplicationController < ActionController::Base
   #helper_method :is_admin?
  
   # Is borrower type included in authorized borrower types
-  #def is_authorized
-  #  (!current_user.nil? and auth_types.include? current_user.user_attributes[:bor_type])
-  #end
-  #alias :is_authorized? :is_authorized
-  #helper_method :is_authorized?
-  #
-  ## Array of authorized borrower types
-  #def auth_types
-  #  @auth_types ||= ["CB"]
-  #end
-  
   def is_authorized?
-    true
+    (!current_user.nil? and auth_types.include? current_user.user_attributes[:bor_type])
+  end
+  helper_method :is_authorized?
+  
+  # Array of authorized borrower types
+  def auth_types
+    @auth_types ||= ["CB"]
   end
   
   # Return boolean matching the url to find out if we are in the admin view

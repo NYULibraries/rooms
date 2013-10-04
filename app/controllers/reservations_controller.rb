@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  #before_filter :authorize_patron
+  before_filter :authorize_patron
   respond_to :html, :js
   respond_to :xml, :json, :csv, :except => [:new, :edit]
 

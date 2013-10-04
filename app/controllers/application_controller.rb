@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   #
   # Authorize patron access to this application
   def authorize_patron
-    if is_admin? or is_authorized? 
+    if current_user.is? :admin or is_authorized? 
       return true
     elsif !current_user.nil?
       render 'user_sessions/unauthorized_patron'

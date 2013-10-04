@@ -14,9 +14,4 @@ namespace :cleanup do
       @log.error "[#{Time.now.to_formatted_s(:db)}] #{destroyed.count} reservations destroyed"
     end
     
-    desc "Set admin flag from user_attributes"
-    task :admin => :environment do
-      User.where("user_attributes LIKE '%:room_reserve_admin: true%'").update_all(:admin => true, :admin_groups => {:admin_groups => ["ny-graduate", "ny-undergraduate","shanghai-undergraduate"]})
-    end
-    
 end

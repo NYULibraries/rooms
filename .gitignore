@@ -28,3 +28,7 @@ doc
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+
+lib/tasks/*.yml
+lib/tasks/transfer.rake
+lib/tasks/deleted_by_field_change.rake

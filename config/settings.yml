@@ -27,3 +27,7 @@ secret_token: 'dd6f1b6faf2511a744f3f08644e76edcb6be01d7019a6e62947e3a76a2c5f1ea7
   
 cookie: 
   domain: ".local"
+
+elasticsearch:
+  bonsai:
+    url: "http://localhost:9200"

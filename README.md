@@ -7,6 +7,42 @@
 
 The Graduate Collaborative Room Reservation System is a Rails 3 application that allows authorized user to view available graduate rooms and book them for private or collaborative study.
 
+## Rooms Search with ElasticSearch (ES)
+
+The rooms search uses indexed searching courtesy of [ElasticSearch](http://www.elasticsearch.org/) with the gem [tire](https://github.com/karmi/tire) which exposes the ElasticSearch DSL to blend easily with ActiveRecord.
+
+### Install ES
+
+If you are locally hosting ES or setting it up for development, download [the latest distribution](http://www.elasticsearch.org/guide/reference/setup/installation/).
+
+Or install it from homebrew on a Mac:
+
+	brew install elasticsearch
+
+### Start up ES
+
+To start it up run the following command `bin/elasticsearch` or `bin/elasticsearch -f` to run it in the fore-ground. Alternatively you can start it up with a custom config file:
+
+	sudo elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
+
+You can find ElasticSearch by visiting:
+
+	http://localhost:9200/
+
+### ES on Rails
+
+Tire
+Flex
+
+### Index records in ES
+
+	bundle exec rake environment tire:import CLASS=Room FORCE=true
+	bundle exec rake environment tire:import CLASS=Reservation FORCE=true
+
+### Cloud-hosted ES
+
+[Bonsai](http://www.bonsai.io/) is a cloud-hosted ES service.
+
 ## Scheduled Jobs
 
 Every year at **4am on September 1st** the cleanup script runs to clear out users who have been inactive for over a year. The definition of an inactive user is a user who hasn't made a reservation.

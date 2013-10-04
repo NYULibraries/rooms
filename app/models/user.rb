@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
+  ROLES = %w[super_admin admin ny_admin shanghai_admin ny_graduate ny_undergraduate shanghai_undergraduate]
   has_many :reservations, :dependent => :destroy
   
   attr_accessible :crypted_password, :current_login_at, :current_login_ip, :email, :firstname, :last_login_at, :last_login_ip, :last_request_at, :lastname, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id, :user_attributes, :username
+  attr_accessible :roles
   scope :non_admin, where("user_attributes NOT LIKE '%:room_reserve_admin: true%'")
   scope :admin, where("user_attributes LIKE '%:room_reserve_admin: true%'")
   scope :inactive, where("last_request_at < ?", 1.year.ago)
@@ -31,4 +33,25 @@ class User < ActiveRecord::Base
     lastname
     email
   end
+  
+  #https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
+  def roles=(roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+  end
+
+  def roles
+    ROLES.reject do |r|
+      ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
+    end
+  end
+  
+  def roles_list
+    roles.join(", ").humanize.titleize
+  end
+  
+  def is?(role)
+    roles.include?(role.to_s)
+  end
+
+  
 end

@@ -18,7 +18,9 @@ Rooms::Application.routes.draw do
   
   match 'reservations/generate_grid' => "reservations#generate_grid", :as => 'generate_grid'
   match 'reservations/resend_email' => "reservations#resend_email"
-  resources :reservations
+  resources :reservations do
+    put "delete" => "reservations#delete"
+  end
   
   match 'login', :to => 'user_sessions#new', :as => :login
   match 'logout', :to => 'user_sessions#destroy', :as => :logout

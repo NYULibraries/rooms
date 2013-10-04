@@ -1,4 +1,4 @@
-<% h = @user.user_attributes %>
+<% h = @user.try(:user_attributes) || {} %>
 
 <h2>User: <%=h @user.username %></h2>
 <div id="show_user">
@@ -8,10 +8,10 @@
 <dd>&nbsp;<%=h @user.username %></dd>
 
 <dt>First name</dt>
-<dd>&nbsp;<%=h @user.firstname %></dd>
+<dd>&nbsp;<%=h @user.try(:firstname) %></dd>
 
 <dt>Last name:</dt>
-<dd>&nbsp;<%=h @user.lastname %></dd>
+<dd>&nbsp;<%=h @user.try(:lastname) %></dd>
 
 <dt>E-mail:</dt>
 <dd>&nbsp;<%=h @user.email %></dd>
@@ -31,21 +31,8 @@
 <dt>Patron status:</dt>
 <dd>&nbsp;<%=h h[:bor_status]%></dd>
 
-<dt>Graduate Student?</dt>
-<dd>
-  <% if !h[:bor_type].nil? %>
-	<%=h is_authorized? %>
-	<% else %>
-	<strong>not found</strong>
-	<% end %>
-</dd>
-
-<%= form_for @user, :remote => true, :class => "form-inline clearfix" do |f| %>
-  <dt>Admin?</dt>
-  <dd>
-  <%= f.check_box :room_reserve_admin, :checked => h[:room_reserve_admin], :disabled => (current_user.username == @user.username) %>
-  </dd>
-<% end -%>
+<dt>Roles:</dt>
+<dd>&nbsp;<%= @user.roles_list %>
 
 </dl>
 
@@ -119,6 +106,8 @@
 </p>
 
 <br />
+<%= icon_tag :edit %>
+<%= link_to 'Edit', edit_user_path(@user) %> | 
 <%= icon_tag :back %>
 <%= link_to 'Back', users_path %>
 </div>

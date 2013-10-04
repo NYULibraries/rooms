@@ -1,14 +1,14 @@
 class ReservationsController < ApplicationController
-  before_filter :authorize_patron
+  #before_filter :authorize_patron
   respond_to :html, :js
   respond_to :xml, :json, :csv, :except => [:new, :edit]
 
   # GET /reservations
   def index
-    @reservation = Reservation.new
     @user = current_user
+    @reservation = @user.reservations.new
     @reservations = @user.reservations.active_non_blocks.current
-    
+
     respond_with(@reservations)
   end
 
@@ -21,43 +21,32 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @reservation = Reservation.new
-    @rooms = Room.order(sort_column + " " + sort_direction).page(params[:page]).per(30)
     @user = current_user
-    @start_dt = DateTime.parse(params[:reservation][:start_dt]) unless params[:reservation][:start_dt].nil?
-    @end_dt = DateTime.parse(params[:reservation][:end_dt]) unless params[:reservation][:end_dt].nil?
-  
-    if (@start_dt.nil? || @end_dt.nil?) and params[:reservation][:which_date].match(/\d\d\d\d-\d\d-\d\d/) 
-      # construct DateTime object from calendar params submitted
-      date = Date.parse(params[:reservation][:which_date])
-      # convert 12 hour to 24 hour for storing
-      if params[:reservation][:ampm] == "pm" && params[:reservation][:hour] != "12"
-        hour = params[:reservation][:hour].to_i + 12
-      elsif params[:reservation][:ampm] == "am" && params[:reservation][:hour] == "12" 
-        hour = 0
-      else 
-        hour = params[:reservation][:hour].to_i 
+    begin
+      @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
+      options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+      @rooms = Room.tire.search do
+        sort { by options[:sort], options[:direction] }
+        page = options[:page].to_i
+        search_size = options[:per].to_i
+        from (page -1) * search_size
+        size search_size
       end
-      
-      # set start and end times as DateTime objects to insert into database if valid
-      @start_dt = DateTime.new(date.year, date.mon, date.mday, hour.to_i, params[:reservation][:minute].to_i)
-      @end_dt = @start_dt + params[:reservation][:how_long].to_i.minutes unless @start_dt.blank?
+    rescue ArgumentError => e
+      @reservation = @user.reservations.new
+      flash[:error] = "Please select a valid future date in the format YYYY-MM-DD." if e.message == "invalid date"
     end
     
-    if @start_dt.blank? || @start_dt < DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 0,0)
-      flash[:error] = "Please select a valid future date in the format YYYY-MM-DD."
-    elsif rr_made_today?
+    if @reservation.rr_made_today?
       flash[:error] = "Sorry, you are only allowed <strong>to create one reservation per day.</strong>".html_safe
-    elsif rr_for_same_day?
+    elsif @reservation.rr_for_same_day?
       flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>".html_safe
     end
-    
+
     respond_with(@reservation) do |format|
       if flash[:error].blank?
-        format.js { render :layout => false }
         format.html { render :new }
       else
-        format.js { render :layout => false }
         format.html { render :index }
       end
     end
@@ -65,24 +54,31 @@ class ReservationsController < ApplicationController
 
   # GET /reservations
   def create   
-    @reservation = Reservation.new(params[:reservation])
-    @user = @reservation.user
+    @user = current_user
+    @reservation = @user.reservations.new(params[:reservation])
+    #@reservation.created_at_day = Time.zone.now.strftime("%Y-%m-%d")
+    #@reservation.created_at_timezone = Time.zone.name
     @room = @reservation.room
-    @rooms = Room.order(sort_column + " " + sort_direction).page(params[:page]).per(30)
-   
-    @start_dt = DateTime.parse(params[:reservation][:start_dt]) unless params[:reservation][:start_dt].nil?
-    @end_dt = DateTime.parse(params[:reservation][:end_dt]) unless params[:reservation][:end_dt].nil?
     
+    options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    @rooms = Room.tire.search do
+      sort { by options[:sort], options[:direction] }
+      page = options[:page].to_i
+      search_size = options[:per].to_i
+      from (page -1) * search_size
+      size search_size
+    end
+
     respond_with(@reservation) do |format|
       if @reservation.save
         # Send email
         ReservationMailer.confirmation_email(@reservation).deliver
         flash[:success] = 'Reservation was successful. You will be sent an e-mail confirming your reservation.'
         format.html { render :index }
-        format.js { render :layout => false }
+        format.js 
       else
         format.html { render :new, params: params }
-        format.js { render :new, params: params, :layout => false }
+        format.js { render :new, params: params }
       end
     end
   end
@@ -91,32 +87,30 @@ class ReservationsController < ApplicationController
   def edit
     @reservation = Reservation.find(params[:id])
     @user = current_user
-    respond_with(@reservation) do |format|
-      format.js { render :layout => false }
-    end
+    respond_with(@reservation)
   end
 
   # PUT /reservations/1
   def update
     @reservation = Reservation.find(params[:id])
     @user = current_user
-    
+
     if @reservation.update_attributes(params[:reservation])
       flash[:success] = 'Reservation was successfully updated.'
     end
 
-    respond_with(@reservation, :location => root_url) do |format|
-      format.js { render :layout => false }
-    end
+    respond_with(@reservation, :location => root_url)
   end
 
-  # DELETE /reservations/1
-  def destroy
-    # TODO: This is not RESTful and should probably be a PUT
-    @reservation = Reservation.find(params[:id])
-    @user = current_user
-    
-    if @reservation.update_attributes(:deleted => true, :deleted_by => { :by_user => current_user.id })
+  # PUT /reservations/1
+  def delete
+    @user = current_user    
+    @reservation = @user.reservations.find(params[:reservation_id])
+    @reservation.deleted = true
+    @reservation.deleted_by = { :by_user => current_user.id }
+    #@reservation.deleted_at_timezone = Time.zone.name
+
+    if @reservation.save
       flash[:success] = "Reservation was successfully deleted."
       # Send email
       ReservationMailer.cancellation_email(@reservation).deliver
@@ -124,10 +118,10 @@ class ReservationsController < ApplicationController
       flash[:error] = "Could not delete this reservation. Please report this to the system administrator: gswg@library.nyu.edu."
     end
     
-    respond_with(@reservation, :location => params[:return_to]) do |format|
-      format.js { render :layout => false }
-      if is_admin? and is_in_admin_view?
-        format.html { redirect_to user_path(@reservation.user) } 
+    respond_with(@reservation) do |format|
+      format.js
+      if @user.is? :admin and in_admin_view?
+        format.html { redirect_to user_path(@user) } 
       else
         format.html { redirect_to root_url }
       end
@@ -136,16 +130,15 @@ class ReservationsController < ApplicationController
   
   # RESEND confirmation email
   def resend_email
-    @reservation = Reservation.find(params[:id])
-    @user = @reservation.user
-    # Send email
-    ReservationMailer.confirmation_email(@reservation).deliver
+    @user = current_user    
+    @reservation = @user.reservations.find(params[:id])
     
-    respond_with(@reservation, :location => root_url) do |format|
-      flash[:success] = "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
-      format.html { render :index }
-      format.js { render :layout => false }
-    end
+    # Send email
+    if ReservationMailer.confirmation_email(@reservation).deliver
+       flash[:success] = "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
+     end
+    
+    respond_with(@reservation, :location => root_url)
   end
   
   # Implement sort column function for this model
@@ -153,29 +146,41 @@ class ReservationsController < ApplicationController
     super "Room", "sort_order"
   end
   helper_method :sort_column
+   
+  def start_dt
+    @start_dt ||= 
+      (params[:reservation][:start_dt].blank?) ? 
+        DateTime.new(which_date.year, which_date.mon, which_date.mday, hour.to_i, params[:reservation][:minute].to_i) :
+          DateTime.parse(params[:reservation][:start_dt]) 
+  end
+  helper_method :start_dt
+  
+  def end_dt
+    @end_dt ||=
+     (params[:reservation][:end_dt].nil?) ? 
+      start_dt + params[:reservation][:how_long].to_i.minutes :
+        DateTime.parse(params[:reservation][:end_dt])
+  end
+  helper_method :end_dt
   
 private 
   
-  #Perform a check to find if the user has already created a reservation today
-  def rr_made_today?
-    # find today's date as comparable object
-    d_now = DateTime.now.strftime('%Y%m%d').to_i
-    # find if this user has already made a reservation today...
-    @rr_made_today = Reservation.active_non_blocks.where("user_id = ? AND DATE_FORMAT(created_at,'%Y%m%d') = ?", @user.id, d_now)
-    return false if @rr_made_today.blank? || @user.user_attributes[:room_reserve_admin]
-    return true
+  def which_date
+    @which_date ||= Date.parse(params[:reservation][:which_date])
   end
   
-  #Perform a check to find if the user already has a reservation for this day
-  def rr_for_same_day?
-    # find date of reservation as comparable object
-    reservation_day = @start_dt.strftime('%Y%m%d').to_i
-    # or if they made a reservation for the selected day already
-    @rr_for_same_day = Reservation.active_non_blocks.where("user_id = ? AND DATE_FORMAT(start_dt,'%Y%m%d') = ?", @user.id, reservation_day)
-    return false if @rr_for_same_day.blank? || @user.user_attributes[:room_reserve_admin]
-    return true
+  def hour
+    # convert 12 hour to 24 hour for storing
+    if params[:reservation][:ampm] == "pm" && params[:reservation][:hour] != "12"
+      hour = params[:reservation][:hour].to_i + 12
+    elsif params[:reservation][:ampm] == "am" && params[:reservation][:hour] == "12" 
+      hour = 0
+    else 
+      hour = params[:reservation][:hour].to_i 
+    end
+    return hour
   end
-
+  
 end
 
 

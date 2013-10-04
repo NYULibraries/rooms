@@ -15,7 +15,7 @@
 
   <% if @reservation.errors.any? %>  
     <div id="error_explanation" class="alert alert-error">  
-      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>  
+      <h2>The form has been disabled for the following reason:</h2>  
       <ul>  
       <% @reservation.errors.full_messages.each do |msg| %>  
         <li><%= msg %></li>  
@@ -25,13 +25,13 @@
   <% end %>
   
   <div class="well well-small">
-  
+  <fieldset>
     <div class="control-group">
       <label class="control-label" for="inputDate">Select a date:</label>
       <div class="controls">
         <input type="text" name="reservation[which_date]" id="room_reservation_which_date" /> 
-        <%= icon_tag :date %>
-  			<span id="date_example" class="js_hide">YYYY-MM-DD</span>
+        <%= link_to icon_tag(:date), nil, :class => "select_date_icon" %>
+  		<span id="date_example" class="js_hide">YYYY-MM-DD</span>
       </div>
     </div>
     <div class="control-group">
@@ -48,11 +48,13 @@
         <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), :class => "span6"%>
       </div>
     </div>
-  
+  </fieldset>
   </div>
 
+  <fieldset>
   <%= button_tag(:type => "submit", :class => "btn launch_modal", :id => "generate_grid") do %>
     Determine availability
   <% end -%>
+  </fieldset>
 
 <% end %>

@@ -10,4 +10,5 @@ class UserSession < Authlogic::Session::Base
     h[:room_reserve_admin] = true if Settings.login.default_admins.include? pds_user.uid
     return h
   end
+  
 end

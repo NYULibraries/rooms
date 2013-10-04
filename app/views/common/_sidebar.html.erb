@@ -1,4 +1,4 @@
-<% if is_admin? %>
+<% if current_user.is? :admin %>
 	<%= sidebar_section("admin_panel", content_tag(:h2, "Admin Panel"), true) do %>
 	    <ul class="admin_options">
 	      <li><%= link_to "Manage Rooms", rooms_url %></li>
@@ -9,7 +9,13 @@
 	<% end -%>
 <% end %>
 
-<% unless @user.nil? or is_in_admin_view? %>
+<%= render "reservations/policies" %>
+
+<% unless @user.nil? or in_admin_view? %>
+<%= render :partial => "reservations/past_reservations"%>
+<% end %>
+
+<% unless @user.nil? or in_admin_view? %>
 <%= render :partial => "reservations/current_reservations"%>
 <% end %>
 

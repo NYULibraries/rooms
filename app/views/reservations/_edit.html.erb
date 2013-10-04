@@ -1,7 +1,7 @@
 <% unless @reservation.title? %>
-<h1>Name your event</h1>
+	<h1>Name your event</h1>
 <% else %>
-<h1>Rename your event</h1>
+	<h1>Rename your event</h1>
 <% end %>
 
 <%= form_for @reservation, :html => {:class => "form-horizontal ajax_form"}, :remote => true do |f| %>

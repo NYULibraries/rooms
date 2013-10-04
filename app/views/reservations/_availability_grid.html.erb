@@ -1,5 +1,3 @@
-<% get_times_array %>
-
 <p class="hidden-phone availability_grid_desc">Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot', root_url, :class => "close_dialog")%> for more availability.</p>
 
 <div class="legend hidden-phone">
@@ -24,55 +22,55 @@
   </div>  
 <% end %>
 
-<table class="table table-bordered">
+<table id="availability_grid_table" class="table table-bordered">
+	<thead>
 	<tr class="hidden-phone">
-		<td colspan="5"></td>
-		<td colspan="<%=(@times.size.to_f / 2.0).floor %>">
+		<th colspan="5"></th>
+		<th colspan="<%=(times_array.size.to_f / 2.0).floor %>">
 			<div class="reservation_timeslot_hunt" id="backOptions">
 			<div id="back_one_day">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 1.day, :end_dt =>  @end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe}%>
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt =>  end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe }%>
 			</div>
 			<div id="back_thirty_mins">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime - 30.minutes, :end_dt => @end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe}%>
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe }%>
 			</div>
 			</div>
-		</td>
-		<td colspan="<%=(@times.size.to_f / 2.0).ceil %>">
+		</th>
+		<th colspan="<%=(times_array.size.to_f / 2.0).ceil %>">
 			<div class="reservation_timeslot_hunt" id="forwardOptions">
 			<div id="forward_one_day">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 1.day, :end_dt => @end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe}%>
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe }%>
 			</div>
 			<div id="forward_thirty_mins">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => @start_dt.to_datetime + 30.minutes, :end_dt => @end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe}%>
+				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe }%>
 			</div>
 			</div>
-		</td>
+		</th>
 	</tr>
 	<tr>
 		<th></th>
 		<th><div class="sort_by_field">
-		  <%#= link_to_sorted "Room", :title, remote: true %>
 		  <%= sortable :title, "Room", {:action => "new"}, true %>
 		</div></th>
 		<th class="hidden-phone"><div class="sort_by_field">
-		  <%#= link_to_sorted "Type", :type_of_room, remote: true  %>
 		  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 		</div></th>
 		<th class="hidden-phone">Details</th>
 		<th class="hidden-phone"><div class="sort_by_field">
-		  <%#= link_to_sorted "Size", :sort_size_of_room, remote: true %>
 		  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
 		</div></th>
-    <% @times.each do |timeslot| %>
-    <th class="date-cell">
-      <span class="hidden-phone"><%= prettify_dayofweek(timeslot) %><br /></span>
-      <%= prettify_simple_date(timeslot) %><br />
-      <%= prettify_time(timeslot) %>
-    </th>
-    <% end -%>
+		<% times_array.each do |timeslot| %>
+		<th class="date-cell">
+			<span class="hidden-phone"><%= prettify_dayofweek(timeslot) %><br /></span>
+			<%= prettify_simple_date(timeslot) %><br />
+			<%= prettify_time(timeslot) %>
+		</th>
+		<% end -%>
 	</tr>
+	</thead>
+	<tbody>
 	
-<% @rooms.each do |r| %>
+<% @rooms.results.each do |r| %>
 	<tr>
 		<td><%= radio_button :reservation, :room_id, r.id, :disabled => disable_reservation_button(r), :class => "new_reservation_radio_select" %></td>
 		<td style="width:60px;">
@@ -91,12 +89,13 @@
 		<%= construct_grid_data(r) %>
 	</tr>
 <% end %>
+
 	<tr>
 		<td></td>
 		<td colspan="2" class="extra_fields">
 			<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
 		</td>
-		<td colspan="<%= @times.size + 2%>" class="extra_fields">
+		<td colspan="<%= times_array.size + 2%>" class="extra_fields">
 			<div id="res_title_div"><%= text_field :reservation, :title %></div>
 		</td>
 	</tr>
@@ -105,21 +104,23 @@
 		<td colspan="2" class="extra_fields">
 			<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
 		</td>
-		<td colspan="<%= @times.size + 2%>" class="extra_fields">
+		<td colspan="<%= times_array.size + 2%>" class="extra_fields">
 			<div id="res_cc_div"><%= text_field :reservation, :cc %></div>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="<%= @times.size + 5%>">
+		<td colspan="<%= times_array.size + 5%>">
 			<%= f.hidden_field "user_id", :value => @user.id %>
-			<%= f.hidden_field "start_dt", :value => @start_dt %>
-			<%= f.hidden_field "end_dt", :value => @end_dt %>
-      <button type="submit" class="btn">
-        Reserve<span class="hidden-phone"> selected timeslot</span>
-      </button>
+			<%= f.hidden_field "start_dt", :value => start_dt %>
+			<%= f.hidden_field "end_dt", :value => end_dt %>
+			<button type="submit" class="btn">
+				Reserve<span class="hidden-phone"> selected timeslot</span>
+			</button>
 		</td>
 	</tr>
+	</tbody>
 </table>
+<table id="availability_grid_header_fixed" class="table table-bordered"></table>
 <% end %>
 
 </div>

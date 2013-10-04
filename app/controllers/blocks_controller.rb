@@ -18,16 +18,36 @@ class BlocksController < ApplicationController
   def generate
     @block = Reservation.new(params[:block]) 
     @room = Room.find(params[:block][:room_id])
+    room_id = @room.id
     
-    @start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
-    @end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
-     
+    start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
+    end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
+
     # Find all reservations that fall between this selected date range      
-    @existing_reservations = Reservation.active_non_blocks.where("room_id = ? AND start_dt >= ? AND ((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", params[:block][:room_id], Time.now, @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt)
+    @existing_reservations = Reservation.tire.search :load => { :include => "user" } do
+      query do
+        filtered do
+          filter :term, :deleted => false
+          filter :term, :room_id => room_id
+          filter :term, :is_block => false
+          filter :range, :start_dt => { :gte => Time.now }
+          filter :or, 
+            { :range => { :start_dt => { :from => start_dt, :to => end_dt } } } ,
+            { :range => { :end_dt => { :from => start_dt, :to => end_dt } } } ,
+            :and => [
+                { :range => { :start_dt => { :lte => start_dt } } },
+                { :range => { :end_dt => { :gte => end_dt } } }
+            ]
+        end
+      end
+      size 300
+    end
+    
+    #Reservation.active_non_blocks.where("room_id = ? AND start_dt >= ? AND ((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", params[:block][:room_id], Time.now, @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt)
 
     # Set the fields to the proper datetime objects   
-    @block.start_dt = @start_dt
-    @block.end_dt = @end_dt
+    @block.start_dt = start_dt
+    @block.end_dt = end_dt
     @block.title = "Scheduled closure" if params[:block][:title].blank?
     
     respond_with(@block)

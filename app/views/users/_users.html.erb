@@ -30,7 +30,6 @@
       <th class="hidden-phone">
         <%= link_to_sorted "Email", :email %>
       </th>
-      <th class="hidden-phone">Graduate Student?</th>
       <th class="hidden-phone">Admin?</th>
       <th>Options</th>
     </tr>
@@ -43,9 +42,9 @@
       <td class="hidden-phone"><%=h user.firstname %></td>
       <td class="hidden-phone"><%=h user.lastname %></td>
       <td class="hidden-phone"><%=h user.email %></td>
-      <td class="hidden-phone"><%= (!h[:bor_type].nil?) ? is_authorized? : "<strong>not found</strong>".html_safe %></td>
-      <td class="hidden-phone"><%=h h[:room_reserve_admin] %></td>
+      <td class="hidden-phone"><%=h user.is? :admin %></td>
       <td><%= link_to 'Show', user %></td>
+      <td><%= link_to 'Edit', edit_user_path(user) %></td>
       <td><%= link_to_if(user.username != current_user.username, 'Destroy', user, :confirm => 'Are you sure?', :method => :delete) %></td>
     </tr>
     <% end %>

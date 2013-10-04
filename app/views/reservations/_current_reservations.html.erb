@@ -1,40 +1,23 @@
-  <% unless @user.reservations.active_non_blocks.past.one_week.blank? %>
-  <%= sidebar_section("reservations_sidebar_past", content_tag(:h2, "Your past reservations (up to 1 week)"), true) do %>
-  <ul id="past_reservations">
-      <% @user.reservations.active_non_blocks.past.one_week.each do |res| %>
+<%= sidebar_section("reservations_sidebar_current", content_tag(:h2, "Your current reservations"), true) do %>
+<ul id="current_reservations">
+  <% if @user.reservations.active_non_blocks.current.blank? %>
+    <li>None.</li>
+  <% else %>
+    <% @user.reservations.active_non_blocks.current.each do |res| %>
       <li>
-        <% unless res.title.blank? %>
-          <strong>Name:</strong> <%= res.title %> <br />
-        <% end %>
+        <%= (res.title?) ? "<strong>Name:</strong> #{res.title}<br />".html_safe : '' %>
         <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />
         <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
-        <strong>Location:</strong> <%= res.room.title %>
+        <strong>Location:</strong> <%= res.room.title %><br />
+        <% if res.title.blank? %>
+         <%= icon_tag :add %> <%= link_to 'name your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
+        <% else %>
+          <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
+        <% end %>
+        <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id }, :remote => true %> <br />	
+        <%= icon_tag :destroy %> <%= link_to 'delete reservation', reservation_delete_path(res), :method => :put, :confirm => "Are you sure?", :remote => true %>
       </li>
-      <% end %>
-  </ul>
-  <% end -%>
-  <% end %>
-
-  <%= sidebar_section("reservations_sidebar_current", content_tag(:h2, "Your current reservations"), true) do %>
-  <ul id="current_reservations">
-    <% if @user.reservations.active_non_blocks.current.blank? %>
-      <li>None.</li>
-    <% else %>
-      <% @user.reservations.active_non_blocks.current.each do |res| %>
-        <li>
-          <%= (res.title?) ? "<strong>Name:</strong> #{res.title}<br />".html_safe : '' %>
-          <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />
-          <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
-          <strong>Location:</strong> <%= res.room.title %><br />
-          <% if res.title.blank? %>
-           <%= icon_tag :add %> <%= link_to 'name your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
-          <% else %>
-            <%= icon_tag :edit %> <%= link_to 'rename your event', edit_reservation_path(res), :class => "launch_modal", :remote => true %><br />
-          <% end %>
-          <%= icon_tag :resend %> <%= link_to 're-send confirmation e-mail', { :controller=>'reservations', :action=>'resend_email', :id => res.id }, :remote => true %> <br />	
-          <%= icon_tag :destroy %> <%= link_to 'delete reservation', res, :method => :delete, :confirm => "Are you sure?", :remote => true %>
-        </li>
-      <% end %>
     <% end %>
-  </ul>
-  <% end -%>
+  <% end %>
+</ul>
+<% end -%>

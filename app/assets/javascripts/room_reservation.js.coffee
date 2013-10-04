@@ -11,8 +11,16 @@ window.fit_modal_body = (modal) ->
   body.css("max-height", "#{height}px")
 
 $ ->
+  # Set cookie finding user's timezone
+  detected_zone = Temporal.detect()
+  
 	# Hide objects not important for JS
   $(".js_hide").hide()
+  
+  # Click the calendar icon to select a date
+  $(document).on 'click', "a.select_date_icon", (e) ->
+    e.preventDefault()
+    $('#room_reservation_which_date').focus()
 
   # Set up date picker objects
   $(".report_datetime, .block_datetime").datetimepicker {
@@ -61,6 +69,11 @@ $ ->
     $("#ajax-modal").find(".modal-body").removeAttr("style")
     $("#ajax-modal").find(".ajax-loader").show()
     $("#ajax-modal").modal('show')
+    window.location.hash = '#reservations'
+    
+  $(window).on 'hashchange', ->
+    if window.location.hash != '#reservations'
+      $("#ajax-modal").modal('hide')
   
   $(document).on 'click', "#ajax-modal a.close_dialog", (e) ->
     e.preventDefault()
@@ -91,4 +104,4 @@ $ ->
   # Bind resize event with the modal
   $(window).resize -> 
     fit_modal_body($("#ajax-modal"))
-  
+      

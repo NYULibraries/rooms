@@ -1,0 +1,50 @@
+individual:
+  title: Individual Room 1
+  type_of_room: One person
+  size_of_room: 1-2 People 
+  sort_size_of_room: 2
+  sort_order: 1
+  hours:
+    hours_start:
+      hour: '7'
+      minute: '0'
+      ampm: am
+    hours_end:
+      hour: '7'
+      minute: '0'
+      ampm: am
+
+individual_with_hours:
+  title: Individual Room 2   
+  type_of_room: Individual
+  size_of_room: 1-2 People 
+  sort_size_of_room: 2
+  sort_order: 2
+  hours:
+    hours_start:
+      hour: '7'
+      minute: '0'
+      ampm: am
+    hours_end:
+      hour: '1'
+      minute: '0'
+      ampm: am
+
+collaborative:
+  title: Collaborative Room 123
+  type_of_room: Collaborative
+  description: This and that in here
+  image_link: http://google.com
+  size_of_room: 6 People
+  sort_size_of_room: 6
+  sort_order: 3
+  # Open 7am-1am
+  hours:
+    hours_start:
+      hour: '7'
+      minute: '0'
+      ampm: am
+    hours_end:
+      hour: '1'
+      minute: '0'
+      ampm: am

@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=10
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"query_string":{"query":"id:725306934"}},"size":10}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '61'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '491'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"725306934","_score":1.0,
+        "_source" : {"deleted":true,"end_dt":"2013-10-04T14:15:29+00:00","id":725306934,"is_block":false,"room_id":127138841,"start_dt":"2013-10-04T13:45:29+00:00","user_id":607422496,"created_at_day":"2013-10-04","start_day":"2013-10-04","created_at_timezone":null,"deleted_at_timezone":null}}]}}'
+    http_version: 
+  recorded_at: Fri, 04 Oct 2013 18:27:43 GMT
+recorded_with: VCR 2.6.0

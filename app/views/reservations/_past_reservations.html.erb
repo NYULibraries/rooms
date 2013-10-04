@@ -1,0 +1,16 @@
+<% unless @user.reservations.active_non_blocks.past.one_week.blank? %>
+	<%= sidebar_section("reservations_sidebar_past", content_tag(:h2, "Your past reservations (up to 1 week)"), true) do %>
+	<ul id="past_reservations">
+	    <% @user.reservations.active_non_blocks.past.one_week.each do |res| %>
+	    <li>
+	      <% unless res.title.blank? %>
+	        <strong>Name:</strong> <%= res.title %> <br />
+	      <% end %>
+	      <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />
+	      <strong>Time:</strong> <%= res.start_dt.strftime('%I:%M %p') %> &mdash; <%= res.end_dt.strftime('%I:%M %p') %><br />
+	      <strong>Location:</strong> <%= res.room.title %>
+	    </li>
+	    <% end %>
+	</ul>
+	<% end -%>
+<% end %>

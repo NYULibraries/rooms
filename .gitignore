@@ -31,4 +31,3 @@ config/environments/*.local.yml
 
 lib/tasks/*.yml
 lib/tasks/transfer.rake
-lib/tasks/deleted_by_field_change.rake

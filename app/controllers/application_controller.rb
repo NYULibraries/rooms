@@ -26,16 +26,16 @@ class ApplicationController < ActionController::Base
   #  end
   #end
   #
-  ## Authorize patron access to this application
-  #def authorize_patron
-  #  if is_admin? or is_authorized? 
-  #    return true
-  #  elsif !current_user.nil?
-  #    render 'user_sessions/unauthorized_patron'
-  #  else
-  #    redirect_to login_url unless performed?
-  #  end
-  #end
+  # Authorize patron access to this application
+  def authorize_patron
+    if is_admin? or is_authorized? 
+      return true
+    elsif !current_user.nil?
+      render 'user_sessions/unauthorized_patron'
+    else
+      redirect_to login_url unless performed?
+    end
+  end
   
   # For dev purposes
   def current_user_dev
@@ -65,6 +65,10 @@ class ApplicationController < ActionController::Base
   #def auth_types
   #  @auth_types ||= ["CB"]
   #end
+  
+  def is_authorized?
+    true
+  end
   
   # Return boolean matching the url to find out if we are in the admin view
   def in_admin_view?

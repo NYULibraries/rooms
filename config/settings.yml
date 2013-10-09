@@ -3,7 +3,7 @@
 databases: 
   password: 
   username: root
-  database: nyu_reserve_test
+  database: nyu_rooms_test
   host: localhost
 
 capistrano:

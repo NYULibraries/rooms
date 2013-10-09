@@ -1,15 +1,16 @@
 language: ruby
 
-services:
-  - memcached
-
 before_script:
-  - echo -e "Host heroku.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - mysql -e 'create database nyu_rooms_test;'
+  - bundle exec rake db:schema:load
 
 rvm:
   - "1.9.3"
   - "2.0.0"
-  
+
 git:
   submodules: false
+
+notifications:
+  email:
+    - barnaby.alter@nyu.edu

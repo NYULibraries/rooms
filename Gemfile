@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+csource 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.13'
 
@@ -44,7 +44,7 @@ gem 'debugger', :groups => [:development, :test]
 gem 'json', '~> 1.8.0'
 
 gem 'jquery-rails', '~> 3.0.4'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~> 4.0.0'
 
 # Authenticate gem
 gem 'authpds-nyu', :git => 'git@github.com:NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'

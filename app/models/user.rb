@@ -34,7 +34,8 @@ class User < ActiveRecord::Base
     email
   end
   
-  #https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
+  # Bitwise roles field in database per
+  # https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end

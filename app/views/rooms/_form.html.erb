@@ -35,15 +35,15 @@
   <p>
     <%= f.label :hours, "Hours of operation (leave as default if 24 hours)" %> 
     
-    Opening:
-    <%= select_tag "hours_start[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_start_hour), :class => "span2" %>
-    <%= select_tag "hours_start[minute]", options_for_select([['00',0],['30',30]], default_start_minute), :class => "span2" %>	
-    <%= select_tag "hours_start[ampm]", options_for_select(['am','pm'], default_start_ampm), :class => "span2" %>
-	  <br />
-	  Closing:
-	  <%= select_tag "hours_end[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_end_hour), :class => "span2" %>
-	  <%= select_tag "hours_end[minute]", options_for_select([['00',0],['30',30]], default_end_minute), :class => "span2" %>	
-	  <%= select_tag "hours_end[ampm]", options_for_select(['am','pm'], default_end_ampm), :class => "span2" %>
+	Opening:
+	<%= select_tag "hours_start[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_start_hour), :class => "span2" %>
+	<%= select_tag "hours_start[minute]", options_for_select([['00',0],['30',30]], default_start_minute), :class => "span2" %>	
+	<%= select_tag "hours_start[ampm]", options_for_select(['am','pm'], default_start_ampm), :class => "span2" %>
+	<br />
+	Closing:
+	<%= select_tag "hours_end[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_end_hour), :class => "span2" %>
+	<%= select_tag "hours_end[minute]", options_for_select([['00',0],['30',30]], default_end_minute), :class => "span2" %>	
+	<%= select_tag "hours_end[ampm]", options_for_select(['am','pm'], default_end_ampm), :class => "span2" %>
   </p>
 
   <p>

@@ -1,5 +1,6 @@
 class BlocksController < ApplicationController
-  before_filter :authenticate_admin
+  authorize_resource
+  #before_filter :authenticate_admin
   respond_to :html, :js
   
   # GET /blocks

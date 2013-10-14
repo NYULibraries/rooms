@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+  skip_authorization_check
   include Authpds::Controllers::AuthpdsSessionsController
   
   # GET /validate

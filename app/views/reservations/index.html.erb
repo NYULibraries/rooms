@@ -1,12 +1,7 @@
 <h1 class="page_title">Reserve a room</h1>
 
   <div class="alert alert-block">
-  <h3>Policies:</h3>
-  <ul>
-  	<li>You must be a graduate student</li>
-  	<li>You can reserve up to 3 hours/day</li>
-  	<li>You can make only one reservation/day</li>
-  </ul>
+	<%= render "policies" %>
   </div>
 
   <h3>Specify your desired timeslot below for a list of available rooms.</h3>
@@ -45,7 +40,11 @@
     <div class="control-group">
       <label class="control-label" for="inputStartTime">Select length:</label>
       <div class="controls">
-        <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), :class => "span6"%>
+		<% if can? :create, :graduate => true %>
+        <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120]]), :class => "span6"%>
+		<% else %>
+		<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120]]), :class => "span6"%>
+		<% end %>
       </div>
     </div>
   </fieldset>

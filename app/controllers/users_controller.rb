@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  authorize_resource
   #before_filter :authenticate_admin
   respond_to :js, :html, :csv
   

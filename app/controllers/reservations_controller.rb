@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
-  before_filter :authorize_patron
+  authorize_resource
+  #before_filter :authorize_patron
   respond_to :html, :js
   respond_to :xml, :json, :csv, :except => [:new, :edit]
 
@@ -24,7 +25,9 @@ class ReservationsController < ApplicationController
     @user = current_user
     begin
       @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
+      # Options for ElasticSearch
       options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+      # Get Rooms from ElasticSearch through tire DSL
       @rooms = Room.tire.search do
         sort { by options[:sort], options[:direction] }
         page = options[:page].to_i
@@ -32,11 +35,13 @@ class ReservationsController < ApplicationController
         from (page -1) * search_size
         size search_size
       end
+    # Reservation.new will fail with invalid dates, catch this
     rescue ArgumentError => e
       @reservation = @user.reservations.new
       flash[:error] = "Please select a valid future date in the format YYYY-MM-DD." if e.message == "invalid date"
     end
     
+    # Do some policy checking on the current reservation and set errors accordingly
     if @reservation.rr_made_today?
       flash[:error] = "Sorry, you are only allowed <strong>to create one reservation per day.</strong>".html_safe
     elsif @reservation.rr_for_same_day?
@@ -150,7 +155,7 @@ class ReservationsController < ApplicationController
   def start_dt
     @start_dt ||= 
       (params[:reservation][:start_dt].blank?) ? 
-        DateTime.new(which_date.year, which_date.mon, which_date.mday, hour.to_i, params[:reservation][:minute].to_i) :
+        DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
           DateTime.parse(params[:reservation][:start_dt]) 
   end
   helper_method :start_dt
@@ -165,20 +170,16 @@ class ReservationsController < ApplicationController
   
 private 
   
+  # Parse single date field into date object
   def which_date
     @which_date ||= Date.parse(params[:reservation][:which_date])
   end
   
+  # Convert 12 to 24 hours
   def hour
-    # convert 12 hour to 24 hour for storing
-    if params[:reservation][:ampm] == "pm" && params[:reservation][:hour] != "12"
-      hour = params[:reservation][:hour].to_i + 12
-    elsif params[:reservation][:ampm] == "am" && params[:reservation][:hour] == "12" 
-      hour = 0
-    else 
-      hour = params[:reservation][:hour].to_i 
-    end
-    return hour
+    @hour ||= (params[:reservation][:ampm] == "pm" && params[:reservation][:hour] != "12") ? params[:reservation][:hour].to_i + 12 :
+                (params[:reservation][:ampm] == "am" && params[:reservation][:hour] == "12") ? hour = 0 :
+                  params[:reservation][:hour].to_i 
   end
   
 end

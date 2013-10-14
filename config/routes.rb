@@ -1,5 +1,8 @@
 Rooms::Application.routes.draw do
   scope "admin" do
+    get 'rooms/sort' => "rooms#index_sort", :as => "sort_rooms"
+    put 'rooms/sort' => "rooms#update_sort"
+    
     resources :user_sessions
     resources :users
     resources :rooms
@@ -9,9 +12,6 @@ Rooms::Application.routes.draw do
     match 'reservations/destroy/:id' => "reservations#destroy", :as => "admin_reservation_destroy"
     match 'blocks/generate' => "blocks#generate", :as => 'generate', :via => :post
     match 'blocks/destroy/:id' => "blocks#destroy", :as => "destroy_block"
-    
-    match 'rooms/update_order' => "rooms#update_order", :as => "update_order"
-    match 'rooms/refresh_images_list' => "rooms#refresh_images_list"
    
     match 'reports' => "reservations#generate_report"
   end

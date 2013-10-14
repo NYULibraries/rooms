@@ -8,8 +8,9 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  #check_authorization
+  check_authorization
 
+  # Set the system timezone to the user timezone 
   before_filter :set_timezone  
   after_filter :set_timezone
 
@@ -27,15 +28,15 @@ class ApplicationController < ActionController::Base
   #end
   #
   # Authorize patron access to this application
-  def authorize_patron
-    if current_user.is? :admin or is_authorized? 
-      return true
-    elsif !current_user.nil?
-      render 'user_sessions/unauthorized_patron'
-    else
-      redirect_to login_url unless performed?
-    end
-  end
+  #def authorize_patron
+  #  if current_user.is? :admin or is_authorized? 
+  #    return true
+  #  elsif !current_user.nil?
+  #    render 'user_sessions/unauthorized_patron'
+  #  else
+  #    redirect_to login_url unless performed?
+  #  end
+  #end
   
   # For dev purposes
   def current_user_dev
@@ -55,15 +56,15 @@ class ApplicationController < ActionController::Base
   #helper_method :is_admin?
  
   # Is borrower type included in authorized borrower types
-  def is_authorized?
-    (!current_user.nil? and auth_types.include? current_user.user_attributes[:bor_type])
-  end
-  helper_method :is_authorized?
+  #def is_authorized?
+  #  (!current_user.nil? and auth_types.include? current_user.user_attributes[:bor_type])
+  #end
+  #helper_method :is_authorized?
   
   # Array of authorized borrower types
-  def auth_types
-    @auth_types ||= ["CB"]
-  end
+  #def auth_types
+  #  @auth_types ||= ["CB"]
+  #end
   
   # Return boolean matching the url to find out if we are in the admin view
   def in_admin_view?
@@ -86,7 +87,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "Access denied!"
-    redirect_to root_url
+    render "user_sessions/unauthorized_patron", :alert => exception.message
   end
 
 end

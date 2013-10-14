@@ -6,7 +6,7 @@ class Room < ActiveRecord::Base
 
   attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link
   
-  validates_presence_of :title
+  validates_presence_of :title, :hours
   
   has_many :reservations, :dependent => :destroy
   
@@ -30,11 +30,13 @@ class Room < ActiveRecord::Base
   
 private
 
+  # Set sort_order attribute to the end
   def set_sort_order
     previous_max = Room.maximum("sort_order")
     write_attribute(:sort_order, previous_max +1)
   end
   
+  # Set size of room as int based on string
   def set_sort_size_of_room
     sort_size_of_room = size_of_room.split(" ").first.split("-").last.to_i
     write_attribute(:sort_size_of_room, sort_size_of_room)

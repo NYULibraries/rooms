@@ -10,17 +10,6 @@ module Views
         meta << favicon_link_tag('https://library.nyu.edu/favicon.ico')
       end
       
-      # Stylesheets to include in layout
-      def stylesheets
-        catalog_stylesheets = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Muli"
-        catalog_stylesheets += stylesheet_link_tag "application"
-      end
-
-      # Javascripts to include in layout
-      def javascripts
-        catalog_javascripts = javascript_include_tag "application"
-      end
-      
       def application_title
        "Reserve a room"
       end
@@ -56,12 +45,6 @@ module Views
         false
       end
       
-      # Boolean for whether or not to show search box
-      # For this application only show tabs when not in admin view
-      def show_search_box?
-        !in_admin_view?
-      end
-    
     end
   end
 end

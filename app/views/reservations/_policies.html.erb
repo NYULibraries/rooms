@@ -1,7 +1,10 @@
-<%= sidebar_section("policies_panel", content_tag(:h2, "Policies"), true) do %>
+<h3>Policies:</h3>
 <ul>
 	<li>You must be a graduate student</li>
+	<% if can? :create, :graduate => true %>
 	<li>You can reserve up to 3 hours/day</li>
+	<% else %>
+	<li>You can reserve up to 2 hours/day</li>
+	<% end %>
 	<li>You can make only one reservation/day</li>
 </ul>
-<% end %>

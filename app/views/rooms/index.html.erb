@@ -1,12 +1,22 @@
 <h1>Listing rooms</h1>
 
-<div id="box_container">
+<%= form_tag rooms_path, :class => "form-inline clearfix", :method => :get do %>
+  <p>
+    <%= hidden_field_tag :direction, (params[:direction] || 'asc') %>
+	<%= hidden_field_tag :sort, (params[:sort] || sort_column) %>
+    <div class="input-append pull-left">
+      <%= label_tag :q, "Search...", :class => "hide-text" %>
+      <%= text_field_tag :q, nil, :class => "search_q q", :placeholder => "Search..." %>
+      <%= button_tag(:type => 'submit', :id => "search", :class => "btn btn-primary search-btn") do
+        content_tag(:span, 'Search', :class => "submit-search-text")+"     "+
+        content_tag(:i, nil, :class => "icon-search icon-white")
+      end %>
+    </div>
+  </p>
+<% end %>
 
+<div id="sortable_table">
 <%= render "rooms" %>
-
 </div>
 
 <br />
-
-<%= icon_tag :add %>
-<%= link_to 'New room', new_room_path %>

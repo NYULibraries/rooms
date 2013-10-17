@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
     c.require_password_confirmation = false  
     c.disable_perishable_token_maintenance = true
   end
+  
+  #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["superuser"]
 
   def self.search(search)
     if search

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   authorize_resource
-  #before_filter :authenticate_admin
   respond_to :js, :html, :csv
   
   # GET /users
@@ -28,13 +27,9 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(params[:user])
-    respond_with(@user) do |format|
-      if @user.save
-        #format.html { redirect_to @user, notice: "Successfully created new user." and return }
-      else
-        format.html { render :new }
-      end
-    end
+    flash[:notice] = 'User was successfully created.' if @user.save
+    
+    respond_with(@user) 
   end
   
   # GET /users/1/edit

@@ -1,42 +1,9 @@
-
 <h1>Create a new block</h1>
 
-<%= form_for :block, :url => {:controller => "blocks", :action => "generate"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
-
-<div class="control-group">
-  <%= f.label :title, "Title:", :class => "control-label" %>
-  <div class="controls"><%= f.text_field :title, :class => "large_text_field" %></div>
-</div>
-
-<div class="control-group">
-  <%= f.label :start_dt, "Start date:", :class => "control-label" %>
-  <div class="controls">
-    <%= f.text_field :start_dt, :class => "large_text_field block_datetime" %>
-    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png")%>
-  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
-  </div>
-</div>
-
-<div class="control-group">
-  <%= f.label :end_dt, "End date:", :class => "control-label" %>
-  <div class="controls">
-    <%= f.text_field :end_dt, :class => "large_text_field block_datetime" %>
-    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png") %>
-  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
-  </div>
-</div>
-
-<div class="control-group">
-  <%= f.label :room_id, "Room:", :class => "control-label" %>
-  <div class="controls">
-    <%= select_tag "block[room_id]", options_from_collection_for_select(Room.all, 'id', 'title')%>
-  </div>
-</div>
-
-<%= f.hidden_field "user_id", :value => current_user.id %>
-<%= f.hidden_field "is_block", :value => "true" %>
-<%= f.submit "Create" %>
-
+<% if @existing_reservations.blank? %>
+	<%= render "new" %>
+<% else %>
+	<%= render "destroy_multiple" %>
 <% end %>
 
 <%= icon_tag :back %>

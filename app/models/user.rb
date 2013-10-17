@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   
   attr_accessible :crypted_password, :current_login_at, :current_login_ip, :email, :firstname, :last_login_at, :last_login_ip, :last_request_at, :lastname, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id, :user_attributes, :username
   attr_accessible :roles
-  scope :non_admin, where("user_attributes NOT LIKE '%:room_reserve_admin: true%'")
-  scope :admin, where("user_attributes LIKE '%:room_reserve_admin: true%'")
+  scope :non_admin, where("roles_mask = 0 OR roles_mask IS NULL")
+  scope :admin, where("roles_mask > 0")
   scope :inactive, where("last_request_at < ?", 1.year.ago)
 
   serialize :user_attributes
@@ -52,6 +52,32 @@ class User < ActiveRecord::Base
   
   def is?(role)
     roles.include?(role.to_s)
+  end
+  
+  def is_admin?
+    (self.is? :shanghai_admin) || (self.is? :ny_admin) || (self.is? :superuser)
+  end
+  
+  def is_authorized?
+    #https://web1.library.nyu.edu/privileges_guide/patrons/54-nyu-phd-student.json?sublibrary_code=BOBST
+    #"permission_value_id":134
+    #(self.is_admin? || self.is_graduate? || self.is_undergradute?)
+  end
+  
+  def is_shanghai?
+    # Shanghai borrower statuses
+  end
+  
+  def is_ny?
+    # NY borrower status
+  end
+  
+  def is_undergraduate?
+    # Undergraduate borrower status
+  end
+  
+  def is_graduate?
+    # Graduate statuses
   end
 
   

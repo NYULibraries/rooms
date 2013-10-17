@@ -1,0 +1,97 @@
+<%= form_for @block, :url => {:controller => "blocks", :action => "create"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
+	<% if @block.errors.any? %>  
+	  <div id="error_explanation" class="alert alert-error">  
+	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
+	    <ul>  
+	    <% @block.errors.full_messages.each do |msg| %>  
+	      <li><%= msg %></li>  
+	    <% end %>  
+	    </ul>  
+	  </div>  
+	<% end %>
+
+	<div class="control-group">
+	  <%= f.label :title, "Title:", :class => "control-label" %>
+	  <div class="controls"><%= f.text_field :title, :class => "large_text_field" %></div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :start_dt, "Start date:", :class => "control-label" %>
+	  <div class="controls">
+	    <%= f.text_field :start_dt, :class => "large_text_field block_datetime" %>
+	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png")%>
+	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :end_dt, "End date:", :class => "control-label" %>
+	  <div class="controls">
+	    <%= f.text_field :end_dt, :class => "large_text_field block_datetime" %>
+	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png") %>
+	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :room_id, "Room:", :class => "control-label" %>
+	  <div class="controls">
+		<% if params[:reservation].blank? || params[:reservation][:room_id].blank? %>
+			<%= f.select :room_id, options_from_collection_for_select(Room.all, 'id', 'title') %>
+		<% else %>
+			<%= select :reservation, :room_id, options_from_collection_for_select(Room.all, 'id', 'title', params[:reservation][:room_id]) %>
+		<% end %>
+	  </div>
+	</div>
+
+	<%= f.hidden_field "is_block", :value => "true" %>
+
+	<% unless @existing_reservations.blank? %>
+		<%#= render "existing_reservations" %>
+		<h4>Edit cancellation email text</h4>
+
+		<div class="well well-small">
+			<strong>:room</strong> will print the title of the room.  <br />
+			<strong>:start</strong> will print the start date/time of the reservation. <br />
+			<strong>:end</strong> will print the end date/time of the reservation.
+		</div>
+
+		<div id="edit_cancellation_email">
+			<%= text_area_tag "cancellation_email", "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact gswg@library.nyu.edu.\n\nSorry for the inconvenience.", :rows => 5, :class => "span12" %>
+		</div>
+
+		<label class="radio inline">
+			<input type="radio" name="cancel" value="delete_with_alert" checked="checked" />
+			Cancel and alert
+		</label>
+
+		<label class="radio inline">
+			<input type="radio" name="cancel" value="delete_no_alert" />
+			Cancel without alert
+		</label>
+
+		<br />
+
+		<label class="checkbox">
+			<input type="checkbox" name="cc_admin" id="cc_admin" />
+			Send a copy to <input type="text" class="large_text_field" name="cc_admin_email" id="cc_admin_email" value="gswg@library.nyu.edu" />
+		</label>
+
+		<br />
+
+		<label class="checkbox">
+			<input type="checkbox" name="cc_group" id="cc_group" />
+			Send a copy to reservation CCs
+		</label>
+
+		<% @existing_reservations.each do |res| %>
+			<%= hidden_field_tag "reservations_to_delete[]", res.id %>
+		<% end %>
+
+		<br /><br />
+		<%= f.submit "Continue" %>
+	<% else %>
+		<%= f.submit "Create" %>
+	<% end %>
+
+<% end %>

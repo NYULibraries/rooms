@@ -9,18 +9,18 @@ class Reservation < ActiveRecord::Base
   # Validations for Reservation
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
   # Allow overlap if reservation is an admin-created block because all other reservations will be deleted for the block
-  validate :doesnt_overlap, :if => Proc.new { |room_id| room_id? }, :unless => Proc.new { |is_block| is_block? }, :on => :create
-  validate :validate_cc
+  validate :just_taken, :if => Proc.new { |room_id| room_id? }, :unless => Proc.new { |is_block| is_block? }, :on => :create
+  validate :existing_reservations_in_block, :if => Proc.new { |room_id| room_id? }, :if => Proc.new { |is_block| is_block? }, :on => :create
+  validate :validate_cc, :unless => Proc.new { |is_block| is_block? }
   # Require CCs if collaborative room
-  validate :collaborative_requires_ccs
-  validate :dates_are_valid?
+  validate :collaborative_requires_ccs, :unless => Proc.new { |is_block| is_block? }
+  validate :check_dates
   validate :end_comes_after_start
-  after_initialize :dates_are_valid? # Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
+  after_initialize :check_dates # Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
   
   # Non-database attributes
   attr_accessor :created_at_day, :created_at_timezone, :deleted_at_timezone
   # Require initialization
-  #after_initialize :populate_created_at_day
   after_initialize :populate_timezones
   
   serialize :deleted_by, Hash
@@ -28,7 +28,7 @@ class Reservation < ActiveRecord::Base
   # Scopes
   scope :active_with_blocks, :conditions => { :deleted => false }, :order => "start_dt ASC"
   scope :active_non_blocks, :conditions => { :deleted => false, :is_block => false }, :order => "start_dt ASC"
-  scope :blocks, :conditions => { :is_block => true }, :order => "start_dt ASC"
+  scope :blocks, :conditions => { :is_block => true }
   scope :deleted, :conditions => { :is_block => false, :deleted => true }, :order => "start_dt ASC"
   scope :current, lambda { where("end_dt > ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
   scope :past, lambda { where("end_dt <= ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
@@ -72,19 +72,6 @@ class Reservation < ActiveRecord::Base
     room 'Room Type' do |room| room.type_of_room end
   end
 
-  # Created_at_day is not stored in database and requires preprocessing, 
-  # so after object is found initialize Rails attr from ElasticSearch
-  #def populate_created_at_day
-  #  if new_record?
-  #    self.created_at_day = Time.zone.now.strftime("%Y-%m-%d")
-  #  else
-  #    @populate_created_at_day ||= Reservation.search "id:#{id}"
-  #    unless @populate_created_at_day.results.empty?
-  #      self.created_at_day = @populate_created_at_day.results.first.created_at_day
-  #    end
-  #  end
-  #end
-  
   # Timezone attrs are not stored in database, so when the object is found 
   # initialize the Rails attr from the ElasticSearch results
   def populate_timezones
@@ -96,6 +83,36 @@ class Reservation < ActiveRecord::Base
         self.created_at_timezone = @populate_timezones.results.first.created_at_timezone
         self.deleted_at_timezone = Time.zone.name
       end
+    end
+  end
+
+  # Class function finds existing reservations for this timeslot
+  def self.existing_reservations(room_id, start_dt, end_dt, creating_block = false, results_size = 1)
+    if !start_dt.blank? and !end_dt.blank?
+      start_dt = start_dt.to_datetime.change(:offset => "+0000")
+      end_dt = end_dt.to_datetime.change(:offset => "+0000")
+      existing_reservations = Reservation.tire.search :load => { :include => 'user' }  do 
+        query { all }
+        filter :term, :is_block => false if creating_block
+        filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if creating_block
+        filter :term, :room_id => room_id
+        filter :term, :deleted => false
+        filter :or, 
+          { :and => [
+              { :range => { :start_dt => { :gte => start_dt } } },
+              { :range => { :start_dt => { :lt => end_dt } } }
+          ]},
+          { :and => [
+              { :range => { :end_dt => { :gt => start_dt } } },
+              { :range => { :end_dt => { :lte => end_dt } } }
+          ]},
+          { :and => [
+              { :range => { :start_dt => { :lte => start_dt } } },
+              { :range => { :end_dt => { :gte => end_dt } } }
+          ]}
+        size results_size
+      end
+      return existing_reservations
     end
   end
 
@@ -142,44 +159,29 @@ class Reservation < ActiveRecord::Base
 private
 
   # Start date and end date must be present and valid before inserting into database
-  def dates_are_valid?
+  def check_dates
     if !start_dt.blank? and !end_dt.blank? and (!DateTime.parse(start_dt.to_s) or !DateTime.parse(end_dt.to_s))
       errors.add(:base, "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30.")
     end
   end
 
-  # Do a ElasticSearch search to make sure there isn't already an overlapping reservation in the index
-  # Since user's cannot generally reserve a timeslot if another reservation overlaps, this will only occur
-  # when more than one user is simultaneously attempting to reserve the same room/time
-  def doesnt_overlap
-    if !start_dt.blank? and !end_dt.blank?
-      room_id = room.id
-      start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
-      end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
-      status_search = Reservation.search do 
-        query { all }
-        filter :term, :room_id => room_id
-        filter :term, :deleted => false
-        filter :or, 
-          { :and => [
-              { :range => { :start_dt => { :gte => start_dt } } },
-              { :range => { :start_dt => { :lt => end_dt } } }
-          ]},
-          { :and => [
-              { :range => { :end_dt => { :gt => start_dt } } },
-              { :range => { :end_dt => { :lte => end_dt } } }
-          ]},
-          { :and => [
-              { :range => { :start_dt => { :lte => start_dt } } },
-              { :range => { :end_dt => { :gte => end_dt } } }
-          ]}
-        size 1
-      end
-      status = status_search.results.first
-      unless status.blank?
-        errors.add(:base, "Sorry, your selected reservation slot was just taken. Please check the availability again.")
-      end
+  # Print an error message if another reservation exists in the selected timeslot when user is creating a reservation
+  def just_taken
+    if timeslot_contains_reservations?
+      errors.add(:base, "Sorry, your selected reservation slot was just taken. Please check the availability again.")
     end
+  end
+  
+  # Print an error message if another reservation exists in the selected timeslot when admin is creating a block
+  def existing_reservations_in_block
+    if timeslot_contains_reservations?
+      errors.add(:base, "Sorry, your selection is unavailable. Please check existing reservations.")
+    end
+  end
+  
+  # Boolean returns true if the selected timeslot (i.e. start_dt through end_dt) contains other reservations
+  def timeslot_contains_reservations?
+    return (start_dt.blank? || end_dt.blank?) || (self.class.existing_reservations(room.id, start_dt, end_dt, is_block).results.size > 0)
   end
   
   # If CC/s are present, make sure it/they're valid email/s
@@ -191,7 +193,7 @@ private
   
   # If collaborative room, valid CCs are required, and it can't just be the user's email
   def collaborative_requires_ccs
-    if room_id? and room.type_of_room.strip.eql? "Collaborative" and !is_block?
+    if room_id? and room.type_of_room.strip.eql? "Collaborative"
       if cc? 
         if current_user_is_only_email? cc
           errors.add(:base, "For collaborative rooms, please add at least one other e-mail besides your own.")

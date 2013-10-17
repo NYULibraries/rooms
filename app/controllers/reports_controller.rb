@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
-  authorize_resource
-  #before_filter :authenticate_admin
+  authorize_resource :class => false
 
   #Generate a report of reservations based on submitted params
   def index

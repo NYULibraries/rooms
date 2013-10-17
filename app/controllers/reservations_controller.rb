@@ -109,8 +109,8 @@ class ReservationsController < ApplicationController
 
   # PUT /reservations/1
   def delete
-    @user = current_user    
-    @reservation = @user.reservations.find(params[:reservation_id])
+    @reservation = Reservation.find(params[:reservation_id])
+    @user = @reservation.user
     @reservation.deleted = true
     @reservation.deleted_by = { :by_user => current_user.id }
     #@reservation.deleted_at_timezone = Time.zone.name
@@ -125,7 +125,7 @@ class ReservationsController < ApplicationController
     
     respond_with(@reservation) do |format|
       format.js
-      if @user.is? :admin and in_admin_view?
+      if current_user.is_admin? and params[:admin_delete]
         format.html { redirect_to user_path(@user) } 
       else
         format.html { redirect_to root_url }

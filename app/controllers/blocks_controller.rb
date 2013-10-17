@@ -1,6 +1,5 @@
 class BlocksController < ApplicationController
-  authorize_resource
-  #before_filter :authenticate_admin
+  authorize_resource :class => false
   respond_to :html, :js
   
   # GET /blocks
@@ -13,95 +12,73 @@ class BlocksController < ApplicationController
   # GET /blocks/new
   def new
     @block = Reservation.new
-  end
-  
-  # Generates new block request for approval before creating
-  def generate
-    @block = Reservation.new(params[:block]) 
-    @room = Room.find(params[:block][:room_id])
-    room_id = @room.id
-    
-    start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
-    end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
-
-    # Find all reservations that fall between this selected date range      
-    @existing_reservations = Reservation.tire.search :load => { :include => "user" } do
-      query do
-        filtered do
-          filter :term, :deleted => false
-          filter :term, :room_id => room_id
-          filter :term, :is_block => false
-          filter :range, :start_dt => { :gte => Time.now }
-          filter :or, 
-            { :range => { :start_dt => { :from => start_dt, :to => end_dt } } } ,
-            { :range => { :end_dt => { :from => start_dt, :to => end_dt } } } ,
-            :and => [
-                { :range => { :start_dt => { :lte => start_dt } } },
-                { :range => { :end_dt => { :gte => end_dt } } }
-            ]
-        end
-      end
-      size 300
-    end
-    
-    #Reservation.active_non_blocks.where("room_id = ? AND start_dt >= ? AND ((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", params[:block][:room_id], Time.now, @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt)
-
-    # Set the fields to the proper datetime objects   
-    @block.start_dt = start_dt
-    @block.end_dt = end_dt
-    @block.title = "Scheduled closure" if params[:block][:title].blank?
-    
     respond_with(@block)
   end
   
   # POST /blocks
   def create
-    @block = Reservation.new(params[:block])
+    @block = Reservation.new(params[:reservation])
     @block.user_id = current_user.id
     @block.is_block = true
-    @room = Room.find(params[:block][:room_id])
-
-    @start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
-    @end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
+    @block.title = (params[:reservation][:title].blank?) ? "Scheduled closure" : params[:reservation][:title]
     
-    # If there are existing reservations and a cancellation request has been submitted...
-    unless params[:cancel].blank?
-      # Delete all found reservations
+    respond_with(@block) do |format|
+      if @block.save
+        flash[:notice] = "Block successfully created."
+        format.html { redirect_to blocks_url, notice: "Block successfully created." }
+      else
+        # If the block can't save, you will render :new with a list of existing reservations and options
+        @existing_reservations = Reservation.existing_reservations(params[:reservation][:room_id], params[:reservation][:start_dt], params[:reservation][:end_dt], true, 1000)
+        format.html { render :new, params: params }
+      end
+    end
+  end
+  
+  def destroy_multiple
+    @block = Reservation.new(params[:reservation])
+    @block.user_id = current_user.id
+    @block.is_block = true
+    @block.title = (params[:reservation][:title].blank?) ? "Scheduled closure" : params[:reservation][:title]
+    
+    # If this has been submitted with a cancel request, delete conflicting reservations
+    unless params[:cancel].blank? || params[:reservations_to_delete].blank?
       formatted_reservations = ""
-      @existing_reservations = Reservation.find(params[:reservations_to_delete])
-      @existing_reservations.each do |res|
+      reservations_to_delete = Reservation.find(params[:reservations_to_delete])
+      reservations_to_delete.each do |res|
         # Mark reservation as deleted
         if res.update_attributes(:deleted => true, :deleted_by => { :by_block => true })
           # Send an email if choice to alert users was made
           ReservationMailer.block_cancellation_email(res, params[:cc_group], params[:cancellation_email]).deliver if params[:cancel].eql? "delete_with_alert"
+          # Format each deleted reservation to send email to admin
           formatted_reservations += "User: #{res.user.username}; Room: #{res.room.title}; Reservation: #{res.start_dt.strftime('%a. %b %d, %Y %I:%M %p')} -- #{res.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}\n"
-        else
-          flash[:error] = "Could not delete reservation with id: #{res.id}. Please report this to the system administrator: gswg@library.nyu.edu."
-          render :new and return false
         end
       end
+      Tire.index("#{Rails.env}_reservations").refresh
       # Send an email to the administrator specified if the checkbox was selected
       ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
+
+      #reservations_not_deleted = Reservation.find(params[:reservations_to_delete]).delete_if {|res| res.deleted? }
     end
-   
-    respond_with(@block) do |format|
-      if @block.save
-        format.html { redirect_to blocks_url, notice: "Block successfully created." }
-      else
-        flash[:error] = "Could not save block. If this problem persists please report to administrator."
-        format.html { render :new }
-      end
+    
+    if @block.save
+      redirect_to blocks_url, notice: "Block successfully created." 
+    else
+      # If the block can't save, you will render :new with a list of existing reservations and options
+      flash[:error] = "Could not delete existing reservations. Please contact web administrator web.services@library.nyu.edu."
+      render :new, params: params
     end
   end
   
   # DELETE /blocks/1
   def destroy
     @block = Reservation.find(params[:id])
-    @block.destroy
+    flash[:notice] = "Block was successfully deleted." if @block.destroy
 
-    respond_with(@block) do |format|
-      format.html { redirect_to blocks_url, notice: "Block was successfully deleted." }
-    end
+    respond_with(@block, :location => blocks_url)
+  end
+  
+  def existing_reservations
+    @existing_reservations = Reservation.find(params[:reservations_to_delete])
   end
   
 end

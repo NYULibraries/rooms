@@ -127,6 +127,13 @@ ul#list_rooms {
 
 img.preview { max-width: 300px ; }
 
+ul.admin_options > li > ul {
+  padding: 0 15px !important;
+  list-style-type: disc !important;
+  list-style-position: inside !important;
+}
+
+
 /* Mobile look for modal */ 
 @media (max-width: 480px) {
   .modal-header h1 {

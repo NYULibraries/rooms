@@ -51,80 +51,6 @@ module ApplicationHelper
     end
   end
   
-  # Logic for when to disable the reservation radio button in the availability form
-  #
-  # * Return true if the room is closed during selected hour and skip search for existing reservations
-  # * Return true if current classroom is in use at the selected time
-  # * Return true if time is in the past
-  # * Otherwise return false, button is not disabled 
-  def disable_reservation_button(room)
-    times = [start_dt]
-    while true do
-      tmp = times.last + 30.minutes
-      break if tmp == (end_dt)
-      times.push(tmp)
-    end
-    
-    times.each do |timeslot|
-  		t_next = timeslot + 30.minutes
-      
-      #Return true if the room is closed during this hour and forgo search for existing reservations
-      return true if is_in_past?(timeslot) or !room_is_open?(room,timeslot)
-      
-      status_search = Reservation.search do 
-        query do
-          filtered do 
-            filter :term, :room_id => room.id
-            filter :term, :deleted => false
-            filter :term, :is_block => false
-            filter :or, 
-              { :and => [
-                  { :range => { :start_dt => { :gte => timeslot } } },
-                  { :range => { :end_dt => { :lte => t_next } } }
-              ]},
-              { :and => [
-                  { :range => { :start_dt => { :lte => timeslot } } },
-                  { :range => { :end_dt => { :gte => t_next } } }
-              ]}
-          end
-        end
-        size 1
-      end
-      status = status_search.first
-
-  		# Disable radio button if classroom is in use at this time
-  		return true if !status.blank? 
-    end
-    return false
-  end
-  
-  # Find if the room (r) is open during the timeslot (t)
-  def room_is_open?(room,t)
-    r = room.load
-    t_as_time = t.strftime('%H%M').to_i
-    unless r.hours.nil? or r.hours[:hours_start].nil? or r.hours[:hours_end].nil? or (r.hours[:hours_end] == r.hours[:hours_start])
-      #Parse our start and end hour and add 12 to the hour if in PM
-      hour_start = (r.hours[:hours_start][:ampm].to_s == "am") ?  
-                      (r.hours[:hours_start][:hour].to_i == 12) ? 0 : r.hours[:hours_start][:hour].to_i : 
-                          (r.hours[:hours_start][:hour].to_i == 12) ? r.hours[:hours_start][:hour].to_i : r.hours[:hours_start][:hour].to_i + 12
-      hour_end = (r.hours[:hours_end][:ampm].to_s == "am") ?  
-                    (r.hours[:hours_end][:hour].to_i == 12) ? 0 : r.hours[:hours_end][:hour].to_i : 
-                      (r.hours[:hours_end][:hour].to_i == 12) ? r.hours[:hours_end][:hour].to_i : r.hours[:hours_end][:hour].to_i + 12
-      #Create dates and format them as comparable integers
-      open_time = DateTime.new(1,1,1,hour_start,r.hours[:hours_start][:minute].to_i).strftime('%H%M').to_i
-      close_time = DateTime.new(1,1,1,hour_end,r.hours[:hours_end][:minute].to_i).strftime('%H%M').to_i
-      #If close time is before opening time (i.e. hours wrap back around to am) 
-      #and current time is less than the closing time return true
-      return true if close_time < open_time and t_as_time < close_time
-      #Some processing for wraparound hours
-      close_time = (close_time < open_time) ? close_time + 2400 : close_time
-      #See if current time (t) is between opening and closing
-      return (t_as_time >= open_time and t_as_time < close_time)
-    end
-    #The room is always open if there are no hours set up
-    return true
-  end
-  
   # Generate link to sorting action
   def sortable(column, title = nil, url_options = {}, remote = true)
     title ||= column.titleize
@@ -145,12 +71,9 @@ module ApplicationHelper
     sanitize(t, :tags => %w(b strong i em br p a ul li), :attributes => %w(target href class))
   end
   
-  # Generate an abbr tag for long words
-  def word_break word, break_at = 10
-    if word.length > break_at
-      content_tag :abbr, truncate(word, :length => 10), :title => word
-    else
-      word
-    end
+  # Set a class to highlight item if this ID is selected in query string parameters
+  def highlight(reservation)
+    (!params[:highlight].blank? and params[:highlight].include? reservation.id.to_s) ? 'warning' : ''
   end
+  
 end

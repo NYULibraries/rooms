@@ -98,7 +98,7 @@
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= prettify_created_at_date(r.created_at)%></td>
-			<td><%= link_to "Destroy", admin_reservation_destroy_path(r), :confirm => "Are you sure?", :method => :delete %>
+			<td><%= link_to "Destroy", reservation_delete_path(r, :admin_delete => true), :method => :put, :confirm => "Are you sure?" %>
 		</tr>
 		<% end %>
 		</tbody>

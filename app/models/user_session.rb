@@ -7,7 +7,7 @@ class UserSession < Authlogic::Session::Base
   def additional_attributes
     h = {}
     return h unless pds_user
-    h[:room_reserve_admin] = true if Settings.login.default_admins.include? pds_user.uid
+    h[:room_reserve_admin] = true if Settings.login.default_admins.include? pds_user.uid #user.roles = ["superuser"]
     return h
   end
   

@@ -1,15 +1,19 @@
 <% if can? :manage, :all %>
 	<%= sidebar_section("admin_panel", content_tag(:h2, "Admin Panel"), true) do %>
 	    <ul class="admin_options">
-	      <% if can? :manage, Room %><li><%= link_to "Manage Rooms", rooms_url %></li><% end %>
+	      <li><%= (can? :manage, Room) ? link_to("Manage Rooms", rooms_url) : "Manage Rooms" %>
+			<ul>
+				<% if can? :manage, Room, :room_group => :graduate_ny %><li><%= link_to "Graduate Rooms", rooms_url(:room_group => :graduate_ny) %></li><% end %>
+				<% if can? :manage, Room, :room_group => :undergraduate_ny %><li><%= link_to "Undergraduate Rooms", rooms_url(:room_group => :undergraduate_ny) %></li><% end %>
+				<% if can? :manage, Room, :room_group => :undergraduate_shanghai %><li><%= link_to "Shanghai Undergraduate Rooms", rooms_url(:room_group => :undergraduate_shanghai) %></li><% end %>
+			</ul>
+		  </li>
 	      <% if can? :manage, User %><li><%= link_to "Manage Users", users_url %></li><% end %>
-	      <% if can? :manage, Reservation %><li><%= link_to "Manage Blocks", blocks_url %></li><% end %>
-	      <% if can? :manage, Reservation %><li><%= link_to "Reporting", reports_url %></li><% end %>
+	      <% if can? :manage, :block %><li><%= link_to "Manage Blocks", blocks_url %></li><% end %>
+	      <% if can? :manage, :report %><li><%= link_to "Reporting", reports_url %></li><% end %>
 	    </ul>
 	<% end -%>
 <% end %>
-
-<%#= render "reservations/policies" %>
 
 <% unless @user.nil? or in_admin_view? %>
 <%= render :partial => "reservations/past_reservations"%>

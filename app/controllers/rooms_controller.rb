@@ -65,7 +65,7 @@ class RoomsController < ApplicationController
   # GET /rooms/sort
   # Get rooms for sorting
   def index_sort
-    @rooms = Room.all
+    @rooms = Room.order(sort_column.to_sym)
 
     respond_with(@rooms)
   end
@@ -73,15 +73,19 @@ class RoomsController < ApplicationController
   # PUT /rooms/sort  
   # Update sort order of rooms
   def update_sort
-    @rooms = Room.all
+    @rooms = Room.order(sort_column.to_sym)
     
+    # Have to iterate through each room in order to reindex sort order
+    # Could be a scalability issue moving forward
     params[:rooms].each_with_index do |id, index|
-      Room.update_all(['sort_order=?', index+1],['id=?',id])
+      room = Room.find(id)
+      room.sort_order = index+1
+      room.save
     end 
-    # And then reindex
 
-    flash[:notice] = 'Room order was successfully updated.'
-    respond_with(@rooms)
+    flash[:notice] = "Room order was successfully updated."
+
+    respond_with(@rooms, :location => sort_rooms_url)
   end
   
   # Implement sort column function for this model

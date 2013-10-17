@@ -1,0 +1,50 @@
+<%= form_for @block, :url => {:controller => "blocks", :action => "create"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
+	
+	<% if @block.errors.any? %>  
+	  <div id="error_explanation" class="alert alert-error">  
+	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
+	    <ul>  
+	    <% @block.errors.full_messages.each do |msg| %>  
+	      <li><%= msg %></li>  
+	    <% end %>  
+	    </ul>  
+	  </div>  
+	<% end %>
+
+	<div class="control-group">
+	  <%= f.label :title, "Title:", :class => "control-label" %>
+	  <div class="controls"><%= f.text_field :title, :class => "large_text_field" %></div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :start_dt, "Start date:", :class => "control-label" %>
+	  <div class="controls">
+	    <%= f.text_field :start_dt, :class => "large_text_field block_datetime" %>
+	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png")%>
+	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :end_dt, "End date:", :class => "control-label" %>
+	  <div class="controls">
+	    <%= f.text_field :end_dt, :class => "large_text_field block_datetime" %>
+	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png") %>
+	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <%= f.label :room_id, "Room:", :class => "control-label" %>
+	  <div class="controls">
+		<% if params[:reservation].blank? || params[:reservation][:room_id].blank? %>
+			<%= f.select :room_id, options_from_collection_for_select(Room.all, 'id', 'title') %>
+		<% else %>
+			<%= select :reservation, :room_id, options_from_collection_for_select(Room.all, 'id', 'title', params[:reservation][:room_id]) %>
+		<% end %>
+	  </div>
+	</div>
+
+	<%= f.submit "Create" %>
+
+<% end %>

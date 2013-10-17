@@ -8,38 +8,96 @@ module ReservationsHelper
     times_array.each do |timeslot|
 	    t_next = timeslot + 30.minutes #next iteration's time
 	    
-	    reservation_search = Reservation.search do 
-        query do
-          filtered do 
-            filter :term, :deleted => false
-            filter :term, :room_id => room.id
-            filter :or, 
-              { :and => [
-                  { :range => { :start_dt => { :gte => timeslot } } },
-                  { :range => { :end_dt => { :lte => t_next } } }
-              ]},
-              { :and => [
-                  { :range => { :start_dt => { :lte => timeslot } } },
-                  { :range => { :end_dt => { :gte => t_next } } }
-              ]}
-          end
-        end
-        size 1
-      end
-      reservation = reservation_search.first
+      reservation = reservation_search(timeslot, t_next, room.id).first
 
       html += content_tag(:td, :class => timeslot_class(reservation, room, timeslot)) do 
-        if @user.is? :admin and !reservation.nil? and !reservation.is_block
+        if @user.is_admin? and !reservation.nil? and !reservation.is_block
           link_to(icon_tag(:info), user_path(reservation.user_id, :params => {:highlight => [reservation.id]}, :anchor => reservation.id), :title => "Room is booked", :alt => "Room is booked", :class => "preview_link reservation_whois", :target => "_blank") 
         elsif !room_is_open?(room, timeslot)
           link_to(icon_tag(:warning), "#", :title => "Room is closed", :alt => "Room is closed", :class => "preview_link", :target => "_blank")
         elsif room_is_open?(room, timeslot) and !reservation.nil? and reservation.is_block
-          link_to(icon_tag(:warning), "#", :title => reservation.title, :alt => reservation.title, :class => "preview_link", :target => "_blank") 
+          reservation_from_db = reservation.load
+          link_to(icon_tag(:warning), "#", :title => reservation_from_db.title, :alt => reservation_from_db.title, :class => "preview_link", :target => "_blank") 
         end
       end
 	  end
 	 
 	  return html.html_safe
+  end
+  
+  # Logic for when to disable the reservation radio button in the availability form
+  #
+  # * Return true if the room is closed during selected hour and skip search for existing reservations
+  # * Return true if current classroom is in use at the selected time
+  # * Return true if time is in the past
+  # * Otherwise return false, button is not disabled 
+  def disable_reservation_button(room)
+    times = [start_dt]
+    while true do
+      tmp = times.last + 30.minutes
+      break if tmp == (end_dt)
+      times.push(tmp)
+    end
+    
+    times.each do |timeslot|
+  		t_next = timeslot + 30.minutes
+      
+      #Return true if the room is closed during this hour and forgo search for existing reservations
+      return true if is_in_past?(timeslot) or !room_is_open?(room,timeslot)
+      
+  		# Disable radio button if classroom is in use at this time
+  		return true if !reservation_search(timeslot, t_next, room.id).empty? 
+    end
+    return false
+  end
+  
+  # ElasticSearch search to find if a reservation exists in a given timeslot
+  def reservation_search(timeslot, t_next, room_id)
+    return Reservation.search do 
+      query do
+        filtered do 
+          filter :term, :room_id => room_id
+          filter :term, :deleted => false
+          filter :or, 
+            { :and => [
+                { :range => { :start_dt => { :gte => timeslot } } },
+                { :range => { :end_dt => { :lte => t_next } } }
+            ]},
+            { :and => [
+                { :range => { :start_dt => { :lte => timeslot } } },
+                { :range => { :end_dt => { :gte => t_next } } }
+            ]}
+        end
+      end
+      size 1
+    end
+  end
+  
+  # Find if the room (r) is open during the timeslot (t)
+  def room_is_open?(room,t)
+    r = room.load
+    t_as_time = t.strftime('%H%M').to_i
+    unless r.hours.nil? or r.hours[:hours_start].nil? or r.hours[:hours_end].nil? or (r.hours[:hours_end] == r.hours[:hours_start])
+      #Parse our start and end hour and add 12 to the hour if in PM
+      hour_start = (r.hours[:hours_start][:ampm].to_s == "am") ?  
+                      (r.hours[:hours_start][:hour].to_i == 12) ? 0 : r.hours[:hours_start][:hour].to_i : 
+                          (r.hours[:hours_start][:hour].to_i == 12) ? r.hours[:hours_start][:hour].to_i : r.hours[:hours_start][:hour].to_i + 12
+      hour_end = (r.hours[:hours_end][:ampm].to_s == "am") ?  
+                    (r.hours[:hours_end][:hour].to_i == 12) ? 0 : r.hours[:hours_end][:hour].to_i : 
+                      (r.hours[:hours_end][:hour].to_i == 12) ? r.hours[:hours_end][:hour].to_i : r.hours[:hours_end][:hour].to_i + 12
+      #Create dates and format them as comparable integers
+      open_time = DateTime.new(1,1,1,hour_start,r.hours[:hours_start][:minute].to_i).strftime('%H%M').to_i
+      close_time = DateTime.new(1,1,1,hour_end,r.hours[:hours_end][:minute].to_i).strftime('%H%M').to_i
+      #If close time is before opening time (i.e. hours wrap back around to am) 
+      #and current time is less than the closing time return true
+      return true if close_time < open_time and t_as_time < close_time
+      #Some processing for wraparound hours
+      close_time = (close_time < open_time) ? close_time + 2400 : close_time
+      #See if current time (t) is between opening and closing
+      return (t_as_time >= open_time and t_as_time < close_time)
+    end
+    #The room is always open if there are no hours set up
+    return true
   end
   
   # Get the css classes to color-code availability grid
@@ -52,6 +110,10 @@ module ReservationsHelper
   # Return true if the :timeslot: is in the past, and false otherwise
   def is_in_past?(timeslot)
     return (timeslot.strftime("%Y-%m-%d %H:%M").to_datetime <= Time.zone.now.strftime("%Y-%m-%d %H:%M").to_datetime)
+  end
+
+  def times_array(padding = true)
+    @times_array ||= get_times_array(padding)
   end
   
   # Generate an instance variable with an array of times starting one hour before the selected start hour
@@ -67,16 +129,7 @@ module ReservationsHelper
     end
     return times
   end
-  
-  def times_array(padding = true)
-    @times_array ||= get_times_array(padding)
-  end
 
-  # Set a class to highlight item if this ID is selected in query string parameters
-  def highlight(reservation)
-    (!params[:highlight].blank? and params[:highlight].include? reservation.id.to_s) ? 'warning' : ''
-  end
-  
   # Get information about who deleted the given reservation
   def get_deleted_by(reservation)
     if reservation.deleted?
@@ -92,66 +145,5 @@ module ReservationsHelper
       end
     end
   end
-  
-  def room_type_options
-    @room_types ||= Rails.cache.fetch "room_types", :expires_in => 30.days do
-      Room.where("type_of_room IS NOT NULL and type_of_room != ''").uniq.pluck(:type_of_room)
-    end
-  end
-  
-  def college_name_options
-    colleges = []
-    @user_college_names ||= Rails.cache.fetch "user_college_names", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%college_name%'").uniq.pluck(:user_attributes)
-    end
-    @user_college_names.each do |p|
-      colleges.push(p[:college_name]) unless colleges.include? p[:college_name] or p[:college_name].blank?
-    end
-    colleges
-  end
-  
-  def college_code_options
-    college_codes = []
-    @user_college_codes ||= Rails.cache.fetch "user_college_codes", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%college_code%'").uniq.pluck(:user_attributes)
-    end
-    @user_college_codes.each do |p|
-      college_codes.push(p[:college_code]) unless college_codes.include? p[:college_code] or p[:college_code].blank?
-    end
-    college_codes
-  end
-  
-  def dept_options
-    depts = []
-    @user_dept_names ||= Rails.cache.fetch "user_dept_names", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%dept_name%'").uniq.pluck(:user_attributes)
-    end
-    @user_dept_names.each do |p|
-      depts.push(p[:dept_name]) unless depts.include? p[:dept_name] or p[:dept_name].blank?
-    end
-    depts
-  end
-  
-  def major_options
-    majors = []
-    @user_majors ||= Rails.cache.fetch "user_majors", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%major%'").uniq.pluck(:user_attributes)
-    end
-    @user_majors.each do |p|
-      majors.push(p[:major]) unless majors.include? p[:major] or p[:major].blank?
-    end
-    majors
-  end
-  
-  def user_status_options
-    user_statuses = []
-    @user_bor_statuses ||= Rails.cache.fetch "user_bor_statuses", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%bor_status%'").uniq.pluck(:user_attributes)
-    end
-    @user_bor_statuses.each do |p|
-      user_statuses.push(p[:bor_status]) unless user_statuses.include? p[:bor_status] or p[:bor_status].blank?
-    end
-    user_statuses
-  end
-  
+
 end

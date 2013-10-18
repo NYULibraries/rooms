@@ -24,6 +24,7 @@ coverage
 doc
 
 *.sql
+sqldumps/
 
 config/settings.local.yml
 config/settings/*.local.yml

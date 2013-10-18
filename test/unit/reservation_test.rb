@@ -86,17 +86,7 @@ class ReservationTest < ActiveSupport::TestCase
       assert_empty @reservation.errors
     end
   end
-  
-  test "check start_dt comes before end_dt" do
-    VCR.use_cassette('start date before end date') do
-      reservation_fields = { :user_id => users(:real_user).id , :room_id => rooms(:individual).id, :start_dt => 2.years.from_now, :end_dt => 2.years.from_now - 30.minutes }
-      @reservation = Reservation.new(reservation_fields)
-      assert !@reservation.save
-      assert @reservation.invalid?
-      assert_equal @reservation.errors.first.last, "Please select a valid end date that is after your selected start date."
-    end
-  end
-  
+    
   test "doesnt allow overlap when: reservation falls inside existing reservation" do
     VCR.use_cassette('no overlap when inside') do
       @reservation = Reservation.new(@overlap_attrs.merge({:start_dt => reservations(:overlap).start_dt + 30.minutes, :end_dt => reservations(:overlap).end_dt - 30.minutes }))

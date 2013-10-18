@@ -1,9 +1,9 @@
 <%= sidebar_section("reservations_sidebar_current", content_tag(:h2, "Your current reservations"), true) do %>
 <ul id="current_reservations">
-  <% if @user.reservations.active_non_blocks.current.blank? %>
+  <% if @user.reservations.active.no_blocks.current.blank? %>
     <li>None.</li>
   <% else %>
-    <% @user.reservations.active_non_blocks.current.each do |res| %>
+    <% @user.reservations.active.no_blocks.current.each do |res| %>
       <li>
         <%= (res.title?) ? "<strong>Name:</strong> #{res.title}<br />".html_safe : '' %>
         <strong>Date:</strong> <%= res.start_dt.strftime('%a. %b %d, %Y') %> <br />

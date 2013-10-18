@@ -1,5 +1,33 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  room:
+    type:
+      collaborative: "Collaborative"
+  reservation:
+    date_formatted_correctly: "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30."
+    reservations_exist_in_block: "Sorry, your selection is unavailable. Please check existing reservations."
+    reservation_available: "Sorry, your selected reservation slot was just taken. Please check the availability again."
+    validate_cc: "One or more of the e-mails you entered is invalid."
+    current_user_is_only_email: "For collaborative rooms, please add at least one other e-mail besides your own."
+    collaborative_requires_ccs: "For collaborative rooms, please add at least one other valid e-mail from your group."
+  reservations:
+    new:
+      made_today:
+        error: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"
+      on_same_day:
+        error: "Sorry, you are only allowed <strong>to have one reservation per day.</strong>"
+    create:
+      success: Reservation was successful. You will be sent an e-mail confirming your reservation.
+    update:
+      success: Reservation was successfully updated.
+    delete:
+      success: Reservation was successfully deleted.
+      error: "Could not delete this reservation. Please report this to the system administrator: gswg@library.nyu.edu."
+    resend_email:
+      success: "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
+  rooms:
+    create:
+      success: Room was successfully created.
+    update:
+      success: Room was successfully updated.
+    update_sort:
+      success: Room order was successfully updated.

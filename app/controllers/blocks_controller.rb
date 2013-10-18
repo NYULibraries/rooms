@@ -27,8 +27,6 @@ class BlocksController < ApplicationController
         flash[:notice] = "Block successfully created."
         format.html { redirect_to blocks_url, notice: "Block successfully created." }
       else
-        # If the block can't save, you will render :new with a list of existing reservations and options
-        @existing_reservations = Reservation.existing_reservations(params[:reservation][:room_id], params[:reservation][:start_dt], params[:reservation][:end_dt], true, 1000)
         format.html { render :new, params: params }
       end
     end
@@ -53,11 +51,8 @@ class BlocksController < ApplicationController
           formatted_reservations += "User: #{res.user.username}; Room: #{res.room.title}; Reservation: #{res.start_dt.strftime('%a. %b %d, %Y %I:%M %p')} -- #{res.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}\n"
         end
       end
-      Tire.index("#{Rails.env}_reservations").refresh
       # Send an email to the administrator specified if the checkbox was selected
       ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
-
-      #reservations_not_deleted = Reservation.find(params[:reservations_to_delete]).delete_if {|res| res.deleted? }
     end
     
     if @block.save

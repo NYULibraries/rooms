@@ -1,6 +1,6 @@
-<h1>Create a new block</h1>
+<h1>Schedule a new closure</h1>
 
-<% if @existing_reservations.blank? %>
+<% if @block.existing_reservations.blank? %>
 	<%= render "new" %>
 <% else %>
 	<%= render "destroy_multiple" %>

@@ -4,11 +4,10 @@ class RoomsController < ApplicationController
   
   # GET /rooms
   def index
-    options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
     # Get Rooms from ElasticSearch through tire DSL
-    tire_params = params
     @rooms = Room.tire.search do
-      query { string tire_params[:q] } unless tire_params[:q].blank?
+      query { string options[:q] } unless options[:q].blank?
       sort { by options[:sort], options[:direction] }
       page = options[:page].to_i
       search_size = options[:per].to_i
@@ -39,18 +38,18 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room = Room.new(params[:room])   
-    @room.hours = hours
+    @room.hours = hours_hash
 
-    flash[:notice] = 'Room was successfully created.' if @room.save
+    flash[:notice] = t("rooms.create.success") if @room.save
     respond_with(@room)
   end
 
   # PUT /rooms/1
   def update
     @room = Room.find(params[:id])
-    @room.hours = hours
+    @room.hours = hours_hash
      
-    flash[:notice] = 'Room was successfully updated.' if @room.update_attributes(params[:room])
+    flash[:notice] = t("rooms.update.success") if @room.update_attributes(params[:room])
     respond_with(@room)
   end
 
@@ -63,17 +62,15 @@ class RoomsController < ApplicationController
   end
   
   # GET /rooms/sort
-  # Get rooms for sorting
   def index_sort
-    @rooms = Room.order(sort_column.to_sym)
+    @rooms = Room.reorder(sort_column.to_sym)
 
     respond_with(@rooms)
   end
 
   # PUT /rooms/sort  
-  # Update sort order of rooms
   def update_sort
-    @rooms = Room.order(sort_column.to_sym)
+    @rooms = Room.reorder(sort_column.to_sym)
     
     # Have to iterate through each room in order to reindex sort order
     # Could be a scalability issue moving forward
@@ -83,7 +80,7 @@ class RoomsController < ApplicationController
       room.save
     end 
 
-    flash[:notice] = "Room order was successfully updated."
+    flash[:notice] = t("rooms.update_sort.success")
 
     respond_with(@rooms, :location => sort_rooms_url)
   end
@@ -97,8 +94,8 @@ class RoomsController < ApplicationController
 private
 
   # Convert hours parameter to a hash
-  def hours
-    @hours ||= { 
+  def hours_hash
+    @hours_hash ||= { 
       :hours_start => {
         :hour => params[:hours_start][:hour],
         :minute => params[:hours_start][:minute],

@@ -71,7 +71,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<% @user.reservations.active_non_blocks.past.one_month.each do |r| %>
+		<% @user.reservations.active.no_blocks.past.one_month.each do |r| %>
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title.html_safe %></td>
@@ -93,12 +93,12 @@
 		</tr>
 		</thead>
 		<tbody>
-		<% @user.reservations.active_non_blocks.current.each do |r| %>
+		<% @user.reservations.active.no_blocks.current.each do |r| %>
 		<tr id="<%= r.id %>" class="<%= highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= prettify_created_at_date(r.created_at)%></td>
-			<td><%= link_to "Destroy", reservation_delete_path(r, :admin_delete => true), :method => :put, :confirm => "Are you sure?" %>
+			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, :confirm => "Are you sure?" %>
 		</tr>
 		<% end %>
 		</tbody>

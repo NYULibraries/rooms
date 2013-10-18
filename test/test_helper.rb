@@ -1,3 +1,5 @@
+ENV["RAILS_ENV"] ||= "test"
+
 unless ENV['TRAVIS']
   require 'simplecov'
   require 'simplecov-rcov'
@@ -8,9 +10,21 @@ else
   Coveralls.wear!
 end
 
-ENV["RAILS_ENV"] ||= "test"
+require 'vcr'
+require 'webmock'
+WebMock.allow_net_connect!
 
-require File.expand_path('../../config/environment', __FILE__)
+VCR.configure do |c|
+  c.cassette_library_dir = 'test/vcr_cassettes'
+  # webmock needed for HTTPClient testing
+  c.hook_into :webmock 
+  #c.filter_sensitive_data("http://localhost:9200") { "" }
+end
+
+VCR.use_cassette('load elasticsearch models') do
+  require File.expand_path('../../config/environment', __FILE__)
+end
+
 require 'rails/test_help'
 require 'authlogic'
 require 'authlogic/test_case'
@@ -34,19 +48,5 @@ class ActiveSupport::TestCase
     user_session.instance_variable_set("@pds_user".to_sym, users(:real_user))
   end
   
-end
-
-require 'vcr'
-require 'webmock'
-
-WebMock.allow_net_connect!
-
-@@elasticsearch_host = Settings.elasticsearch.bonsai.url
-
-VCR.configure do |c|
-  c.cassette_library_dir = 'test/vcr_cassettes'
-  # webmock needed for HTTPClient testing
-  c.hook_into :webmock 
-  c.filter_sensitive_data("http://localhost:9200") { @@elasticsearch_host }
 end
 

@@ -2,17 +2,17 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/test_reservations/reservation/_search?load%5Binclude%5D=user&size=1
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"query":{"match_all":{}},"filter":{"and":[{"term":{"room_id":127138841}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2018-10-17T20:33:20+00:00"}}},{"range":{"start_dt":{"lt":"2018-10-17T21:03:20+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2018-10-17T20:33:20+00:00"}}},{"range":{"end_dt":{"lte":"2018-10-17T21:03:20+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2018-10-17T20:33:20+00:00"}}},{"range":{"end_dt":{"gte":"2018-10-17T21:03:20+00:00"}}}]}]}]},"size":1}'
+      string: ! '{"filter":{"and":[{"term":{"room_id":127138841}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2018-10-18T21:15:25+00:00"}}},{"range":{"start_dt":{"lt":"2018-10-18T21:45:25+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2018-10-18T21:15:25+00:00"}}},{"range":{"end_dt":{"lte":"2018-10-18T21:45:25+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2018-10-18T21:15:25+00:00"}}},{"range":{"end_dt":{"gte":"2018-10-18T21:45:25+00:00"}}}]}]}]},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '497'
+      - '472'
       User-Agent:
       - Ruby
   response:
@@ -28,5 +28,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Thu, 17 Oct 2013 20:33:20 GMT
+  recorded_at: Fri, 18 Oct 2013 21:15:25 GMT
 recorded_with: VCR 2.6.0

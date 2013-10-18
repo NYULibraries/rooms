@@ -1,14 +1,13 @@
 class ReservationsController < ApplicationController
   authorize_resource
-  #before_filter :authorize_patron
   respond_to :html, :js
-  respond_to :xml, :json, :csv, :except => [:new, :edit]
+  respond_to :json, :csv, :except => [:new, :edit]
 
   # GET /reservations
   def index
     @user = current_user
     @reservation = @user.reservations.new
-    @reservations = @user.reservations.active_non_blocks.current
+    @reservations = @user.reservations.active.no_blocks.current
 
     respond_with(@reservations)
   end
@@ -23,31 +22,25 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @user = current_user
-    begin
-      @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
-      # Options for ElasticSearch
-      options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
-      # Get Rooms from ElasticSearch through tire DSL
-      @rooms = Room.tire.search do
-        sort { by options[:sort], options[:direction] }
-        page = options[:page].to_i
-        search_size = options[:per].to_i
-        from (page -1) * search_size
-        size search_size
-      end
-    # Reservation.new will fail with invalid dates, catch this
-    rescue ArgumentError => e
-      @reservation = @user.reservations.new
-      flash[:error] = "Please select a valid future date in the format YYYY-MM-DD." if e.message == "invalid date"
-    end
+    @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
     
-    # Do some policy checking on the current reservation and set errors accordingly
-    if @reservation.rr_made_today?
-      flash[:error] = "Sorry, you are only allowed <strong>to create one reservation per day.</strong>".html_safe
-    elsif @reservation.rr_for_same_day?
-      flash[:error] = "Sorry, you are only allowed <strong>to have one reservation per day.</strong>".html_safe
+    if @user.reservations.any? {|r| r.made_today? }
+      flash[:error] = t('reservations.new.made_today.error').html_safe
+    elsif @user.reservations.any? {|r| r.on_same_day?(@reservation) }
+      flash[:error] = t('reservations.new.on_same_day.error').html_safe
+    end unless !@user.is_admin?
+    
+    # Options for ElasticSearch
+    options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    # Get Rooms from ElasticSearch through tire DSL
+    @rooms = Room.tire.search do
+      sort { by options[:sort], options[:direction] }
+      page = options[:page].to_i
+      search_size = options[:per].to_i
+      from (page -1) * search_size
+      size search_size
     end
-
+        
     respond_with(@reservation) do |format|
       if flash[:error].blank?
         format.html { render :new }
@@ -61,8 +54,6 @@ class ReservationsController < ApplicationController
   def create   
     @user = current_user
     @reservation = @user.reservations.new(params[:reservation])
-    #@reservation.created_at_day = Time.zone.now.strftime("%Y-%m-%d")
-    #@reservation.created_at_timezone = Time.zone.name
     @room = @reservation.room
     
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
@@ -78,7 +69,7 @@ class ReservationsController < ApplicationController
       if @reservation.save
         # Send email
         ReservationMailer.confirmation_email(@reservation).deliver
-        flash[:success] = 'Reservation was successful. You will be sent an e-mail confirming your reservation.'
+        flash[:success] = t('reservations.create.success')
         format.html { render :index }
         format.js 
       else
@@ -101,7 +92,7 @@ class ReservationsController < ApplicationController
     @user = current_user
 
     if @reservation.update_attributes(params[:reservation])
-      flash[:success] = 'Reservation was successfully updated.'
+      flash[:success] = t('reservations.update.success')
     end
 
     respond_with(@reservation, :location => root_url)
@@ -110,26 +101,20 @@ class ReservationsController < ApplicationController
   # PUT /reservations/1
   def delete
     @reservation = Reservation.find(params[:reservation_id])
-    @user = @reservation.user
     @reservation.deleted = true
     @reservation.deleted_by = { :by_user => current_user.id }
-    #@reservation.deleted_at_timezone = Time.zone.name
+    @user = @reservation.user
 
     if @reservation.save
-      flash[:success] = "Reservation was successfully deleted."
+      flash[:success] = t('reservations.delete.success')
       # Send email
       ReservationMailer.cancellation_email(@reservation).deliver
     else 
-      flash[:error] = "Could not delete this reservation. Please report this to the system administrator: gswg@library.nyu.edu."
+      flash[:error] = t('reservations.delete.error')
     end
     
     respond_with(@reservation) do |format|
-      format.js
-      if current_user.is_admin? and params[:admin_delete]
-        format.html { redirect_to user_path(@user) } 
-      else
-        format.html { redirect_to root_url }
-      end
+      format.html { redirect_to (params[:return_url] || user_path(@user)) } 
     end
   end
   
@@ -140,7 +125,7 @@ class ReservationsController < ApplicationController
     
     # Send email
     if ReservationMailer.confirmation_email(@reservation).deliver
-       flash[:success] = "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
+       flash[:success] = t('reservations.resend_email.success')
      end
     
     respond_with(@reservation, :location => root_url)

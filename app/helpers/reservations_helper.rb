@@ -6,18 +6,15 @@ module ReservationsHelper
   def construct_grid_data(room)
     html = ""
     times_array.each do |timeslot|
-	    t_next = timeslot + 30.minutes #next iteration's time
-	    
-      reservation = reservation_search(timeslot, t_next, room.id).first
+      reservation = room.find_reservation_by_timeslot(timeslot)
 
       html += content_tag(:td, :class => timeslot_class(reservation, room, timeslot)) do 
-        if @user.is_admin? and !reservation.nil? and !reservation.is_block
+        if @user.is_admin? and !reservation.blank? and !reservation.is_block
           link_to(icon_tag(:info), user_path(reservation.user_id, :params => {:highlight => [reservation.id]}, :anchor => reservation.id), :title => "Room is booked", :alt => "Room is booked", :class => "preview_link reservation_whois", :target => "_blank") 
         elsif !room_is_open?(room, timeslot)
           link_to(icon_tag(:warning), "#", :title => "Room is closed", :alt => "Room is closed", :class => "preview_link", :target => "_blank")
-        elsif room_is_open?(room, timeslot) and !reservation.nil? and reservation.is_block
-          reservation_from_db = reservation.load
-          link_to(icon_tag(:warning), "#", :title => reservation_from_db.title, :alt => reservation_from_db.title, :class => "preview_link", :target => "_blank") 
+        elsif room_is_open?(room, timeslot) and !reservation.blank? and reservation.is_block
+          link_to(icon_tag(:warning), "#", :title => reservation.load.title, :alt => reservation.load.title, :class => "preview_link", :target => "_blank") 
         end
       end
 	  end
@@ -40,54 +37,29 @@ module ReservationsHelper
     end
     
     times.each do |timeslot|
-  		t_next = timeslot + 30.minutes
-      
       #Return true if the room is closed during this hour and forgo search for existing reservations
       return true if is_in_past?(timeslot) or !room_is_open?(room,timeslot)
       
   		# Disable radio button if classroom is in use at this time
-  		return true if !reservation_search(timeslot, t_next, room.id).empty? 
+  		return true if !room.find_reservation_by_timeslot(timeslot).blank?
     end
     return false
   end
-  
-  # ElasticSearch search to find if a reservation exists in a given timeslot
-  def reservation_search(timeslot, t_next, room_id)
-    return Reservation.search do 
-      query do
-        filtered do 
-          filter :term, :room_id => room_id
-          filter :term, :deleted => false
-          filter :or, 
-            { :and => [
-                { :range => { :start_dt => { :gte => timeslot } } },
-                { :range => { :end_dt => { :lte => t_next } } }
-            ]},
-            { :and => [
-                { :range => { :start_dt => { :lte => timeslot } } },
-                { :range => { :end_dt => { :gte => t_next } } }
-            ]}
-        end
-      end
-      size 1
-    end
-  end
-  
+    
   # Find if the room (r) is open during the timeslot (t)
   def room_is_open?(room,t)
-    r = room.load
     t_as_time = t.strftime('%H%M').to_i
-    unless r.hours.nil? or r.hours[:hours_start].nil? or r.hours[:hours_end].nil? or (r.hours[:hours_end] == r.hours[:hours_start])
+    unless room.hours.nil? or room.hours[:hours_start].nil? or room.hours[:hours_end].nil? or (room.hours[:hours_end] == room.hours[:hours_start])
       #Parse our start and end hour and add 12 to the hour if in PM
-      hour_start = (r.hours[:hours_start][:ampm].to_s == "am") ?  
-                      (r.hours[:hours_start][:hour].to_i == 12) ? 0 : r.hours[:hours_start][:hour].to_i : 
-                          (r.hours[:hours_start][:hour].to_i == 12) ? r.hours[:hours_start][:hour].to_i : r.hours[:hours_start][:hour].to_i + 12
-      hour_end = (r.hours[:hours_end][:ampm].to_s == "am") ?  
-                    (r.hours[:hours_end][:hour].to_i == 12) ? 0 : r.hours[:hours_end][:hour].to_i : 
-                      (r.hours[:hours_end][:hour].to_i == 12) ? r.hours[:hours_end][:hour].to_i : r.hours[:hours_end][:hour].to_i + 12
+      hour_start = (room.hours[:hours_start][:ampm].to_s == "am") ?  
+                      (room.hours[:hours_start][:hour].to_i == 12) ? 0 : room.hours[:hours_start][:hour].to_i : 
+                          (room.hours[:hours_start][:hour].to_i == 12) ? room.hours[:hours_start][:hour].to_i : room.hours[:hours_start][:hour].to_i + 12
+      hour_end = (room.hours[:hours_end][:ampm].to_s == "am") ?  
+                    (room.hours[:hours_end][:hour].to_i == 12) ? 0 : room.hours[:hours_end][:hour].to_i : 
+                      (room.hours[:hours_end][:hour].to_i == 12) ? room.hours[:hours_end][:hour].to_i : room.hours[:hours_end][:hour].to_i + 12
       #Create dates and format them as comparable integers
-      open_time = DateTime.new(1,1,1,hour_start,r.hours[:hours_start][:minute].to_i).strftime('%H%M').to_i
-      close_time = DateTime.new(1,1,1,hour_end,r.hours[:hours_end][:minute].to_i).strftime('%H%M').to_i
+      open_time = DateTime.new(1,1,1,hour_start,room.hours[:hours_start][:minute].to_i).strftime('%H%M').to_i
+      close_time = DateTime.new(1,1,1,hour_end,room.hours[:hours_end][:minute].to_i).strftime('%H%M').to_i
       #If close time is before opening time (i.e. hours wrap back around to am) 
       #and current time is less than the closing time return true
       return true if close_time < open_time and t_as_time < close_time

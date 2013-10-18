@@ -26,8 +26,8 @@ http_interactions:
       - '506'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"980190962","_score":0.30685282,
+      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"980190962","_score":0.30685282,
         "_source" : {"deleted":false,"end_dt":"2013-10-04T14:15:29+00:00","id":980190962,"is_block":false,"room_id":127138841,"start_dt":"2013-10-04T13:45:29+00:00","user_id":607422496,"created_at_day":"2013-10-04","start_day":"2013-10-04","created_at_timezone":null,"deleted_at_timezone":null}}]}}'
     http_version: 
-  recorded_at: Thu, 17 Oct 2013 20:33:19 GMT
+  recorded_at: Fri, 18 Oct 2013 21:15:25 GMT
 recorded_with: VCR 2.6.0

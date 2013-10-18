@@ -70,23 +70,23 @@
 	</thead>
 	<tbody>
 	
-<% @rooms.results.each do |r| %>
+<% @rooms.results.each do |room| %>
 	<tr>
-		<td><%= radio_button :reservation, :room_id, r.id, :disabled => disable_reservation_button(r), :class => "new_reservation_radio_select" %></td>
+		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room.load), :class => "new_reservation_radio_select" %></td>
 		<td style="width:60px;">
-		<b><%= r.title %></b>
+		<b><%= room.title %></b>
 		</td>
 		<td class="hidden-phone" style="width:60px;">
-		<b><%= r.type_of_room %></b>
+		<b><%= room.type_of_room %></b>
 		</td>
 		<td class="hidden-phone">
-		<% unless r.description.blank? %><b><%= get_formatted_text(r.description) %></b><br /><% end %>
-		<% unless r.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", r.image_link, :target => :blank, :class => "preview_image" %><% end %>
+		<% unless room.description.blank? %><b><%= get_formatted_text(room.description) %></b><br /><% end %>
+		<% unless room.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => :blank, :class => "preview_image" %><% end %>
 		</td>
 		<td class="hidden-phone" style="width:60px;">
-		<b><%= r.size_of_room %></b>
+		<b><%= room.size_of_room %></b>
 		</td>
-		<%= construct_grid_data(r) %>
+		<%= construct_grid_data(room.load) %>
 	</tr>
 <% end %>
 

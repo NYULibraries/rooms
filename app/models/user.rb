@@ -1,15 +1,16 @@
 class User < ActiveRecord::Base
-  ROLES = %w[superuser ny_admin shanghai_admin]
   has_many :reservations, :dependent => :destroy
   
-  attr_accessible :crypted_password, :current_login_at, :current_login_ip, :email, :firstname, :last_login_at, :last_login_ip, :last_request_at, :lastname, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id, :user_attributes, :username
-  attr_accessible :roles
+  attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :roles
+  attr_accessible :crypted_password, :current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id 
+  
   scope :non_admin, where("roles_mask = 0 OR roles_mask IS NULL")
   scope :admin, where("roles_mask > 0")
   scope :inactive, where("last_request_at < ?", 1.year.ago)
 
   serialize :user_attributes
   
+  # Configure authlogic
   acts_as_authentic do |c|
     c.validations_scope = :username
     c.validate_password_field = false
@@ -17,18 +18,12 @@ class User < ActiveRecord::Base
     c.disable_perishable_token_maintenance = true
   end
   
-  #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["superuser"]
-
-  def self.search(search)
-    if search
-      q = "%#{search}%"
-      where('firstname LIKE ? || lastname LIKE ? || username LIKE ? || email LIKE ?', q, q, q, q)
-    else
-      scoped
-    end
-  end
-  
-  # Create a CSV format
+  ##
+  # Create a CSV format with comma DSL
+  #
+  # = Example
+  #
+  # format.csv { render :csv }
   comma do
     username
     firstname
@@ -36,6 +31,25 @@ class User < ActiveRecord::Base
     email
   end
   
+  ##
+  # Pass in a search term to do a user search on one of the common field names
+  #
+  # = Example
+  #
+  #   User.search("Smith")
+  def self.search(search)
+    if search
+      q = "%#{search}%"
+      where('firstname LIKE ? || lastname LIKE ? || username LIKE ? || email LIKE ?', q, q, q, q)
+    else
+      # 'where' returns a scope, if there is no search return a blank scope 
+      scoped
+    end
+  end
+  
+  ROLES = %w[superuser ny_admin shanghai_admin]
+  
+  # Move all these functions into an admin_roles.rb in lib/
   # Bitwise roles field in database per
   # https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
   def roles=(roles)
@@ -56,6 +70,8 @@ class User < ActiveRecord::Base
     roles.include?(role.to_s)
   end
   
+  #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["superuser"]
+  # move these into an authroized.rb in lib/
   def is_admin?
     (self.is? :shanghai_admin) || (self.is? :ny_admin) || (self.is? :superuser)
   end

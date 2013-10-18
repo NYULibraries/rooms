@@ -6,17 +6,15 @@ class Reservation < ActiveRecord::Base
   
   attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by
   
-  # Validations for Reservation
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
-  # Allow overlap if reservation is an admin-created block because all other reservations will be deleted for the block
-  validate :just_taken, :if => Proc.new { |room_id| room_id? }, :unless => Proc.new { |is_block| is_block? }, :on => :create
-  validate :existing_reservations_in_block, :if => Proc.new { |room_id| room_id? }, :if => Proc.new { |is_block| is_block? }, :on => :create
-  validate :validate_cc, :unless => Proc.new { |is_block| is_block? }
-  # Require CCs if collaborative room
-  validate :collaborative_requires_ccs, :unless => Proc.new { |is_block| is_block? }
-  validate :check_dates
-  validate :end_comes_after_start
-  after_initialize :check_dates # Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
+  
+  validate :reservation_available, :if => :room_id?, :unless => :is_block?, :on => :create
+  validate :reservations_exist_in_block, :if => :is_block?, :unless => Proc.new {|start_dt| start_dt.blank? }, :unless => Proc.new {|end_dt| end_dt.blank? }, :on => :create
+  validate :validate_cc, :unless => :is_block?
+  validate :collaborative_requires_ccs, :unless => :is_block?
+  validate :date_formatted_correctly
+  
+  #after_initialize :date_formatted_correctly # Validate dates on Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
   
   # Non-database attributes
   attr_accessor :created_at_day, :created_at_timezone, :deleted_at_timezone
@@ -25,10 +23,11 @@ class Reservation < ActiveRecord::Base
   
   serialize :deleted_by, Hash
   
-  # Scopes
-  scope :active_with_blocks, :conditions => { :deleted => false }, :order => "start_dt ASC"
-  scope :active_non_blocks, :conditions => { :deleted => false, :is_block => false }, :order => "start_dt ASC"
-  scope :blocks, :conditions => { :is_block => true }
+  # Scopes  
+  # Active non blocks still used in reporting controller
+  scope :blocks, :conditions => { :is_block => true }, :order => "start_dt ASC"
+  scope :active, :conditions => { :deleted => false }, :order => "start_dt ASC"
+  scope :no_blocks, :conditions => { :is_block => false }, :order => "start_dt ASC"
   scope :deleted, :conditions => { :is_block => false, :deleted => true }, :order => "start_dt ASC"
   scope :current, lambda { where("end_dt > ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
   scope :past, lambda { where("end_dt <= ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
@@ -39,22 +38,20 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   
   # Tire ElasticSearch mapping
-  unless Rails.env == "test"
-    mapping do
-      # Map to database values
-      indexes :id,           :index    => :not_analyzed
-      indexes :room_id
-      indexes :user_id
-      indexes :start_dt, :as => 'start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-      indexes :end_dt, :as => 'end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-      indexes :is_block, :type => 'boolean'
-      indexes :deleted, :type => 'boolean'
-      # Mappings for non-database values
-      indexes :created_at_day, :as => 'created_at.in_time_zone.strftime("%Y-%m-%d")', :type => 'date'
-      indexes :start_day, :index => :not_analyzed, :as => 'start_dt.strftime("%Y-%m-%d")', :type => 'date'
-      indexes :created_at_timezone, :as => 'created_at_timezone'
-      indexes :deleted_at_timezone, :as => 'deleted_at_timezone'
-    end
+  mapping do
+    # Map to database values
+    indexes :id, :index => :not_analyzed
+    indexes :room_id, :index => :not_analyzed
+    indexes :user_id, :index => :not_analyzed
+    indexes :start_dt, :as => 'start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
+    indexes :end_dt, :as => 'end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
+    indexes :is_block, :type => 'boolean'
+    indexes :deleted, :type => 'boolean'
+    # Mappings for non-database values
+    indexes :created_at_day, :as => 'created_at.in_time_zone.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
+    indexes :start_day, :as => 'start_dt.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
+    indexes :created_at_timezone, :as => 'created_at_timezone', :index => :not_analyzed
+    indexes :deleted_at_timezone, :as => 'deleted_at_timezone', :index => :not_analyzed
   end
   
   # CSV mapping
@@ -72,29 +69,23 @@ class Reservation < ActiveRecord::Base
     room 'Room Type' do |room| room.type_of_room end
   end
 
-  # Timezone attrs are not stored in database, so when the object is found 
-  # initialize the Rails attr from the ElasticSearch results
-  def populate_timezones
-    if new_record?
-      self.created_at_timezone = Time.zone.name
-    else
-      @populate_timezones ||= Reservation.search "id:#{id}"
-      unless @populate_timezones.results.empty?
-        self.created_at_timezone = @populate_timezones.results.first.created_at_timezone
-        self.deleted_at_timezone = Time.zone.name
-      end
-    end
-  end
-
-  # Class function finds existing reservations for this timeslot
-  def self.existing_reservations(room_id, start_dt, end_dt, creating_block = false, results_size = 1)
-    if !start_dt.blank? and !end_dt.blank?
-      start_dt = start_dt.to_datetime.change(:offset => "+0000")
-      end_dt = end_dt.to_datetime.change(:offset => "+0000")
+  ##
+  # Finds existing reservations for this timeslot
+  #
+  # = Example
+  #
+  #   @reservation.existing_reservations # Returns array of tire results
+  def existing_reservations
+    if !self.start_dt.blank? && !self.end_dt.blank?
+      start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
+      end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
+      is_block = self.is_block
+      room_id = self.room.id
+      results_size = (self.is_block?) ? 1000 : 1
+    
       existing_reservations = Reservation.tire.search :load => { :include => 'user' }  do 
-        query { all }
-        filter :term, :is_block => false if creating_block
-        filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if creating_block
+        filter :term, :is_block => false if is_block
+        filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
         filter :term, :room_id => room_id
         filter :term, :deleted => false
         filter :or, 
@@ -112,101 +103,109 @@ class Reservation < ActiveRecord::Base
           ]}
         size results_size
       end
-      return existing_reservations
+    
+      return existing_reservations.results
     end
-  end
-
-  # Perform a check to find if the user has already created a reservation today
-  def rr_made_today?
-    return false if user.user_attributes[:room_reserve_admin]
-    # Find today's date as comparable object
-    today = Time.zone.now.strftime('%Y-%m-%d')
-    # find if this user has already made a reservation today...
-    current_user = user
-    @rr_made_today ||= Reservation.search do 
-      query do
-        string "created_at_day:#{today}" 
-        filtered do
-          filter :term, :deleted => false
-          filter :term, :is_block => false
-          filter :term, :user_id => current_user.id
-        end
-      end
-    end 
-    return !@rr_made_today.results.blank?
-  end
-
-  # Perform a check to find if the user already has a reservation for this day
-  def rr_for_same_day?
-    return false if user.user_attributes[:room_reserve_admin]
-    # Find date of reservation as comparable date
-    reservation_day = start_dt.strftime('%Y-%m-%d')
-    # or if they made a reservation for the selected day already
-    current_user = user
-    @rr_for_same_day ||= Reservation.search do 
-      query do
-        string "start_day:#{reservation_day}"
-        filtered do
-          filter :term, :deleted => false
-          filter :term, :is_block => false
-          filter :term, :user_id => current_user.id
-        end
-      end
-    end
-    return !@rr_for_same_day.results.blank?
   end
   
+  ##
+  # Boolean returns if any reservations were found for timeslot
+  #
+  # = Example
+  #
+  #   @reservation.existing_reservations? # Returns bool
+  def existing_reservations?
+    !existing_reservations.empty?
+  end
+
+  ##
+  # Perform a check to find if the user has already created a reservation today
+  def made_today?
+    reservation_on_day?("created_at_day", Time.zone.now.strftime('%Y-%m-%d'))
+  end
+
+  ##
+  # Perform a check to find if the user already has a reservation for this day
+  def on_same_day?(reservation)
+    reservation_on_day?("start_day", reservation.start_dt.strftime('%Y-%m-%d'))
+  end
+
 private
 
-  # Start date and end date must be present and valid before inserting into database
-  def check_dates
+  ##
+  # Return count if reservation is found on a specifc day field
+  def reservation_on_day?(on_day_field, on_day)
+    reservation_day = start_dt.strftime('%Y-%m-%d')
+    user_id = user.id
+    on_day_field = on_day_field
+    on_day = on_day
+    reservation_on_day ||= Reservation.tire.search :search_type => "count" do 
+      query { string "#{on_day_field}:#{on_day}" }
+      filter :term, :deleted => false
+      filter :term, :is_block => false
+      filter :term, :user_id => user_id
+    end
+    return reservation_on_day.total > 0
+  end
+
+  ##
+  # Timezone attrs are not stored in database, so on initialize set the timezones to the found values in elasticsearch
+  def populate_timezones
+    if new_record?
+      self.created_at_timezone ||= Time.zone.name
+    else
+      @populate_timezones ||= Reservation.tire.search "id:#{id}"
+      unless @populate_timezones.results.empty?
+        self.created_at_timezone ||= @populate_timezones.results.first.created_at_timezone
+        self.deleted_at_timezone ||= Time.zone.name
+      end
+    end
+  end
+
+  # Start date and end date must be valid before inserting into database
+  def date_formatted_correctly
     if !start_dt.blank? and !end_dt.blank? and (!DateTime.parse(start_dt.to_s) or !DateTime.parse(end_dt.to_s))
-      errors.add(:base, "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30.")
+      errors.add(:base, I18n.t('reservation.date_formatted_correctly'))
     end
   end
 
   # Print an error message if another reservation exists in the selected timeslot when user is creating a reservation
-  def just_taken
+  def reservation_available
     if timeslot_contains_reservations?
-      errors.add(:base, "Sorry, your selected reservation slot was just taken. Please check the availability again.")
+      errors.add(:base, I18n.t('reservation.reservation_available'))
     end
   end
   
   # Print an error message if another reservation exists in the selected timeslot when admin is creating a block
-  def existing_reservations_in_block
+  def reservations_exist_in_block
     if timeslot_contains_reservations?
-      errors.add(:base, "Sorry, your selection is unavailable. Please check existing reservations.")
+      errors.add(:base, I18n.t('reservation.reservations_exist_in_block'))
     end
   end
   
   # Boolean returns true if the selected timeslot (i.e. start_dt through end_dt) contains other reservations
   def timeslot_contains_reservations?
-    return (start_dt.blank? || end_dt.blank?) || (self.class.existing_reservations(room.id, start_dt, end_dt, is_block).results.size > 0)
+    return start_dt.blank? || end_dt.blank? || existing_reservations?
   end
   
   # If CC/s are present, make sure it/they're valid email/s
   def validate_cc
     if cc? and !is_valid_email? cc
-      errors.add(:base, "One or more of the e-mails you entered is invalid.")
+      errors.add(:base, I18n.t('reservation.validate_cc'))
     end
   end
   
   # If collaborative room, valid CCs are required, and it can't just be the user's email
   def collaborative_requires_ccs
-    if room_id? and room.type_of_room.strip.eql? "Collaborative"
+    if room_id? and room.type_of_room.strip.eql? I18n.t('room.type.collaborative')
       if cc? 
         if current_user_is_only_email? cc
-          errors.add(:base, "For collaborative rooms, please add at least one other e-mail besides your own.")
+          errors.add(:base, I18n.t('reservation.current_user_is_only_email'))
         end
       else
-        errors.add(:base, "For collaborative rooms, please add at least one other valid e-mail from your group.")
+        errors.add(:base, I18n.t('reservation.collaborative_requires_ccs'))
       end
     end
-  end
-  
-  # Verify end date is after start date
-  def end_comes_after_start
-    errors.add(:base, "Please select a valid end date that is after your selected start date.") if !start_dt.blank? and !end_dt.blank? and start_dt > end_dt
   end
   
   # Check that the email submitted is a valid email address

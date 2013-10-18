@@ -30,7 +30,7 @@
 	<%= icon_tag :back %>
 	<%= link_to "Edit block", new_block_url %>
 
-	<% unless @existing_reservations.blank? %>
+	<% unless @block.existing_reservations.blank? %>
 		<h1>Existing reservations</h1>
 
 		<div class="alert alert-block">
@@ -38,7 +38,7 @@
 		<h4>Note: </h4>
 
 		<p>
-		If you choose to continue, you will delete <strong><%= @existing_reservations.count %></strong> reservations and send an email alerting the users of the cancellation. <%= link_to "View the individual reservations.", existing_reservations_url("reservations_to_delete" => @existing_reservations.results.map(&:id)), :target => :blank %>
+		If you choose to continue, you will delete <strong><%= @block.existing_reservations.count %></strong> reservations and send an email alerting the users of the cancellation. <%= link_to "View the individual reservations.", existing_reservations_url("reservations_to_delete" => @block.existing_reservations.map(&:id)), :target => :blank %>
 		</p>
 
 		</div>
@@ -78,7 +78,7 @@
 			Send a copy to reservation CCs
 		</label>
 
-		<% @existing_reservations.each do |res| %>
+		<% @block.existing_reservations.each do |res| %>
 			<%= hidden_field_tag "reservations_to_delete[]", res.id %>
 		<% end %>
 

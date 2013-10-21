@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/test_rooms/room/_search?from=0&size=20
+    body:
+      encoding: US-ASCII
+      string: ! '{"sort":[{"sort_order":"asc"}],"size":20,"from":0}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '50'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '923'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
+        "_source" : {"description":null,"id":1,"image_link":null,"size_of_room":"1-2
+        People","sort_order":1,"sort_size_of_room":2,"title":"Individual Room 1","type_of_room":"One
+        person"},"sort":[1]},{"_index":"test_rooms","_type":"room","_id":"2","_score":null,
+        "_source" : {"description":null,"id":2,"image_link":null,"size_of_room":"1-2
+        People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual"},"sort":[2]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
+        "_source" : {"description":"This and that in here","id":3,"image_link":"http://google.com","size_of_room":"6
+        People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative"},"sort":[3]}]}}'
+    http_version: 
+  recorded_at: Mon, 21 Oct 2013 21:03:21 GMT
+recorded_with: VCR 2.6.0

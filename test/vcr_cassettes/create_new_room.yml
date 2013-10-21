@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/test_rooms/room/4
+    body:
+      encoding: US-ASCII
+      string: ! '{"description":null,"id":4,"image_link":null,"size_of_room":null,"sort_order":4,"sort_size_of_room":0,"title":"Cool
+        new room","type_of_room":null}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '146'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '71'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"4","_version":1}'
+    http_version: 
+  recorded_at: Mon, 21 Oct 2013 21:03:20 GMT
+recorded_with: VCR 2.6.0

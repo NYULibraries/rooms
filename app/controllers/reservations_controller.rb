@@ -12,23 +12,16 @@ class ReservationsController < ApplicationController
     respond_with(@reservations)
   end
 
-  # GET /reservations/1
-  def show
-    @reservation = Reservation.find(params[:id])
-    
-    respond_with(@reservation)
-  end
-
   # GET /reservations/new
   def new
     @user = current_user
     @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
-    
+
     if @user.reservations.any? {|r| r.made_today? }
       flash[:error] = t('reservations.new.made_today.error').html_safe
     elsif @user.reservations.any? {|r| r.on_same_day?(@reservation) }
       flash[:error] = t('reservations.new.on_same_day.error').html_safe
-    end unless !@user.is_admin?
+    end unless @user.is_admin?
     
     # Options for ElasticSearch
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  

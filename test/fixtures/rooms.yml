@@ -1,4 +1,5 @@
 individual:
+  id: 1
   title: Individual Room 1
   type_of_room: One person
   size_of_room: 1-2 People 
@@ -15,6 +16,7 @@ individual:
       ampm: am
 
 individual_with_hours:
+  id: 2
   title: Individual Room 2   
   type_of_room: Individual
   size_of_room: 1-2 People 
@@ -31,6 +33,7 @@ individual_with_hours:
       ampm: am
 
 collaborative:
+  id: 3
   title: Collaborative Room 123
   type_of_room: Collaborative
   description: This and that in here

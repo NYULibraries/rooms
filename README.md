@@ -38,6 +38,10 @@ Flex
 
 	bundle exec rake environment tire:import CLASS=Room FORCE=true
 	bundle exec rake environment tire:import CLASS=Reservation FORCE=true
+	
+### Environment specific ElasticSearch indexes
+
+When using webmock/vcr in test environment you cannot make physical web requests even when trying to run a tire import with the `RAILS_ENV=test` variable. A workaround for this would be to make the local settings the same as test settings and hardcode the `index_name` in each tire model to your test indexes. Then run the above import commands without a `RAILS_ENV` specified.
 
 ### Cloud-hosted ES
 
@@ -46,6 +50,10 @@ Flex
 ## Scheduled Jobs
 
 Every year at **4am on September 1st** the cleanup script runs to clear out users who have been inactive for over a year. The definition of an inactive user is a user who hasn't made a reservation.
+
+## Time Zones
+
+wtf?
 
 ## To-do
 

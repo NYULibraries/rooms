@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   # GET /users/1
   def show
     @user = User.find(params[:id])
-    
     respond_with(@user)
   end
   
@@ -27,9 +26,9 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(params[:user])
-    flash[:notice] = 'User was successfully created.' if @user.save
+    flash[:notice] = t('users.create.success') if @user.save
     
-    respond_with(@user) 
+    respond_with(@user)
   end
   
   # GET /users/1/edit
@@ -42,7 +41,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
      
-    flash[:notice] = 'User was successfully updated.' if @user.update_attributes(params[:user])
+    flash[:notice] = t('users.update.success') if @user.update_attributes(params[:user])
     respond_with(@user)
   end
   

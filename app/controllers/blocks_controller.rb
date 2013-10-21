@@ -20,12 +20,11 @@ class BlocksController < ApplicationController
     @block = Reservation.new(params[:reservation])
     @block.user_id = current_user.id
     @block.is_block = true
-    @block.title = (params[:reservation][:title].blank?) ? "Scheduled closure" : params[:reservation][:title]
+    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
     
     respond_with(@block) do |format|
       if @block.save
-        flash[:notice] = "Block successfully created."
-        format.html { redirect_to blocks_url, notice: "Block successfully created." }
+        format.html { redirect_to blocks_url, notice: t('blocks.create.success') }
       else
         format.html { render :new, params: params }
       end
@@ -36,7 +35,7 @@ class BlocksController < ApplicationController
     @block = Reservation.new(params[:reservation])
     @block.user_id = current_user.id
     @block.is_block = true
-    @block.title = (params[:reservation][:title].blank?) ? "Scheduled closure" : params[:reservation][:title]
+    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
     
     # If this has been submitted with a cancel request, delete conflicting reservations
     unless params[:cancel].blank? || params[:reservations_to_delete].blank?
@@ -56,10 +55,10 @@ class BlocksController < ApplicationController
     end
     
     if @block.save
-      redirect_to blocks_url, notice: "Block successfully created." 
+      redirect_to blocks_url, notice: t('blocks.destroy_multiple.success')
     else
       # If the block can't save, you will render :new with a list of existing reservations and options
-      flash[:error] = "Could not delete existing reservations. Please contact web administrator web.services@library.nyu.edu."
+      flash[:error] = t('blocks.destroy_multiple.error')
       render :new, params: params
     end
   end
@@ -67,7 +66,7 @@ class BlocksController < ApplicationController
   # DELETE /blocks/1
   def destroy
     @block = Reservation.find(params[:id])
-    flash[:notice] = "Block was successfully deleted." if @block.destroy
+    flash[:notice] = t('blocks.destroy.success') if @block.destroy
 
     respond_with(@block, :location => blocks_url)
   end

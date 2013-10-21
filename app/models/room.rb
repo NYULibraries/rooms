@@ -4,6 +4,7 @@ class Room < ActiveRecord::Base
   
   # ElasticSearch index name
   index_name("#{Rails.env}_rooms")
+  #index_name("test_rooms")
 
   attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link
   

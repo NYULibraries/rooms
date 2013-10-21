@@ -15,6 +15,7 @@ require 'webmock'
 WebMock.allow_net_connect!
 
 VCR.configure do |c|
+  #c.ignore_hosts '127.0.0.1', 'localhost'
   c.cassette_library_dir = 'test/vcr_cassettes'
   # webmock needed for HTTPClient testing
   c.hook_into :webmock 

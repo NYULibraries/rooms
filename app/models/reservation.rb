@@ -3,6 +3,10 @@ class Reservation < ActiveRecord::Base
   include Tire::Model::Callbacks
   
   index_name("#{Rails.env}_reservations")
+  #index_name("test_reservations")
+  
+  belongs_to :room
+  belongs_to :user
   
   attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by
   
@@ -34,9 +38,6 @@ class Reservation < ActiveRecord::Base
   scope :one_week, lambda { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
   scope :one_month, lambda { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
-  belongs_to :room
-  belongs_to :user
-  
   # Tire ElasticSearch mapping
   mapping do
     # Map to database values

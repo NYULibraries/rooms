@@ -1,20 +1,26 @@
 one:
   start_dt: <%= start_dt = Time.now %>
   end_dt: <%= start_dt + 30.minutes %>
-  room: individual
-  user: real_user
+  room_id: 1
+  user_id: 1
 
 deleted: 
   start_dt: <%= start_dt = Time.now %>
   end_dt: <%= start_dt + 30.minutes %>
-  room: individual
-  user: real_user
+  room_id: 1
+  user_id: 1
   deleted: true
   deleted_by:
     by_user: one
 
 overlap:
-  room: individual
-  user: real_user
+  room_id: 1
+  user_id: 1
   start_dt: '3020-10-01 13:30:00'
   end_dt: '3020-10-01 15:00:00'
+
+admin_res:
+  start_dt: <%= start_dt = Time.now %>
+  end_dt: <%= start_dt + 30.minutes %>
+  room_id: 1
+  user_id: 3

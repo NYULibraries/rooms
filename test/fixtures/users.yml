@@ -1,4 +1,5 @@
 real_user:
+  id: 1
   username: <%= username = "real_user" %>
   email: <%= username + "@university.edu" %>
   password_salt: <%= salt = Authlogic::Random.hex_token %>
@@ -12,6 +13,7 @@ real_user:
     :aleph_permissions => {} }.to_yaml.inspect  %>
 
 nonadmin:
+  id: 2
   username: <%= username = "nonadmin" %>
   email: <%= username + "@university.edu" %>
   password_salt: <%= salt = Authlogic::Random.hex_token %>
@@ -26,6 +28,7 @@ nonadmin:
     :aleph_permissions => {} }.to_yaml.inspect  %>
 
 admin:
+  id: 3
   username: <%= username = "admin" %>
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(username + salt) %>
@@ -34,6 +37,7 @@ admin:
   roles_mask: 1
   firstname: Marcus T
   lastname: Admin
+  roles_mask: 1
   user_attributes: <%= {
     :nyuidn => "N0000001", 
     :primary_institution => "INST01",

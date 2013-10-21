@@ -31,3 +31,17 @@ en:
       success: Room was successfully updated.
     update_sort:
       success: Room order was successfully updated.
+  blocks:
+    default_title: Scheduled closure
+    destroy:
+      success: Block was successfully deleted.
+    destroy_multiple:
+      error: "Could not delete existing reservations. Please contact web administrator web.services@library.nyu.edu."
+      success: Block successfully created.
+    create:
+      success: Block successfully created.
+  users:
+    update:
+      success: User was successfully updated.
+    create:
+      success: User was successfully created.

@@ -6,33 +6,37 @@ class Ability
     
     alias_action :create, :read, :update, :destroy, :to => :crud
     
-    undergraduate(user) if user.is_undergraduate?
-    graduate(user) if user.is_graduate?
-    admin(user) if user.is_admin? && !user.is?(:superuser)
-    superuser(user) if user.is? :superuser
+    booker(user) if user.is_authorized?
+    shanghai_undergraduate(user) if user.is_shanghai_undergraduate?
+    ny_graduate(user) if user.is_ny_graduate?
+    admin(user) if user.is_admin?
+    ny_undergraduate(user) if user.is_ny_undergraduate?
   end
   
-  def undergraduate(user)
+  def booker(user)
     can :crud, Reservation, :user_id => user.id
-    cannot :crud, Reservation, :graduate => true
+    #cannot :create, Reservation if user.reservations.rr_made_today? or user.reservations.rr_for_same_day?
   end
 
-  def graduate(user)
-    undergraduate(user)
+  def shanghai_undergraduate(user)
+    ny_undergraduate(user)
+  end
+  
+  def ny_undergraduate(user)
+    booker(user)
+    cannot :create, Reservation, :graduate => true
+    cannot :manage, Room
+  end  
+
+  def ny_graduate(user)
+    booker(user)
     can :create, Reservation, :graduate => true
-    #cannot :create, Reservation if user.reservations.rr_made_today? or user.reservations.rr_for_same_day?
   end
 
   def admin(user)
     can :manage, :all 
-    cannot :destroy, User, :id => user.id
-    cannot :manage, Room
-    cannot :update, User, :id => user.id
+    cannot [:destroy, :update], User, :id => user.id
   end
 
-  def superuser(user)
-    can :manage, :all
-    cannot :destroy, User, :id => user.id
-  end
 
 end

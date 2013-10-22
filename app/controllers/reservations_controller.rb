@@ -27,6 +27,7 @@ class ReservationsController < ApplicationController
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
     # Get Rooms from ElasticSearch through tire DSL
     @rooms = Room.tire.search do
+      # query { string}
       sort { by options[:sort], options[:direction] }
       page = options[:page].to_i
       search_size = options[:per].to_i

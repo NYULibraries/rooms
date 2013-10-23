@@ -35,10 +35,17 @@ elasticsearch:
 roles:
   admin:
     - global
+    - ny_admin
+    - shanghai_admin
   authorized:
-    grad:
-      - 1
-      - 2
-    undergrad:
-      - 3
-      - 4
+    shanghai_undergraduate:
+      - "00"
+    ny_undergraduate:
+      - "1"
+      - "2"
+    ny_graduate:
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"

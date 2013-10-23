@@ -1,5 +1,7 @@
 # Graduate Collaborative Room Reservation System
 
+[![Build Status](http://jenkins1.bobst.nyu.edu/buildStatus/icon?job=Room Reservation Production)](http://jenkins1.bobst.nyu.edu/view/Production/job/Room%20Reservation%20Production/)
+
 [![Build Status](https://travis-ci.org/NYULibraries/rooms.png?branch=master)](https://travis-ci.org/NYULibraries/rooms)
 [![Dependency Status](https://gemnasium.com/NYULibraries/rooms.png)](https://gemnasium.com/NYULibraries/rooms)
 [![Code Climate](https://codeclimate.com/github/NYULibraries/rooms.png)](https://codeclimate.com/github/NYULibraries/rooms)

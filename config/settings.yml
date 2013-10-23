@@ -31,3 +31,14 @@ cookie:
 elasticsearch:
   bonsai:
     url: http://localhost:9200
+    
+roles:
+  admin:
+    - global
+  authorized:
+    grad:
+      - 1
+      - 2
+    undergrad:
+      - 3
+      - 4

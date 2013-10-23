@@ -37,6 +37,7 @@ module Rooms
       end
 
       def is_authorized?
+        return false if (attrs.blank? || attrs[:bor_status].blank?)
         @is_authorized ||= Rails.cache.fetch "#{attrs[:bor_status]}_authorized", :expires_in => 24.hours do
           auth_roles.delete_if {|key,value| !value.include? attrs[:bor_status] }.blank?
         end

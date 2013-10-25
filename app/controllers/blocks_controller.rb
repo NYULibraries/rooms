@@ -1,10 +1,10 @@
 class BlocksController < ApplicationController
-  load_and_authorize_resource :class => Reservation
+  authorize_resource :class => false
   respond_to :html, :js
   
   # GET /blocks
   def index
-    @blocks = Reservation.blocks.joins(:room).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
+    @blocks = Reservation.blocks.joins(:room).accessible_by(current_ability).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
     @rooms = Room.all
     respond_with(@blocks)
   end

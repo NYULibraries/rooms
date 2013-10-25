@@ -6,8 +6,10 @@ class RoomsController < ApplicationController
   def index
     options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
     # Get Rooms from ElasticSearch through tire DSL
+    room_group_filter = (params[:room_group].blank?) ? RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
     @rooms = Room.tire.search do
       query { string options[:q] } unless options[:q].blank?
+      filter :terms, :room_group => room_group_filter, :execution => "or"
       sort { by options[:sort], options[:direction] }
       page = options[:page].to_i
       search_size = options[:per].to_i

@@ -54,6 +54,10 @@ module RoomsHelper
       "#{hours[:hours_start][:hour]}:#{hours[:hours_start][:minute].to_s.rjust(2, '0')} #{hours[:hours_start][:ampm]} - #{hours[:hours_end][:hour]}:#{hours[:hours_end][:minute].to_s.rjust(2, '0')} #{hours[:hours_end][:ampm]}"
     end
   end
-
+  
+  def room_group_selected?(room_group)
+    (!params[:room].blank? and params[:room][:room_group_id] == room_group.id.to_s) or
+      (!@room.room_group.blank? and room_group.id == @room.room_group.id)
+  end
   
 end

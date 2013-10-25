@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
+  skip_load_resource :only => [:new, :edit, :create]
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 
@@ -17,19 +18,16 @@ class ReservationsController < ApplicationController
     @user = current_user
     @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
     
-    #authorize! :create, Reservation, :message => "Unable to read this article."
-    if @user.reservations.any? {|r| r.made_today? }
-      flash[:error] = t('reservations.new.made_today.error').html_safe
-    elsif @user.reservations.any? {|r| r.on_same_day?(@reservation) }
-      flash[:error] = t('reservations.new.on_same_day.error').html_safe
-    end unless @user.is_admin?
-    
+    #Explicitly authorize here
+      
     # Options for ElasticSearch
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     # Get Rooms from ElasticSearch through tire DSL
     @rooms = Room.tire.search do
-      # query { string}
+      filter :terms, :room_group => room_group_filter, :execution => "or"
       sort { by options[:sort], options[:direction] }
+      #sort { by options[:sort], options[:direction] }
       page = options[:page].to_i
       search_size = options[:per].to_i
       from (page -1) * search_size
@@ -52,7 +50,9 @@ class ReservationsController < ApplicationController
     @room = @reservation.room
     
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     @rooms = Room.tire.search do
+      filter :terms, :room_group => room_group_filter, :execution => "or"
       sort { by options[:sort], options[:direction] }
       page = options[:page].to_i
       search_size = options[:per].to_i

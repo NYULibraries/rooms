@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  authorize_resource :class => false
+  load_and_authorize_resource :class => "Reservation"
 
   #Generate a report of reservations based on submitted params
   def index
@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
           conditions.push("(user_id in (select id from users where user_attributes like '%bor_status: \"#{@patron_status}\"%'))") unless @patron_status.nil?
 
           # Find all reservations that fall between this selected date range      
-          @reservations = Reservation.active.no_blocks.where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)
+          @reservations = Reservation.active.no_blocks.accessible_by(current_ability).where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)
         
           # Populate a 'no data found' error if no reservations were found
           flash[:error] = "Could not find any data for the range you selected." if @reservations.empty?

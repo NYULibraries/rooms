@@ -3,7 +3,7 @@
 	    <ul class="admin_options">
 	      <li><%= link_to "Manage Rooms", rooms_url %></li>
 	      <% if can? :manage, User %><li><%= link_to "Manage Users", users_url %></li><% end %>
-	      <% if can? :manage, :block %><li><%= link_to "Schedule Closures", blocks_url %></li><% end %>
+	      <% if can? :manage, Reservation, :is_block => true %><li><%= link_to "Schedule Closures", blocks_url %></li><% end %>
 	      <% if can? :manage, :report %><li><%= link_to "Reporting", reports_url %></li><% end %>
 	    </ul>
 	<% end -%>

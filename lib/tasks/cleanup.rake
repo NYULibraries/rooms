@@ -13,5 +13,5 @@ namespace :cleanup do
       destroyed = Reservation.destroy_all(["end_dt < ?", 1.year.ago])
       @log.error "[#{Time.now.to_formatted_s(:db)}] #{destroyed.count} reservations destroyed"
     end
-    
+      
 end

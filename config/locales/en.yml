@@ -1,4 +1,9 @@
 en:
+  unauthorized:
+    create:
+      reservation: "Sorry, you are only allowed <strong>to have one reservation per day</strong> and <strong>to create one reservation per day.</strong>"
+    manage:
+      all: "You are not authorized to %{action} %{subject}."
   room:
     type:
       collaborative: "Collaborative"
@@ -10,11 +15,6 @@ en:
     current_user_is_only_email: "For collaborative rooms, please add at least one other e-mail besides your own."
     collaborative_requires_ccs: "For collaborative rooms, please add at least one other valid e-mail from your group."
   reservations:
-    new:
-      made_today:
-        error: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"
-      on_same_day:
-        error: "Sorry, you are only allowed <strong>to have one reservation per day.</strong>"
     create:
       success: Reservation was successful. You will be sent an e-mail confirming your reservation.
     update:
@@ -45,3 +45,4 @@ en:
       success: User was successfully updated.
     create:
       success: User was successfully created.
+  

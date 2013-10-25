@@ -47,6 +47,17 @@
   </p>
 
   <p>
+	<%= f.label :room_group_id, "Room group" %>
+	<select name="room[room_group_id]" id="room_room_group_id">
+	<% RoomGroup.all.each do |room_group| %>
+		<% if can? room_group.code.to_sym, RoomGroup %>
+    	<option value="<%= room_group.id %>"<%=(room_group_selected?(room_group)) ? " selected" : ''%>><%= room_group.title %></option>
+		<% end %>
+	<% end %>
+	</select>
+  </p>
+
+  <p>
     <%= f.submit 'Save changes' %>
   </p>
 <% end %>

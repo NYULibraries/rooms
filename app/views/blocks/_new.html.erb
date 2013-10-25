@@ -38,9 +38,9 @@
 	  <%= f.label :room_id, "Room:", :class => "control-label" %>
 	  <div class="controls">
 		<% if params[:reservation].blank? || params[:reservation][:room_id].blank? %>
-			<%= f.select :room_id, options_from_collection_for_select(Room.all, 'id', 'title') %>
+			<%= f.select :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title') %>
 		<% else %>
-			<%= select :reservation, :room_id, options_from_collection_for_select(Room.all, 'id', 'title', params[:reservation][:room_id]) %>
+			<%= select :reservation, :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title', params[:reservation][:room_id]) %>
 		<% end %>
 	  </div>
 	</div>

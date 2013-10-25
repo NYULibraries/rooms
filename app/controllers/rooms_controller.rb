@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   respond_to :html, :js
   
   # GET /rooms

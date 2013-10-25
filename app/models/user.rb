@@ -1,17 +1,17 @@
 class User < ActiveRecord::Base
-  include Rooms::User::Authorization
+  include Rooms::Authorization
   has_many :reservations, :dependent => :destroy
   
-  attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :roles
+  attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :admin_roles
   attr_accessible :crypted_password, :current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id 
   
-  scope :non_admin, where("roles_mask = 0 OR roles_mask IS NULL")
-  scope :admin, where("roles_mask > 0")
+  scope :non_admin, where("admin_roles_mask = 0 OR roles_mask IS NULL")
+  scope :admin, where("admin_roles_mask > 0")
   scope :inactive, where("last_request_at < ?", 1.year.ago)
 
   serialize :user_attributes
   
-  after_initialize :is_authorized?
+  #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["global"]
   
   # Configure authlogic
   acts_as_authentic do |c|
@@ -40,12 +40,16 @@ class User < ActiveRecord::Base
   # = Example
   #
   #   User.search("Smith")
+  #
+  # = Returns
+  #
+  #   ActiveRecord::Relation
   def self.search(search)
     if search
       q = "%#{search}%"
       where('firstname LIKE ? || lastname LIKE ? || username LIKE ? || email LIKE ?', q, q, q, q)
     else
-      # 'where' returns a scope, if there is no search return a blank scope 
+      # 'where' returns a scope, if there is no search return a blank scope
       scoped
     end
   end

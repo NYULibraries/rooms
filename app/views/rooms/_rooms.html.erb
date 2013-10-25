@@ -13,6 +13,21 @@
   </ul>
 </div>
 
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Filter
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+	<li><%= link_to "<None>", rooms_url %>
+	<% RoomGroup.all.each do |room_group| %>
+		<% if can? room_group.code.to_sym, RoomGroup %>
+    	<li><%= link_to rooms_url(:room_group => room_group.code) do %> <%= room_group.title %><% end -%></li>
+		<% end %>
+	<% end %>
+  </ul>
+</div>
+
 <br /><br />
 
 <table class="table table-striped">

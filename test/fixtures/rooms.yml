@@ -5,6 +5,7 @@ individual:
   size_of_room: 1-2 People 
   sort_size_of_room: 2
   sort_order: 1
+  room_group: one
   hours:
     hours_start:
       hour: '7'
@@ -22,6 +23,7 @@ individual_with_hours:
   size_of_room: 1-2 People 
   sort_size_of_room: 2
   sort_order: 2
+  room_group: one
   hours:
     hours_start:
       hour: '7'
@@ -41,6 +43,7 @@ collaborative:
   size_of_room: 6 People
   sort_size_of_room: 6
   sort_order: 3
+  room_group: two
   # Open 7am-1am
   hours:
     hours_start:

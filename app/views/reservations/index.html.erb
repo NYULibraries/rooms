@@ -40,7 +40,7 @@
     <div class="control-group">
       <label class="control-label" for="inputStartTime">Select length:</label>
       <div class="controls">
-		<% if can? :create, :graduate => true %>
+		<% if can? :create, Reservation, :graduate => true %>
         <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), :class => "span6"%>
 		<% else %>
 		<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120]]), :class => "span6"%>

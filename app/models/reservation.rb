@@ -8,7 +8,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :room
   belongs_to :user
   
-  attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by
+  attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by, :deleted_at
   
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
   
@@ -21,9 +21,10 @@ class Reservation < ActiveRecord::Base
   #after_initialize :date_formatted_correctly # Validate dates on Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
   
   # Non-database attributes
-  attr_accessor :created_at_day, :created_at_timezone, :deleted_at_timezone
-  # Require initialization
-  after_initialize :populate_timezones
+  attr_accessor :created_at_day
+
+  before_save :populate_timezones
+  before_save :populate_deleted_at
   
   serialize :deleted_by, Hash
   
@@ -51,8 +52,6 @@ class Reservation < ActiveRecord::Base
     # Mappings for non-database values
     indexes :created_at_day, :as => 'created_at.in_time_zone.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
     indexes :start_day, :as => 'start_dt.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
-    indexes :created_at_timezone, :as => 'created_at_timezone', :index => :not_analyzed
-    indexes :deleted_at_timezone, :as => 'deleted_at_timezone', :index => :not_analyzed
   end
   
   # CSV mapping
@@ -69,7 +68,7 @@ class Reservation < ActiveRecord::Base
     room 'Room Name' do |room| room.title end
     room 'Room Type' do |room| room.type_of_room end
   end
-
+  
   ##
   # Finds existing reservations for this timeslot
   #
@@ -128,7 +127,7 @@ class Reservation < ActiveRecord::Base
   ##
   # Perform a check to find if the user already has a reservation for this day
   def on_same_day?(reservation)
-    reservation_on_day?("start_day", reservation.start_dt.strftime('%Y-%m-%d'))
+    (reservation.blank? || reservation.start_dt.blank?) ? false : reservation_on_day?("start_day", reservation.start_dt.strftime('%Y-%m-%d'))
   end
 
 private
@@ -155,11 +154,15 @@ private
     if new_record?
       self.created_at_timezone ||= Time.zone.name
     else
-      @populate_timezones ||= Reservation.tire.search "id:#{id}"
-      unless @populate_timezones.results.empty?
-        self.created_at_timezone ||= @populate_timezones.results.first.created_at_timezone
+      if self.deleted?
         self.deleted_at_timezone ||= Time.zone.name
       end
+    end
+  end
+  
+  def populate_deleted_at
+    if self.deleted?
+      self.deleted_at ||= Time.zone.now
     end
   end
 

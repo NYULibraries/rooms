@@ -16,7 +16,8 @@ class ReservationsController < ApplicationController
   def new
     @user = current_user
     @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
-
+    
+    #authorize! :create, Reservation, :message => "Unable to read this article."
     if @user.reservations.any? {|r| r.made_today? }
       flash[:error] = t('reservations.new.made_today.error').html_safe
     elsif @user.reservations.any? {|r| r.on_same_day?(@reservation) }

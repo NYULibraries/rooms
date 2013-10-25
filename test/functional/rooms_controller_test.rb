@@ -39,7 +39,7 @@ class RoomsControllerTest < ActionController::TestCase
   test "create new room" do
     VCR.use_cassette('create new room') do
       assert_difference('Room.count', 1) do
-        post :create, :room => { :title => "Cool new room" }, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
+        post :create, :room => { :id => 4, :title => "Cool new room" }, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
       end
       assert assigns(:room)
       assert_redirected_to room_url(assigns(:room))

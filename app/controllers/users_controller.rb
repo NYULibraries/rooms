@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   respond_to :js, :html, :csv
   
   # GET /users

@@ -1,5 +1,5 @@
 class BlocksController < ApplicationController
-  authorize_resource :class => false
+  load_and_authorize_resource :class => Reservation
   respond_to :html, :js
   
   # GET /blocks

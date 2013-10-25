@@ -44,13 +44,13 @@ class ApplicationController < ActionController::Base
   protected :sort_direction
   
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = "Access denied!"
+    flash[:error] ||= "Access denied!"
     if current_user.nil?
       redirect_to login_url unless performed?
     elsif can? :manage, Reservation, :user_id => current_user.id
       redirect_to root_url, :alert => exception.message
     else
-      render "user_sessions/unauthorized_patron", :alert => exception.message
+      render "user_sessions/unauthorized_patron", :alert => exception.message, :formats => [:html, :js]
     end
   end
 

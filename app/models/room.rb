@@ -9,8 +9,9 @@ class Room < ActiveRecord::Base
   attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link
   
   has_many :reservations, :dependent => :destroy
+  belongs_to :room_group
 
-  validates_presence_of :title, :hours  
+  validates_presence_of :title, :hours
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
   
@@ -26,6 +27,7 @@ class Room < ActiveRecord::Base
     indexes :image_link, :index => :not_analyzed
     indexes :sort_order, :type => 'integer'
     indexes :sort_size_of_room, :type => 'integer'
+    indexes :room_group, :index => :not_analyzed
   end
   
   ##

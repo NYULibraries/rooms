@@ -45,14 +45,6 @@ class ReservationTest < ActiveSupport::TestCase
     end
   end
   
-  test "intitialize timezone attrs" do
-    VCR.use_cassette('get created at timezone') do
-      @reservation = Reservation.new({ :start_dt => 4.years.from_now, :end_dt => 4.years.from_now + 30.minutes })
-      assert_not_nil @reservation.created_at_timezone
-      assert_equal @reservation.created_at_timezone, Time.zone.name
-    end
-  end
-
   test "check for at least one cc on collaborative" do
     VCR.use_cassette('at least one cc collaborative') do
       reservation_fields = { :user_id => users(:real_user).id , :room_id => rooms(:collaborative).id, :start_dt => 3.years.from_now, :end_dt => 3.years.from_now + 30.minutes }

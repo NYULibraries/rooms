@@ -33,7 +33,7 @@ group :test do
   gem 'ruby-prof' #For Benchmarking
   gem 'coveralls', '~> 0.7.0', :require => false
   gem 'vcr', '~> 2.6.0'
-  gem 'webmock', '~> 1.11.0'
+  gem 'webmock', '~> 1.15.0'
 end
 
 gem 'debugger', :groups => [:development, :test]
@@ -52,6 +52,7 @@ gem 'cancan', '~> 1.6.10'
 # Pagination and sorting
 gem 'kaminari', '~> 0.13'
 gem 'sorted', '~> 0.4.3'
+#gem 'acts_as_paranoid', '~> 0.4.0'
 
 # Settings
 gem 'rails_config', '~> 0.3.2'

@@ -20,13 +20,15 @@
     <%= f.text_field :email, :disabled => !@user.id.nil? %>
     <% end -%>
 
-	<% for role in User::ROLES %>
-	<%= f.label "user_roles_#{role}", :class => "control-label" do %>
-		<%= check_box_tag "user[roles][#{role}]", role, @user.roles.include?(role), {:name => "user[roles][]"}%>
-		<%= role.humanize.titleize %>
+	<% for role in @user.all_admin_roles %>
+		<% if current_user.is?(:global) or current_user.is? role.to_sym %>
+			<%= label_tag "user[admin_roles][#{role}]", :class => "control-label" do %>
+				<%= check_box_tag "user[admin_roles][#{role}]", role, @user.admin_roles.include?(role), {:name => "user[admin_roles][]"}%>
+				<%= role.humanize.titleize %>
+			<% end %>
+		<% end %>
 	<% end %>
-	<% end %>
-	<%= hidden_field_tag "user[roles][]", "" %>
+	<%= hidden_field_tag "user[admin_roles][]", "" %>
 
   </fieldset>
   <p>

@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '31'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"acknowledged":true}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 20:21:04 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/test_reservations/_bulk
+    body:
+      encoding: US-ASCII
+      string: ! '{"index":{"_index":"test_reservations","_type":"reservation","_id":"2327581"}}
+
+        {"deleted":false,"end_dt":"3020-10-01T15:00:00+00:00","id":2327581,"is_block":false,"room_id":1,"start_dt":"3020-10-01T13:30:00+00:00","user_id":1,"created_at_day":"2013-10-24","start_day":"3020-10-01"}
+
+        {"index":{"_index":"test_reservations","_type":"reservation","_id":"263555389"}}
+
+        {"deleted":false,"end_dt":"2013-10-24T15:36:11+00:00","id":263555389,"is_block":false,"room_id":1,"start_dt":"2013-10-24T15:06:11+00:00","user_id":3,"created_at_day":"2013-10-24","start_day":"2013-10-24"}
+
+        {"index":{"_index":"test_reservations","_type":"reservation","_id":"725306934"}}
+
+        {"deleted":true,"end_dt":"2013-10-24T15:36:11+00:00","id":725306934,"is_block":false,"room_id":1,"start_dt":"2013-10-24T15:06:11+00:00","user_id":1,"created_at_day":"2013-10-24","start_day":"2013-10-24"}
+
+        {"index":{"_index":"test_reservations","_type":"reservation","_id":"980190962"}}
+
+        {"deleted":false,"end_dt":"2013-10-24T15:36:11+00:00","id":980190962,"is_block":false,"room_id":1,"start_dt":"2013-10-24T15:06:11+00:00","user_id":1,"created_at_day":"2013-10-24","start_day":"2013-10-24"}
+
+'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '1139'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '436'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":636,"items":[{"index":{"_index":"test_reservations","_type":"reservation","_id":"2327581","_version":1,"ok":true}},{"index":{"_index":"test_reservations","_type":"reservation","_id":"263555389","_version":1,"ok":true}},{"index":{"_index":"test_reservations","_type":"reservation","_id":"725306934","_version":1,"ok":true}},{"index":{"_index":"test_reservations","_type":"reservation","_id":"980190962","_version":1,"ok":true}}]}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 20:21:05 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_rooms
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '31'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"acknowledged":true}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 20:21:05 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/test_rooms/_bulk
+    body:
+      encoding: US-ASCII
+      string: ! '{"index":{"_index":"test_rooms","_type":"room","_id":"1"}}
+
+        {"description":null,"id":1,"image_link":null,"size_of_room":"1-2 People","sort_order":1,"sort_size_of_room":2,"title":"Individual
+        Room 1","type_of_room":"One person"}
+
+        {"index":{"_index":"test_rooms","_type":"room","_id":"2"}}
+
+        {"description":null,"id":2,"image_link":null,"size_of_room":"1-2 People","sort_order":2,"sort_size_of_room":2,"title":"Individual
+        Room 2","type_of_room":"Individual"}
+
+        {"index":{"_index":"test_rooms","_type":"room","_id":"3"}}
+
+        {"description":"This and that in here","id":3,"image_link":"http://google.com","size_of_room":"6
+        People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative"}
+
+'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '718'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '268'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":312,"items":[{"index":{"_index":"test_rooms","_type":"room","_id":"1","_version":1,"ok":true}},{"index":{"_index":"test_rooms","_type":"room","_id":"2","_version":1,"ok":true}},{"index":{"_index":"test_rooms","_type":"room","_id":"3","_version":1,"ok":true}}]}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 20:21:05 GMT
+recorded_with: VCR 2.6.0

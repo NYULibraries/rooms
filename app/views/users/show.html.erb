@@ -45,6 +45,7 @@
 			<th>Location</th>
 			<th>Deleted by</th>
 			<th>Date created</th>
+			<th>Date deleted</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -53,7 +54,8 @@
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= get_deleted_by(r)%></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
+			<td><%= prettify_date(r.deleted_at)%> <%= r.deleted_at_timezone %></td>
 		</tr>
 		<% end %>
 		</tbody>
@@ -75,7 +77,7 @@
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title.html_safe %></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
 		</tr>
 		<% end %>
 		</tbody>
@@ -97,7 +99,7 @@
 		<tr id="<%= r.id %>" class="<%= highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
 			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, :confirm => "Are you sure?" %>
 		</tr>
 		<% end %>

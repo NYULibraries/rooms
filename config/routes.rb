@@ -11,13 +11,11 @@ Rooms::Application.routes.draw do
     resources :rooms
     resources :blocks 
     resources :reports
-    
-    match 'reservations/destroy/:id' => "reservations#destroy", :as => "admin_reservation_destroy"
+    resources :room_groups
    
     match 'reports' => "reservations#generate_report"
   end
   
-  match 'reservations/generate_grid' => "reservations#generate_grid", :as => 'generate_grid'
   match 'reservations/resend_email' => "reservations#resend_email"
   resources :reservations do
     put "delete" => "reservations#delete"

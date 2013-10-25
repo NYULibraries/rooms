@@ -45,13 +45,7 @@
       <td class="hidden-phone"><%=h user.is_admin? %></td>
       <td><%= link_to 'Show', user %></td>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
-      <td>
-		<% if can? :destroy, user %>
-			<%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
-		<% else %>
-			Destroy
-		<% end %>
-	  </td>
+      <td><%= (can? :destroy, user) ? link_to('Destroy', user, :confirm => 'Are you sure?', :method => :delete) : 'Destroy' %></td>
     </tr>
     <% end %>
   </tbody>

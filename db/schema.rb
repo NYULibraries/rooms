@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003170025) do
+ActiveRecord::Schema.define(:version => 20131024204201) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "user_id"
@@ -21,11 +21,22 @@ ActiveRecord::Schema.define(:version => 20131003170025) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.boolean  "is_block",      :default => false
+    t.boolean  "is_block",            :default => false
     t.string   "deleted_by"
     t.string   "cc"
     t.string   "config_option"
-    t.boolean  "deleted",       :default => false
+    t.boolean  "deleted",             :default => false
+    t.string   "created_at_timezone"
+    t.string   "deleted_at_timezone"
+    t.datetime "deleted_at"
+  end
+
+  create_table "room_groups", :force => true do |t|
+    t.string   "title"
+    t.integer  "admin_roles_mask"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "code"
   end
 
   create_table "rooms", :force => true do |t|
@@ -39,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20131003170025) do
     t.string   "image_link"
     t.text     "hours"
     t.integer  "sort_size_of_room", :default => 0
+    t.integer  "room_group_id"
   end
 
   create_table "users", :force => true do |t|
@@ -58,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20131003170025) do
     t.datetime "last_login_at"
     t.text     "user_attributes"
     t.datetime "refreshed_at"
-    t.integer  "roles_mask"
+    t.integer  "admin_roles_mask"
   end
 
 end

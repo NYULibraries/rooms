@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=10
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"query_string":{"query":"id:980190962"}},"size":10}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '61'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '490'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"980190962","_score":0.30685282,
+        "_source" : {"deleted":false,"end_dt":"2013-10-21T17:29:20+00:00","id":980190962,"is_block":false,"room_id":1,"start_dt":"2013-10-21T16:59:20+00:00","user_id":1,"created_at_day":"2013-10-21","start_day":"2013-10-21","created_at_timezone":null,"deleted_at_timezone":null}}]}}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 16:20:59 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=10
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"query_string":{"query":"id:980190962"}},"size":10}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '61'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '490'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"980190962","_score":0.30685282,
+        "_source" : {"deleted":false,"end_dt":"2013-10-21T17:29:20+00:00","id":980190962,"is_block":false,"room_id":1,"start_dt":"2013-10-21T16:59:20+00:00","user_id":1,"created_at_day":"2013-10-21","start_day":"2013-10-21","created_at_timezone":null,"deleted_at_timezone":null}}]}}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 16:21:00 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/test_reservations/reservation/980190962
+    body:
+      encoding: US-ASCII
+      string: ! '{"deleted":false,"end_dt":"2013-10-24T12:50:59+00:00","id":980190962,"is_block":false,"room_id":1,"start_dt":"2013-10-24T12:20:59+00:00","user_id":1,"created_at_day":"2013-10-24","start_day":"2013-10-24","created_at_timezone":null,"deleted_at_timezone":"Eastern
+        Time (US & Canada)"}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '282'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '93'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"980190962","_version":2}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 16:21:00 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=10
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"query_string":{"query":"id:980190962"}},"size":10}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '61'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '490'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"980190962","_score":0.30685282,
+        "_source" : {"deleted":false,"end_dt":"2013-10-21T17:29:20+00:00","id":980190962,"is_block":false,"room_id":1,"start_dt":"2013-10-21T16:59:20+00:00","user_id":1,"created_at_day":"2013-10-21","start_day":"2013-10-21","created_at_timezone":null,"deleted_at_timezone":null}}]}}'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 16:21:00 GMT
+recorded_with: VCR 2.6.0

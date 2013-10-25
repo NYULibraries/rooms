@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: Graduate
+  admin_roles_mask: 1
+  code: grad
+
+two:
+  title: Undergraduate
+  admin_roles_mask: 1
+  code: undergrad

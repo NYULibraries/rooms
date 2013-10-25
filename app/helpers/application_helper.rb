@@ -10,11 +10,7 @@ module ApplicationHelper
   end
   
   def prettify_date(d)
-    d.strftime('%a. %b %d, %Y %I:%M %p')    
-  end
-  
-  def prettify_created_at_date(d)
-    d.strftime('%a. %b %d, %Y %I:%M %p')    
+    d.strftime('%a. %b %d, %Y %I:%M %p') unless d.blank?
   end
   
   def prettify_simple_date(d)

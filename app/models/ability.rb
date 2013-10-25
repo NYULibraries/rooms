@@ -7,11 +7,12 @@ class Ability
     @user.auth_roles.each { |role| send(role) if respond_to?(role) } unless @user.is_admin?
     # For admins ignore the standard permissions
     @user.admin_roles.each { |role| send(role) if respond_to?(role) } if @user.is_admin? and !@user.is? :global
+    # Force only global permissions for global admin
     send("global") if @user.is? :global
   end
   
   def booker
-    can [:read, :create, :update, :delete, :resend_email], Reservation, :user_id => @user.id
+    
     #cannot :create, Reservation do |reservation|
     #  reservation.room.room_group.code == "ny_graduate"
     #end
@@ -21,7 +22,11 @@ class Ability
   end
   
   def ny_undergraduate
-    booker
+    can :manage, Reservation, {:user_id => @user.id, :room => {:room_group => { :code => }}
+    can :create, Reservation do |reservation|
+      #, {:room_group => { :code => ["ny_graduate", "ny_undergraduate"] }}
+      
+    end
   end  
 
   def shanghai_undergraduate
@@ -29,7 +34,6 @@ class Ability
   end
 
   def ny_graduate
-    booker
     can :create, Reservation, :graduate => true
   end
 
@@ -39,6 +43,7 @@ class Ability
   end
     
   def ny_admin
+    can :manage, Reservation
     can :manage, User
     can :manage, :block
     can :manage, :report
@@ -48,6 +53,7 @@ class Ability
   end
   
   def shanghai_admin
+    can :manage, Reservation
     can :manage, User
     can :manage, :block
     can :manage, :report

@@ -18,7 +18,7 @@ class RoomTest < ActiveSupport::TestCase
   
   test "reservations belong to room" do
     assert_nothing_raised() { rooms(:individual).reservations }
-    assert_equal 4, rooms(:individual).reservations.count
+    assert_equal rooms(:individual).reservations.count, 5
   end
   
 end

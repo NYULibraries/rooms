@@ -17,17 +17,23 @@ class ReservationsController < ApplicationController
   def new
     @user = current_user
     @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
+
+    [:made_today, :for_same_day, :create_length].each do |action|
+      authorize! action, @reservation
+    end
     
-    #Explicitly authorize here
-      
     # Options for ElasticSearch
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
+    resort = (sort_column.to_sym == options[:sort])
     # Get Rooms from ElasticSearch through tire DSL
     @rooms = Room.tire.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
-      sort { by options[:sort], options[:direction] }
-      #sort { by options[:sort], options[:direction] }
+      sort do
+        by :room_group, 'asc'
+        by options[:sort], options[:direction]
+      end if resort
+      sort { by options[:sort], options[:direction] } unless resort
       page = options[:page].to_i
       search_size = options[:per].to_i
       from (page -1) * search_size
@@ -48,12 +54,18 @@ class ReservationsController < ApplicationController
     @user = current_user
     @reservation = @user.reservations.new(params[:reservation])
     @room = @reservation.room
+
+    [:made_today, :for_same_day, :create_length].each do |action|
+      authorize! action, @reservation
+    end
     
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
+    resort = (sort_column.to_sym == options[:sort])
     @rooms = Room.tire.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
-      sort { by options[:sort], options[:direction] }
+      sort { by :room_group, 'asc' } if resort
+      sort { by options[:sort], options[:direction] } unless resort
       page = options[:page].to_i
       search_size = options[:per].to_i
       from (page -1) * search_size
@@ -78,17 +90,19 @@ class ReservationsController < ApplicationController
   def edit
     @reservation = Reservation.find(params[:id])
     @user = current_user
+    
+    #Explicitly authorize reservation creation here
+    authorize! :update, @reservation
+    
     respond_with(@reservation)
   end
 
   # PUT /reservations/1
   def update
     @reservation = Reservation.find(params[:id])
-    @user = current_user
+    @user = @reservation.user
 
-    if @reservation.update_attributes(params[:reservation])
-      flash[:success] = t('reservations.update.success')
-    end
+    flash[:success] = t('reservations.update.success') if @reservation.update_attributes(params[:reservation])
 
     respond_with(@reservation, :location => root_url)
   end
@@ -149,7 +163,7 @@ class ReservationsController < ApplicationController
   helper_method :end_dt
   
 private 
-  
+
   # Parse single date field into date object
   def which_date
     @which_date ||= Date.parse(params[:reservation][:which_date])

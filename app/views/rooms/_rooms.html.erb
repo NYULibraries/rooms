@@ -9,7 +9,7 @@
   </a>
   <ul class="dropdown-menu">
     <li><%= link_to new_room_url do %><i class="icon-user"></i> Add room<% end -%></li>
-    <li><%= link_to sort_rooms_url, :method => :get do %><i class="icon-user"></i> Update sort order<% end -%></li>
+    <li><%= link_to sort_rooms_url(:room_group => params[:room_group]), :method => :get do %><i class="icon-user"></i> Update sort order<% end -%></li>
   </ul>
 </div>
 

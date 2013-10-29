@@ -7,10 +7,15 @@ class RoomsController < ApplicationController
     options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
     # Get Rooms from ElasticSearch through tire DSL
     room_group_filter = (params[:room_group].blank?) ? RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
+    resort = (sort_column.to_sym == options[:sort])
     @rooms = Room.tire.search do
       query { string options[:q] } unless options[:q].blank?
       filter :terms, :room_group => room_group_filter, :execution => "or"
-      sort { by options[:sort], options[:direction] }
+      sort do
+        by :room_group, 'asc'
+        by options[:sort], options[:direction]
+      end if resort
+      sort { by options[:sort], options[:direction] } unless resort
       page = options[:page].to_i
       search_size = options[:per].to_i
       from (page -1) * search_size
@@ -65,14 +70,16 @@ class RoomsController < ApplicationController
   
   # GET /rooms/sort
   def index_sort
-    @rooms = Room.reorder(sort_column.to_sym)
+    @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
+    @rooms = @rooms.where(:room_groups => {:code => params[:room_group]}) unless params[:room_group].blank?
 
     respond_with(@rooms)
   end
 
   # PUT /rooms/sort  
   def update_sort
-    @rooms = Room.reorder(sort_column.to_sym)
+    @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
+    @rooms = @rooms.where(:room_groups => {:code => params[:room_group]}) unless params[:room_group].blank?
     
     # Have to iterate through each room in order to reindex sort order
     # Could be a scalability issue moving forward

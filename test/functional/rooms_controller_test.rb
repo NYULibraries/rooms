@@ -39,10 +39,13 @@ class RoomsControllerTest < ActionController::TestCase
   test "create new room" do
     VCR.use_cassette('create new room') do
       assert_difference('Room.count', 1) do
-        post :create, :room => { :id => 4, :title => "Cool new room" }, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
+        post :create, :room => { :room_group_id => room_groups(:one).to_param, :title => "Cool new room" }, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
       end
       assert assigns(:room)
       assert_redirected_to room_url(assigns(:room))
+      assert_difference('Room.count', -1) do
+        delete :destroy, :id => assigns(:room).to_param
+      end
     end
   end
   
@@ -66,9 +69,9 @@ class RoomsControllerTest < ActionController::TestCase
     VCR.use_cassette('destroy a room') do
       assert_difference('Room.count', -1) do
         delete :destroy, :id => rooms(:individual_with_hours)
-        assert assigns(:room)
-        assert_redirected_to rooms_url
       end
+      assert assigns(:room)
+      assert_redirected_to rooms_url      
     end
   end
   

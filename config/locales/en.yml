@@ -1,9 +1,13 @@
 en:
   unauthorized:
-    create:
-      reservation: "Sorry, you are only allowed <strong>to have one reservation per day</strong> and <strong>to create one reservation per day.</strong>"
+    made_today:
+      reservation: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"
+    for_same_day:
+      reservation: "Sorry, you are only allowed <strong>to have one reservation per day</strong>"
+    create_length:
+      reservation: "Sorry, you are not authorized to book for the selected length of time."
     manage:
-      all: "You are not authorized to %{action} %{subject}."
+      all: Access denied!
   room:
     type:
       collaborative: "Collaborative"

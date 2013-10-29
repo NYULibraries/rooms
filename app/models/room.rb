@@ -4,7 +4,6 @@ class Room < ActiveRecord::Base
   
   # ElasticSearch index name
   index_name("#{Rails.env}_rooms")
-  #index_name("test_rooms")
 
   attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link, :room_group_id
   
@@ -28,7 +27,7 @@ class Room < ActiveRecord::Base
     indexes :sort_order, :type => 'integer'
     indexes :sort_size_of_room, :type => 'integer'
     indexes :room_group, :as => "room_group.code", :index => :not_analyzed
-  end
+  end 
   
   ##
   # Return Tire result from idnex where reservation falls within the given timeslot

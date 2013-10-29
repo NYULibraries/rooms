@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   
   # For dev purposes
   def current_user_dev
-   @current_user ||= User.find_by_username("ba36")
+   @current_user ||= User.find_by_username("std5")
   end
   alias :current_user :current_user_dev if Rails.env == "development"
 
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     flash[:error] ||= exception.message.html_safe
     if current_user.nil?
       redirect_to login_url unless performed?
-    elsif can? :manage, Reservation, :user_id => current_user.id
+    elsif can? :create, Reservation
       if request.xhr?
         render "user_sessions/unauthorized_action", :alert => exception.message, :formats => :js
       else

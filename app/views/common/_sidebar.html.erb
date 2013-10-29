@@ -1,7 +1,7 @@
 <% if current_user.is_admin? %>
 	<%= sidebar_section("admin_panel", content_tag(:h2, "Admin Panel"), true) do %>
 	    <ul class="admin_options">
-	      <li><%= link_to "Manage Rooms", rooms_url %></li>
+	      <% if can? :admin, Room %><li><%= link_to "Manage Rooms", rooms_url %></li><% end %>
 	      <% if can? :manage, User %><li><%= link_to "Manage Users", users_url %></li><% end %>
 	      <% if can? :manage, Reservation, :is_block => true %><li><%= link_to "Schedule Closures", blocks_url %></li><% end %>
 	      <% if can? :manage, :report %><li><%= link_to "Reporting", reports_url %></li><% end %>

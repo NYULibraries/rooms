@@ -3,7 +3,6 @@ class Reservation < ActiveRecord::Base
   include Tire::Model::Callbacks
   
   index_name("#{Rails.env}_reservations")
-  #index_name("test_reservations")
   
   belongs_to :room
   belongs_to :user

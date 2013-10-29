@@ -1,7 +1,6 @@
 <h3>Policies:</h3>
 <ul>
-	<li>You must be a graduate student</li>
-	<% if can? :create, Reservation, :graduate => true %>
+	<% if can? :ny_graduate, RoomGroup %>
 	<li>You can reserve up to 3 hours/day</li>
 	<% else %>
 	<li>You can reserve up to 2 hours/day</li>

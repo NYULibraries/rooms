@@ -49,14 +49,14 @@ class ActiveSupport::TestCase
     user_session.instance_variable_set("@pds_user".to_sym, users(:real_user))
   end
   
-  VCR.use_cassette('reindex models') do
-    Reservation.index.delete
-    Reservation.index.import Reservation.all
-  
-    Room.index.delete
-    Room.index.import Room.all
-  end
-
+  #VCR.use_cassette('reindex models') do
+  #  Reservation.index.delete
+  #  Reservation.index.import Reservation.all
+  #
+  #  Room.index.delete
+  #  Room.index.import Room.all
+  #end
+  #
   
 end
 

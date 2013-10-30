@@ -28,7 +28,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":0.0,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:19:57 GMT
+  recorded_at: Wed, 30 Oct 2013 20:25:11 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?search_type=count&size=10
@@ -55,7 +55,7 @@ http_interactions:
       - '121'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":0.0,"hits":[]}}'
+      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":0.0,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:19:57 GMT
+  recorded_at: Wed, 30 Oct 2013 20:25:11 GMT
 recorded_with: VCR 2.6.0

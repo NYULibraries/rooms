@@ -39,7 +39,7 @@ class ReservationsControllerTest < ActionController::TestCase
   test "get new action" do
     current_user = UserSession.create(users(:hasnt_been_used_grad))
     VCR.use_cassette('reservations get new page') do
-     get :new, :reservation => { :start_dt => Time.now, :end_dt => Time.now + 60.minutes }
+     get :new, :reservation => { :start_dt => '3020-01-01 11:30:00'.to_time, :end_dt => '3020-01-01 11:30:00'.to_time + 60.minutes }
      assert assigns(:user)
      assert assigns(:reservation)
      assert_template :new
@@ -100,7 +100,7 @@ class ReservationsControllerTest < ActionController::TestCase
     current_user = UserSession.create(users(:no_bookings_grad))
     VCR.use_cassette('reservations create new gradute') do
       assert_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 150.minutes, :cc => "dummy@silly.org" }  
+        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => '3020-03-01 11:30:00'.to_time + 2.days, :end_dt => '3020-03-01 11:30:00'.to_time + 2.days + 150.minutes, :cc => "dummy@silly.org" }  
       end
     end
     assert assigns(:user)

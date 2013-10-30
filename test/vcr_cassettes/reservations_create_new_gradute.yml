@@ -5,14 +5,14 @@ http_interactions:
     uri: http://localhost:9200/test_rooms/room/_search?from=0&size=20
     body:
       encoding: US-ASCII
-      string: ! '{"sort":[{"room_group":"asc"}],"filter":{"terms":{"room_group":["ny_undergraduate","ny_graduate"],"execution":"or"}},"size":20,"from":0}'
+      string: ! '{"sort":[{"room_group":"asc"},{"sort_order":"asc"}],"filter":{"terms":{"room_group":["ny_undergraduate","ny_graduate"],"execution":"or"}},"size":20,"from":0}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '136'
+      - '157'
       User-Agent:
       - Ruby
   response:
@@ -23,25 +23,25 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '1050'
+      - '1056'
     body:
       encoding: US-ASCII
-      string: ! '{"took":4,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"2","_score":null,
+        "_source" : {"description":null,"id":2,"image_link":null,"size_of_room":"1-2
+        People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual","room_group":"ny_graduate"},"sort":["ny_graduate",2]},{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
         "_source" : {"description":null,"id":1,"image_link":null,"size_of_room":"1-2
         People","sort_order":3,"sort_size_of_room":2,"title":"Individual Room 1","type_of_room":"One
-        person","room_group":"ny_graduate"},"sort":["ny_graduate"]},{"_index":"test_rooms","_type":"room","_id":"2","_score":null,
-        "_source" : {"description":null,"id":2,"image_link":null,"size_of_room":"1-2
-        People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual","room_group":"ny_graduate"},"sort":["ny_graduate"]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
+        person","room_group":"ny_graduate"},"sort":["ny_graduate",3]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
         "_source" : {"description":"This and that in here","id":3,"image_link":"http://google.com","size_of_room":"6
-        People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate"]}]}}'
+        People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",1]}]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:19:56 GMT
+  recorded_at: Wed, 30 Oct 2013 20:25:10 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2013-11-01T12:19:56+00:00"}}},{"range":{"start_dt":{"lt":"2013-11-01T14:49:56+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2013-11-01T12:19:56+00:00"}}},{"range":{"end_dt":{"lte":"2013-11-01T14:49:56+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2013-11-01T12:19:56+00:00"}}},{"range":{"end_dt":{"gte":"2013-11-01T14:49:56+00:00"}}}]}]}]},"size":1}'
+      string: ! '{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"3020-03-03T11:30:00+00:00"}}},{"range":{"start_dt":{"lt":"3020-03-03T14:00:00+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"3020-03-03T11:30:00+00:00"}}},{"range":{"end_dt":{"lte":"3020-03-03T14:00:00+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"3020-03-03T11:30:00+00:00"}}},{"range":{"end_dt":{"gte":"3020-03-03T14:00:00+00:00"}}}]}]}]},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -64,13 +64,13 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:19:56 GMT
+  recorded_at: Wed, 30 Oct 2013 20:25:10 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_reservations/reservation/8
     body:
       encoding: US-ASCII
-      string: ! '{"deleted":false,"end_dt":"2013-11-01T14:49:56+00:00","id":8,"is_block":false,"room_id":3,"start_dt":"2013-11-01T12:19:56+00:00","user_id":8,"created_at_day":"2013-10-30","start_day":"2013-11-01"}'
+      string: ! '{"deleted":false,"end_dt":"3020-03-03T14:00:00+00:00","id":8,"is_block":false,"room_id":3,"start_dt":"3020-03-03T11:30:00+00:00","user_id":8,"created_at_day":"2013-10-30","start_day":"3020-03-03"}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -93,5 +93,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"8","_version":1}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:19:56 GMT
+  recorded_at: Wed, 30 Oct 2013 20:25:10 GMT
 recorded_with: VCR 2.6.0

@@ -49,4 +49,9 @@ en:
       success: User was successfully updated.
     create:
       success: User was successfully created.
+  room_groups:
+    create:
+      success: Room group was successfully created.
+    update:
+      success: Room group was successfully updated.
   

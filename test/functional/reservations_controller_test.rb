@@ -102,12 +102,10 @@ class ReservationsControllerTest < ActionController::TestCase
       assert_difference('Reservation.count', 1) do
         post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => '3020-03-01 11:30:00'.to_time + 2.days, :end_dt => '3020-03-01 11:30:00'.to_time + 2.days + 150.minutes, :cc => "dummy@silly.org" }  
       end
-    end
-    assert assigns(:user)
-    assert assigns(:reservation)
-    assert_response :success
-    assert_template :index
-    VCR.use_cassette('reservations delete new gradute') do
+      assert assigns(:user)
+      assert assigns(:reservation)
+      assert_response :success
+      assert_template :index
       assert_difference('Reservation.count', -1) do
         Reservation.find(assigns(:reservation).to_param).destroy
       end

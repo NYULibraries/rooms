@@ -26,7 +26,7 @@ http_interactions:
       - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:25:02 GMT
+  recorded_at: Wed, 30 Oct 2013 20:41:03 GMT
 recorded_with: VCR 2.6.0

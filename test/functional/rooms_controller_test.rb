@@ -44,7 +44,7 @@ class RoomsControllerTest < ActionController::TestCase
       assert assigns(:room)
       assert_redirected_to room_url(assigns(:room))
       assert_difference('Room.count', -1) do
-        delete :destroy, :id => assigns(:room).to_param
+        delete :destroy, :id => assigns(:room).id
       end
     end
   end

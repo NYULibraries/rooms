@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   
   acts_as_indexed :fields => [:firstname, :lastname, :username, :email]
   
-  #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["global"]
+  before_save :set_static_admins
   
   # Configure authlogic
   acts_as_authentic do |c|
@@ -34,6 +34,14 @@ class User < ActiveRecord::Base
     firstname
     lastname
     email
+  end
+  
+private
+
+  def set_static_admins
+    if Settings.login.default_admins.include? username
+      admin_roles = ["global", self.admin_roles].flatten.uniq
+    end
   end
   
 end

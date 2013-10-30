@@ -1,11 +1,13 @@
 one:
-  start_dt: <%= start_dt = Time.now %>
+  id: 1
+  start_dt: <%= start_dt = '3020-11-11 15:00:00'.to_time %>
   end_dt: <%= start_dt + 30.minutes %>
   room_id: 1
   user_id: 1
 
 deleted: 
-  start_dt: <%= start_dt = Time.now %>
+  id: 2
+  start_dt: <%= start_dt = '3020-10-18 17:00:00'.to_time %>
   end_dt: <%= start_dt + 30.minutes %>
   room_id: 1
   user_id: 1
@@ -14,31 +16,36 @@ deleted:
     by_user: one
 
 overlap:
+  id: 3
   room_id: 1
   user_id: 1
   start_dt: '3020-10-01 13:30:00'
   end_dt: '3020-10-01 15:00:00'
 
 admin_res:
-  start_dt: <%= start_dt = Time.now %>
-  end_dt: <%= start_dt + 30.minutes %>
+  id: 4
+  start_dt: <%= start_dt = '3020-10-15 21:00:00'.to_time %>
+  end_dt: <%= start_dt + 60.minutes %>
   room_id: 1
   user_id: 3
   
 undergraduate:
-  start_dt: <%= start_dt = Time.now %>
+  id: 5
+  start_dt: <%= start_dt = '3020-11-11 18:00:00'.to_time %>
   end_dt: <%= start_dt + 30.minutes %>
   room_id: 3
   user_id: 4
   cc: user@univer.edu
 
 graduate:
-  start_dt: <%= start_dt = Time.now %>
+  id: 6
+  start_dt: <%= start_dt = '3020-10-11 13:00:00'.to_time %>
   end_dt: <%= start_dt + 30.minutes %>
   room_id: 1
   user_id: 5
 
 for_different_day:
+  id: 7
   user_id: 7
   room_id: 3
   start_dt: '3020-10-01 13:30:00'

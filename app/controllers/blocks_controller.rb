@@ -54,13 +54,20 @@ class BlocksController < ApplicationController
       ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
     end
     
-    if @block.save
-      redirect_to blocks_url, notice: t('blocks.destroy_multiple.success')
+    # Jumping through hoops here to avoid ElasticSearch caching class method existing_reservations when @block.save is called
+    reservations_still_exist = Reservation.where(:id => params[:reservations_to_delete], :deleted => false)
+    if reservations_still_exist.empty?
+      redirect_to blocks_url, notice: t('blocks.destroy_multiple.success') if @block.save(:validate => false)
     else
-      # If the block can't save, you will render :new with a list of existing reservations and options
-      flash[:error] = t('blocks.destroy_multiple.error')
-      render :new, params: params
+      if @block.save
+        redirect_to blocks_url, notice: t('blocks.destroy_multiple.success')
+      else
+        # If the block can't save, you will render :new with a list of existing reservations and options
+        flash[:error] = t('blocks.destroy_multiple.error')
+        render :new, params: params
+      end
     end
+  
   end
   
   # DELETE /blocks/1

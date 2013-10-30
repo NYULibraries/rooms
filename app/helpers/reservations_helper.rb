@@ -45,6 +45,10 @@ module ReservationsHelper
     end
     return false
   end
+  
+  def check_reservation_button(room_result)
+    (!params[:reservation].blank? && params[:reservation][:room_id] == room_result.id)
+  end
     
   # Find if the room (r) is open during the timeslot (t)
   def room_is_open?(room,t)

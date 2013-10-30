@@ -112,6 +112,10 @@ ul#list_rooms {
   margin: 0;
 }
 
+.modal-header {
+  overflow-x: scroll;
+}
+
 #ajax-modal {
   .ajax-loader { padding-bottom: 5px; }
   .modal-footer .extra_fields {

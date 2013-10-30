@@ -53,6 +53,7 @@ gem 'cancan', '~> 1.6.10'
 gem 'kaminari', '~> 0.13'
 gem 'sorted', '~> 0.4.3'
 #gem 'acts_as_paranoid', '~> 0.4.0'
+gem 'acts_as_indexed', '~> 0.8.3'
 
 # Settings
 gem 'rails_config', '~> 0.3.2'

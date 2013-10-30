@@ -92,9 +92,11 @@ $(".modal-header").append(fixedHeader)
 
 $(".modal-body").bind "scroll", ->
   offset = $(this).scrollTop()
+  $(".modal-header").prop("scrollLeft", $(this).scrollLeft())
 
   if (offset >= tableOffset && fixedHeader.is(":hidden"))
     fixedHeader.show()
+    adjust_table_header_widths() 
     fit_modal_body($("#ajax-modal"))
   else if (offset < tableOffset)
     fixedHeader.hide()

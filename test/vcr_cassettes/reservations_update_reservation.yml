@@ -2,17 +2,17 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:9200/test_reservations/reservation/233196176
+    uri: http://localhost:9200/test_reservations/reservation/5
     body:
       encoding: US-ASCII
-      string: ! '{"deleted":false,"end_dt":"2013-10-29T17:13:21+00:00","id":233196176,"is_block":false,"room_id":3,"start_dt":"2013-10-29T16:43:21+00:00","user_id":4,"created_at_day":"2013-10-29","start_day":"2013-10-29"}'
+      string: ! '{"deleted":false,"end_dt":"3020-11-11T13:30:00+00:00","id":5,"is_block":false,"room_id":3,"start_dt":"3020-11-11T13:00:00+00:00","user_id":4,"created_at_day":"2013-10-30","start_day":"3020-11-11"}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '204'
+      - '196'
       User-Agent:
       - Ruby
   response:
@@ -23,10 +23,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '94'
+      - '85'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"233196176","_version":11}'
+      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"5","_version":3}'
     http_version: 
-  recorded_at: Tue, 29 Oct 2013 20:43:22 GMT
+  recorded_at: Wed, 30 Oct 2013 16:19:57 GMT
 recorded_with: VCR 2.6.0

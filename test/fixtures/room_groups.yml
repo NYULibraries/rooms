@@ -3,9 +3,9 @@
 one:
   title: Graduate
   admin_roles_mask: 1
-  code: ny_graduate
+  code: "ny_graduate"
 
 two:
   title: Undergraduate
   admin_roles_mask: 1
-  code: ny_undergraduate
+  code: "ny_undergraduate"

@@ -9,6 +9,10 @@ window.fit_modal_body = (modal) ->
   footerheight = parseInt(footer.css("height")) + parseInt(footer.css("padding-top")) + parseInt(footer.css("padding-bottom"))
   height = windowheight - headerheight - bodypaddings - footerheight - 40 # Top and bottom spacings
   body.css("max-height", "#{height}px")
+  
+window.adjust_table_header_widths = ->
+  $(".modal-header #availability_grid_header_fixed").find("thead tr:last-child th").each (i) ->
+    $(this).css('min-width':$(".modal-body #availability_grid_table").find("thead tr:last-child th:nth-child("+(i+1)+")").css('width'))
 
 $ ->
   # Set cookie finding user's timezone
@@ -104,4 +108,5 @@ $ ->
   # Bind resize event with the modal
   $(window).resize -> 
     fit_modal_body($("#ajax-modal"))
+    adjust_table_header_widths()
       

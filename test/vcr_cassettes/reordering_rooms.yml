@@ -29,7 +29,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"3","_version":3}'
     http_version: 
-  recorded_at: Tue, 29 Oct 2013 20:43:23 GMT
+  recorded_at: Wed, 30 Oct 2013 16:19:58 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/2
@@ -59,7 +59,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"2","_version":5}'
     http_version: 
-  recorded_at: Tue, 29 Oct 2013 20:43:23 GMT
+  recorded_at: Wed, 30 Oct 2013 16:19:58 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/1
@@ -90,5 +90,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":5}'
     http_version: 
-  recorded_at: Tue, 29 Oct 2013 20:43:24 GMT
+  recorded_at: Wed, 30 Oct 2013 16:19:58 GMT
 recorded_with: VCR 2.6.0

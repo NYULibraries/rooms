@@ -57,7 +57,7 @@ undergraduate:
     :nyuidn => "N0000001", 
     :primary_institution => "INST01",
     :institutions => ["INST01"],
-    :bor_status => "1",
+    :bor_status => "2",
     :aleph_permissions => {} }.to_yaml.inspect  %>
 
 graduate:
@@ -105,7 +105,7 @@ hasnt_been_used_undergrad:
     :nyuidn => "N0000001", 
     :primary_institution => "INST01",
     :institutions => ["INST01"],
-    :bor_status => "1",
+    :bor_status => "2",
     :aleph_permissions => {} }.to_yaml.inspect  %>
 
 no_bookings_grad:
@@ -137,5 +137,5 @@ no_bookings_undergrad:
     :nyuidn => "N0000001", 
     :primary_institution => "INST01",
     :institutions => ["INST01"],
-    :bor_status => "1",
+    :bor_status => "2",
     :aleph_permissions => {} }.to_yaml.inspect  %>

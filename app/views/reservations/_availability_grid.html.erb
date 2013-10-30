@@ -72,7 +72,7 @@
 	
 <% @rooms.results.each do |room| %>
 	<tr>
-		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room.load), :class => "new_reservation_radio_select" %></td>
+		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room.load), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
 		<td style="width:60px;">
 		<b><%= room.title %></b>
 		</td>
@@ -113,6 +113,9 @@
 			<%= f.hidden_field "user_id", :value => @user.id %>
 			<%= f.hidden_field "start_dt", :value => start_dt %>
 			<%= f.hidden_field "end_dt", :value => end_dt %>
+			<%= hidden_field_tag :page, params[:page] unless params[:page].blank? %>
+			<%= hidden_field_tag :direction, params[:direction] unless params[:direction].blank? %>
+			<%= hidden_field_tag :sort, params[:sort] unless params[:sort].blank? %>
 			<button type="submit" class="btn">
 				Reserve<span class="hidden-phone"> selected timeslot</span>
 			</button>

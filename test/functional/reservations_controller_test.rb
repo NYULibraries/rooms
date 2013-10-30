@@ -46,15 +46,22 @@ class ReservationsControllerTest < ActionController::TestCase
     end
   end
   
-  test "already created reservation today" do
-    VCR.use_cassette('reservations already created today') do
-      get :new, :reservation => { :start_dt => Time.now, :end_dt => Time.now + 60.minutes }  
-      assert assigns(:user)
-      assert assigns(:reservation)
-      assert_template "user_sessions/unauthorized_action"
-      assert_equal flash[:error], I18n.t('unauthorized.made_today.reservation')
-    end
-  end
+  #test "already created reservation today" do
+  #  current_user = UserSession.create(users(:no_bookings_undergrad))
+  #  VCR.use_cassette('reservations already created today') do
+  #    #assert_difference('Reservation.count', 1) do
+  #    #  post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 60.minutes, :cc => "silly@dummy.org" }
+  #    #end
+  #    get :new, :reservation => { :start_dt => Time.now, :end_dt => Time.now + 60.minutes }  
+  #    assert assigns(:user)
+  #    assert assigns(:reservation)
+  #    assert_template "user_sessions/unauthorized_action"
+  #    assert_equal flash[:error], I18n.t('unauthorized.made_today.reservation')
+  #    #assert_difference('Reservation.count', -1) do
+  #    #  Reservation.find(assigns(:reservation).to_param).destroy
+  #    #end
+  #  end
+  #end
   
   test "already created reservation for day" do
     current_user = UserSession.create(users(:hasnt_been_used_undergrad))
@@ -91,7 +98,7 @@ class ReservationsControllerTest < ActionController::TestCase
   
   test "create new reservation grad" do
     current_user = UserSession.create(users(:no_bookings_grad))
-    VCR.use_cassette('reservations create new gradute', :match_requests_on => :path) do
+    VCR.use_cassette('reservations create new gradute') do
       assert_difference('Reservation.count', 1) do
         post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 150.minutes, :cc => "dummy@silly.org" }  
       end
@@ -110,11 +117,16 @@ class ReservationsControllerTest < ActionController::TestCase
   #test "create new reservation undergrad" do
   #  current_user = UserSession.create(users(:no_bookings_undergrad))
   #  VCR.use_cassette('reservations create new undergraduate') do
-  #   post :create, :reservation => { :room_id => rooms(:individual).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes }  
-  #   assert assigns(:user)
-  #   assert assigns(:reservation)
-  #   assert_response :success
-  #   assert_template :index
+  #    assert_difference('Reservation.count', 1) do
+  #      post :create, :reservation => { :id => 11, :room_id => rooms(:collaborative).id, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 30.minutes, :cc => "dummy@silly.org" }  
+  #    end
+  #    assert assigns(:user)
+  #    assert assigns(:reservation)
+  #    assert_response :success
+  #    assert_template :index
+  #    assert_difference('Reservation.count', -1) do
+  #      Reservation.find(assigns(:reservation).to_param).destroy
+  #    end
   #  end
   #end
   

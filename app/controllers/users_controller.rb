@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   
   # GET /users
   def index
-    @users = User.search(params[:q]).sorted(params[:sort], "lastname ASC").page(params[:page]).per(30)
+    @users = User.sorted(params[:sort], "lastname ASC").page(params[:page]).per(30)
+    @users = @users.with_query(params[:q]) unless params[:q].blank?
     
     respond_with(@users) do |format|
       format.csv { render :csv => @users, :filename => "room_reservation_users.#{Time.now.strftime("%Y%m%d%H%m")}" }

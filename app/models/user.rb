@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   serialize :user_attributes
   
+  acts_as_indexed :fields => [:firstname, :lastname, :username, :email]
+  
   #validate :set_admins, Settings.login.default_admins.include? pds_user.uid #user.roles = ["global"]
   
   # Configure authlogic
@@ -32,26 +34,6 @@ class User < ActiveRecord::Base
     firstname
     lastname
     email
-  end
-  
-  ##
-  # Pass in a search term to do a user search on one of the common field names
-  #
-  # = Example
-  #
-  #   User.search("Smith")
-  #
-  # = Returns
-  #
-  #   ActiveRecord::Relation
-  def self.search(search)
-    if search
-      q = "%#{search}%"
-      where('firstname LIKE ? || lastname LIKE ? || username LIKE ? || email LIKE ?', q, q, q, q)
-    else
-      # 'where' returns a scope, if there is no search return a blank scope
-      scoped
-    end
   end
   
 end

@@ -22,6 +22,7 @@ public/assets
 
 coverage
 doc
+/wiki
 
 *.sql
 sqldumps/

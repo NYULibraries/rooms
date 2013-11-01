@@ -71,8 +71,9 @@
 	<tbody>
 	
 <% @rooms.results.each do |room| %>
+<% room = RoomDecorator.decorate(room) %>
 	<tr>
-		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room.load), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
+		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
 		<td style="width:60px;">
 		<b><%= room.title %></b>
 		</td>
@@ -86,7 +87,7 @@
 		<td class="hidden-phone" style="width:60px;">
 		<b><%= room.size_of_room %></b>
 		</td>
-		<%= construct_grid_data(room.load) %>
+		<%= construct_grid_data(room) %>
 	</tr>
 <% end %>
 

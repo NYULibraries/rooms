@@ -45,7 +45,8 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room = Room.new(params[:room])   
-    @room.hours = hours_hash
+    @room.opens_at = opens_at
+    @room.closes_at = closes_at
 
     flash[:notice] = t("rooms.create.success") if @room.save
     respond_with(@room)
@@ -54,7 +55,8 @@ class RoomsController < ApplicationController
   # PUT /rooms/1
   def update
     @room = Room.find(params[:id])
-    @room.hours = hours_hash
+    @room.opens_at = opens_at
+    @room.closes_at = closes_at
      
     flash[:notice] = t("rooms.update.success") if @room.update_attributes(params[:room])
     respond_with(@room)
@@ -102,20 +104,24 @@ class RoomsController < ApplicationController
   
 private
 
-  # Convert hours parameter to a hash
-  def hours_hash
-    @hours_hash ||= { 
-      :hours_start => {
-        :hour => params[:hours_start][:hour],
-        :minute => params[:hours_start][:minute],
-        :ampm => params[:hours_start][:ampm]
-      }, 
-      :hours_end => {
-        :hour => params[:hours_end][:hour],
-        :minute => params[:hours_end][:minute],
-        :ampm => params[:hours_end][:ampm]
-      } 
-    }
+  def opens_at
+    @opens_at ||= Time.new(1,1,1,opens_at_hour,params[:opens_at][:minute],0,0).strftime("%k:%M")
+  end
+  
+  def closes_at
+    @closes_at ||= Time.new(1,1,1,closes_at_hour,params[:closes_at][:minute],0,0).strftime("%k:%M")
+  end
+  
+  def opens_at_hour
+    @opens_at_hour ||= (params[:opens_at][:ampm] == "pm" && params[:opens_at][:hour] != "12") ? params[:opens_at][:hour].to_i + 12 :
+      (params[:opens_at][:ampm] == "am" && params[:opens_at][:hour] == "12") ? hour = 0 :
+        params[:opens_at][:hour].to_i
+  end
+  
+  def closes_at_hour
+    @closes_at_hour ||= (params[:closes_at][:ampm] == "pm" && params[:closes_at][:hour] != "12") ? params[:closes_at][:hour].to_i + 12 :
+      (params[:closes_at][:ampm] == "am" && params[:closes_at][:hour] == "12") ? hour = 0 :
+        params[:closes_at][:hour].to_i
   end
   
 end

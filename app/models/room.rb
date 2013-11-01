@@ -10,11 +10,9 @@ class Room < ActiveRecord::Base
   has_many :reservations, :dependent => :destroy
   belongs_to :room_group
 
-  validates_presence_of :title, :hours, :room_group_id
+  validates_presence_of :title, :opens_at, :closes_at, :room_group_id
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
-  
-  serialize :hours 
   
   # Tire mapping to ElasticSearch index
   mapping do
@@ -27,36 +25,12 @@ class Room < ActiveRecord::Base
     indexes :sort_order, :type => 'integer'
     indexes :sort_size_of_room, :type => 'integer'
     indexes :room_group, :as => "room_group.code", :index => :not_analyzed
+    indexes :opens_at, :as => 'opens_at'
+    indexes :closes_at, :as => 'closes_at'
   end 
   
-  ##
-  # Return Tire result from idnex where reservation falls within the given timeslot
-  #
-  # = Example
-  #
-  #   @room.find_reservation_by_timeslot(DateTime.now)
-  def find_reservation_by_timeslot(timeslot)
-    t_next = timeslot + 30.minutes #next iteration's time
-    timeslot = timeslot
-    room_id = self.id
-    
-    reservation ||= Reservation.tire.search do 
-      filter :term, :room_id => room_id
-      filter :term, :deleted => false
-      filter :or, 
-        { :and => [
-            { :range => { :start_dt => { :gte => timeslot } } },
-            { :range => { :end_dt => { :lte => t_next } } }
-        ]},
-        { :and => [
-            { :range => { :start_dt => { :lte => timeslot } } },
-            { :range => { :end_dt => { :gte => t_next } } }
-        ]}
-      size 1
-    end
-    return reservation.results.first
-  end
-
+  serialize :hours
+  
 private
 
   ##

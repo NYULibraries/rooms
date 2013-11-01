@@ -36,7 +36,7 @@ group :test do
   gem 'webmock', '~> 1.15.0'
 end
 
-gem 'debugger', :groups => [:development, :test]
+gem 'debugger', :groups => [:development, :test, :staging]
 
 gem 'json', '~> 1.8.0'
 
@@ -71,3 +71,6 @@ gem 'tire', '~> 0.6.0'
 
 # New Relic
 gem 'newrelic_rpm', '~> 3.6.0'
+
+# For decorators
+gem 'draper', '~> 1.3'

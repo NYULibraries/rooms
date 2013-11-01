@@ -29,7 +29,7 @@ class ReservationsController < ApplicationController
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     resort = (sort_column.to_sym != options[:sort])
     # Get Rooms from ElasticSearch through tire DSL
-    @rooms = Room.tire.search do
+    rooms = Room.tire.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
       # Default sort by room group and then default
       sort do
@@ -42,6 +42,7 @@ class ReservationsController < ApplicationController
       from (page -1) * search_size
       size search_size
     end
+    @rooms = RoomsDecorator.new(rooms)
 
     respond_with(@reservation)
   end

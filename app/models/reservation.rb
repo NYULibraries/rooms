@@ -44,6 +44,7 @@ class Reservation < ActiveRecord::Base
     indexes :id, :index => :not_analyzed
     indexes :room_id, :index => :not_analyzed
     indexes :user_id, :index => :not_analyzed
+    indexes :title, :index => :not_analyzed
     indexes :start_dt, :as => 'start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
     indexes :end_dt, :as => 'end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
     indexes :is_block, :type => 'boolean'
@@ -82,7 +83,7 @@ class Reservation < ActiveRecord::Base
       room_id = self.room.id
       results_size = (self.is_block?) ? 1000 : 1
     
-      existing_reservations = Reservation.tire.search :load => { :include => 'user' }  do 
+      existing_reservations = Reservation.tire.search do 
         filter :term, :is_block => false if is_block
         filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
         filter :term, :room_id => room_id

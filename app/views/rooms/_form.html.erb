@@ -25,8 +25,7 @@
   <p>
     <%= f.label :size_of_room %>
     <%= f.text_field :size_of_room %>
-  </p> 
-
+  </p>
   <p>
     <%= f.label :image_link, "Use image from the Web (URL)" %>
     <%= f.text_field :image_link %>
@@ -36,14 +35,14 @@
     <%= f.label :hours, "Hours of operation (leave as default if 24 hours)" %> 
     
 	Opening:
-	<%= select_tag "hours_start[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_start_hour), :class => "span2" %>
-	<%= select_tag "hours_start[minute]", options_for_select([['00',0],['30',30]], default_start_minute), :class => "span2" %>	
-	<%= select_tag "hours_start[ampm]", options_for_select(['am','pm'], default_start_ampm), :class => "span2" %>
+	<%= select_tag "opens_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_opens_at_hour), :class => "span2" %>
+	<%= select_tag "opens_at[minute]", options_for_select([['00',0],['30',30]], default_opens_at_minute), :class => "span2" %>	
+	<%= select_tag "opens_at[ampm]", options_for_select(['am','pm'], default_opens_at_ampm), :class => "span2" %>
 	<br />
 	Closing:
-	<%= select_tag "hours_end[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_end_hour), :class => "span2" %>
-	<%= select_tag "hours_end[minute]", options_for_select([['00',0],['30',30]], default_end_minute), :class => "span2" %>	
-	<%= select_tag "hours_end[ampm]", options_for_select(['am','pm'], default_end_ampm), :class => "span2" %>
+	<%= select_tag "closes_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_closes_at_hour), :class => "span2" %>
+	<%= select_tag "closes_at[minute]", options_for_select([['00',0],['30',30]], default_closes_at_minute), :class => "span2" %>	
+	<%= select_tag "closes_at[ampm]", options_for_select(['am','pm'], default_closes_at_ampm), :class => "span2" %>
   </p>
 
   <p>

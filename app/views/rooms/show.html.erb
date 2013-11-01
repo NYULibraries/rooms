@@ -32,12 +32,11 @@
 </p>
 <% end %>
 
-<% unless @room.hours.blank? %>
 <p>
   <b>Hours:</b><br />
   <%=display_hours%>
 </p>
-<% end %>
+
 
 <%= icon_tag :edit %>
 <%= link_to 'Edit', edit_room_path(@room) %> |

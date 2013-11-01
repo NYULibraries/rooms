@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:9200/test_rooms/room/3
     body:
       encoding: US-ASCII
-      string: ! '{"description":"This and that in here","id":3,"image_link":"http://google.com","size_of_room":"6
+      string: ! '{"closes_at":"01:00","description":"This and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
         People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"}'
     headers:
       Accept:
@@ -13,7 +13,7 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '238'
+      - '277'
       User-Agent:
       - Ruby
   response:
@@ -27,15 +27,15 @@ http_interactions:
       - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"3","_version":6}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"3","_version":2}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:12 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/2
     body:
       encoding: US-ASCII
-      string: ! '{"description":null,"id":2,"image_link":null,"size_of_room":"1-2
+      string: ! '{"closes_at":"01:00","description":null,"id":2,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
         People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual","room_group":"ny_graduate"}'
     headers:
       Accept:
@@ -43,7 +43,7 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '193'
+      - '232'
       User-Agent:
       - Ruby
   response:
@@ -54,18 +54,18 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '72'
+      - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"2","_version":11}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"2","_version":3}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:12 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/1
     body:
       encoding: US-ASCII
-      string: ! '{"description":null,"id":1,"image_link":null,"size_of_room":"1-2
+      string: ! '{"closes_at":"01:00","description":null,"id":1,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
         People","sort_order":3,"sort_size_of_room":2,"title":"Individual Room 1","type_of_room":"One
         person","room_group":"ny_graduate"}'
     headers:
@@ -74,7 +74,7 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '193'
+      - '232'
       User-Agent:
       - Ruby
   response:
@@ -85,10 +85,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '72'
+      - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":11}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":4}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:12 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
 recorded_with: VCR 2.6.0

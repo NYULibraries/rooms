@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:9200/test_reservations/reservation/_search?search_type=count&size=10
     body:
       encoding: US-ASCII
-      string: ! '{"query":{"query_string":{"query":"created_at_day:2013-10-30"}},"filter":{"and":[{"term":{"deleted":false}},{"term":{"is_block":false}},{"term":{"user_id":7}}]},"size":10}'
+      string: ! '{"query":{"query_string":{"query":"created_at_day:2013-11-01"}},"filter":{"and":[{"term":{"deleted":false}},{"term":{"is_block":false}},{"term":{"user_id":7}}]},"size":10}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -28,7 +28,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":0.0,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:10 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:55 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?search_type=count&size=10
@@ -52,10 +52,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '121'
+      - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.0,"hits":[]}}'
+      string: ! '{"took":74,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":0.0,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:10 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:55 GMT
 recorded_with: VCR 2.6.0

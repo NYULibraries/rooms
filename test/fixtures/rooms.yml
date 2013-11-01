@@ -6,15 +6,8 @@ individual:
   sort_size_of_room: 2
   sort_order: 1
   room_group: one
-  hours:
-    hours_start:
-      hour: '7'
-      minute: '0'
-      ampm: am
-    hours_end:
-      hour: '7'
-      minute: '0'
-      ampm: am
+  opens_at: '07:00'
+  closes_at: '01:00'
 
 individual_with_hours:
   id: 2
@@ -24,15 +17,8 @@ individual_with_hours:
   sort_size_of_room: 2
   sort_order: 2
   room_group: one
-  hours:
-    hours_start:
-      hour: '7'
-      minute: '0'
-      ampm: am
-    hours_end:
-      hour: '1'
-      minute: '0'
-      ampm: am
+  opens_at: '07:00'
+  closes_at: '01:00'
 
 collaborative:
   id: 3
@@ -45,12 +31,5 @@ collaborative:
   sort_order: 3
   room_group: two
   # Open 7am-1am
-  hours:
-    hours_start:
-      hour: '7'
-      minute: '0'
-      ampm: am
-    hours_end:
-      hour: '1'
-      minute: '0'
-      ampm: am
+  opens_at: '07:00'
+  closes_at: '01:00'

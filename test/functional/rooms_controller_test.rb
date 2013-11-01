@@ -39,7 +39,7 @@ class RoomsControllerTest < ActionController::TestCase
   test "create new room" do
     VCR.use_cassette('create new room') do
       assert_difference('Room.count', 1) do
-        post :create, :room => { :room_group_id => room_groups(:one).to_param, :title => "Cool new room" }, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
+        post :create, :room => { :room_group_id => room_groups(:one).to_param, :title => "Cool new room" }, :opens_at => { :hour => '7', :minute => '0', :ampm => 'am'}, :closes_at => { :hour => '7', :minute => '0', :ampm => 'am'} 
       end
       assert assigns(:room)
       assert_redirected_to room_url(assigns(:room))
@@ -57,7 +57,7 @@ class RoomsControllerTest < ActionController::TestCase
   
   test "update room" do
     VCR.use_cassette('update existing room') do
-      put :update, :id => rooms(:individual), :room => {:title => "Changing Titles"}, :hours_start => { :hour => '7', :minute => '0', :ampm => 'am'}, :hours_end => { :hour => '7', :minute => '0', :ampm => 'am'} 
+      put :update, :id => rooms(:individual), :room => {:title => "Changing Titles"}, :opens_at => { :hour => '7', :minute => '0', :ampm => 'am'}, :closes_at => { :hour => '7', :minute => '0', :ampm => 'am'} 
     
       assert_equal flash[:notice], I18n.t("rooms.update.success")
       assert_equal Room.find(rooms(:individual)).title, "Changing Titles"

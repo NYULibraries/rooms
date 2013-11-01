@@ -26,7 +26,7 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:01 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:42 GMT
 - request:
     method: head
     uri: http://localhost:9200/test_rooms
@@ -53,5 +53,5 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:01 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:42 GMT
 recorded_with: VCR 2.6.0

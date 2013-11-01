@@ -5,16 +5,16 @@ http_interactions:
     uri: http://localhost:9200/test_rooms/room/1
     body:
       encoding: US-ASCII
-      string: ! '{"description":null,"id":1,"image_link":null,"size_of_room":"1-2
-        People","sort_order":1,"sort_size_of_room":2,"title":"Changing Titles","type_of_room":"One
-        person","room_group":"ny_graduate"}'
+      string: ! '{"closes_at":" 7:00","description":null,"id":1,"image_link":null,"opens_at":"
+        7:00","size_of_room":"1-2 People","sort_order":1,"sort_size_of_room":2,"title":"Changing
+        Titles","type_of_room":"One person","room_group":"ny_graduate"}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '191'
+      - '230'
       User-Agent:
       - Ruby
   response:
@@ -25,10 +25,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '72'
+      - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":10}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":3}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 20:41:12 GMT
+  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
 recorded_with: VCR 2.6.0

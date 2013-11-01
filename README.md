@@ -7,18 +7,13 @@
 
 The Rooms app allows NYU users to book rooms for which they are authorized.
 
-## Read the [wiki](/NYULibraries/rooms/wiki)
+## Read the [wiki](https://github.com/NYULibraries/rooms/wiki)
 
 ## Benchmarking
 
 ### Before ElasticSearch index:
 
 ### After ElasticSearch index (now):
-
-	ReservationTest#test_getting_availabilty_grid (79 ms warmup)
-	        process_time: 35 ms
-	              memory: 0 Bytes
-	             objects: 0
 
 ## Notes
 

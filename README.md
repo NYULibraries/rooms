@@ -15,11 +15,6 @@ The Rooms app allows authorized users to book rooms.
 
 ### After ElasticSearch index (now):
 
-ReservationTest#test_getting_availabilty_grid (57 ms warmup)
-        process_time: 36 ms
-              memory: 0 Bytes
-             objects: 0
-
 ## Notes
 
 - ElasticSearch index with Tire gem for searching room availability 

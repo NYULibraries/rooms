@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/NYULibraries/rooms.png)](https://codeclimate.com/github/NYULibraries/rooms)
 [![Coverage Status](https://coveralls.io/repos/NYULibraries/rooms/badge.png?branch=development)](https://coveralls.io/r/NYULibraries/rooms)
 
-The Rooms app allows NYU users to book rooms for which they are authorized.
+The Rooms app allows authorized users to book rooms.
 
 ## Read the [wiki](https://github.com/NYULibraries/rooms/wiki)
 
@@ -14,6 +14,11 @@ The Rooms app allows NYU users to book rooms for which they are authorized.
 ### Before ElasticSearch index:
 
 ### After ElasticSearch index (now):
+
+ReservationTest#test_getting_availabilty_grid (57 ms warmup)
+        process_time: 36 ms
+              memory: 0 Bytes
+             objects: 0
 
 ## Notes
 

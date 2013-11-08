@@ -18,7 +18,7 @@ $ ->
   # Set cookie finding user's timezone
   detected_zone = Temporal.detect()
   
-	# Hide objects not important for JS
+  # Hide objects not important for JS
   $(".js_hide").hide()
   
   # Click the calendar icon to select a date
@@ -39,7 +39,7 @@ $ ->
   }
   
   # Set up sortable list for rooms
-  $('ul#list_rooms').sortable { 
+  $('ul#list_rooms').sortable {
     handle: "i.icon-move"
     update: -> $(this).closest("form").submit()
     opacity: 0.4
@@ -66,9 +66,9 @@ $ ->
   #initialize_modal_form = ->
   $(document).on 'click', ".launch_modal", ->
     $("#ajax-modal").removeClass("fullscreen")
-    $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
+    $("#ajax-modal").find(".modal-footer").html$('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
     $("#ajax-modal").find(".modal-title").html("Loading...")
-    $("#ajax-modal").find(".modal-header").find(".legend, p").remove()  
+    $("#ajax-modal").find(".modal-header").find(".legend, p").remove()
     $("#ajax-modal").find(".modal-body-content").html('')
     $("#ajax-modal").find(".modal-body").removeAttr("style")
     $("#ajax-modal").find(".ajax-loader").show()
@@ -106,7 +106,7 @@ $ ->
     $(this).tooltip('show')
 
   # Bind resize event with the modal
-  $(window).resize -> 
+  $(window).resize ->
     fit_modal_body($("#ajax-modal"))
     adjust_table_header_widths()
       

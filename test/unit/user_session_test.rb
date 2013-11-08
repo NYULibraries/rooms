@@ -2,6 +2,9 @@ require 'test_helper'
 
 class UserSessionTest < ActiveSupport::TestCase
 
-  setup :activate_authlogic
-
+  setup do
+    activate_authlogic
+    current_user = UserSession.create(users(:undergraduate))
+  end
+  
 end

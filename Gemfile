@@ -34,6 +34,7 @@ group :test do
   gem 'coveralls', '~> 0.7.0', :require => false
   gem 'vcr', '~> 2.6.0'
   gem 'webmock', '~> 1.15.0'
+  gem 'timecop', '~> 0.6.3'
 end
 
 gem 'debugger', :groups => [:development, :test, :staging]

@@ -17,7 +17,7 @@ newrelic:
   app_name: ''
 
 login:
-  default_admins: []
+  default_admins: ['admin']
   pds_url: ""
   calling_system: ""
   

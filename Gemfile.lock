@@ -253,6 +253,7 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
+    timecop (0.6.3)
     tins (0.12.0)
     tire (0.6.1)
       activemodel (>= 3.0)
@@ -309,6 +310,7 @@ DEPENDENCIES
   sorted (~> 0.4.3)
   temporal-rails (~> 0.2.3)
   therubyracer (~> 0.12.0)
+  timecop (~> 0.6.3)
   tire (~> 0.6.0)
   uglifier (~> 2.2.1)
   vcr (~> 2.6.0)

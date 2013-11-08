@@ -53,11 +53,5 @@ class UsersController < ApplicationController
 
     respond_with(@user)
   end
-  
-  # Implement sort column function for this model
-  def sort_column
-    super "User", "lastname"
-  end
-  helper_method :sort_column
 
 end

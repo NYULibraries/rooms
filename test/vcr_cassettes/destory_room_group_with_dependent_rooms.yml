@@ -1,0 +1,192 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations/reservation/1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '98'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"1","_version":2}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations/reservation/2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '98'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"2","_version":2}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations/reservation/3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '98'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"3","_version":2}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations/reservation/4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '98'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"4","_version":2}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_reservations/reservation/6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '98'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"6","_version":2}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_rooms/room/1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '84'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_rooms","_type":"room","_id":"1","_version":5}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+- request:
+    method: delete
+    uri: http://localhost:9200/test_rooms/room/2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '84'
+    body:
+      encoding: US-ASCII
+      string: ! '{"ok":true,"found":true,"_index":"test_rooms","_type":"room","_id":"2","_version":4}'
+    http_version: 
+  recorded_at: Fri, 08 Nov 2013 20:32:03 GMT
+recorded_with: VCR 2.6.0

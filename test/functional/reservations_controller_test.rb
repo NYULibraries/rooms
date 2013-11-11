@@ -18,19 +18,20 @@ class ReservationsControllerTest < ActionController::TestCase
   end
   
   test "reservations index with forced time" do
-    Timecop.freeze(Time.new(2030, 9, 1, 11, 29, 0).in_time_zone("America/New_York")) do
+    Time.zone = 'Eastern Time (US & Canada)'
+    Timecop.freeze(Time.new(2030, 9, 1, 11, 29, 0)) do
       get :index
       assert_select "#reservation_hour option[selected='selected']", "11"
       assert_select "#reservation_minute option[selected='selected']", "30"
       assert_select "#reservation_ampm option[selected='selected']", "am"
     end
-    Timecop.freeze(Time.new(2030, 9, 1, 11, 34, 0).in_time_zone("America/New_York")) do
+    Timecop.freeze(Time.new(2030, 9, 1, 11, 34, 0)) do
       get :index
       assert_select "#reservation_hour option[selected='selected']", "12"
       assert_select "#reservation_minute option[selected='selected']", "00"
       assert_select "#reservation_ampm option[selected='selected']", "pm"
     end
-    Timecop.freeze(Time.new(2030, 9, 1, 12, 34, 0).in_time_zone("America/New_York")) do
+    Timecop.freeze(Time.new(2030, 9, 1, 12, 34, 0)) do
       get :index
       assert_select "#reservation_hour option[selected='selected']", "1"
       assert_select "#reservation_minute option[selected='selected']", "00"

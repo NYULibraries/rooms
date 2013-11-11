@@ -18,7 +18,6 @@ class ReservationsControllerTest < ActionController::TestCase
   end
   
   test "reservations index with forced time" do
-    Time.zone = 'Eastern Time (US & Canada)'
     Timecop.freeze(Time.new(2030, 9, 1, 11, 29, 0)) do
       get :index
       assert_select "#reservation_hour option[selected='selected']", "11"

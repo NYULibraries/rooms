@@ -66,7 +66,7 @@ $ ->
   #initialize_modal_form = ->
   $(document).on 'click', ".launch_modal", ->
     $("#ajax-modal").removeClass("fullscreen")
-    $("#ajax-modal").find(".modal-footer").html$('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
+    $("#ajax-modal").find(".modal-footer").html$('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>')
     $("#ajax-modal").find(".modal-title").html("Loading...")
     $("#ajax-modal").find(".modal-header").find(".legend, p").remove()
     $("#ajax-modal").find(".modal-body-content").html('')

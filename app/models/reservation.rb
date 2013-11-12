@@ -2,7 +2,8 @@ class Reservation < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
   
-  index_name("#{Rails.env}_reservations")
+  #index_name("#{Rails.env}_reservations")
+  index_name("staging_reservations")
   
   belongs_to :room
   belongs_to :user

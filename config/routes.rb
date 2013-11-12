@@ -3,8 +3,8 @@ Rooms::Application.routes.draw do
     get 'rooms/sort' => "rooms#index_sort", :as => "sort_rooms"
     put 'rooms/sort' => "rooms#update_sort"
     match 'blocks/destroy/:id' => "blocks#destroy", :as => "destroy_block"
-    match 'blocks/destroy_multiple' => "blocks#destroy_multiple", :as => 'destroy_multiple'
-    match 'blocks/existing_reservations' => "blocks#existing_reservations", :as => 'existing_reservations'
+    match 'blocks/destroy_existing_reservations' => "blocks#destroy_existing_reservations", :as => 'destroy_existing_reservations'
+    match 'blocks/index_existing_reservations' => "blocks#index_existing_reservations", :as => 'index_existing_reservations'
     
     resources :user_sessions
     resources :users

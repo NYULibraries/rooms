@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   load_and_authorize_resource
-  skip_load_resource :only => [:new, :edit, :create]
-  skip_authorize_resource :only => :create
+  # Can't autoload new action because params don't match up to column names in DB
+  skip_load_resource :only => [:new]
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 
@@ -19,16 +19,18 @@ class ReservationsController < ApplicationController
     @user = current_user
     @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
 
-    # Manually authorize
-    [:made_today, :for_same_day, :create_length].each do |action|
+    # Manually authorize these actions so that we can load a custom message
+    [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
-    
-    # Options for ElasticSearch
+
+    # Default elasticsearch options
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    # Get room groups this user can admin
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
+    # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from ElasticSearch through tire DSL
+    # Get Rooms from elasticsearch through tire DSL
     rooms = Room.tire.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
       # Default sort by room group and then default
@@ -53,16 +55,19 @@ class ReservationsController < ApplicationController
     @reservation = @user.reservations.new(params[:reservation])
     @room = @reservation.room
 
-    # Manually authorize
-    [:made_today, :for_same_day, :create_length].each do |action|
+    # Manually authorize these actions so that we can load a custom message
+    [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
     
+    # Default elasticsearch options
     options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+    # Get room groups this user can admin
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
+    # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from ElasticSearch through tire DSL
-    @rooms = Room.tire.search do
+    # Get Rooms from elasticsearch through tire DSL
+    rooms = Room.tire.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
       # Default sort by room group and then default
       sort do
@@ -75,6 +80,7 @@ class ReservationsController < ApplicationController
       from (page -1) * search_size
       size search_size
     end
+    @rooms = RoomsDecorator.new(rooms)
 
     respond_with(@reservation) do |format|
       if @reservation.save
@@ -94,9 +100,6 @@ class ReservationsController < ApplicationController
   def edit
     @reservation = Reservation.find(params[:id])
     @user = current_user
-    
-    #Explicitly authorize reservation creation here
-    authorize! :update, @reservation
     
     respond_with(@reservation)
   end
@@ -138,8 +141,8 @@ class ReservationsController < ApplicationController
     
     # Send email
     if ReservationMailer.confirmation_email(@reservation).deliver
-       flash[:success] = t('reservations.resend_email.success')
-     end
+      flash[:success] = t('reservations.resend_email.success')
+    end
     
     respond_with(@reservation, :location => root_url)
   end

@@ -12,53 +12,20 @@ class Ability
   end
   
   def ny_undergraduate
-    can [__method__], RoomGroup
-    can [:read, :create, :new, :delete, :update, :edit, :resend_email], Reservation, { :user_id => @user.id, :room => {:room_group => { :code => __method__.to_s } } }
-    # Undergrads can't make a reservations if they've made one today
-    can :made_today, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.made_today? }
-    end
-    # Undergrads can't make a reservation if they've aready made one for that day
-    can :for_same_day, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.on_same_day?(reservation) }
-    end
-    # Undergrads can make reservations for up to 2 hours
-    can :create_length, Reservation do |reservation|
-      ((reservation.end_dt.to_time - reservation.start_dt.to_time) / 60 / 60) <= 2.0 #2.hours
-    end
+    group_access = [__method__]
+    shared_booker(group_access, __method__)
   end
   
   def shanghai_undergraduate
-    can [__method__], RoomGroup
-    can [:read, :create, :new, :delete, :update, :edit, :resend_email], Reservation, { :user_id => @user.id, :room => {:room_group => { :code => __method__.to_s } } }
-    # Undergrads can't make a reservations if they've made one today
-    can :made_today, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.made_today? }
-    end
-    # Undergrads can't make a reservation if they've aready made one for that day
-    can :for_same_day, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.on_same_day?(reservation) }
-    end
-    # Undergrads can make reservations for up to 2 hours
-    can :create_length, Reservation do |reservation|
-      ((reservation.end_dt.to_time - reservation.start_dt.to_time) / 60 / 60) <= 2.0 #2.hours
-    end
+    group_access = [__method__]
+    shared_booker(group_access, __method__)
   end
 
   def ny_graduate
     group_access = [__method__, :ny_undergraduate]
-    can group_access, RoomGroup
-    can [:read, :create, :new, :delete, :update, :edit, :resend_email], Reservation, { :user_id => @user.id, :room => {:room_group => { :code => group_access.map {|g| g.to_s } } } }
-    # Grads can't make a reservations if they've made one today
-    can :made_today, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.made_today? }
-    end
-    # Grads can't make a reservation if they've aready made one for that day
-    can :for_same_day, Reservation do |reservation|
-      @user.reservations.none? {|r| !r.new_record? && r.on_same_day?(reservation) }
-    end
-    # Grads can make reservations for up to 2 hours
-    can :create_length, Reservation do |reservation|
+    shared_booker(group_access, __method__)
+    # Can't make reservations for greater than 3 hours
+    can :create_for_length, Reservation do |reservation|
       ((reservation.end_dt.to_time - reservation.start_dt.to_time) / 60 / 60) <= 3.0 #3.hours
     end
   end
@@ -70,31 +37,51 @@ class Ability
     
   def ny_admin
     group_access = [:ny_graduate, :ny_undergraduate]
-    can :manage, Reservation, {:room => {:room_group => { :code => group_access.map {|g| g.to_s } }}}
-    can :manage, Reservation
-    can :manage, :block
-    can :manage, User
-    can :manage, :report
-    cannot :destroy, User, :id => @user.id
-    can group_access, RoomGroup
-    can :manage, Room, {:room_group => { :code => group_access.map {|g| g.to_s } } }
-    can :create, Room
-    can :admin, Room
+    shared_admin(group_access, __method__)
   end
   
   def shanghai_admin
     group_access = [:shanghai_undergraduate]
-    can [:made_today, :for_same_day, :create_length], Reservation
+    shared_admin(group_access, __method__)
+  end
+  
+private
+
+  ##
+  # Actions that all admins can do based on their group access and role name
+  def shared_admin(group_access, method_name)
+    # Manage reservations if they are in rooms you manage
     can :manage, Reservation, {:room => {:room_group => { :code => group_access.map {|g| g.to_s } }}}
-    can :manage, Reservation
     can :manage, :block
-    can :manage, User
     can :manage, :report
-    cannot :destroy, User, :id => @user.id
+    can [:read, :update, :create], User
+    # Destroy user if it isn't you, it isn't an admin or it is an admin you can edit
+    can :destroy, User do |user|
+      user.id != @user.id and (!user.is_admin? or user.is? method_name)
+    end
+    # Room access
     can group_access, RoomGroup
-    can :manage, Room, {:room_group => { :code => group_access.map {|g| g.to_s } }}
-    can :create, Room
-    can :admin, Room
+    can :new, Room
+    can :manage, Room, {:room_group => { :code => group_access.map {|g| g.to_s } } }
+  end
+  
+  ##
+  # Actions that all bookers can do based on their group access and role name
+  def shared_booker(group_access, method_name)
+    can group_access, RoomGroup
+    can [:read, :create, :delete, :update, :resend_email], Reservation, { :user_id => @user.id, :room => {:room_group => { :code => group_access.map {|g| g.to_s } } } }
+    # Grads can't make a reservations if they've made one today
+    can :create_today, Reservation do |reservation|
+      @user.reservations.none? {|r| !r.new_record? && r.made_today? }
+    end
+    # Grads can't make a reservation if they've aready made one for that day
+    can :create_for_same_day, Reservation do |reservation|
+      @user.reservations.none? {|r| !r.new_record? && r.on_same_day?(reservation) }
+    end
+    # Can't make reservations for greater than 2 hours
+    can :create_for_length, Reservation do |reservation|
+      ((reservation.end_dt.to_time - reservation.start_dt.to_time) / 60 / 60) <= 2.0 #2.hours
+    end
   end
 
 end

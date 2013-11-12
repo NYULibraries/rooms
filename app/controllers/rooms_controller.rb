@@ -4,10 +4,13 @@ class RoomsController < ApplicationController
   
   # GET /rooms
   def index
+    # Default elasticsearch options
     options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
-    # Get Rooms from ElasticSearch through tire DSL
+    # Get room groups this user can admin
     room_group_filter = (params[:room_group].blank?) ? RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
+    # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym == options[:sort])
+    # Elasticsearch DSL
     @rooms = Room.tire.search do
       query { string options[:q] } unless options[:q].blank?
       filter :terms, :room_group => room_group_filter, :execution => "or"

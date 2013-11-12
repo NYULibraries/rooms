@@ -1,5 +1,6 @@
 class BlocksController < ApplicationController
-  authorize_resource :class => false
+  # Authorize as symbol without class since this is only for RESTful actions
+  authorize_resource :block, :class => false
   respond_to :html, :js
   
   # GET /blocks
@@ -11,7 +12,7 @@ class BlocksController < ApplicationController
   
   # GET /blocks/new
   def new
-    @block = Reservation.new
+    @block = Reservation.new(:is_block => true)
     respond_with(@block)
   end
   
@@ -26,12 +27,21 @@ class BlocksController < ApplicationController
       if @block.save
         format.html { redirect_to blocks_url, notice: t('blocks.create.success') }
       else
-        format.html { render :new, params: params }
+        format.html { render :new }
       end
     end
   end
+    
+  # DELETE /blocks/1
+  def destroy
+    @block = Reservation.find(params[:id])
+    flash[:notice] = t('blocks.destroy.success') if @block.destroy
+
+    respond_with(@block, :location => blocks_url)
+  end
   
-  def destroy_multiple
+  # POST /blocks/destroy_existing_reservations
+  def destroy_existing_reservations
     @block = Reservation.new(params[:reservation])
     @block.user_id = current_user.id
     @block.is_block = true
@@ -57,28 +67,20 @@ class BlocksController < ApplicationController
     # Jumping through hoops here to avoid ElasticSearch caching class method existing_reservations when @block.save is called
     reservations_still_exist = Reservation.where(:id => params[:reservations_to_delete], :deleted => false)
     if reservations_still_exist.empty?
-      redirect_to blocks_url, notice: t('blocks.destroy_multiple.success') if @block.save(:validate => false)
+      redirect_to blocks_url, notice: t('blocks.destroy_existing_reservations.success') if @block.save(:validate => false)
     else
       if @block.save
-        redirect_to blocks_url, notice: t('blocks.destroy_multiple.success')
+        redirect_to blocks_url, notice: t('blocks.destroy_existing_reservations.success')
       else
         # If the block can't save, you will render :new with a list of existing reservations and options
-        flash[:error] = t('blocks.destroy_multiple.error')
+        flash[:error] = t('blocks.destroy_existing_reservations.error')
         render :new, params: params
       end
     end
-  
   end
   
-  # DELETE /blocks/1
-  def destroy
-    @block = Reservation.find(params[:id])
-    flash[:notice] = t('blocks.destroy.success') if @block.destroy
-
-    respond_with(@block, :location => blocks_url)
-  end
-  
-  def existing_reservations
+  # GET /blocks/index_existing_reservations
+  def index_existing_reservations
     @existing_reservations = Reservation.find(params[:reservations_to_delete])
   end
   

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  check_authorization
+  check_authorization # Enable CanCan
 
   # Set the system timezone to the user timezone 
   before_filter :set_timezone  
@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
   
   # For dev purposes
   def current_user_dev
-   @current_user ||= User.find_by_username("std5")
+   @current_user ||= User.find_by_username("ba36")
   end
-  alias :current_user :current_user_dev if Rails.env == "development"
+  alias :current_user :current_user_dev if Rails.env.development?
 
   # Return boolean matching the url to find out if we are in the admin view
   def in_admin_view?

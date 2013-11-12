@@ -3,7 +3,7 @@
 <% if @block.existing_reservations.blank? %>
 	<%= render "new" %>
 <% else %>
-	<%= render "destroy_multiple" %>
+	<%= render "destroy_existing_reservations" %>
 <% end %>
 
 <%= icon_tag :back %>

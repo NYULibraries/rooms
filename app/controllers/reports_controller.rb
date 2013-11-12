@@ -1,5 +1,9 @@
+##
+# Todo:
+#   * Create a model for this so we can add some validations
 class ReportsController < ApplicationController
-  load_and_authorize_resource :class => "Reservation"
+  # Authorize as symbol without class since this is only for RESTful actions
+  authorize_resource :report, :class => false
 
   #Generate a report of reservations based on submitted params
   def index

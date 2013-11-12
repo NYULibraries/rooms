@@ -6,3 +6,4 @@
 //= require jquery-ui-timepicker-addon.js
 //= require temporal
 //= require room_reservation
+//= require peek

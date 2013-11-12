@@ -92,7 +92,7 @@ class ReservationsControllerTest < ActionController::TestCase
      assert assigns(:user)
      assert assigns(:reservation)
      assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.for_same_day.reservation')
+     assert_equal flash[:error], I18n.t('unauthorized.create_for_same_day.reservation')
     end
   end
   
@@ -103,7 +103,7 @@ class ReservationsControllerTest < ActionController::TestCase
      assert assigns(:user)
      assert assigns(:reservation)
      assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.create_length.reservation')
+     assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
     end
   end
   
@@ -114,7 +114,7 @@ class ReservationsControllerTest < ActionController::TestCase
      assert assigns(:user)
      assert assigns(:reservation)
      assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.create_length.reservation')
+     assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
     end
   end
   

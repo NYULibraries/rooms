@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
   helper_method :sort_direction
   protected :sort_direction
   
+  # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] ||= exception.message.html_safe
     if current_user.nil?
@@ -60,6 +61,11 @@ class ApplicationController < ActionController::Base
         render "user_sessions/unauthorized_patron", :alert => exception.message
       end 
     end
+  end
+  
+  # Skip cancan auth for Peek
+  Peek::ResultsController.class_eval do
+    skip_authorization_check
   end
 
 end

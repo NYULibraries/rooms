@@ -50,7 +50,7 @@ class UsersControllerTest < ActionController::TestCase
   test "update existing user" do
     assert !users(:nonadmin).is_admin?
     
-    put :update, :id => users(:nonadmin), :user => { :admin_roles => ["global"] }
+    put :update, :id => users(:nonadmin), :user => { :admin_roles => ["superuser"] }
     
     assert_equal flash[:notice], I18n.t('users.update.success')
     assert User.find(users(:nonadmin).to_param).is_admin?    

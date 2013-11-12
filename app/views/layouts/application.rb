@@ -10,6 +10,10 @@ module Views
         meta << favicon_link_tag('https://library.nyu.edu/favicon.ico')
       end
       
+      def header
+        
+      end
+      
       def application_title
        "Reserve a room"
       end
@@ -29,7 +33,7 @@ module Views
       
       # Prepend modal dialog elements to the body
       def prepend_body
-        render :partial => "common/modal"
+        render 'common/prepend_body'
       end
       
       # Prepend the flash message partial before yield

@@ -6,9 +6,9 @@ class Ability
     # For each role this user has, call the corresponding function
     @user.auth_roles.each { |role| send(role) if respond_to?(role) } unless @user.is_admin?
     # For admins ignore the standard permissions
-    @user.admin_roles.each { |role| send(role) if respond_to?(role) } if @user.is_admin? and !@user.is? :global
-    # Force only global permissions for global admin
-    send("global") if @user.is? :global
+    @user.admin_roles.each { |role| send(role) if respond_to?(role) } if @user.is_admin? and !@user.is? :superuser
+    # Force only superuser permissions for superuser admin
+    send("superuser") if @user.is? :superuser
   end
   
   def ny_undergraduate
@@ -63,7 +63,7 @@ class Ability
     end
   end
   
-  def global
+  def superuser
     can :manage, :all
     cannot :destroy, User, :id => @user.id
   end

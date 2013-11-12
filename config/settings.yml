@@ -34,7 +34,7 @@ elasticsearch:
     
 roles:
   admin:
-    - global
+    - superuser
     - ny_admin
     - shanghai_admin
   authorized:

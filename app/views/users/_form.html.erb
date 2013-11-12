@@ -21,7 +21,7 @@
     <% end -%>
 
 	<% for role in @user.all_admin_roles %>
-		<% if current_user.is?(:global) or current_user.is? role.to_sym %>
+		<% if current_user.is?(:superuser) or current_user.is? role.to_sym %>
 			<%= label_tag "user[admin_roles][#{role}]", :class => "control-label" do %>
 				<%= check_box_tag "user[admin_roles][#{role}]", role, @user.admin_roles.include?(role), {:name => "user[admin_roles][]"}%>
 				<%= role.humanize.titleize %>

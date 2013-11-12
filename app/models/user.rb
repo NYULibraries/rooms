@@ -40,7 +40,7 @@ private
 
   def set_static_admins
     if Settings.login.default_admins.include? username
-      admin_roles = ["global", self.admin_roles].flatten.uniq
+      admin_roles = ["superuser", self.admin_roles].flatten.uniq
     end
   end
   

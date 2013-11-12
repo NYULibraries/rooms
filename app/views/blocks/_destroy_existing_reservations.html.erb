@@ -1,0 +1,91 @@
+<%= form_for @block, :url => {:controller => "blocks", :action => "destroy_existing_reservations"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
+
+	<% if @block.errors.any? %>  
+	  <div id="error_explanation" class="alert alert-error">  
+	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
+	    <ul>  
+	    <% @block.errors.full_messages.each do |msg| %>  
+	      <li><%= msg %></li>  
+	    <% end %>  
+	    </ul>  
+	  </div>  
+	<% end %>
+
+	<dl class="dl-horizontal">
+		<dt>Title: </dt>
+		<dd><%= @block.title%></dd>
+		<dt>Start date: </dt>
+		<dd><%= params[:reservation][:start_dt]%></dd>
+		<dt>End date: </dt>
+		<dd><%= params[:reservation][:end_dt]%></dd>
+		<dt>Room: </dt>
+		<dd><%= Room.find(params[:reservation][:room_id]).title %></dd>
+	</dl>
+	
+	<%= f.hidden_field :room_id, :value => params[:reservation][:room_id] %>
+	<%= f.hidden_field :start_dt, :value => params[:reservation][:start_dt] %>
+	<%= f.hidden_field :end_dt, :value => params[:reservation][:end_dt] %>
+	<%= f.hidden_field :title, :value => params[:reservation][:title]%>
+	
+	<%= icon_tag :back %>
+	<%= link_to "Edit block", new_block_url %>
+
+	<% unless @block.existing_reservations.blank? %>
+		<h1>Existing reservations</h1>
+
+		<div class="alert alert-block">
+
+		<h4>Note: </h4>
+
+		<p>
+		If you choose to continue, you will delete <strong><%= @block.existing_reservations.count %></strong> reservations and send an email alerting the users of the cancellation. <%= link_to "View the individual reservations.", existing_reservations_url("reservations_to_delete" => @block.existing_reservations.map(&:id)), :target => :blank %>
+		</p>
+
+		</div>
+		<h4>Edit cancellation email text</h4>
+
+		<div class="well well-small">
+			<strong>:room</strong> will print the title of the room.  <br />
+			<strong>:start</strong> will print the start date/time of the reservation. <br />
+			<strong>:end</strong> will print the end date/time of the reservation.
+		</div>
+
+		<div id="edit_cancellation_email">
+			<%= text_area_tag "cancellation_email", "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact gswg@library.nyu.edu.\n\nSorry for the inconvenience.", :rows => 5, :class => "span12" %>
+		</div>
+
+		<label class="radio inline">
+			<input type="radio" name="cancel" value="delete_with_alert" checked="checked" />
+			Cancel and alert
+		</label>
+
+		<label class="radio inline">
+			<input type="radio" name="cancel" value="delete_no_alert" />
+			Cancel without alert
+		</label>
+
+		<br />
+
+		<label class="checkbox">
+			<input type="checkbox" name="cc_admin" id="cc_admin" />
+			Send a copy to <input type="text" class="large_text_field" name="cc_admin_email" id="cc_admin_email" value="gswg@library.nyu.edu" />
+		</label>
+
+		<br />
+
+		<label class="checkbox">
+			<input type="checkbox" name="cc_group" id="cc_group" />
+			Send a copy to reservation CCs
+		</label>
+
+		<% @block.existing_reservations.each do |res| %>
+			<%= hidden_field_tag "reservations_to_delete[]", res.id %>
+		<% end %>
+
+		<br /><br />
+		<%= f.submit "Continue" %>
+	<% else %>
+		<%= f.submit "Create" %>
+	<% end %>
+
+<% end %>

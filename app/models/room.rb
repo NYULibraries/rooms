@@ -2,9 +2,8 @@ class Room < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
   
-  # ElasticSearch index name
-  #index_name("#{Rails.env}_rooms")
-  index_name("staging_rooms")
+  # elasticsearch index name
+  index_name("#{Rails.env}_rooms")
 
   attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link, :room_group_id
   

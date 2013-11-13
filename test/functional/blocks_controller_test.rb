@@ -47,20 +47,21 @@ class BlocksControllerTest < ActionController::TestCase
   test "should render destroy existing reservations" do
     VCR.use_cassette("block cannot create until delete existing") do
       post :create, :reservation => {:room_id => 1, :start_dt => "3020-04-01 00:00", :end_dt => "3020-06-01 00:00"}
+      assert assigns(:block).invalid?
+      assert !assigns(:block).errors.empty?
+      assert_template :new
+
+      post :destroy_existing_reservations, :reservation => {:room_id => 1, :start_dt => "3020-04-01 00:00", :end_dt => "3020-06-01 00:00"}, :cancel => "delete_with_alert", :reservations_to_delete => [9,10]
+      assert_equal flash[:notice], I18n.t('blocks.destroy_existing_reservations.success')
+      assert_redirected_to blocks_url
     end
-    assert assigns(:block)
-    assert !assigns(:block).errors.empty?
-    assert_template :new
   end
   
-  #test "should destroy multiple" do
-  #  put :destroy_multiple
-  #  assert_response :success
-  #end
-  #
-  #test "should get existing reservations" do
-  #  get :existing_reservations
-  #  assert_response :success
-  #end
+  test "should get existing reservations" do
+    get :index_existing_reservations, :reservations_to_delete => [9,10]
+    assert assigns(:existing_reservations)
+    assert_equal assigns(:existing_reservations).count, 2
+    assert_template :index_existing_reservations
+  end
 
 end

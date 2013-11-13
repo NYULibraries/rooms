@@ -15,16 +15,16 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 200
+      message: OK
     headers:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '99'
+      - '98'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"found":false,"_index":"test_reservations","_type":"reservation","_id":"8","_version":1}'
+      string: ! '{"ok":true,"found":true,"_index":"test_reservations","_type":"reservation","_id":"8","_version":2}'
     http_version: 
-  recorded_at: Wed, 13 Nov 2013 21:30:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:52:25 GMT
 recorded_with: VCR 2.6.0

@@ -27,7 +27,7 @@ http_interactions:
       - '85'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"5","_version":5}'
+      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"5","_version":2}'
     http_version: 
-  recorded_at: Wed, 13 Nov 2013 21:30:48 GMT
+  recorded_at: Wed, 13 Nov 2013 21:52:27 GMT
 recorded_with: VCR 2.6.0

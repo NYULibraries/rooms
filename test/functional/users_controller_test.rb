@@ -59,7 +59,7 @@ class UsersControllerTest < ActionController::TestCase
   
   test "destroy user" do
     assert_difference('User.count', -1) do
-      delete :destroy, :id => users(:nonadmin).to_param
+      delete :destroy, :id => users(:delete_me).to_param
     end
     
     assert assigns(:user)

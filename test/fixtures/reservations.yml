@@ -55,21 +55,21 @@ for_different_day:
 block:
   id: 8
   room_id: 1
-  user: admin
+  user_id: 3
   start_dt: '3020-04-29 01:00:00'
   end_dt: '3020-06-01 03:00:00'
   is_block: true
 
 one_in_block:
   id: 9
-  user: admin
+  user_id: 3
   room_id: 1
   start_dt: '3020-04-30 01:00:00'
   end_dt: '3020-04-30 02:00:00'
 
 two_in_block:
   id: 10
-  user: nonadmin
+  user_id: 2
   room_id: 1
   start_dt: '3020-05-30 01:00:00'
   end_dt: '3020-05-30 02:00:00'

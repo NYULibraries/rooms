@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1000
     body:
       encoding: US-ASCII
-      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"is_block":false}},{"range":{"end_dt":{"gte":"2013-11-13T16:30:45+00:00"}}},{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2012-10-01T00:00:00+00:00"}}},{"range":{"start_dt":{"lt":"2012-11-01T00:00:00+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2012-10-01T00:00:00+00:00"}}},{"range":{"end_dt":{"lte":"2012-11-01T00:00:00+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2012-10-01T00:00:00+00:00"}}},{"range":{"end_dt":{"gte":"2012-11-01T00:00:00+00:00"}}}]}]}]}}},"size":1000}'
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"is_block":false}},{"range":{"end_dt":{"gte":"2013-11-13T16:52:24+00:00"}}},{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2012-10-01T00:00:00+00:00"}}},{"range":{"start_dt":{"lt":"2012-11-01T00:00:00+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2012-10-01T00:00:00+00:00"}}},{"range":{"end_dt":{"lte":"2012-11-01T00:00:00+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2012-10-01T00:00:00+00:00"}}},{"range":{"end_dt":{"gte":"2012-11-01T00:00:00+00:00"}}}]}]}]}}},"size":1000}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -26,9 +26,9 @@ http_interactions:
       - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Wed, 13 Nov 2013 21:30:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:52:25 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_reservations/reservation/11
@@ -47,8 +47,8 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 200
-      message: OK
+      code: 201
+      message: Created
     headers:
       Content-Type:
       - application/json; charset=UTF-8
@@ -56,7 +56,7 @@ http_interactions:
       - '86'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"11","_version":4}'
+      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"11","_version":1}'
     http_version: 
-  recorded_at: Wed, 13 Nov 2013 21:30:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:52:25 GMT
 recorded_with: VCR 2.6.0

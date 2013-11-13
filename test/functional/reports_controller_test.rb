@@ -36,4 +36,10 @@ class ReportsControllerTest < ActionController::TestCase
     assert_template :index
   end
   
+  test "report with invalid dates formats" do
+    get :index, :report => {:start_dt => "10:00 2013-01-01", :end_dt => "12:00 2013-03-01"}
+    assert_equal flash[:error], "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30."
+    assert_template :index
+  end
+  
 end

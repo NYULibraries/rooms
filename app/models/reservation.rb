@@ -18,8 +18,6 @@ class Reservation < ActiveRecord::Base
   validate :collaborative_requires_ccs, :unless => :is_block?
   validate :date_formatted_correctly
   
-  #after_initialize :date_formatted_correctly # Validate dates on Reservation.new(:start_dt => start_dt, :end_dt => end_dt)
-  
   # Non-database attributes
   attr_accessor :created_at_day
 
@@ -77,36 +75,41 @@ class Reservation < ActiveRecord::Base
   #
   #   @reservation.existing_reservations # Returns array of tire results
   def existing_reservations
-    if !self.start_dt.blank? && !self.end_dt.blank?
+    if !self.start_dt.blank? && !self.end_dt.blank? && !self.room.blank?
       start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
       end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
-      is_block = self.is_block
+      is_block = self.is_block?
       room_id = self.room.id
       results_size = (self.is_block?) ? 1000 : 1
-    
+
       existing_reservations = Reservation.tire.search do 
-        filter :term, :is_block => false if is_block
-        filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
-        filter :term, :room_id => room_id
-        filter :term, :deleted => false
-        filter :or, 
-          { :and => [
-              { :range => { :start_dt => { :gte => start_dt } } },
-              { :range => { :start_dt => { :lt => end_dt } } }
-          ]},
-          { :and => [
-              { :range => { :end_dt => { :gt => start_dt } } },
-              { :range => { :end_dt => { :lte => end_dt } } }
-          ]},
-          { :and => [
-              { :range => { :start_dt => { :lte => start_dt } } },
-              { :range => { :end_dt => { :gte => end_dt } } }
-          ]}
+        query do
+          filtered do
+            filter :term, :is_block => false if is_block
+            filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
+            filter :term, :room_id => room_id
+            filter :term, :deleted => false
+            filter :or, 
+              { :and => [
+                  { :range => { :start_dt => { :gte => start_dt } } },
+                  { :range => { :start_dt => { :lt => end_dt } } }
+              ]},
+              { :and => [
+                  { :range => { :end_dt => { :gt => start_dt } } },
+                  { :range => { :end_dt => { :lte => end_dt } } }
+              ]},
+              { :and => [
+                  { :range => { :start_dt => { :lte => start_dt } } },
+                  { :range => { :end_dt => { :gte => end_dt } } }
+              ]}
+          end
+        end
         size results_size
       end
-    
+
       return existing_reservations.results
     end
+    []
   end
   
   ##
@@ -141,10 +144,14 @@ private
     on_day_field = on_day_field
     on_day = on_day
     reservation_on_day ||= Reservation.tire.search :search_type => "count" do 
-      query { string "#{on_day_field}:#{on_day}" }
-      filter :term, :deleted => false
-      filter :term, :is_block => false
-      filter :term, :user_id => user_id
+      query do
+        string "#{on_day_field}:#{on_day}"
+        filtered do
+          filter :term, :deleted => false
+          filter :term, :is_block => false
+          filter :term, :user_id => user_id 
+        end
+      end
     end
     return reservation_on_day.total > 0
   end

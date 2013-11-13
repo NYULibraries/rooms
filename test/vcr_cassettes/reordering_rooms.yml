@@ -27,9 +27,9 @@ http_interactions:
       - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"3","_version":2}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"3","_version":5}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:49 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/2
@@ -57,9 +57,9 @@ http_interactions:
       - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"2","_version":3}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"2","_version":9}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:49 GMT
 - request:
     method: post
     uri: http://localhost:9200/test_rooms/room/1
@@ -88,7 +88,7 @@ http_interactions:
       - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":4}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":9}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:49 GMT
 recorded_with: VCR 2.6.0

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include Rooms::Authorization
+  include Roles::Authorization
   has_many :reservations, :dependent => :destroy
   
   attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :admin_roles

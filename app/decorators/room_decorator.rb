@@ -6,30 +6,21 @@ class RoomDecorator < Draper::Decorator
   #
   # = Example
   #
-  #   @room.find_reservation_by_timeslot(DateTime.now)
-  def find_reservation_by_timeslot(timeslot)
-    
+  #   @room.find_reservation_by_timeslot(DateTime.now, existing_reservations)
+  def find_reservation_by_timeslot(timeslot, existing_reservations)
     t_next = timeslot + 30.minutes #next iteration's time
     timeslot = timeslot
-    room_id = model.id
-    
-    reservation ||= Reservation.tire.search do 
-      filter :term, :room_id => room_id
-      filter :term, :deleted => false
-      filter :or, 
-        { :and => [
-            { :range => { :start_dt => { :gte => timeslot } } },
-            { :range => { :end_dt => { :lte => t_next } } }
-        ]},
-        { :and => [
-            { :range => { :start_dt => { :lte => timeslot } } },
-            { :range => { :end_dt => { :gte => t_next } } }
-        ]}
-      size 1
+
+    # Get existing reservations in this room from previously queries elasticsearch result
+    room_reservations = existing_reservations.find {|r| r[model.id.to_i]}
+    unless room_reservations.blank?
+      # Return a has with the reservation information if it is found in the collection of reservations for this room in this timeslot
+      reservation = room_reservations[model.id.to_i].find {|r| (r[:start_dt].to_datetime >= timeslot and r[:end_dt].to_datetime <= t_next) or (r[:start_dt].to_datetime <= timeslot and r[:end_dt].to_datetime >= t_next) }
+      return reservation
     end
-    return reservation.results.first
+
   end
-  
+    
   def is_open?(timeslot)
     # Base case: room is open is hours are missing or equal
     return true if (model.opens_at.blank? or model.closes_at.blank?) or (model.opens_at == model.closes_at)

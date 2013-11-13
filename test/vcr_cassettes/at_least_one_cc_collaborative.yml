@@ -5,14 +5,14 @@ http_interactions:
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-01T19:40:45+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-01T20:10:45+00:00"}}}]}]}]},"size":1}'
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-13T16:30:36+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-13T17:00:36+00:00"}}}]}]}]}}},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '464'
+      - '487'
       User-Agent:
       - Ruby
   response:
@@ -26,22 +26,22 @@ http_interactions:
       - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:36 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-01T19:40:45+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-01T20:10:45+00:00"}}}]}]}]},"size":1}'
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-13T16:30:36+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-13T17:00:36+00:00"}}}]}]}]}}},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '464'
+      - '487'
       User-Agent:
       - Ruby
   response:
@@ -57,20 +57,20 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:36 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-01T19:40:45+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-01T20:10:45+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-01T19:40:45+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-01T20:10:45+00:00"}}}]}]}]},"size":1}'
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":3}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2016-11-13T16:30:36+00:00"}}},{"range":{"start_dt":{"lt":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"lte":"2016-11-13T17:00:36+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2016-11-13T16:30:36+00:00"}}},{"range":{"end_dt":{"gte":"2016-11-13T17:00:36+00:00"}}}]}]}]}}},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
-      - '464'
+      - '487'
       User-Agent:
       - Ruby
   response:
@@ -86,5 +86,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:45 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:36 GMT
 recorded_with: VCR 2.6.0

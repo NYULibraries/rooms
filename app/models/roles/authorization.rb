@@ -1,7 +1,6 @@
-module Rooms
+module Roles
   module Authorization
-    def self.included(base)
-    end
+    def self.included(base); end
 
     ##
     # Gets Hash of all authorized roles

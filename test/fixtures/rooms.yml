@@ -33,3 +33,17 @@ collaborative:
   # Open 7am-1am
   opens_at: '07:00'
   closes_at: '01:00'
+  
+delete_me:
+  id: 4
+  title: Garbage time
+  type_of_room: Indy
+  description: Smorgasbrd
+  image_link: http://bing.com
+  size_of_room: 2
+  sort_size_of_room: 2
+  sort_order: 4
+  room_group: delete_three
+  # Open 7am-1am
+  opens_at: '07:00'
+  closes_at: '01:00'

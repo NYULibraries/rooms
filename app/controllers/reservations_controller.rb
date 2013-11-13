@@ -45,6 +45,8 @@ class ReservationsController < ApplicationController
       size search_size
     end
     @rooms = RoomsDecorator.new(rooms)
+    # Existing reservations for this collection of rooms in this range
+    @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
 
     respond_with(@reservation)
   end
@@ -81,6 +83,8 @@ class ReservationsController < ApplicationController
       size search_size
     end
     @rooms = RoomsDecorator.new(rooms)
+    # Existing reservations for this collection of rooms in this range
+    @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
 
     respond_with(@reservation) do |format|
       if @reservation.save

@@ -24,7 +24,7 @@ class Room < ActiveRecord::Base
     indexes :image_link, :index => :not_analyzed
     indexes :sort_order, :type => 'integer'
     indexes :sort_size_of_room, :type => 'integer'
-    indexes :room_group, :as => "room_group.code", :index => :not_analyzed
+    indexes :room_group, :as => 'room_group.code', :index => :not_analyzed
     indexes :opens_at, :as => 'opens_at'
     indexes :closes_at, :as => 'closes_at'
   end 

@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"deleted":false,"end_dt":"3020-11-11T13:30:00+00:00","id":5,"is_block":false,"room_id":3,"start_dt":"3020-11-11T13:00:00+00:00","title":"What
-        a class this will be!","user_id":4,"created_at_day":"2013-11-01","start_day":"3020-11-11"}'
+        a class this will be!","user_id":4,"created_at_day":"2013-11-13","start_day":"3020-11-11"}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -27,7 +27,7 @@ http_interactions:
       - '85'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"5","_version":2}'
+      string: ! '{"ok":true,"_index":"test_reservations","_type":"reservation","_id":"5","_version":5}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:57 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:48 GMT
 recorded_with: VCR 2.6.0

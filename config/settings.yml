@@ -39,7 +39,7 @@ roles:
     - shanghai_admin
   authorized:
     shanghai_undergraduate:
-      - "00"
+      - "0"
     ny_undergraduate:
       - "1"
       - "2"

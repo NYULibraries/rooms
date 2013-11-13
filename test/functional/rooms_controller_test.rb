@@ -15,6 +15,15 @@ class RoomsControllerTest < ActionController::TestCase
     end
   end
   
+  test "gets index of ny rooms" do
+    current_user = UserSession.create(users(:ny_admin))
+    VCR.use_cassette('rooms ny index') do
+      get :index
+      assert assigns(:rooms)
+      assert_template :index
+    end
+  end
+  
   test "gets index of rooms with search results" do
     VCR.use_cassette('search rooms') do
       get :index, :q => "google.com"

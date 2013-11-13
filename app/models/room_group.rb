@@ -1,6 +1,6 @@
 class RoomGroup < ActiveRecord::Base
-  include Rooms::Authorization
+  include Roles::Authorization
   validates_presence_of :title, :code, :admin_roles_mask
   attr_accessible :title, :code, :admin_roles
-  has_many :rooms, :dependent => :destroy
+  has_many :rooms, :dependent => :nullify
 end

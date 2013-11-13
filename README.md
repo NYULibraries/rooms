@@ -9,12 +9,6 @@ The Rooms app allows authorized users to book rooms.
 
 ## Read the [wiki](https://github.com/NYULibraries/rooms/wiki)
 
-## Benchmarking
-
-### Before ElasticSearch index:
-
-### After ElasticSearch index (now):
-
 ## Notes
 
 - ElasticSearch index with Tire gem for searching room availability 

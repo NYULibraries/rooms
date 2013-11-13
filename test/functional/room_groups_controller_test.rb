@@ -49,7 +49,7 @@ class RoomGroupsControllerTest < ActionController::TestCase
   test "should get destroy" do
     VCR.use_cassette('destory room group with dependent rooms') do
       assert_difference('RoomGroup.count', -1) do
-        delete :destroy, :id => room_groups(:one)
+        delete :destroy, :id => room_groups(:delete_three)
       end
       assert assigns(:room_group)
       assert_redirected_to room_groups_url

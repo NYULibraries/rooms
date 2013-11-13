@@ -118,6 +118,32 @@ class ReservationsControllerTest < ActionController::TestCase
     end
   end
   
+  test "array of emails in cc" do
+    current_user = UserSession.create(users(:admin))
+    VCR.use_cassette('reservations cant create with invalid ccs') do
+      assert_no_difference('Reservation.count', 1) do
+        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "dummy@silly.org, mr.invalid.in.array" }  
+      end
+      assert assigns(:reservation).invalid?
+      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
+      assert_no_difference('Reservation.count', 1) do
+        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes }  
+      end
+      assert assigns(:reservation).invalid?
+      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.collaborative_requires_ccs')
+      assert_no_difference('Reservation.count', 1) do
+        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "mr.invalid" }  
+      end
+      assert assigns(:reservation).invalid?
+      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
+      assert_no_difference('Reservation.count', 1) do
+        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "admin@university.edu" }  
+      end
+      assert assigns(:reservation).invalid?
+      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.current_user_is_only_email')
+    end
+  end
+  
   test "create new reservation grad" do
     current_user = UserSession.create(users(:no_bookings_grad))
     VCR.use_cassette('reservations create new gradute') do

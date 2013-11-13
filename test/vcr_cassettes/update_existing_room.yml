@@ -28,7 +28,7 @@ http_interactions:
       - '71'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":3}'
+      string: ! '{"ok":true,"_index":"test_rooms","_type":"room","_id":"1","_version":8}'
     http_version: 
-  recorded_at: Fri, 01 Nov 2013 19:40:58 GMT
+  recorded_at: Wed, 13 Nov 2013 21:30:49 GMT
 recorded_with: VCR 2.6.0

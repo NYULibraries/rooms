@@ -7,3 +7,6 @@
 //= require temporal
 //= require room_reservation
 //= require peek
+//= require peek/views/dalli
+//= require peek/views/performance_bar
+//= require peek/views/rblineprof

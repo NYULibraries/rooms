@@ -77,8 +77,10 @@ gem 'newrelic_rpm', '~> 3.6.0'
 # For decorators
 gem 'draper', '~> 1.3'
 
+# Peek and plugins
 gem 'peek'
 gem 'peek-git'
 gem 'peek-mysql2'
 gem 'peek-dalli'
 gem 'peek-performance_bar'
+gem 'peek-rblineprof'

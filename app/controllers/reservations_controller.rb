@@ -1,8 +1,7 @@
 class ReservationsController < ApplicationController
-  #load_and_authorize_resource
+  load_and_authorize_resource
   # Can't autoload new action because params don't match up to column names in DB
-  #skip_load_resource :only => [:new]
-  skip_authorization_check
+  skip_load_resource :only => [:new]
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 

@@ -68,6 +68,14 @@ class ReservationsControllerTest < ActionController::TestCase
     end
   end
   
+  test "fail with invalid date" do
+    current_user = UserSession.create(users(:hasnt_been_used_grad))
+    VCR.use_cassette('reservations fail with invalid date') do
+     get :new, :reservation => { :which_date => "blah", :hour => "1", :minute => "00", :ampm => "pm", :how_long => 300 } 
+     assert_equal flash[:error], I18n.t('reservation.date_formatted_correctly')
+    end
+  end
+  
   #test "already created reservation today" do
   #  current_user = UserSession.create(users(:no_bookings_undergrad))
   #  VCR.use_cassette('reservations already created today') do
@@ -177,7 +185,13 @@ class ReservationsControllerTest < ActionController::TestCase
   #end
   
   test "deletes existing reservation" do
-    
+    current_user = UserSession.create(users(:undergraduate))
+    VCR.use_cassette("reservation delete existing") do
+      put :delete, :reservation_id => reservations(:undergraduate).id
+    end
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_equal flash[:success], I18n.t('reservations.delete.success')
   end
   
   test "can't delete existing reservation if not own" do
@@ -189,7 +203,12 @@ class ReservationsControllerTest < ActionController::TestCase
   end
   
   test "resend mail action" do
-    
+    current_user = UserSession.create(users(:admin))
+    get :resend_email, :id => reservations(:admin_res).id
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_equal flash[:success], I18n.t('reservations.resend_email.success')
+    assert_template :resend_email
   end
   
 end

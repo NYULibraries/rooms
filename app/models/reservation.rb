@@ -16,7 +16,6 @@ class Reservation < ActiveRecord::Base
   validate :reservations_exist_in_block, :if => :is_block?, :unless => Proc.new {|start_dt| start_dt.blank? }, :unless => Proc.new {|end_dt| end_dt.blank? }, :on => :create
   validate :validate_cc, :unless => :is_block?
   validate :collaborative_requires_ccs, :unless => :is_block?
-  validate :date_formatted_correctly
   
   # Non-database attributes
   attr_accessor :created_at_day
@@ -171,13 +170,6 @@ private
   def populate_deleted_at
     if self.deleted?
       self.deleted_at ||= Time.zone.now
-    end
-  end
-
-  # Start date and end date must be valid before inserting into database
-  def date_formatted_correctly
-    if !start_dt.blank? and !end_dt.blank? and (!DateTime.parse(start_dt.to_s) or !DateTime.parse(end_dt.to_s))
-      errors.add(:base, I18n.t('reservation.date_formatted_correctly'))
     end
   end
 

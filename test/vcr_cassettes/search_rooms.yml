@@ -26,9 +26,9 @@ http_interactions:
       - '505'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
         "_source" : {"closes_at":"01:00","description":"This and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
-        People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",3]}]}}'
+        People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",1]}]}}'
     http_version: 
-  recorded_at: Wed, 13 Nov 2013 21:52:28 GMT
+  recorded_at: Thu, 14 Nov 2013 18:11:17 GMT
 recorded_with: VCR 2.6.0

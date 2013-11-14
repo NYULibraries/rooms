@@ -13,9 +13,9 @@ module ReservationsHelper
         if @user.is_admin? and !reservation.blank? and !reservation[:is_block]
           link_to(icon_tag(:info), user_path(reservation[:user_id], :params => {:highlight => [reservation[:id]]}, :anchor => reservation[:id]), :title => "Room is booked", :alt => "Room is booked", :class => "preview_link reservation_whois", :target => "_blank") 
         elsif room.is_closed? timeslot
-          link_to(icon_tag(:warning), "#", :title => "Room is closed", :alt => "Room is closed", :class => "preview_link", :target => "_blank")
+          link_to(icon_tag(:warning), '#', :title => "Room is closed", :alt => "Room is closed", :class => "preview_link", :target => "_blank")
         elsif room.is_open? timeslot and !reservation.blank? and reservation[:is_block]
-          link_to(icon_tag(:warning), "#", :title => reservation[:title], :alt => reservation[:title], :class => "preview_link", :target => "_blank") 
+          link_to(icon_tag(:warning), '#', :title => reservation[:title], :alt => reservation[:title], :class => "preview_link", :target => "_blank") 
         end
       end
 	  end

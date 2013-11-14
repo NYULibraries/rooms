@@ -1,7 +1,8 @@
 class ReservationsController < ApplicationController
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # Can't autoload new action because params don't match up to column names in DB
-  skip_load_resource :only => [:new]
+  #skip_load_resource :only => [:new]
+  skip_authorization_check
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 
@@ -162,6 +163,9 @@ class ReservationsController < ApplicationController
       (params[:reservation][:start_dt].blank?) ? 
         DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
           DateTime.parse(params[:reservation][:start_dt]) 
+  rescue Exception => e
+    flash[:error] = t('reservation.date_formatted_correctly')
+    @start_dt = DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
   end
   helper_method :start_dt
   
@@ -170,6 +174,9 @@ class ReservationsController < ApplicationController
      (params[:reservation][:end_dt].nil?) ? 
       start_dt + params[:reservation][:how_long].to_i.minutes :
         DateTime.parse(params[:reservation][:end_dt])
+  rescue Exception => e
+    flash[:error] = t('reservation.date_formatted_correctly')
+    @endt_dt = DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
   end
   helper_method :end_dt
   
@@ -178,6 +185,9 @@ private
   # Parse single date field into date object
   def which_date
     @which_date ||= Date.parse(params[:reservation][:which_date])
+  rescue Exception => e
+    flash[:error] = t('reservation.date_formatted_correctly')
+    @which_date = DateTime.today
   end
   
   # Convert 12 to 24 hours

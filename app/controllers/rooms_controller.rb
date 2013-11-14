@@ -4,10 +4,11 @@ class RoomsController < ApplicationController
   
   # GET /rooms
   def index
+    @room_groups = RoomGroup.all
     # Default elasticsearch options
     options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
     # Get room groups this user can admin
-    room_group_filter = (params[:room_group].blank?) ? RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
+    room_group_filter = (params[:room_group].blank?) ? @room_groups.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym == options[:sort])
     # Elasticsearch DSL
@@ -36,12 +37,14 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @room_groups = RoomGroup.all
     respond_with(@room)
   end
 
   # GET /rooms/1/edit
   def edit
     @room = Room.find(params[:id])
+    @room_groups = RoomGroup.all
     respond_with(@room)
   end
 

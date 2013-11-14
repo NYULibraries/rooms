@@ -21,6 +21,10 @@ $ ->
   # Hide objects not important for JS
   $(".js_hide").hide()
   
+  # Disable anchor tags linking to #
+  $(document).on "click", "a[href='#']", ->
+    false
+  
   # Click the calendar icon to select a date
   $(document).on 'click', "a.select_date_icon", (e) ->
     e.preventDefault()

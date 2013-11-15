@@ -50,6 +50,8 @@ module ReservationsHelper
   def timeslot_class(reservation, room, timeslot)
     timeslot_class = (!reservation.blank? or is_in_past?(timeslot) or room.is_closed?(timeslot)) ? "timeslot_unavailable" : "timeslot_available"	  
     timeslot_class += " timeslot_selected" if timeslot >= start_dt && timeslot < end_dt
+    timeslot_class += " timeslot_selected_first" if timeslot == start_dt
+    timeslot_class += " timeslot_selected_last" if (timeslot + 30.minutes) == end_dt
     return timeslot_class
   end
   

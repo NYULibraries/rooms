@@ -8,10 +8,37 @@ h1.page_title { margin-top: 0; }
 .legend_available {margin-right: 5px;padding-right:15px;background-color:#8bc18b;border:1px solid #1b511b;display:inline}
 .legend_selected {margin-right: 5px;padding-right:15px;background-color:#efefef;border:2px solid #6666ff;display:inline}
 .legend_text {margin-right:10px;display:inline;}
-.timeslot_unavailable {background-color:#cc3333;}
-.timeslot_available {background-color:#8bc18b;}
-.timeslot_selected {border:2px solid #6666ff !important;}
+
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
+
+.room_title, .room_type, .room_size {
+  width: 60px;
+}
+
+#availability_grid_table {
+  .timeslot_unavailable {background-color:#cc3333;}
+  .timeslot_available {background-color:#8bc18b;}
+  .timeslot_selected {
+    border-top: 1px solid #6666ff;
+    border-bottom: 1px solid #6666ff;
+    &.timeslot_selected_last {
+      border-right: 2px solid #6666ff;
+    }
+    &.timeslot_selected_first {
+      border-left: 2px solid #6666ff;
+    }
+  }
+ tbody tr:first-child {
+   .timeslot_selected {
+     border-top: 2px solid #6666ff;
+   }
+ }
+ tbody tr:nth-last-child(4) {
+   .timeslot_selected {
+     border-bottom: 2px solid #6666ff;
+   }
+ }
+}
 
 div.policies { background-color:#efefef;padding: .3em .5em;width:323px;border: 1px solid #ccc; }
 div.policies ul li {color: #990000;}

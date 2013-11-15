@@ -56,6 +56,7 @@ module ApplicationHelper
     search = params[:search]
     html = link_to title, params.merge(:sort => column, :direction => direction, :id => "").merge(url_options), {:data => {:remote => remote}, :class => css_class}.delete_if{ |key,value| key == :data && !remote }
     html << icon_tag(direction_icon) if column == sort_column.to_sym
+    html << icon_tag(:sortable) unless column == sort_column.to_sym
     return html
   end
   

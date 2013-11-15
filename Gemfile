@@ -30,11 +30,11 @@ group :test do
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
-  gem 'ruby-prof' #For Benchmarking
   gem 'coveralls', '~> 0.7.0', :require => false
   gem 'vcr', '~> 2.6.0'
   gem 'webmock', '~> 1.15.0'
   gem 'timecop', '~> 0.6.3'
+  gem 'ruby-prof'
 end
 
 gem 'debugger', :groups => [:development, :test, :staging]

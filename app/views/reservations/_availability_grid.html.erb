@@ -1,4 +1,4 @@
-<p class="hidden-phone availability_grid_desc">Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot', root_url, :class => "close_dialog")%> for more availability.</p>
+<p class="hidden-phone availability_grid_desc">Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot <i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%>  for more availability.</p>
 
 <div class="legend hidden-phone">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
@@ -6,7 +6,7 @@
   <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
 </div>
 
-<a href="#" id="top_of_page" title="top_of_page">&nbsp;</a><%= paginate @rooms, theme: "bootstrap", remote: true, :params => {:controller => 'reservations', :action => 'new'} %>
+<a href="#" id="top_of_page" title="top_of_page">&nbsp;</a><%= paginate @rooms, theme: "bootstrap", remote: true, :params => { :controller => 'reservations', :action => 'new', _: nil, _method: nil, authenticity_token: nil, utf8: nil } %>
 
 <div class="availability_grid_content">
 
@@ -24,106 +24,95 @@
 
 <table id="availability_grid_table" class="table table-bordered">
 	<thead>
-	<tr class="hidden-phone">
-		<th colspan="5"></th>
-		<th colspan="<%=(times_array.size.to_f / 2.0).floor %>">
-			<div class="reservation_timeslot_hunt" id="backOptions">
-			<div id="back_one_day">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt =>  end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe }%>
-			</div>
-			<div id="back_thirty_mins">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe }%>
-			</div>
-			</div>
-		</th>
-		<th colspan="<%=(times_array.size.to_f / 2.0).ceil %>">
-			<div class="reservation_timeslot_hunt" id="forwardOptions">
-			<div id="forward_one_day">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe }%>
-			</div>
-			<div id="forward_thirty_mins">
-				<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe }%>
-			</div>
-			</div>
-		</th>
-	</tr>
-	<tr>
-		<th></th>
-		<th><div class="sort_by_field">
-		  <%= sortable :title, "Room", {:action => "new"}, true %>
-		</div></th>
-		<th class="hidden-phone"><div class="sort_by_field">
-		  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
-		</div></th>
-		<th class="hidden-phone">Details</th>
-		<th class="hidden-phone"><div class="sort_by_field">
-		  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
-		</div></th>
-		<% times_array.each do |timeslot| %>
-		<th class="date-cell">
-			<span class="hidden-phone"><%= prettify_dayofweek(timeslot) %><br /></span>
-			<%= prettify_simple_date(timeslot) %><br />
-			<%= prettify_time(timeslot) %>
-		</th>
-		<% end -%>
-	</tr>
+		<tr class="hidden-phone">
+			<th colspan="5"></th>
+			<th colspan="<%=(times_array.size.to_f / 2.0).floor %>">
+				<div class="reservation_timeslot_hunt" id="backOptions">
+				<div id="back_one_day">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt =>  end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe }%>
+				</div>
+				<div id="back_thirty_mins">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe }%>
+				</div>
+				</div>
+			</th>
+			<th colspan="<%=(times_array.size.to_f / 2.0).ceil %>">
+				<div class="reservation_timeslot_hunt" id="forwardOptions">
+				<div id="forward_one_day">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe }%>
+				</div>
+				<div id="forward_thirty_mins">
+					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe }%>
+				</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th><div class="sort_by_field">
+			  <%= sortable :title, "Room", {:action => "new"}, true %>
+			</div></th>
+			<th class="hidden-phone"><div class="sort_by_field">
+			  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
+			</div></th>
+			<th class="hidden-phone">Details</th>
+			<th class="hidden-phone"><div class="sort_by_field">
+			  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
+			</div></th>
+			<% times_array.each do |timeslot| %>
+			<th class="date-cell">
+				<span class="hidden-phone dayofweek"><%= prettify_dayofweek(timeslot) %><br /></span>
+				<%= prettify_simple_date(timeslot) %><br />
+				<%= prettify_time(timeslot) %>
+			</th>
+			<% end -%>
+		</tr>
 	</thead>
+	
 	<tbody>
-
-<% @rooms.results.each do |room| %>
-<% room = RoomDecorator.decorate(room) %>
-	<tr>
-		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
-		<td class="room_title"><%= room.title %></td>
-		<td class="hidden-phone" class="room_type"><%= room.type_of_room %></td>
-		<td class="hidden-phone">
-		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>
-		<% unless room.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => :blank, :class => "preview_image" %><% end %>
-		</td>
-		<td class="hidden-phone" class="room_size"><%= room.size_of_room %></td>
-		<%= construct_grid_data(room) %>
-	</tr>
-<% end %>
-
-	<tr>
-		<td></td>
-		<td colspan="2" class="extra_fields">
-			<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
-		</td>
-		<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-			<div id="res_title_div"><%= text_field :reservation, :title %></div>
-		</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td colspan="2" class="extra_fields">
-			<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
-		</td>
-		<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-			<div id="res_cc_div"><%= text_field :reservation, :cc %></div>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="<%= times_array.size + 5%>">
-			<%= f.hidden_field "user_id", :value => @user.id %>
-			<%= f.hidden_field "start_dt", :value => start_dt %>
-			<%= f.hidden_field "end_dt", :value => end_dt %>
-			<%= hidden_field_tag :page, params[:page] unless params[:page].blank? %>
-			<%= hidden_field_tag :direction, params[:direction] unless params[:direction].blank? %>
-			<%= hidden_field_tag :sort, params[:sort] unless params[:sort].blank? %>
-			<button type="submit" class="btn">
-				Reserve<span class="hidden-phone"> selected timeslot</span>
-			</button>
-		</td>
-	</tr>
+		<%= render "rooms_reservations" %>
 	</tbody>
+	
+	<tfoot>
+		<tr>
+			<td></td>
+			<td colspan="2" class="extra_fields">
+				<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
+			</td>
+			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
+				<div id="res_title_div"><%= text_field :reservation, :title %></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan="2" class="extra_fields">
+				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
+			</td>
+			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
+				<div id="res_cc_div"><%= text_field :reservation, :cc, :data => {:toggle => "popover", :placement => "top", :content => "Required for collaborative rooms"} %></div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="<%= times_array.size + 5%>">
+				<%= f.hidden_field "user_id", :value => @user.id %>
+				<%= f.hidden_field "start_dt", :value => start_dt %>
+				<%= f.hidden_field "end_dt", :value => end_dt %>
+				<%= hidden_field_tag :page, params[:page] unless params[:page].blank? %>
+				<%= hidden_field_tag :direction, params[:direction] unless params[:direction].blank? %>
+				<%= hidden_field_tag :sort, params[:sort] unless params[:sort].blank? %>
+				<button type="submit" class="btn">
+					Reserve<span class="hidden-phone"> selected timeslot</span>
+				</button>
+			</td>
+		</tr>
+	</tfoot>
 </table>
 <table id="availability_grid_header_fixed" class="table table-bordered"></table>
 <% end %>
 
 </div>
 
-<%= paginate @rooms, theme: "bootstrap", remote: true %>
+<%= paginate @rooms, theme: "bootstrap", remote: true, :params => { :controller => 'reservations', :action => 'new', _: nil, _method: nil, authenticity_token: nil, utf8: nil } %>
 
 <div class="legend">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>

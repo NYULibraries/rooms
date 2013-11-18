@@ -30,8 +30,7 @@ if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*"))
     $('#ajax-modal').find("#top_of_page").focus()
     
 #Move extra fields in availability grid to modal-footer, just pretties it up a bit
-$("#ajax-modal").find(".ajax_form table tbody tr:last").hide()
-$("#ajax-modal").find(".ajax_form .extra_fields").closest("tr").hide()
+$("#ajax-modal").find(".ajax_form table tfoot").hide()
 
 if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*")) 
   $("#ajax-modal").find(".modal-footer").prepend($("#ajax-modal .ajax_form").find(".extra_fields div"))
@@ -54,7 +53,7 @@ $('#ajax-modal').on "change", '.ajax_form input[name="reservation[room_id]"]', (
     $('#ajax-modal').find(".modal-footer input#reservation_title").focus()
     $('#ajax-modal').find(".modal-footer input#reservation_title").effect("highlight", {}, 3000)
     fit_modal_body($("#ajax-modal"))
-    
+
 # Make loading bar reappear and animate when remote links or forms are called
 $("#ajax-modal").on "click", "a[data-remote='true'], .modal-footer button[type='submit']", ->
   if (!$("#ajax-modal #remote_progress").is("*")) 
@@ -84,22 +83,36 @@ $(".modal-header").find("#availability_grid_header_fixed").remove()
 # Fit modal to screen size after all other resizings have been done
 fit_modal_body($("#ajax-modal"))
 
-# AFFix table header
-tableOffset = $("#availability_grid_table").offset().top
+# Varriable for affixing table header
+tableOffset = $(".modal-body #availability_grid_table tbody").position().top
 header = $("#availability_grid_table > thead").clone()
 fixedHeader = $("#availability_grid_header_fixed").append(header).hide()
 $(".modal-header").append(fixedHeader)
 
+# Bind actions to the scroll event
 $(".modal-body").bind "scroll", ->
   offset = $(this).scrollTop()
   $(".modal-header").prop("scrollLeft", $(this).scrollLeft())
 
+  # Show fixedHeader when scrolling down table
   if (offset >= tableOffset && fixedHeader.is(":hidden"))
     fixedHeader.show()
     adjust_table_header_widths() 
     fit_modal_body($("#ajax-modal"))
+  # And hide when back at the top
   else if (offset < tableOffset)
     fixedHeader.hide()
     fit_modal_body($("#ajax-modal"))
-    
+
+  #if $('.pagination').length
+  #  if offset >= $('.modal-body-content').height() - $(window).height() - 50
+  #    url = $('.pagination .next a').attr('href')
+  #    if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
+  #      $('.pagination').text("Fetching more products...")
+  #      sleep 1
+  #      $.getScript url, ( data, textStatus, jqxhr ) ->
+  #        console.log data
+        
+$(".modal-body").scroll()
+
 <% end %>

@@ -15,6 +15,13 @@ h1.page_title { margin-top: 0; }
   width: 60px;
 }
 
+.popover {
+  border-color: #cc3333;
+  color: #cc3333;
+}
+
+.dayofweek { font-size: 24px; }
+
 #availability_grid_table {
   .timeslot_unavailable {background-color:#cc3333;}
   .timeslot_available {background-color:#8bc18b;}
@@ -75,7 +82,7 @@ table#availability_grid_header_fixed {
 }
 
 #backOptions, #forwardOptions {
-  a { font-weight: normal; }
+  a { font-weight: bold; }
 }
 
 #remote_progress {

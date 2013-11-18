@@ -24,10 +24,7 @@ $ ->
   # Disable anchor tags linking to #
   $(document).on "click", "a[href='#']", ->
     false
-  
-  $(document).on "click", "td.timeslot_selected", ->
-    $(this).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').attr('checked', true)
-  
+
   # Click the calendar icon to select a date
   $(document).on 'click', "a.select_date_icon", (e) ->
     e.preventDefault()
@@ -115,4 +112,7 @@ $ ->
   $(window).resize ->
     fit_modal_body($("#ajax-modal"))
     adjust_table_header_widths()
-        
+
+  $(".modal-body").on "click", "td.timeslot_selected", ->
+   $("#availability_grid_table").find('input:radio[name="reservation[room_id]"][chcked="checked"]').removeAttr('checked')
+   #$(this).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').attr('checked', true)

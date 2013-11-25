@@ -11,8 +11,8 @@ window.fit_modal_body = (modal) ->
   body.css("max-height", "#{height}px")
   
 window.adjust_table_header_widths = ->
-  $(".modal-header #availability_grid_header_fixed").find("thead tr:last-child th").each (i) ->
-    $(this).css('min-width':$(".modal-body #availability_grid_table").find("thead tr:last-child th:nth-child("+(i+1)+")").css('width'))
+  $(".modal-header #availability_grid_header_fixed").find("thead tr:first-child th").each (i) ->
+    $(this).css('min-width':$(".modal-body #availability_grid_table").find("thead tr:first-child th:nth-child("+(i+1)+")").css('width'))
 
 $ ->
   # Set cookie finding user's timezone
@@ -113,6 +113,17 @@ $ ->
     fit_modal_body($("#ajax-modal"))
     adjust_table_header_widths()
 
-  $(".modal-body").on "click", "td.timeslot_selected", ->
-   $("#availability_grid_table").find('input:radio[name="reservation[room_id]"][chcked="checked"]').removeAttr('checked')
-   #$(this).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').attr('checked', true)
+  # Make preferred slot selectable by clicking table
+  $(".modal-body").on "click", "td.timeslot_preferred", ->
+    # When a room is selected, show the extra fields with highlight
+    $('#ajax-modal').on "change", '.ajax_form input[name="reservation[room_id]"]', (event) ->
+      if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) 
+        $('#ajax-modal').find(".modal-footer .extra_fields").show()
+        $('#ajax-modal').find(".modal-footer input#reservation_title").focus()
+        $('#ajax-modal').find(".modal-footer input#reservation_title").effect("highlight", {}, 3000)
+        fit_modal_body($("#ajax-modal"))
+    unless $(this).closest("tr").find("td.timeslot_preferred.timeslot_unavailable").is("*")
+      $(this).closest('table').find('td:first-child input:radio:checked').prop('checked', false)
+      $(this).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').prop('checked', true)
+      $(this).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').trigger('change')
+   

@@ -4,7 +4,7 @@
 		<td><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
 		<td class="room_title"><%= room.title %></td>
 		<td class="hidden-phone" class="room_type"><%= room.type_of_room %></td>
-		<td class="hidden-phone">
+		<td class="hidden-phone room_details">
 		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>
 		<% unless room.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => :blank, :class => "preview_image" %><% end %>
 		</td>

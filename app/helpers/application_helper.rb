@@ -14,12 +14,16 @@ module ApplicationHelper
   end
   
   def prettify_simple_date(d)
-    d.strftime('%m/%d<span class="hidden-phone">/%y</span>').html_safe  
+    d.strftime('%m/%d/%Y').html_safe  
   end
   
   def prettify_dayofweek(d)
     d.strftime('%a')    
   end
+  
+  def simple_date_header(d)
+    d.strftime('%A, %B %e, %Y')
+  end  
   
   def set_default_hour
     if Time.zone.now.strftime("%I").to_i != 12 and Time.zone.now.strftime("%M").to_i >= 30

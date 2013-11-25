@@ -7,6 +7,8 @@ $("#main-flashses").html("<%=j render 'common/flash_msg'%>")
 
 <% else %>
 
+$("#availability_grid_table, #availability_grid_header_fixed").find("tr td:first-child").hide()
+
 # Hide ajax-loader
 $("#ajax-modal #remote_progress").remove()
 $("#ajax-modal").find(".modal-body .ajax-loader").hide()
@@ -45,14 +47,6 @@ if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*"))
 
 #And Initially hide extra fields
 $("#ajax-modal").find(".modal-footer .extra_fields").hide();
-
-# When a room is selected, show the extra fields with highlight
-$('#ajax-modal').on "change", '.ajax_form input[name="reservation[room_id]"]', (event) ->
-  if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) 
-    $('#ajax-modal').find(".modal-footer .extra_fields").show()
-    $('#ajax-modal').find(".modal-footer input#reservation_title").focus()
-    $('#ajax-modal').find(".modal-footer input#reservation_title").effect("highlight", {}, 3000)
-    fit_modal_body($("#ajax-modal"))
 
 # Make loading bar reappear and animate when remote links or forms are called
 $("#ajax-modal").on "click", "a[data-remote='true'], .modal-footer button[type='submit']", ->

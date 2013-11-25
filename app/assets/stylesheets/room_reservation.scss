@@ -1,12 +1,17 @@
 @import "nyulibraries";
 @import "jquery-ui-timepicker-addon";
 
+@mixin striped-bg($bg-color: #ccc, $darken-amount: 5%, $stripe-color: $bg-color) {
+  @include background-image(linear-gradient(-45deg, $stripe-color 25%, transparent 25%, transparent 50%, $stripe-color 50%, $stripe-color 75%, transparent 75%, transparent));
+  background-size: 6px 6px;
+}
+
 h1.page_title { margin-top: 0; }
 
 .sidebar-padded {width:300px;margin-left:10px;}
-.legend_unavailable {margin-right:5px; padding-right:15px;background-color:#cc3333;border:1px solid #000;display:inline;}
-.legend_available {margin-right: 5px;padding-right:15px;background-color:#8bc18b;border:1px solid #1b511b;display:inline}
-.legend_selected {margin-right: 5px;padding-right:15px;background-color:#efefef;border:2px solid #6666ff;display:inline}
+.legend_unavailable {margin-right:5px; padding-right:15px;background-color:#ed1c24;border:1px solid #000;display:inline;}
+.legend_preferred {margin-right:5px; padding-right:15px;background-color:#e6e7e8;border:1px solid #1c75bc;display:inline;@include striped-bg(#1c75bc, 4%);}
+.legend_selected {margin-right:5px; padding-right:15px;background-color:#1c75bc;border:1px solid #1c75bc;display:inline;}
 .legend_text {margin-right:10px;display:inline;}
 
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
@@ -20,29 +25,61 @@ h1.page_title { margin-top: 0; }
   color: #cc3333;
 }
 
-.dayofweek { font-size: 24px; }
+.header_fields {
+  background-color: #6d6e71; 
+  border: 0 !important;
+  color: white;
+  a {
+    color: white;
+  }
+}
+
+.rebuild_grid {
+  display: block;
+  padding: 10px;
+  margin: 0;
+  &.rebuild_grid_next {
+    float: right;
+    border-left: 1px solid #dddddd;
+  }
+  &.rebuild_grid_prev {
+    float: left;
+    border-right: 1px solid #dddddd;
+  }
+}
+
+th.times {
+  padding: 0 !important;
+}
+
+.date_header {
+  text-align: center !important;
+  font-size: 18px; 
+}
 
 #availability_grid_table {
   .timeslot_unavailable {background-color:#cc3333;}
-  .timeslot_available {background-color:#8bc18b;}
-  .timeslot_selected {
-    border-top: 1px solid #6666ff;
-    border-bottom: 1px solid #6666ff;
-    &.timeslot_selected_last {
-      border-right: 2px solid #6666ff;
+  .timeslot_available {background-color:#e6e7e8;}
+  .timeslot_preferred {
+    @include striped-bg(#1c75bc, 4%);
+    border-top: 1px solid #1c75bc;
+    border-bottom: 1px solid #1c75bc;
+    &.timeslot_preferred_last {
+      border-right: 4px solid #1c75bc;
     }
-    &.timeslot_selected_first {
-      border-left: 2px solid #6666ff;
+    &.timeslot_preferred_first {
+      border-left: 4px solid #1c75bc;
     }
   }
+  .timeslot_selected {background-color:#1c75bc;}
  tbody tr:first-child {
-   .timeslot_selected {
-     border-top: 2px solid #6666ff;
+   .timeslot_preferred {
+     border-top: 4px solid #1c75bc;
    }
  }
- tbody tr:nth-last-child(4) {
-   .timeslot_selected {
-     border-bottom: 2px solid #6666ff;
+ tbody tr:last-child {
+   .timeslot_preferred {
+     border-bottom: 4px solid #1c75bc;
    }
  }
 }

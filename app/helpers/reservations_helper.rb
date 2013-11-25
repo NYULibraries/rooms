@@ -49,9 +49,9 @@ module ReservationsHelper
   # Get the css classes to color-code availability grid
   def timeslot_class(reservation, room, timeslot)
     timeslot_class = (!reservation.blank? or is_in_past?(timeslot) or room.is_closed?(timeslot)) ? "timeslot_unavailable" : "timeslot_available"	  
-    timeslot_class += " timeslot_selected" if timeslot >= start_dt && timeslot < end_dt
-    timeslot_class += " timeslot_selected_first" if timeslot == start_dt
-    timeslot_class += " timeslot_selected_last" if (timeslot + 30.minutes) == end_dt
+    timeslot_class += " timeslot_preferred" if timeslot >= start_dt && timeslot < end_dt
+    timeslot_class += " timeslot_preferred_first" if timeslot == start_dt
+    timeslot_class += " timeslot_preferred_last" if (timeslot + 30.minutes) == end_dt
     return timeslot_class
   end
   
@@ -63,6 +63,10 @@ module ReservationsHelper
   # Times array with padding
   def times_array(padding = true)
     @times_array ||= get_times_array(padding)
+  end
+  
+  def dates_array
+    @dates_array ||= times_array.group_by {|t| t.to_date}
   end
   
   # Times array of only selected times

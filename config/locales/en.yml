@@ -1,4 +1,5 @@
 en:
+  title: Reserve a study space
   unauthorized:
     create_today:
       reservation: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"

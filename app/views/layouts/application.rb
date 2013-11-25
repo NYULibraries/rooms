@@ -15,7 +15,7 @@ module Views
       end
       
       def application_title
-       "Reserve a room"
+        t('title')
       end
 
       def gauges_tracking_code

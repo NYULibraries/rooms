@@ -1,9 +1,11 @@
-<p class="hidden-phone availability_grid_desc">Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot <i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%>  for more availability.</p>
+<p class="hidden-phone availability_grid_desc">Click on your preferred time slot to select your study space.</p>
+
+<!--Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot <i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%>  for more availability.</p>-->
 
 <div class="legend hidden-phone">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
-  <div class="legend_available"></div><div class="legend_text">Available</div>
-  <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
+  <div class="legend_preferred"></div><div class="legend_text">Your preferred time slot</div>
+  <div class="legend_selected"></div><div class="legend_text">Your selected time slot</div>
 </div>
 
 <a href="#" id="top_of_page" title="top_of_page">&nbsp;</a><%= paginate @rooms, theme: "bootstrap", remote: true, :params => { :controller => 'reservations', :action => 'new', _: nil, _method: nil, authenticity_token: nil, utf8: nil } %>
@@ -24,48 +26,36 @@
 
 <table id="availability_grid_table" class="table table-bordered">
 	<thead>
-		<tr class="hidden-phone">
-			<th colspan="5"></th>
-			<th colspan="<%=(times_array.size.to_f / 2.0).floor %>">
-				<div class="reservation_timeslot_hunt" id="backOptions">
-				<div id="back_one_day">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt =>  end_dt.to_datetime - 1.day, :submit_text => "&laquo; Prev day".html_safe }%>
-				</div>
-				<div id="back_thirty_mins">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; Back 1/2 hour".html_safe }%>
-				</div>
-				</div>
-			</th>
-			<th colspan="<%=(times_array.size.to_f / 2.0).ceil %>">
-				<div class="reservation_timeslot_hunt" id="forwardOptions">
-				<div id="forward_one_day">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "Next day &raquo;".html_safe }%>
-				</div>
-				<div id="forward_thirty_mins">
-					<%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "Forward 1/2 hour &rsaquo;".html_safe }%>
-				</div>
-				</div>
-			</th>
-		</tr>
+
 		<tr>
-			<th></th>
-			<th><div class="sort_by_field">
+			<th rowspan="2" class="header_fields"></th>
+			<th rowspan="2" class="header_fields"><div class="sort_by_field">
 			  <%= sortable :title, "Room", {:action => "new"}, true %>
 			</div></th>
-			<th class="hidden-phone"><div class="sort_by_field">
+			<th rowspan="2" class="hidden-phone header_fields "><div class="sort_by_field">
 			  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 			</div></th>
-			<th class="hidden-phone">Details</th>
-			<th class="hidden-phone"><div class="sort_by_field">
+			<th rowspan="2" class="hidden-phone header_fields room_details">Details</th>
+			<th rowspan="2" class="hidden-phone header_fields"><div class="sort_by_field">
 			  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
 			</div></th>
+      <% dates_array.keys.each do |date| %>
+        <th class="date_header" colspan="<%=dates_array[date].count%>"><span class="hidden-phone"><%= simple_date_header(date) %></span><span class="visible-phone"><%= prettify_simple_date(date) %></span></th>
+      <% end %>
+    </tr>
+    </tr>
+    <tr>
 			<% times_array.each do |timeslot| %>
-			<th class="date-cell">
-				<span class="hidden-phone dayofweek"><%= prettify_dayofweek(timeslot) %><br /></span>
-				<%= prettify_simple_date(timeslot) %><br />
-				<%= prettify_time(timeslot) %>
-			</th>
-			<% end -%>
+      <th class="times">
+        <% if timeslot == times_array[0] %>
+        <div class="rebuild_grid rebuild_grid_prev"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; ".html_safe }%></div>
+        <% end %>
+        <div class="timeslot_time"><%= prettify_time(timeslot) %></div>
+        <% if timeslot == times_array[-1] %>
+        <div class="rebuild_grid rebuild_grid_next"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => " &rsaquo;".html_safe }%></div>
+        <% end %>
+      </th>
+      <% end %>
 		</tr>
 	</thead>
 	

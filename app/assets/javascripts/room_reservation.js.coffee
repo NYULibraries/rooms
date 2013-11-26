@@ -22,7 +22,7 @@ window.adjust_table_grid_widths = ->
 
 window.animate_progress_bar = ->
   if (!$("#ajax-modal #remote_progress").is("*")) 
-    $("#ajax-modal").find(".modal-header").append($("<div />").attr({'id': 'remote_progress'}).addClass("progress progress-striped active").append($("<div />").addClass("bar").css({width: '5%'})))
+    $("#ajax-modal").find(".modal-header .availability_grid_desc").after($("<div />").attr({'id': 'remote_progress'}).addClass("progress progress-striped active").append($("<div />").addClass("bar").css({width: '5%'})))
     setTimeout ->
       $("#remote_progress > div.bar").css({width: "98%"})
     , 0

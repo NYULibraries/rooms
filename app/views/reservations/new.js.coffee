@@ -25,7 +25,7 @@ $("#ajax-modal").find(".modal-title").html($("#ajax-modal").find(".modal-body .m
 if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*")) 
   $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-large btn-primary disabled").on 'click', ->
     false
-    
+
 #Move extra fields in availability grid to modal-footer, just pretties it up a bit
 $("#ajax-modal").find(".ajax_form table tfoot").hide()
 

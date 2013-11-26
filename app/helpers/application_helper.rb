@@ -58,9 +58,9 @@ module ApplicationHelper
     direction = column == sort_column.to_sym && sort_direction == "asc" ? "desc" : "asc"
     direction_icon = (direction.eql? "desc") ? :sort_desc : :sort_asc
     search = params[:search]
-    html = link_to title, params.merge(:sort => column, :direction => direction, :id => "").merge(url_options), {:data => {:remote => remote}, :class => css_class}.delete_if{ |key,value| key == :data && !remote }
-    html << icon_tag(direction_icon) if column == sort_column.to_sym
-    html << icon_tag(:sortable) unless column == sort_column.to_sym
+    title << icon_tag(direction_icon) if column == sort_column.to_sym
+    title << icon_tag(:sortable) unless column == sort_column.to_sym
+    html = link_to title.html_safe, params.merge(:sort => column, :direction => direction, :id => "").merge(url_options), {:data => {:remote => remote}, :class => css_class}.delete_if{ |key,value| key == :data && !remote }
     return html
   end
   

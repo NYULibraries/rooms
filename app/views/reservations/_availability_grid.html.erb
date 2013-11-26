@@ -1,7 +1,5 @@
 <p class="hidden-phone availability_grid_desc">Click on your preferred time slot to select your study space.</p>
 
-<!--Select a room with your preferred timeslot, or <%= link_to('adjust your timeslot <i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%>  for more availability.</p>-->
-
 <div class="legend hidden-phone">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
   <div class="legend_preferred"></div><div class="legend_text">Your preferred time slot</div>
@@ -39,7 +37,7 @@
 			  <%= sortable :sort_size_of_room, "Capacity", {:action => "new"}, true %>
 			</div></th>
       <% dates_array.keys.each do |date| %>
-        <th class="date_header" colspan="<%=dates_array[date].count%>"><span class="hidden-phone"><%= simple_date_header(date) %></span><span class="visible-phone"><%= prettify_simple_date(date) %></span></th>
+        <th class="date_header" colspan="<%=dates_array[date].count%>"><span class="hidden-phone"><%= simple_date_header(date) %></span><span class="visible-phone"><%= prettify_simple_date(date) %></span><span id="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span></th>
       <% end %>
     </tr>
     </tr>

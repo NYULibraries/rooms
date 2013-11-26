@@ -1,6 +1,13 @@
 @import "nyulibraries";
 @import "jquery-ui-timepicker-addon";
 
+$unavailable_color: #ed1c24;
+$available_color: #e6e7e8;
+$preferred_color: #1c75bc;
+$table_header_color: #6d6e71;
+$table_border_color: #dddddd;
+
+
 @mixin striped-bg($bg-color: #ccc, $darken-amount: 5%, $stripe-color: $bg-color) {
   @include background-image(linear-gradient(-45deg, $stripe-color 25%, transparent 25%, transparent 50%, $stripe-color 50%, $stripe-color 75%, transparent 75%, transparent));
   background-size: 6px 6px;
@@ -9,9 +16,9 @@
 h1.page_title { margin-top: 0; }
 
 .sidebar-padded {width:300px;margin-left:10px;}
-.legend_unavailable {margin-right:5px; padding-right:15px;background-color:#ed1c24;border:1px solid #000;display:inline;}
-.legend_preferred {margin-right:5px; padding-right:15px;background-color:#e6e7e8;border:1px solid #1c75bc;display:inline;@include striped-bg(#1c75bc, 4%);}
-.legend_selected {margin-right:5px; padding-right:15px;background-color:#1c75bc;border:1px solid #1c75bc;display:inline;}
+.legend_unavailable {margin-right:5px; padding-right:15px;background-color:$unavailable_color;border:1px solid black;display:inline;}
+.legend_preferred {margin-right:5px; padding-right:15px;background-color:$available_color;border:1px solid $preferred_color;display:inline;@include striped-bg($preferred_color, 4%);}
+.legend_selected {margin-right:5px; padding-right:15px;background-color:$preferred_color;border:1px solid $preferred_color;display:inline;}
 .legend_text {margin-right:10px;display:inline;}
 
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
@@ -26,30 +33,32 @@ h1.page_title { margin-top: 0; }
 }
 
 .header_fields {
-  background-color: #6d6e71; 
-  border: 0 !important;
+  background-color: $table_header_color; 
+  //border: 0 !important;
   color: white;
   a {
     color: white;
   }
 }
 
-.rebuild_grid {
-  display: block;
-  padding: 10px;
-  margin: 0;
-  &.rebuild_grid_next {
-    float: right;
-    border-left: 1px solid #dddddd;
-  }
-  &.rebuild_grid_prev {
-    float: left;
-    border-right: 1px solid #dddddd;
-  }
-}
+//.rebuild_grid {
+//  display: block;
+//  padding: 10px;
+//  margin: 0;
+//  &.rebuild_grid_next {
+//    float: right;
+//    border-left: 1px solid $table_border_color;
+//  }
+//  &.rebuild_grid_prev {
+//    float: left;
+//    border-right: 1px solid $table_border_color;
+//  }
+//}
+
+.rebuild_grid, .timeslot_time { display: inline; }
 
 th.times {
-  padding: 0 !important;
+  text-align: center !important;
 }
 
 .date_header {
@@ -57,30 +66,36 @@ th.times {
   font-size: 18px; 
 }
 
+.rebuild_grid_prev { margin-left: -15%; }
+.rebuild_grid_next { margin-right: -15%; }
+
 #availability_grid_table {
-  .timeslot_unavailable {background-color:#cc3333;}
-  .timeslot_available {background-color:#e6e7e8;}
+  .timeslot_unavailable {background-color:$unavailable_color;}
+  .timeslot_available {background-color:$available_color;}
   .timeslot_preferred {
-    @include striped-bg(#1c75bc, 4%);
-    border-top: 1px solid #1c75bc;
-    border-bottom: 1px solid #1c75bc;
+    @include striped-bg($preferred_color, 4%);
+    border-top: 1px solid $preferred_color;
+    border-bottom: 1px solid $preferred_color;
     &.timeslot_preferred_last {
-      border-right: 4px solid #1c75bc;
+      border-right: 4px solid $preferred_color;
     }
     &.timeslot_preferred_first {
-      border-left: 4px solid #1c75bc;
+      border-left: 4px solid $preferred_color;
     }
   }
-  .timeslot_selected {background-color:#1c75bc;}
+  .timeslot_selected {background-color:$preferred_color;}
  tbody tr:first-child {
    .timeslot_preferred {
-     border-top: 4px solid #1c75bc;
+     border-top: 4px solid $preferred_color;
    }
  }
  tbody tr:last-child {
    .timeslot_preferred {
-     border-bottom: 4px solid #1c75bc;
+     border-bottom: 4px solid $preferred_color;
    }
+ }
+ td.timeslot { 
+   max-width: 120px !important;
  }
 }
 

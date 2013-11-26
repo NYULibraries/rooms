@@ -9,7 +9,7 @@ module ReservationsHelper
     times_array.each do |timeslot|
       reservation = room.find_reservation_by_timeslot(timeslot, @existing_reservations)
 
-      html += content_tag(:td, :class => timeslot_class(reservation, room, timeslot)) do 
+      html += content_tag(:td, :class => timeslot_class(reservation, room, timeslot)) do #, :colspan => (timeslot == times_array[0] || timeslot == times_array[-1]) ? 2 : 1) do 
         if @user.is_admin? and !reservation.blank? and !reservation[:is_block]
           link_to(icon_tag(:info), user_path(reservation[:user_id], :params => {:highlight => [reservation[:id]]}, :anchor => reservation[:id]), :title => "Room is booked", :alt => "Room is booked", :class => "preview_link reservation_whois", :target => "_blank") 
         elsif room.is_closed? timeslot
@@ -48,7 +48,8 @@ module ReservationsHelper
     
   # Get the css classes to color-code availability grid
   def timeslot_class(reservation, room, timeslot)
-    timeslot_class = (!reservation.blank? or is_in_past?(timeslot) or room.is_closed?(timeslot)) ? "timeslot_unavailable" : "timeslot_available"	  
+    timeslot_class = "timeslot"
+    timeslot_class += (!reservation.blank? or is_in_past?(timeslot) or room.is_closed?(timeslot)) ? " timeslot_unavailable" : " timeslot_available"	  
     timeslot_class += " timeslot_preferred" if timeslot >= start_dt && timeslot < end_dt
     timeslot_class += " timeslot_preferred_first" if timeslot == start_dt
     timeslot_class += " timeslot_preferred_last" if (timeslot + 30.minutes) == end_dt

@@ -7,8 +7,6 @@ $("#main-flashses").html("<%=j render 'common/flash_msg'%>")
 
 <% else %>
 
-$("#availability_grid_table, #availability_grid_header_fixed").find("tr td:first-child").hide()
-
 # Hide ajax-loader
 $("#ajax-modal #remote_progress").remove()
 $("#ajax-modal").find(".modal-body .ajax-loader").hide()
@@ -25,11 +23,8 @@ $("#ajax-modal").find(".modal-title").html($("#ajax-modal").find(".modal-body .m
 
 # Move submit action to modal-footer and set to remotely submit form
 if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*")) 
-  $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-large btn-primary").on "click", ->
-    $("#ajax-modal").find(".modal-footer #reservation_cc").clone().appendTo(".ajax_form")
-    $("#ajax-modal").find(".modal-footer #reservation_title").clone().appendTo(".ajax_form")
-    $("#ajax-modal").find(".ajax_form").submit()
-    $('#ajax-modal').find("#top_of_page").focus()
+  $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-large btn-primary disabled").on 'click', ->
+    false
     
 #Move extra fields in availability grid to modal-footer, just pretties it up a bit
 $("#ajax-modal").find(".ajax_form table tfoot").hide()
@@ -46,15 +41,7 @@ if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*"))
   $("#ajax-modal").find("#res_title_label_div, #res_cc_label_div").hide()
 
 #And Initially hide extra fields
-$("#ajax-modal").find(".modal-footer .extra_fields").hide();
-
-# Make loading bar reappear and animate when remote links or forms are called
-$("#ajax-modal").on "click", "a[data-remote='true'], .modal-footer button[type='submit']", ->
-  if (!$("#ajax-modal #remote_progress").is("*")) 
-    $("#ajax-modal").find(".modal-header .availability_grid_desc").append($("<div />").attr({'id': 'remote_progress'}).addClass("progress progress-striped active").append($("<div />").addClass("bar").css({width: '5%'})))
-    setTimeout ->
-      $("#remote_progress > div.bar").css({width: "98%"})
-    , 0
+$("#ajax-modal").find(".modal-footer .extra_fields").hide()
     
 # Move legend into header region
 $("#ajax-modal").find(".modal-header").append($("#ajax-modal").find(".modal-body .legend:first")) if !$("#ajax-modal").find(".modal-header .legend").is("*")
@@ -71,7 +58,7 @@ if $('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':c
 
 # Scrollback to top of page to avoid any offset weirdness
 # And remove previous fixed headers
-$(".modal-body").animate({ scrollTop: 0 }, 0);
+$(".modal-body").animate({ scrollTop: 0 }, 0)
 $(".modal-header").find("#availability_grid_header_fixed").remove()
 
 # Fit modal to screen size after all other resizings have been done
@@ -106,7 +93,20 @@ $(".modal-body").bind "scroll", ->
   #      sleep 1
   #      $.getScript url, ( data, textStatus, jqxhr ) ->
   #        console.log data
-        
+
+$("#availability_grid_table").find("input:radio:checked").closest("tr").find("td.timeslot_preferred").addClass("timeslot_selected")
+
+# Hide radio buttons
+$("#availability_grid_table, #availability_grid_header_fixed").find(".hide_radio").hide()
+
+# Manage relocation of room details
+$(".room_details").hide()
+
+# Initially set height for wide-view windows
+$("#availability_grid_table td.timeslot").css("height","120px")
+
+# Trigger scroll and resize events
 $(".modal-body").scroll()
+$(window).resize()
 
 <% end %>

@@ -26,18 +26,17 @@
 
 <table id="availability_grid_table" class="table table-bordered">
 	<thead>
-
 		<tr>
-			<th rowspan="2" class="header_fields"></th>
+			<th rowspan="2" class="header_fields hide_radio"></th>
 			<th rowspan="2" class="header_fields"><div class="sort_by_field">
-			  <%= sortable :title, "Room", {:action => "new"}, true %>
+			  <%= sortable :title, "Location", {:action => "new"}, true %>
 			</div></th>
 			<th rowspan="2" class="hidden-phone header_fields "><div class="sort_by_field">
 			  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 			</div></th>
 			<th rowspan="2" class="hidden-phone header_fields room_details">Details</th>
 			<th rowspan="2" class="hidden-phone header_fields"><div class="sort_by_field">
-			  <%= sortable :sort_size_of_room, "Size", {:action => "new"}, true %>
+			  <%= sortable :sort_size_of_room, "Capacity", {:action => "new"}, true %>
 			</div></th>
       <% dates_array.keys.each do |date| %>
         <th class="date_header" colspan="<%=dates_array[date].count%>"><span class="hidden-phone"><%= simple_date_header(date) %></span><span class="visible-phone"><%= prettify_simple_date(date) %></span></th>
@@ -47,13 +46,13 @@
     <tr>
 			<% times_array.each do |timeslot| %>
       <th class="times">
-        <% if timeslot == times_array[0] %>
-        <div class="rebuild_grid rebuild_grid_prev"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "&lsaquo; ".html_safe }%></div>
-        <% end %>
-        <div class="timeslot_time"><%= prettify_time(timeslot) %></div>
-        <% if timeslot == times_array[-1] %>
-        <div class="rebuild_grid rebuild_grid_next"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => " &rsaquo;".html_safe }%></div>
-        <% end %>
+      <% if timeslot == times_array[0] %>
+      <div class="rebuild_grid rebuild_grid_prev" style="display:inline;"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%></div>
+      <% end %>
+      <div class="timeslot_time" style="display:inline;"><%= prettify_time(timeslot) %></div>
+      <% if timeslot == times_array[-1] %>
+      <div class="rebuild_grid rebuild_grid_next" style="display:inline;"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "<i class='icon-chevron-right'></i> ".html_safe }%></div>
+      <% end %>
       </th>
       <% end %>
 		</tr>
@@ -65,7 +64,7 @@
 	
 	<tfoot>
 		<tr>
-			<td></td>
+			<td class="hide_radio"></td>
 			<td colspan="2" class="extra_fields">
 				<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
 			</td>
@@ -76,7 +75,7 @@
 		<tr>
 			<td></td>
 			<td colspan="2" class="extra_fields">
-				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\"></a>".html_safe %> </div>
+				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %> </div>
 			</td>
 			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
 				<div id="res_cc_div"><%= text_field :reservation, :cc, :data => {:toggle => "popover", :placement => "top", :content => "Required for collaborative rooms"} %></div>

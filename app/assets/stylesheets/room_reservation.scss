@@ -22,10 +22,14 @@ h1.page_title { margin-top: 0; }
 
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
 
-.change_date {
+.date_header a.close_dialog {
   position: absolute;
   font-size: 12px;
   margin-left: 10px;
+}
+
+.full_date {
+  display: inline;
 }
 
 .timeslot_time_preferred {

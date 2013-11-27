@@ -9,7 +9,6 @@
   		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>
       <%= link_to "See more", show_room_details_path(:id => room.id), :target => "_blank" %>
   		</div>
-  		<% unless room.image_link.blank? %><div class="hidden-phone"><br /><br /><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => "_blank", :class => "preview_image" %></div><% end %>
     </td>
 		<td class="hidden-phone room_type room_info"><%= room.type_of_room %></td>
 		<td class="hidden-phone room_size room_info"><%= room.size_of_room %></td>

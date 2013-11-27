@@ -85,15 +85,6 @@ $(".modal-body").bind "scroll", ->
     fixedHeader.hide()
     fit_modal_body($("#ajax-modal"))
 
-  #if $('.pagination').length
-  #  if offset >= $('.modal-body-content').height() - $(window).height() - 50
-  #    url = $('.pagination .next a').attr('href')
-  #    if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
-  #      $('.pagination').text("Fetching more products...")
-  #      sleep 1
-  #      $.getScript url, ( data, textStatus, jqxhr ) ->
-  #        console.log data
-
 $("#availability_grid_table").find("input:radio:checked").closest("tr").find("td.timeslot_preferred").addClass("timeslot_selected")
 
 # Hide radio buttons

@@ -20,12 +20,12 @@ $ ->
     minuteMax: 30,
     dateFormat: 'yy-mm-dd'
   }
-  $( "#room_reservation_which_date" ).datepicker {
+  $("#room_reservation_which_date").datepicker {
     numberOfMonths: 2,
     minDate: 0,
     dateFormat: 'yy-mm-dd'
   }
-  
+
   # Set up sortable list for rooms
   $('ul#list_rooms').sortable {
     handle: "i.icon-move"
@@ -39,17 +39,17 @@ $ ->
     "readonly": "true",
     "autocomplete": "off"
   }
-  
+
   # Disable main form submit if no date was selected
   # And then enable once it is
   $('button#generate_grid').attr("disabled","true")
   $(document).on "change", 'input#room_reservation_which_date', ->
     $('button#generate_grid').removeAttr("disabled")
-    
+
   # Submit edit user form when admin checkbox is changed
   $("#show_user").on 'change', "input[type='checkbox']", ->
     $(this).closest("form").submit()
-  
+
   # Initialize modal dialog boxes
   $(document).on 'click', ".launch_modal", ->
     $("#ajax-modal").removeClass("fullscreen")
@@ -72,28 +72,29 @@ $ ->
     $("#room_reservation_which_date").focus()
     $("#room_reservation_which_date").effect("highlight", {}, 3000)
     false
-  
-  # Setup popup for classroom images
-  $(document).on 'mouseenter', ".preview_image", ->
-    $(this).popover {
-      placement: 'right',
-      title: null,
-      html: true,
-      content: '<img class="preview" src="' +this+ '" />',
-      trigger: 'hover',
-    }
-    $(this).popover('show')
-    
-  $(document).on 'mouseenter', ".room_details_link", ->
+
+  $(document).on 'click', ".room_details_link", (e) ->
+    e.preventDefault()
     $(this).popover {
       placement: 'right',
       title: null,
       html: true,
       content: $(this).next(".room_details").html(),
-      trigger: 'mouseenter',
+      trigger: 'mouseenter'
     }
     $(this).popover('show')
-   
+    false
+
+  #$(document).on 'focus', "#reservation_cc", ->
+  #  $(this).popover {
+  #    trigger: 'manual',
+  #    placement: 'top',
+  #    title: null,
+  #    html: true,
+  #    content: $(this).data("content")
+  #  }
+    #$(this).popover('show')
+
   # Set tooltips for booking information on grid
   $(document).on 'mouseenter', ".preview_link", ->
     $(this).tooltip {

@@ -6,7 +6,7 @@
 //= require bootstrap-popover
 //= require jquery-ui-timepicker-addon.js
 //= require temporal
-//= require new
+//= require_tree ./partials
 //= require room_reservation
 //= require peek
 //= require peek/views/dalli

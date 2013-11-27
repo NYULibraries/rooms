@@ -38,12 +38,15 @@
       <% dates_array.keys.each do |date| %>
         <th class="date_header" colspan="<%=dates_array[date].count%>">
           <span class="hidden-phone">
+            <div class="full_date"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%>
             <%= simple_date_header(date) %>
-            <span class="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span>
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<i class='icon-chevron-right'></i>".html_safe }%></div>
+            <span id="change_date_full"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span>
           </span>
           <span class="visible-phone">
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%>
             <%= prettify_simple_date(date) %>
-            <span id="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%></span>
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<i class='icon-chevron-right'></i>".html_safe }%>
           </span>
         </th>
       <% end %>
@@ -80,10 +83,10 @@
 		<tr>
 			<td></td>
 			<td colspan="2" class="extra_fields">
-				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add CCs</strong> <em>(for collaborative rooms)</em> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %> </div>
+				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add additional e-mails</strong> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %> </div>
 			</td>
 			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-				<div id="res_cc_div"><%= text_field :reservation, :cc, :data => {:toggle => "popover", :placement => "top", :content => "Required for collaborative rooms"} %></div>
+				<div id="res_cc_div"><%= text_field :reservation, :cc, :data => {:placement => "top", :content => "Required for collaborative rooms"}, :rel => "popover" %></div>
 			</td>
 		</tr>
 		<tr>

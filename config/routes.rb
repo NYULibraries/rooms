@@ -17,6 +17,7 @@ Rooms::Application.routes.draw do
    
     match 'reports' => "reservations#generate_report"
   end
+  get 'rooms/:id' => "rooms#show", :as => "show_room_details"
   
   match 'reservations/resend_email' => "reservations#resend_email"
   resources :reservations do

@@ -99,9 +99,6 @@ $("#availability_grid_table").find("input:radio:checked").closest("tr").find("td
 # Hide radio buttons
 $("#availability_grid_table, #availability_grid_header_fixed").find(".hide_radio").hide()
 
-# Manage relocation of room details
-$(".room_details").hide()
-
 # Initially set height for wide-view windows
 $("#availability_grid_table td.timeslot").css("height","120px")
 

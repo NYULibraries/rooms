@@ -12,7 +12,7 @@
 		<tbody>
 			<% @existing_reservations.each do |res| %>
 				<tr id="<%= res.id%>">
-					<td><%= link_to res.user.username, user_path(res.user), :target => :blank %></td>
+					<td><%= link_to res.user.username, user_path(res.user), :target => "_blank" %></td>
 					<td><%= prettify_date(res.start_dt)%> &mdash; <%= prettify_date(res.end_dt)%></td>
 					<td><%= res.room.title %></td>
 				</tr>

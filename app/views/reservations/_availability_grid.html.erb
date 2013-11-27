@@ -32,24 +32,31 @@
 			<th rowspan="2" class="hidden-phone header_fields "><div class="sort_by_field">
 			  <%= sortable :type_of_room, "Type", {:action => "new"}, true %>
 			</div></th>
-			<th rowspan="2" class="hidden-phone header_fields room_details">Details</th>
 			<th rowspan="2" class="hidden-phone header_fields"><div class="sort_by_field">
 			  <%= sortable :sort_size_of_room, "Capacity", {:action => "new"}, true %>
 			</div></th>
       <% dates_array.keys.each do |date| %>
-        <th class="date_header" colspan="<%=dates_array[date].count%>"><span class="hidden-phone"><%= simple_date_header(date) %></span><span class="visible-phone"><%= prettify_simple_date(date) %></span><span id="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span></th>
+        <th class="date_header" colspan="<%=dates_array[date].count%>">
+          <span class="hidden-phone">
+            <%= simple_date_header(date) %>
+            <span class="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span>
+          </span>
+          <span class="visible-phone">
+            <%= prettify_simple_date(date) %>
+            <span id="change_date"><%= link_to('<i class="icons-famfamfam-date"></i>'.html_safe, root_url, :class => "close_dialog")%></span>
+          </span>
+        </th>
       <% end %>
-    </tr>
     </tr>
     <tr>
 			<% times_array.each do |timeslot| %>
       <th class="times">
       <% if timeslot == times_array[0] %>
-      <div class="rebuild_grid rebuild_grid_prev" style="display:inline;"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%></div>
+      <div class="rebuild_grid rebuild_grid_prev"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%></div>
       <% end %>
-      <div class="timeslot_time" style="display:inline;"><%= prettify_time(timeslot) %></div>
+      <div class="timeslot_time<%= " timeslot_time_preferred" if (selected_times.include? timeslot) %>"><%= prettify_time(timeslot) %></div>
       <% if timeslot == times_array[-1] %>
-      <div class="rebuild_grid rebuild_grid_next" style="display:inline;"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "<i class='icon-chevron-right'></i> ".html_safe }%></div>
+      <div class="rebuild_grid rebuild_grid_next"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "<i class='icon-chevron-right'></i> ".html_safe }%></div>
       <% end %>
       </th>
       <% end %>

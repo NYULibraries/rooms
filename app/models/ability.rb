@@ -82,6 +82,7 @@ private
     can :create_for_length, Reservation do |reservation|
       ((reservation.end_dt.to_time - reservation.start_dt.to_time) / 60 / 60) <= 2.0 #2.hours
     end
+    can :show, Room
   end
 
 end

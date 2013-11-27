@@ -2,12 +2,16 @@
 <% room = RoomDecorator.decorate(room) %>
 	<tr>
 		<td class="hide_radio"><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
-		<td class="room_title room_info"><%= room.title %></td>
+		<td class="room_title room_info">
+      <%= room.title %><br />
+      <%= link_to "details", show_room_details_path(:id => room.id), :target => "_blank", :class => "room_details_link" %>
+  		<div class="room_details room_info">
+  		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>
+      <%= link_to "See more", show_room_details_path(:id => room.id), :target => "_blank" %>
+  		</div>
+  		<% unless room.image_link.blank? %><div class="hidden-phone"><br /><br /><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => "_blank", :class => "preview_image" %></div><% end %>
+    </td>
 		<td class="hidden-phone room_type room_info"><%= room.type_of_room %></td>
-		<td class="hidden-phone room_details room_info">
-		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>
-		<% unless room.image_link.blank? %><%= icon_tag :photo %><%= link_to "See image", room.image_link, :target => :blank, :class => "preview_image" %><% end %>
-		</td>
 		<td class="hidden-phone room_size room_info"><%= room.size_of_room %></td>
 		<%= construct_grid_data(room) %>
 	</tr>

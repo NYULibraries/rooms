@@ -22,23 +22,28 @@ h1.page_title { margin-top: 0; }
 
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
 
-#change_date {
+.change_date {
   position: absolute;
   font-size: 12px;
   margin-left: 10px;
+}
+
+.timeslot_time_preferred {
+  font-weight: bold;
 }
 
 .room_title, .room_type, .room_size {
   width: 60px;
 }
 
-.sort_by_field i {
-  margin-left: 5px;
+.room_info { width: 120px; max-width: 120px; }
+
+.room_details {
+  display: none;
 }
 
-.popover {
-  border-color: #cc3333;
-  color: #cc3333;
+.sort_by_field i {
+  margin-left: 5px;
 }
 
 .header_fields {
@@ -53,15 +58,13 @@ h1.page_title { margin-top: 0; }
 
 th.times {
   text-align: center !important;
+  font-weight: normal;
 }
 
 .date_header {
   text-align: center !important;
   font-size: 18px; 
 }
-
-.rebuild_grid_prev { margin-left: -15%; }
-.rebuild_grid_next { margin-right: -15%; }
 
 #availability_grid_table {
   .timeslot_unavailable {background-color:$unavailable_color;}

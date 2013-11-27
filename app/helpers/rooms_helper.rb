@@ -51,7 +51,9 @@ module RoomsHelper
   def display_hours
     opens_at = Time.new(1,1,1,@room.opens_at.split(":").first.to_i,@room.opens_at.split(":").last.to_i,0).strftime("%l:%M %P")
     closes_at = Time.new(1,1,1,@room.closes_at.split(":").first.to_i,@room.closes_at.split(":").last.to_i,0).strftime("%l:%M %P")
-    unless opens_at.nil? or closes_at.nil?
+    if opens_at == closes_at
+      t('room.open_24_hours')
+    elsif opens_at.nil? or closes_at.nil?
       "#{opens_at} - #{closes_at}"
     end
   end

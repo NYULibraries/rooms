@@ -12,6 +12,7 @@ en:
   room:
     type:
       collaborative: "Collaborative"
+    open_24_hours: "Open 24 hours"
   reservation:
     date_formatted_correctly: "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30."
     reservations_exist_in_block: "Sorry, your selection is unavailable. Please check existing reservations."

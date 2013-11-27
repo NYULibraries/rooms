@@ -38,7 +38,7 @@
 		<h4>Note: </h4>
 
 		<p>
-		If you choose to continue, you will delete <strong><%= @block.existing_reservations.count %></strong> reservations and send an email alerting the users of the cancellation. <%= link_to "View the individual reservations.", index_existing_reservations_url("reservations_to_delete" => @block.existing_reservations.map(&:id)), :target => :blank %>
+		If you choose to continue, you will delete <strong><%= @block.existing_reservations.count %></strong> reservations and send an email alerting the users of the cancellation. <%= link_to "View the individual reservations.", index_existing_reservations_url("reservations_to_delete" => @block.existing_reservations.map(&:id)), :target => "_blank" %>
 		</p>
 
 		</div>

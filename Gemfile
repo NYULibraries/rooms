@@ -57,7 +57,7 @@ gem 'sorted', '~> 0.4.3'
 gem 'acts_as_indexed', '~> 0.8.3'
 
 # Settings
-gem 'rails_config', '~> 0.3.2'
+gem 'rails_config', '~> 0.3.3'
 
 gem 'mustache', '0.99.4'
 gem 'mustache-rails', '~> 0.2.3', :require => 'mustache/railtie'

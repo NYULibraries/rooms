@@ -83,10 +83,10 @@
 		<tr>
 			<td></td>
 			<td colspan="2" class="extra_fields">
-				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add additional e-mails</strong> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %> </div>
+				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add additional e-mails</strong> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %></div>
 			</td>
 			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-				<div id="res_cc_div"><%= text_field :reservation, :cc, :data => {:placement => "top", :content => "Required for collaborative rooms"}, :rel => "popover" %></div>
+				<div id="res_cc_div"><%= text_field :reservation, :cc, :class => "cc" %></div>
 			</td>
 		</tr>
 		<tr>

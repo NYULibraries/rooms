@@ -84,16 +84,18 @@ $ ->
     }
     $(this).popover('show')
     false
-
-  #$(document).on 'focus', "#reservation_cc", ->
-  #  $(this).popover {
-  #    trigger: 'manual',
-  #    placement: 'top',
-  #    title: null,
-  #    html: true,
-  #    content: $(this).data("content")
-  #  }
-    #$(this).popover('show')
+  
+  $(document).on "click", ".cc", (e) ->
+    e.preventDefault()
+    $(this).popover {
+      placement: 'top',
+      title: null,
+      html: true,
+      content: "Required for collaborative rooms",
+      trigger: 'focus'
+    }
+    $(this).popover('show')
+    false
 
   # Set tooltips for booking information on grid
   $(document).on 'mouseenter', ".preview_link", ->
@@ -116,4 +118,3 @@ $ ->
   # Make loading bar reappear and animate when remote links or forms are called
   $(document).on "click", "#ajax-modal a[data-remote='true']", ->
     animate_progress_bar()
-   

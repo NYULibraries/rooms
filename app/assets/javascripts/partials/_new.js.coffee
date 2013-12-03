@@ -36,9 +36,8 @@ window.select_room = (clicked_el) ->
   $('#ajax-modal').on "change", '.ajax_form input[name="reservation[room_id]"]', (event) ->
     if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) 
       $('#ajax-modal').find(".modal-footer .extra_fields").show()
-      #$('#ajax-modal').find(".modal-footer input#reservation_title").focus()
-      #$('#ajax-modal').find(".modal-footer input#reservation_title").effect("highlight", {}, 3000)
-      #$('#ajax-modal').find(".modal-footer input#reservation_cc").trigger('click')
+      $('#ajax-modal').find(".modal-footer input#reservation_cc").animate({backgroundColor: '#f2dede'}, 1000);
+      $(".cc").focus()
       fit_modal_body($("#ajax-modal"))
   # Remove any current selected timeslot classes
   $(".timeslot_selected").removeClass("timeslot_selected")
@@ -54,6 +53,7 @@ window.select_room = (clicked_el) ->
         $("#ajax-modal").find(".modal-footer #reservation_title").clone().appendTo(".ajax_form")
         $("#ajax-modal").find(".ajax_form").submit()
         $('#ajax-modal').find("#top_of_page").focus()
+        $('#ajax-modal').find(".modal-footer .cc").focus()
     $(clicked_el).closest("tr").find("td.room_info").css("font-weight":"bold")
     # Uncheck hidden radio buttons in form
     $(clicked_el).closest('table').find('td:first-child input:radio:checked').prop('checked', false)

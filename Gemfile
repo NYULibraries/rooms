@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.15'
+gem 'rails', '~> 3.2.16'
 
 gem 'mysql2', "~> 0.3.11"
 
@@ -52,7 +52,8 @@ gem 'nyulibraries_assets', :git => 'git://github.com/NYULibraries/nyulibraries_a
 gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
 gem 'nyulibraries_deploy', :git => 'git://github.com/NYULibraries/nyulibraries_deploy.git', :tag => 'v3.2.0'
 
-gem 'mustache-rails', "~> 0.2.3", :require => 'mustache/railtie'
+gem 'mustache', '0.99.4'
+gem 'mustache-rails', '~> 0.2.3', :require => 'mustache/railtie'
 
 # memcached
 gem 'dalli', "~> 2.6"

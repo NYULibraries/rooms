@@ -46,7 +46,7 @@ gem 'sorted', '~> 0.4.3'
 gem "capistrano", "~> 2.15.0"
 gem "capistrano-ext", "~> 1.2.1"
   
-gem "rails_config", "~> 0.3.2"
+gem "rails_config", "~> 0.3.3"
 
 gem 'nyulibraries_assets', :git => 'git://github.com/NYULibraries/nyulibraries_assets.git', :tag => 'v1.2.0'
 gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
@@ -56,7 +56,7 @@ gem 'mustache', '0.99.4'
 gem 'mustache-rails', '~> 0.2.3', :require => 'mustache/railtie'
 
 # memcached
-gem 'dalli', "~> 2.6"
+gem 'dalli', "~> 2.6.0"
 
 gem "comma", "~> 3.2.0"
 

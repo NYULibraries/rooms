@@ -260,7 +260,7 @@ DEPENDENCIES
   compass (~> 0.12.1)
   compass-rails (~> 1.0.3)
   coveralls (~> 0.7.0)
-  dalli (~> 2.6)
+  dalli (~> 2.6.0)
   debugger
   jquery-rails (~> 2.2.1)
   json (~> 1.8.0)
@@ -273,7 +273,7 @@ DEPENDENCIES
   nyulibraries_deploy!
   progress_bar
   rails (~> 3.2.16)
-  rails_config (~> 0.3.2)
+  rails_config (~> 0.3.3)
   ruby-prof
   sass-rails (~> 3.2.3)
   simplecov

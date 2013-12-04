@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.15'
+gem 'rails', '~> 3.2.16'
 
 gem 'mysql2', '~> 0.3.11'
 
@@ -63,13 +63,13 @@ gem 'mustache', '0.99.4'
 gem 'mustache-rails', '~> 0.2.3', :require => 'mustache/railtie'
 
 # memcached
-gem 'dalli', '~> 2.6'
+gem 'dalli', '~> 2.6.0'
 
 # Comma
-gem 'comma', '~> 3.1.1'
+gem 'comma', '~> 3.2.0'
 
 # ElasticSearch w/Tire
-gem 'tire', '~> 0.6.0'
+gem 'tire', '~> 0.6.1'
 
 # New Relic
 gem 'newrelic_rpm', '~> 3.6.0'

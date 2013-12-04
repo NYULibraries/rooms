@@ -64,8 +64,10 @@ class ApplicationController < ActionController::Base
   end
   
   # Skip cancan auth for Peek
-  Peek::ResultsController.class_eval do
-    skip_authorization_check
+  unless defined?(Peek::ResultsController).nil?
+    Peek::ResultsController.class_eval do
+      skip_authorization_check
+    end
   end
 
 end

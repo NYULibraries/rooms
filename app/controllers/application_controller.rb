@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  check_authorization # Enable CanCan
+  check_authorization :unless => :peek_controller? # Enable CanCan
 
   # Set the system timezone to the user timezone 
   before_filter :set_timezone  
@@ -62,10 +62,5 @@ class ApplicationController < ActionController::Base
       end 
     end
   end
-  
-  # Skip cancan auth for Peek
-  Peek::ResultsController.class_eval do
-    skip_authorization_check
-  end unless Rails.env.test?
 
 end

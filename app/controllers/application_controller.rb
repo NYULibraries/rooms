@@ -66,6 +66,6 @@ class ApplicationController < ActionController::Base
   # Skip cancan auth for Peek
   Peek::ResultsController.class_eval do
     skip_authorization_check
-  end
+  end unless Rails.env.test?
 
 end

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   
   # For dev purposes
   def current_user_dev
-   @current_user ||= User.find_by_username("ba36")
+   @current_user ||= User.find_by_username("std5")
   end
   alias :current_user :current_user_dev if Rails.env.development?
 
@@ -62,5 +62,10 @@ class ApplicationController < ActionController::Base
       end 
     end
   end
+
+  def peek_controller?
+    (params[:controller] == "peek/results")
+  end
+  private :peek_controller?
 
 end

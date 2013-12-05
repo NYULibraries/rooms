@@ -34,8 +34,7 @@ window.animate_progress_bar = ->
 window.select_room = (clicked_el) ->
   # When a room is selected, show the extra fields with highlight
   $('#ajax-modal').on "change", '.ajax_form input[name="reservation[room_id]"]', (event) ->
-    if ($('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked') && $("#ajax-modal").find(".modal-footer .extra_fields").is(':hidden')) 
-      $('#ajax-modal').find(".modal-footer .extra_fields").show()
+    if $('#ajax-modal').find(".ajax_form input[name='reservation[room_id]']").is(':checked')
       $('#ajax-modal').find(".modal-footer input#reservation_cc").animate({backgroundColor: '#f2dede'}, 1000);
       $(".cc").focus()
       fit_modal_body($("#ajax-modal"))

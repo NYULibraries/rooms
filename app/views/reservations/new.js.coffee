@@ -40,9 +40,6 @@ if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*"))
   $("#ajax-modal").find("#reservation_title").attr("placeholder", $("#ajax-modal").find("#res_title_label_div").text())
   $("#ajax-modal").find("#res_title_label_div, #res_cc_label_div").hide()
 
-#And Initially hide extra fields
-$("#ajax-modal").find(".modal-footer .extra_fields").hide()
-    
 # Move legend into header region
 $("#ajax-modal").find(".modal-header").append($("#ajax-modal").find(".modal-body .legend:first")) if !$("#ajax-modal").find(".modal-header .legend").is("*")
 

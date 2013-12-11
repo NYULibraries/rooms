@@ -8,6 +8,11 @@
   <dt>Type:</dt>
   <dd><%=h @room.type_of_room %></dd>
   <% end %>
+  
+  <% if current_user.is_admin? %>
+  <dt>Collaborative?</dt>
+  <dd><%=h @room.collaborative? %></dd>
+  <% end %>
 
   <% unless @room.description.blank? %>
   <dt>Details:</dt>

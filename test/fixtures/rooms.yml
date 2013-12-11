@@ -23,6 +23,7 @@ individual_with_hours:
 collaborative:
   id: 3
   title: Collaborative Room 123
+  collaborative: true
   type_of_room: Collaborative
   description: This and that in here
   image_link: http://google.com

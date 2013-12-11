@@ -17,10 +17,13 @@ $table_border_color: #dddddd;
 h1.page_title { margin-top: 0; }
 
 .sidebar-padded {width:300px;margin-left:10px;}
+.legend { margin: 20px 0 10px 0; }
 .legend_unavailable {margin-right:5px; padding-right:15px;background-color:$unavailable_color;border:1px solid black;display:inline;}
 .legend_preferred {margin-right:5px; padding-right:15px;background-color:$available_color;border:1px solid $preferred_color;display:inline;@include striped-bg($preferred_color, 4%);}
 .legend_selected {margin-right:5px; padding-right:15px;background-color:$preferred_color;border:1px solid $preferred_color;display:inline;}
 .legend_text {margin-right:10px;display:inline;}
+
+tr.disabled_row { color: #A7A9AB; }
 
 .outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
 
@@ -28,6 +31,22 @@ h1.page_title { margin-top: 0; }
   position: absolute;
   font-size: 12px;
   margin-left: 10px;
+}
+
+.new_room, .edit_room {
+  label { margin-left: 0; }
+}
+
+div.policies {
+  margin: 1.5em 0;
+  h3 { margin: 0; }
+  ul li {
+    list-style-position: inside;
+  }
+}
+
+h1.availability_grid_desc {
+  font-size: 1.5em;
 }
 
 .full_date {
@@ -46,6 +65,15 @@ h1.page_title { margin-top: 0; }
 
 .room_details {
   display: none;
+}
+
+.room_title_text {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.room_details_link {
+  font-size: 90%;
 }
 
 .sort_by_field i {
@@ -101,9 +129,6 @@ th.times {
    max-width: 120px !important;
  }
 }
-
-div.policies { background-color:#efefef;padding: .3em .5em;width:323px;border: 1px solid #ccc; }
-div.policies ul li {color: #990000;}
 
 #generate_grid_form {
   dl { padding: 10px; border: 1px solid #ccc; }
@@ -180,10 +205,6 @@ ul#list_rooms {
   padding-top: 6px !important;
   padding-bottom: 6px !important;
   line-height: 20px !important;
-}
-
-.legend {
-  margin: 10px 0;
 }
 
 .field_with_errors input {

@@ -114,6 +114,10 @@ $ ->
   # Make preferred slot selectable by clicking table
   $(".modal-body").on "click", "td.timeslot_preferred", ->
     select_room(this)
+  
+  $(".modal-body").on "click", "td.room_info", ->
+    unless $(this).closest("tr").find("td.timeslot_preferred.timeslot_unavailable").is("*")
+      select_room($(this).closest("tr").find("td.timeslot_preferred"))
     
   # Make loading bar reappear and animate when remote links or forms are called
   $(document).on "click", "#ajax-modal a[data-remote='true']", ->

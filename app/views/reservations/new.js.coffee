@@ -19,7 +19,8 @@ $("#ajax-modal").addClass("fullscreen")
 $("#ajax-modal").find(".modal-body .modal-body-content").show()
 
 # Find headers and repopulate modal-title
-$("#ajax-modal").find(".modal-title").html($("#ajax-modal").find(".modal-body .modal-body-content").find("h1"))
+$("#ajax-modal").find(".modal-title").html($("#ajax-modal").find(".modal-body .modal-body-content").find(".availability_grid_desc"))
+$("#ajax-modal").find(".modal-body .modal-body-content").find("h1.page_title").hide()
 
 # Move submit action to modal-footer and set to remotely submit form
 if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*")) 
@@ -86,6 +87,8 @@ $("#availability_grid_table").find("input:radio:checked").closest("tr").find("td
 
 # Hide radio buttons
 $("#availability_grid_table, #availability_grid_header_fixed").find(".hide_radio").hide()
+
+$("#availability_grid_table").find("td.timeslot_preferred.timeslot_unavailable").closest("tr").addClass("disabled_row")
 
 # Initially set height for wide-view windows
 $("#availability_grid_table td.timeslot").css("height","120px")

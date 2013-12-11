@@ -201,7 +201,7 @@ private
   
   # If collaborative room, valid CCs are required, and it can't just be the user's email
   def collaborative_requires_ccs
-    if room_id? and room.type_of_room.strip.eql? I18n.t('room.type.collaborative')
+    if room_id? and room.collaborative?
       if cc? 
         if current_user_is_only_email? cc
           errors.add(:base, I18n.t('reservation.current_user_is_only_email'))

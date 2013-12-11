@@ -50,6 +50,7 @@ class RoomsController < ApplicationController
 
   # POST /rooms
   def create
+    @room_groups = RoomGroup.all
     @room = Room.new(params[:room])   
     @room.opens_at = opens_at
     @room.closes_at = closes_at
@@ -60,6 +61,7 @@ class RoomsController < ApplicationController
 
   # PUT /rooms/1
   def update
+    @room_groups = RoomGroup.all
     @room = Room.find(params[:id])
     @room.opens_at = opens_at
     @room.closes_at = closes_at

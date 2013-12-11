@@ -24,7 +24,9 @@ module Views
       
       # Print breadcrumb navigation
       def breadcrumbs
-        breadcrumbs = super
+        breadcrumbs = []
+        breadcrumbs << link_to(views["breadcrumbs"]["title"], views["breadcrumbs"]["url"])
+        breadcrumbs << link_to('Services', "https://library.nyu.edu/services/")
         breadcrumbs << link_to_unless_current(application_title, root_url)
         breadcrumbs << link_to('Admin', admin_url) if in_admin_view?
         breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if in_admin_view?

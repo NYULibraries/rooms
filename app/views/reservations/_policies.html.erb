@@ -1,9 +1,11 @@
-<h3>Policies:</h3>
+<div class="policies">
 <ul>
+  <h3><%= t('reservation.policies.title') %></h3>
 	<% if can? :ny_graduate, RoomGroup %>
-	<li>You can reserve up to 3 hours/day</li>
+	<li><%= t('reservation.policies.create_today.graduate')%></li>
 	<% else %>
-	<li>You can reserve up to 2 hours/day</li>
+	<li><%= t('reservation.policies.create_today.undergraduate')%></li>
 	<% end %>
-	<li>You can make only one reservation/day</li>
+	<li><%= t('reservation.policies.create_for_same_day')%></li>
 </ul>
+</div>

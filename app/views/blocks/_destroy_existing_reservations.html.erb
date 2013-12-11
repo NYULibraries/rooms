@@ -51,7 +51,7 @@
 		</div>
 
 		<div id="edit_cancellation_email">
-			<%= text_area_tag "cancellation_email", "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact gswg@library.nyu.edu.\n\nSorry for the inconvenience.", :rows => 5, :class => "span12" %>
+			<%= text_area_tag "cancellation_email", t("blocks.destroy_existing_reservations.cancellation_email"), :rows => 5, :class => "span12" %>
 		</div>
 
 		<label class="radio inline">

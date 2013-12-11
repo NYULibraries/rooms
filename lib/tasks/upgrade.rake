@@ -25,5 +25,10 @@ namespace :upgrade do
   task :update_admins => :environment do
     User.where("user_attributes LIKE '%:room_reserve_admin: true%'").update_all(:admin_roles_mask => 1)
   end
+  
+  desc "Populate collaborative flag from pattern matching title"
+  task :collaborative_flag => :environment do
+    Room.where("title LIKE '%Collaborative%'").update_all(:collaborative => true)
+  end
 
 end

@@ -4,7 +4,7 @@
 	<tr <%= (params[:reservation][:room_id] == room.id) ? "class=selected_room" : ''%>>
 		<td class="hide_radio"><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>
 		<td class="room_title room_info">
-      <%= room.title %><br />
+      <div class="room_title_text"><%= room.title %></div>
       <%= link_to "details", show_room_details_path(:id => room.id), :target => "_blank", :class => "room_details_link" %>
   		<div class="room_details room_info">
   		<% unless room.description.blank? %><%= get_formatted_text(room.description) %><br /><% end %>

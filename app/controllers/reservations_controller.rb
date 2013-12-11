@@ -90,7 +90,7 @@ class ReservationsController < ApplicationController
       if @reservation.save
         # Send email
         ReservationMailer.confirmation_email(@reservation).deliver
-        flash[:success] = t('reservations.create.success')
+        flash[:success] = t('reservations.create.success').html_safe
         format.html { render :index }
         format.js 
       else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101180648) do
+ActiveRecord::Schema.define(:version => 20131211223156) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "user_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20131101180648) do
     t.integer  "room_group_id"
     t.string   "opens_at"
     t.string   "closes_at"
+    t.boolean  "collaborative"
   end
 
   create_table "users", :force => true do |t|

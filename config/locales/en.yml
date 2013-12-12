@@ -40,7 +40,7 @@ en:
       create_for_same_day: You can make only one reservation per day
   reservations:
     create:
-      success: "<strong>Reservation was successful!</strong> You will be sent an email confirming your reservation."
+      success: "<strong>Reservation successful!</strong> You will be sent an email confirming your reservation."
     update:
       success: Reservation was successfully updated.
     delete:

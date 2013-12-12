@@ -115,7 +115,7 @@ $ ->
   $(".modal-body").on "click", "td.timeslot_preferred", ->
     select_room(this)
   
-  $(".modal-body").on "click", "td.room_info", ->
+  $(".modal-body").on "click", ".room_title_text, .room_type_text, .room_size", ->
     unless $(this).closest("tr").find("td.timeslot_preferred.timeslot_unavailable").is("*")
       select_room($(this).closest("tr").find("td.timeslot_preferred"))
     

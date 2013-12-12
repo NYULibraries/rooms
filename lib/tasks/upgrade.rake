@@ -28,7 +28,7 @@ namespace :upgrade do
   
   desc "Populate collaborative flag from pattern matching title"
   task :collaborative_flag => :environment do
-    Room.where("title LIKE '%Collaborative%'").update_all(:collaborative => true)
+    Room.where("type_of_room LIKE '%Collaborative%'").update_all(:collaborative => true)
   end
 
 end

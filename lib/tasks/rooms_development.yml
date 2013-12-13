@@ -1,0 +1,1863 @@
+---
+- !ruby/object:Room
+  attributes:
+    id: 2
+    sort_order: 1
+    title: Grad Collaborative LL1-9A
+    description: ! "-Lower level 1\r\n-White boards\r\n-LCD screen\r\n-Laptop hookup\r\n-Large
+      table(s)\r\n-Power and wifi\r\n"
+    created_at: 2010-02-25 16:57:55.000000000 -05:00
+    updated_at: 2013-12-13 12:57:27.000000000 -05:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://farm3.static.flickr.com/2730/4158767970_5f2e3a1449_m.jpg
+    hours:
+      :hours_start:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: ! ' 1:00'
+    closes_at: ! ' 1:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 3
+    sort_order: 2
+    title: Grad Collaborative LL1-9B
+    description: ! '-Lower level 1
+
+      -White boards
+
+      -LCD screen
+
+      -Laptop hookup
+
+      -Large table(s)
+
+      -Power and wifi'
+    created_at: 2010-03-01 16:59:18.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://farm3.static.flickr.com/2730/4158767970_5f2e3a1449_m.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '01:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 4
+    sort_order: 3
+    title: Grad Collaborative LL1-10
+    description: ! "-Lower level 1\r\n-White boards\r\n-LCD screen\r\n-Laptop hookup\r\n-Large
+      table(s)\r\n-Power and wifi"
+    created_at: 2010-03-01 16:59:51.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 8 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/ll1-10.jpg
+    hours:
+      :hours_start:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 8
+    room_group_id: 1
+    opens_at: '01:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 5
+    sort_order: 72
+    title: Graduate Student Exchange Breakout Room, 10th floor
+    description: ! "-10 North\r\n-White board\r\n-Large table(s)\r\n-Power and wifi"
+    created_at: 2010-08-30 15:15:20.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 8 people
+    image_link: ''
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 8
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 6
+    sort_order: 4
+    title: ! 'Grad Collaborative 402 '
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-LCD screen \r\n-Audio/video
+      connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and wifi"
+    created_at: 2010-11-08 16:02:01.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_collabs.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 7
+    sort_order: 5
+    title: Grad Collaborative 404
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-LCD screen \r\n-Audio/video
+      connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and wifi"
+    created_at: 2010-11-08 16:03:00.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_collabs.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 8
+    sort_order: 6
+    title: Grad Collaborative 406
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-LCD screen \r\n-Audio/video
+      connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and wifi"
+    created_at: 2010-11-08 16:03:13.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_collabs.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 9
+    sort_order: 7
+    title: Grad Collaborative 408
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-LCD screen \r\n-Audio/video
+      connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and wifi"
+    created_at: 2010-11-08 16:03:21.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 6 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_collabs.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 10
+    sort_order: 8
+    title: Large Grad Collaborative 411
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-Projection setup
+      \r\n-Audio/video connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and
+      wifi"
+    created_at: 2010-11-08 16:04:32.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 12 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/4_collab.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 12
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 11
+    sort_order: 9
+    title: Large Grad Collaborative 413
+    description: ! "Bobst -- 4th floor, South \r\n-White boards \r\n-Projection setup
+      \r\n-Audio/video connection \r\n-Mac Mini \r\n-Large table(s) \r\n-Power and
+      wifi"
+    created_at: 2010-11-08 16:04:39.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Collaborative
+    size_of_room: 12 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/4_collab.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 12
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 12
+    sort_order: 13
+    title: Graduate Study 442
+    description: ! '-4 West
+
+      -Desk, chair
+
+      -Power and wifi'
+    created_at: 2010-11-08 16:06:13.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 13
+    sort_order: 14
+    title: Graduate Study 443
+    description: ! '-4 West
+
+      -Desk, chair
+
+      -Power and wifi'
+    created_at: 2010-11-08 16:06:28.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 14
+    sort_order: 15
+    title: Graduate Study 444
+    description: ! '-4 West
+
+      -Desk, chair
+
+      -Power and wifi'
+    created_at: 2010-11-08 16:06:40.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 15
+    sort_order: 16
+    title: Graduate Study 446
+    description: ! "-4 West\r\n-Desk, chair\r\n-Power and wifi\r\n"
+    created_at: 2010-11-08 16:06:48.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 16
+    sort_order: 17
+    title: Graduate Study 447
+    description: ! '-4 West
+
+      -Desk, chair
+
+      -Power and wifi
+
+'
+    created_at: 2010-11-08 16:06:58.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 17
+    sort_order: 18
+    title: Graduate Study 448
+    description: ! '-4 West
+
+      -Desk, chair
+
+      -Power and wifi
+
+'
+    created_at: 2010-11-08 16:08:35.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 18
+    sort_order: 12
+    title: Graduate Study 420
+    description: ! '-4 South
+
+      -Desk, chair
+
+      -Power and wifi'
+    created_at: 2010-11-08 16:08:54.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 19
+    sort_order: 11
+    title: Graduate Study 419
+    description: ! '-4 South
+
+      -Desk, chair
+
+      -Power and wifi
+
+'
+    created_at: 2010-11-08 16:09:10.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 20
+    sort_order: 10
+    title: Graduate Study 418
+    description: ! '-4 South
+
+      -Desk, chair
+
+      -Power and wifi'
+    created_at: 2010-11-08 16:09:20.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6640/grad_indiv_study_rooms.jpg
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 35
+    sort_order: 36
+    title: Graduate Study 839
+    description: ! "-8 West\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:03:47.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 36
+    sort_order: 38
+    title: Graduate Study 841
+    description: ! "-8 West\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:04:15.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 37
+    sort_order: 44
+    title: Graduate Study 847
+    description: ! "-8 West\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:04:50.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 38
+    sort_order: 52
+    title: Graduate Study 855
+    description: ! "-8 East\r\n-Desk, chair\r\n-Power and wifi\r\n"
+    created_at: 2011-11-16 21:05:17.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 39
+    sort_order: 60
+    title: Graduate Study 948
+    description: ! "-9 South\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:05:43.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 40
+    sort_order: 61
+    title: Graduate Study 949
+    description: ! "-9 South\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:06:11.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 41
+    sort_order: 63
+    title: Graduate Study 951
+    description: ! "-9 South\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:06:35.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 42
+    sort_order: 70
+    title: Graduate Study 966
+    description: ! "-9 East\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2011-11-16 21:06:58.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 47
+    sort_order: 50
+    title: Graduate Study 853
+    description: ! "-8 East\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2012-01-18 14:48:10.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :minute: '0'
+        :hour: '7'
+        :ampm: am
+      :hours_end:
+        :minute: '0'
+        :hour: '1'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 48
+    sort_order: 35
+    title: Graduate Study 838
+    description: ! "-8 West\r\n- Desk, Chair\r\n- Power and Wifi\r\n"
+    created_at: 2012-06-05 19:31:09.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 49
+    sort_order: 37
+    title: Graduate Study 840
+    description: ! "- 8 West\r\n- Desk, chair\r\n- Power and Wifi\r\n"
+    created_at: 2012-06-05 19:34:14.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 50
+    sort_order: 40
+    title: Graduate Study 843
+    description: ! "- 8 West\r\n- Desk, chair\r\n- Power and Wifi\r\n"
+    created_at: 2012-06-05 19:35:23.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 51
+    sort_order: 45
+    title: Graduate Study 848
+    description: ! "- 8 West\r\n- Desk, chair\r\n- Power and Wifi\r\n"
+    created_at: 2012-06-05 19:36:22.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 52
+    sort_order: 46
+    title: Graduate Study 849
+    description: ! "- 8 South\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:37:25.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 53
+    sort_order: 51
+    title: Graduate Study 854
+    description: ! "- 8 East\r\n- Desk, chair\r\n- Power and Wifi\r\n\r\n"
+    created_at: 2012-06-05 19:38:20.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 54
+    sort_order: 54
+    title: Graduate Study 937
+    description: ! "- 9 West\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:39:03.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 55
+    sort_order: 57
+    title: Graduate Study 941
+    description: ! "- 9 West\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:39:56.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 56
+    sort_order: 65
+    title: Graduate Study 953
+    description: ! "- 9 South\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:41:14.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 57
+    sort_order: 66
+    title: Graduate Study 954
+    description: ! "- 9 South\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:42:12.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 58
+    sort_order: 67
+    title: Graduate Study 955
+    description: ! "- 9 South\r\n- Desk, chair\r\n- Power and Wifi"
+    created_at: 2012-06-05 19:43:01.000000000 -04:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 59
+    sort_order: 23
+    title: Graduate Study 732
+    description: ! "-7 South East\r\n-Desk, chair\r\n-Power and Wifi\r\n"
+    created_at: 2013-01-11 16:38:26.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 60
+    sort_order: 25
+    title: Graduate Study 735
+    description: ! "- 7 South East\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-12 11:02:25.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 61
+    sort_order: 29
+    title: Graduate Study 742
+    description: ! "- 7 North East\r\n- Desk, Chair\r\n- Power and Wifi\r\n"
+    created_at: 2013-01-12 11:03:54.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 62
+    sort_order: 39
+    title: Graduate Study 842
+    description: ! "- 8 North West\r\n- Desk, Chair\r\n- Power and Wifi\r\n"
+    created_at: 2013-01-12 11:07:07.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 63
+    sort_order: 47
+    title: Graduate Study 850
+    description: ! "- 8 South West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-12 11:08:21.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 64
+    sort_order: 49
+    title: Graduate Study 852
+    description: ! "- 8 North East\r\n- Desk, Chair\r\n- Power and Wifi\r\n\r\n"
+    created_at: 2013-01-12 11:09:23.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 65
+    sort_order: 56
+    title: ! 'Graduate Study 939 '
+    description: ! "- 9 North West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-12 11:11:28.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 66
+    sort_order: 59
+    title: Graduate Study 943
+    description: ! "- 9 South West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-12 11:15:19.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 67
+    sort_order: 71
+    title: Graduate Study 967
+    description: ! "- 9 North East\r\n- Desk, Chair\r\n- Power and Wifi\r\n\r\n"
+    created_at: 2013-01-12 11:16:39.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 68
+    sort_order: 24
+    title: Graduate Study 733
+    description: ! "- 7 South East \r\n- Desk, Chair \r\n- Power and Wifi"
+    created_at: 2013-01-17 13:00:02.000000000 -05:00
+    updated_at: 2013-11-01 16:34:48.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 69
+    sort_order: 26
+    title: Graduate Study 736
+    description: ! "- 7 South East\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:01:40.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 70
+    sort_order: 32
+    title: Graduate Study 745
+    description: ! "- 7 North East\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:02:33.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 71
+    sort_order: 41
+    title: Graduate Study 844
+    description: ! "- 8 West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:03:14.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 72
+    sort_order: 43
+    title: Graduate Study 846
+    description: ! "- 8 West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:05:03.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 73
+    sort_order: 55
+    title: Graduate Study 938
+    description: ! "- 9 North West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:07:27.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 74
+    sort_order: 62
+    title: Graduate Study 950
+    description: ! "- 9 South West\r\n- Desk, Chair\r\n- Power and Wifi"
+    created_at: 2013-01-17 13:08:17.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 75
+    sort_order: 64
+    title: Graduate Study 952
+    description: ! "- 9 South East\r\n- Desk, Chair\r\n- Power and Wifi\r\n"
+    created_at: 2013-01-17 13:09:08.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 76
+    sort_order: 28
+    title: Graduate Study 738
+    description: ! "- 7 South East\r\n- Desk, Chair\r\n- Power and Wifi\r\n"
+    created_at: 2013-01-17 13:46:54.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 77
+    sort_order: 31
+    title: Graduate Study 744
+    description: ! "- 7 North East\r\n- Desk, Chair\r\n- Power and Wifi "
+    created_at: 2013-01-23 12:56:41.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :ampm: am
+        :hour: '7'
+        :minute: '0'
+      :hours_end:
+        :ampm: am
+        :hour: '1'
+        :minute: '0'
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 78
+    sort_order: 19
+    title: Grad Collaborative 602
+    description: ! "-Lower level 1\r\n-LCD screen\r\n-Laptop hookup\r\n-Large table(s)\r\n-Power
+      and wifi"
+    created_at: 2013-02-01 15:39:43.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Collaborative '
+    size_of_room: 6 people
+    image_link: ''
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 79
+    sort_order: 20
+    title: Grad Collaborative 604
+    description: ! "-Lower level 1\r\n-LCD screen\r\n-Laptop hookup\r\n-Large table(s)\r\n-Power
+      and wifi"
+    created_at: 2013-02-01 15:41:10.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Collaborative '
+    size_of_room: 6 people
+    image_link: ''
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 80
+    sort_order: 21
+    title: Grad Collaborative 606
+    description: ! "-Lower level 1\r\n-LCD screen\r\n-Laptop hookup\r\n-Large table(s)\r\n-Power
+      and wifi"
+    created_at: 2013-02-01 15:41:37.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Collaborative '
+    size_of_room: 6 people
+    image_link: ''
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 81
+    sort_order: 22
+    title: Grad Collaborative 608
+    description: ! "-Lower level 1\r\n-LCD screen\r\n-Laptop hookup\r\n-Large table(s)\r\n-Power
+      and wifi"
+    created_at: 2013-02-01 15:45:14.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Collaborative '
+    size_of_room: 6 people
+    image_link: ''
+    hours:
+      :hours_end:
+        :minute: '0'
+        :ampm: am
+        :hour: '1'
+      :hours_start:
+        :minute: '0'
+        :ampm: am
+        :hour: '7'
+    sort_size_of_room: 6
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: true
+- !ruby/object:Room
+  attributes:
+    id: 82
+    sort_order: 34
+    title: Graduate Study 749
+    description: ! "-7 West\r\n-Desk, chair\r\n-Power and wifi"
+    created_at: 2013-02-28 15:25:11.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Individual/2-person '
+    size_of_room: ! '1-2 people '
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 83
+    sort_order: 42
+    title: Graduate Study 845
+    description: ! "-8 West\r\n-Desk, chair\r\n-Power and Wifi"
+    created_at: 2013-02-28 15:26:22.000000000 -05:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: ! 'Individual/2-person '
+    size_of_room: ! '1-2 people '
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 84
+    sort_order: 30
+    title: Graduate Study 743
+    description: ! "- 7 North East \r\n- Desk, Chair \r\n- Power and Wifi"
+    created_at: 2013-05-11 19:20:14.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 85
+    sort_order: 68
+    title: Graduate Study 956
+    description: ! "- 9 South\r\n- Desk, chair \r\n- Power and Wifi\r\n\r\n"
+    created_at: 2013-05-18 15:23:55.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 people
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 86
+    sort_order: 69
+    title: Graduate Study 963
+    description: ! "- 9 East\r\n- Desk, chair \r\n- Power and Wifi"
+    created_at: 2013-05-21 17:18:41.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 87
+    sort_order: 58
+    title: Graduate Study 942
+    description: ! "- 9 West\r\n- Desk, chair \r\n- Power and Wifi"
+    created_at: 2013-05-21 17:24:05.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 88
+    sort_order: 48
+    title: Graduate Study 851
+    description: ! "- 8 South West \r\n- Desk, chair \r\n- Power and Wifi"
+    created_at: 2013-05-21 20:33:55.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 89
+    sort_order: 33
+    title: Graduate Study 746
+    description: ! "-- 7 North East\r\n-- Desk, Chair \r\n-- Power and Wifi"
+    created_at: 2013-05-29 18:19:00.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 90
+    sort_order: 53
+    title: Graduate Study 856
+    description: ! "-- 8 Floor\r\n-- Desk, Chair\r\n-- Power and Wifi"
+    created_at: 2013-05-29 18:20:40.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 
+- !ruby/object:Room
+  attributes:
+    id: 91
+    sort_order: 27
+    title: Graduate Study 737
+    description: ! "-- 7 South\r\n-- Desk, Chair\r\n-- Power and Wifi"
+    created_at: 2013-06-12 16:35:54.000000000 -04:00
+    updated_at: 2013-11-01 16:34:49.000000000 -04:00
+    type_of_room: Individual/2-Person
+    size_of_room: 1-2 People
+    image_link: http://lgimages.s3.amazonaws.com/data/imagemanager/6631/rm640.jpg
+    hours:
+      :hours_start:
+        :hour: '7'
+        :minute: '0'
+        :ampm: am
+      :hours_end:
+        :hour: '1'
+        :minute: '0'
+        :ampm: am
+    sort_size_of_room: 2
+    room_group_id: 1
+    opens_at: '07:00'
+    closes_at: '01:00'
+    collaborative: 

@@ -40,5 +40,5 @@
 <% end %>
 <% if can? :index, @room %>
 <%= icon_tag :back %>
-<%= link_to 'Back', rooms_path %>
+<%= link_to 'Back', rooms_path(:room_group=>@room.room_group.code) %>
 <% end %>

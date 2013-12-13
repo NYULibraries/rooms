@@ -58,7 +58,7 @@ module RoomsHelper
   end
   
   def format_hours_time(hours)
-    Time.new(1,1,1,hoursplit(":").first.to_i,hours.split(":").last.to_i,0).strftime("%l:%M %P")
+    Time.new(1,1,1,hours.split(":").first.to_i,hours.split(":").last.to_i,0).strftime("%l:%M %P")
   end
   
   def room_group_selected?(room_group)

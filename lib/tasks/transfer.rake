@@ -16,13 +16,20 @@ namespace :transfer do
   end
   
   desc "Transfer rooms from dev to production based on ID matching"
-    task :rooms => :environment do
-      rooms = YAML.load_file("#{Rails.root}/lib/tasks/rooms_development.yml")
-      rooms.each do |room|
-        existing_room = Room.find(room.id)
-        existing_room.update_attributes(room)
-      end
+  task :rooms => :environment do
+    rooms = YAML.load_file("#{Rails.root}/lib/tasks/rooms_staging.yml")
+    rooms.each do |room|
+      existing_room = Room.find(room.id)
+      existing_room.update_attributes(room)
     end
   end
-    
+  
+  desc "Transfer room groups"
+  task :room_groups => :environment do
+    room_groups = YAML.load_file("#{Rails.root}/lib/tasks/roomgroups_staging.yml")
+    room_groups.each do |room_group|
+      existing_room = RoomGroup.create(room_group)
+    end
+  end
+   
 end

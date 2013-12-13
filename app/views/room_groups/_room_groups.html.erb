@@ -1,0 +1,42 @@
+<p><%= page_entries_info @room_groups %></p>
+
+<%= paginate @room_groups, theme: "bootstrap" %>
+
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Action
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to new_room_group_url do %><i class="icon-user"></i> Add room group<% end -%></li>
+  </ul>
+</div>
+
+<br /><br />
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        <%= sortable :title, "Title", {}, false %>
+      </th>
+      <th class="hidden-phone">
+        <%= sortable :code, "Code", {}, false %>
+      </th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @room_groups.each do |room_group| %>
+    <tr>
+      <td><%=h room_group.title %></td>
+      <td><%=h room_group.code %></td>
+      <td><%= link_to 'Show', room_group %></td>
+      <td><%= link_to 'Edit', edit_room_group_path(room_group) %></td>
+      <td><%= link_to 'Destroy', room_group, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @room_groups, theme: "bootstrap" %>

@@ -25,5 +25,3 @@ staging:
 production:  
   <<: *development
   host: <%= Settings.databases.host %>
-  
-

@@ -1,64 +1,72 @@
 class RoomsController < ApplicationController
-  before_filter :authenticate_admin
+  load_and_authorize_resource
   respond_to :html, :js
   
   # GET /rooms
   def index
-    @rooms = Room.sorted(params[:sort], "sort_order ASC")
+    @room_groups = RoomGroup.all
+    # Default elasticsearch options
+    options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
+    # Get room groups this user can admin
+    room_group_filter = (params[:room_group].blank?) ? @room_groups.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
+    # Boolean if this is default sort or a re-sort
+    resort = (sort_column.to_sym == options[:sort])
+    # Elasticsearch DSL
+    @rooms = Room.tire.search do
+      query { string options[:q] } unless options[:q].blank?
+      filter :terms, :room_group => room_group_filter, :execution => "or"
+      sort do
+        by :room_group, 'asc'
+        by options[:sort], options[:direction]
+      end if resort
+      sort { by options[:sort], options[:direction] } unless resort
+      page = options[:page].to_i
+      search_size = options[:per].to_i
+      from (page -1) * search_size
+      size search_size
+    end
+    respond_with(@rooms)
   end
 
   # GET /rooms/1
   def show
     @room = Room.find(params[:id])
+    respond_with(@room)
   end
 
   # GET /rooms/new
   def new
     @room = Room.new
+    @room_groups = RoomGroup.all
+    respond_with(@room)
   end
 
   # GET /rooms/1/edit
   def edit
     @room = Room.find(params[:id])
+    @room_groups = RoomGroup.all
+    respond_with(@room)
   end
 
   # POST /rooms
   def create
-    @room = Room.new(params[:room])
-    hours = { :hours_start => {}, :hours_end => {} }
-    unless params[:hours_start].nil?
-      hours[:hours_start][:hour] = params[:hours_start][:hour] unless params[:hours_start][:hour].nil?
-      hours[:hours_start][:minute] = params[:hours_start][:minute] unless params[:hours_start][:minute].nil?
-      hours[:hours_start][:ampm] = params[:hours_start][:ampm] unless params[:hours_start][:ampm].nil?
-    end
-    unless params[:hours_end].nil?
-      hours[:hours_end][:hour] = params[:hours_end][:hour] unless params[:hours_end][:hour].nil?
-      hours[:hours_end][:minute] = params[:hours_end][:minute] unless params[:hours_end][:minute].nil?
-      hours[:hours_end][:ampm] = params[:hours_end][:ampm] unless params[:hours_end][:ampm].nil?
-    end
-    @room.hours = hours
+    @room_groups = RoomGroup.all
+    @room = Room.new(params[:room])   
+    @room.opens_at = opens_at
+    @room.closes_at = closes_at
 
-    flash[:notice] = 'Room was successfully created.' if @room.save
+    flash[:notice] = t("rooms.create.success") if @room.save
     respond_with(@room)
   end
 
   # PUT /rooms/1
   def update
+    @room_groups = RoomGroup.all
     @room = Room.find(params[:id])
-    hours = { :hours_start => {}, :hours_end => {} }
-    unless params[:hours_start].nil?
-      hours[:hours_start][:hour] = params[:hours_start][:hour] unless params[:hours_start][:hour].nil?
-      hours[:hours_start][:minute] = params[:hours_start][:minute] unless params[:hours_start][:minute].nil?
-      hours[:hours_start][:ampm] = params[:hours_start][:ampm] unless params[:hours_start][:ampm].nil?
-    end
-    unless params[:hours_end].nil?
-      hours[:hours_end][:hour] = params[:hours_end][:hour] unless params[:hours_end][:hour].nil?
-      hours[:hours_end][:minute] = params[:hours_end][:minute] unless params[:hours_end][:minute].nil?
-      hours[:hours_end][:ampm] = params[:hours_end][:ampm] unless params[:hours_end][:ampm].nil?
-    end
-    @room.hours = hours
+    @room.opens_at = opens_at
+    @room.closes_at = closes_at
      
-    flash[:notice] = 'Room was successfully updated.' if @room.update_attributes(params[:room])
+    flash[:notice] = t("rooms.update.success") if @room.update_attributes(params[:room])
     respond_with(@room)
   end
 
@@ -70,24 +78,58 @@ class RoomsController < ApplicationController
     respond_with(@room)
   end
   
-  # Update the order of the rooms from an ajax request
-  def update_order
-    @rooms = Room.all
+  # GET /rooms/sort
+  def index_sort
+    @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
+    @rooms = @rooms.where(:room_groups => {:code => params[:room_group]}) unless params[:room_group].blank?
 
-    if params[:rooms]
-      params[:rooms].each_with_index do |id, index|
-        Room.update_all(['sort_order=?', index+1],['id=?',id])
-      end 
-    elsif params[:sort_order]
-      params[:sort_order].each do |id, index|
-        Room.update_all(['sort_order=?', index],['id=?',id])
-      end 
-    end
+    respond_with(@rooms)
+  end
 
-    flash[:notice] = 'Room order was successfully updated.'
-    respond_with(@rooms) do |format|
-      format.js { render :layout => false }
-    end
+  # PUT /rooms/sort  
+  def update_sort
+    @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
+    @rooms = @rooms.where(:room_groups => {:code => params[:room_group]}) unless params[:room_group].blank?
+    
+    # Have to iterate through each room in order to reindex sort order
+    # Could be a scalability issue moving forward
+    params[:rooms].each_with_index do |id, index|
+      room = Room.find(id)
+      room.sort_order = index+1
+      room.save
+    end 
+
+    flash[:notice] = t("rooms.update_sort.success")
+
+    respond_with(@rooms, :location => sort_rooms_url)
+  end
+  
+  # Implement sort column function for this model
+  def sort_column
+    super "Room", "sort_order"
+  end
+  helper_method :sort_column
+  
+private
+
+  def opens_at
+    @opens_at ||= Time.new(1,1,1,opens_at_hour,params[:opens_at][:minute],0,0).strftime("%k:%M")
+  end
+  
+  def closes_at
+    @closes_at ||= Time.new(1,1,1,closes_at_hour,params[:closes_at][:minute],0,0).strftime("%k:%M")
+  end
+  
+  def opens_at_hour
+    @opens_at_hour ||= (params[:opens_at][:ampm] == "pm" && params[:opens_at][:hour] != "12") ? params[:opens_at][:hour].to_i + 12 :
+      (params[:opens_at][:ampm] == "am" && params[:opens_at][:hour] == "12") ? hour = 0 :
+        params[:opens_at][:hour].to_i
+  end
+  
+  def closes_at_hour
+    @closes_at_hour ||= (params[:closes_at][:ampm] == "pm" && params[:closes_at][:hour] != "12") ? params[:closes_at][:hour].to_i + 12 :
+      (params[:closes_at][:ampm] == "am" && params[:closes_at][:hour] == "12") ? hour = 0 :
+        params[:closes_at][:hour].to_i
   end
   
 end

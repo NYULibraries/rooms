@@ -63,7 +63,11 @@ GEM
     activesupport (3.2.16)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts_as_indexed (0.8.3)
+    addressable (2.3.5)
+    ansi (1.4.3)
     arel (3.0.3)
+    atomic (1.1.14)
     authlogic (3.3.0)
       activerecord (>= 3.2)
       activesupport (>= 3.2)
@@ -77,6 +81,7 @@ GEM
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
     builder (3.0.4)
+    cancan (1.6.10)
     cap_git_tools (0.9.1)
       capistrano (~> 2.0)
     capistrano (2.15.5)
@@ -85,8 +90,6 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    capistrano-ext (1.2.1)
-      capistrano (>= 1.0.0)
     chunky_png (1.2.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -110,6 +113,8 @@ GEM
       simplecov (>= 0.7)
       term-ansicolor
       thor
+    crack (0.4.1)
+      safe_yaml (~> 0.9.0)
     dalli (2.6.4)
     debugger (1.6.3)
       columnize (>= 0.3.1)
@@ -118,6 +123,11 @@ GEM
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.4)
     docile (1.1.1)
+    draper (1.3.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     erubis (2.7.0)
     execjs (2.0.2)
     exlibris-aleph (1.1.0)
@@ -131,6 +141,7 @@ GEM
     fattr (2.2.1)
     fssm (0.2.10)
     git (1.2.6)
+    hashr (0.0.22)
     highline (1.6.20)
     hike (1.2.3)
     httparty (0.11.0)
@@ -142,9 +153,11 @@ GEM
       require_all (~> 1.3.1)
     ipaddr_range_set (0.10.0)
     journey (1.0.4)
-    jquery-rails (2.2.2)
+    jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.1.0)
+      railties (>= 3.1.0)
     json (1.8.1)
     kaminari (0.15.0)
       actionpack (>= 3.0.0)
@@ -175,6 +188,24 @@ GEM
       mini_portile (~> 0.5.0)
     options (2.3.0)
       fattr
+    peek (0.1.8)
+      atomic (>= 1.0.0)
+      rails (>= 3.0.0)
+    peek-dalli (1.1.2)
+      atomic (>= 1.0.0)
+      dalli
+      peek
+    peek-git (1.0.2)
+      peek
+    peek-mysql2 (1.1.0)
+      atomic (>= 1.0.0)
+      mysql2
+      peek
+    peek-performance_bar (1.1.3)
+      peek (>= 0.1.0)
+    peek-rblineprof (0.1.2)
+      peek
+      rblineprof
     polyglot (0.3.3)
     progress_bar (1.0.0)
       highline (~> 1.6.1)
@@ -204,15 +235,19 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.1.0)
+    rblineprof (0.3.2)
+      debugger-ruby_core_source (~> 1.2)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    request_store (1.0.5)
     require_all (1.3.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     ruby-prof (0.13.0)
     rvm-capistrano (1.5.1)
       capistrano (~> 2.15.4)
+    safe_yaml (0.9.7)
     sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -231,6 +266,9 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    temporal-rails (0.2.3)
+      coffee-rails
+      railties (>= 3.2.5, < 5)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
     therubyracer (0.12.0)
@@ -238,31 +276,46 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
+    timecop (0.6.3)
     tins (0.13.1)
+    tire (0.6.1)
+      activemodel (>= 3.0)
+      activesupport
+      ansi
+      hashr (~> 0.0.19)
+      multi_json (~> 1.3)
+      rake
+      rest-client (~> 1.6)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.0.1)
+    uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    vcr (2.6.0)
+    webmock (1.15.2)
+      addressable (>= 2.2.7)
+      crack (>= 0.3.2)
     yui-compressor (0.12.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_indexed (~> 0.8.3)
   authpds-nyu!
-  capistrano (~> 2.15.0)
-  capistrano-ext (~> 1.2.1)
-  coffee-rails (~> 3.2.1)
+  cancan (~> 1.6.10)
+  coffee-rails (~> 3.2.0)
   comma (~> 3.2.0)
   compass (~> 0.12.1)
   compass-rails (~> 1.0.3)
   coveralls (~> 0.7.0)
   dalli (~> 2.6.0)
   debugger
-  jquery-rails (~> 2.2.1)
+  draper (~> 1.3)
+  jquery-rails (~> 3.0.4)
+  jquery-ui-rails (~> 4.1.0)
   json (~> 1.8.0)
   kaminari (~> 0.13)
   mustache (= 0.99.4)
@@ -271,14 +324,25 @@ DEPENDENCIES
   newrelic_rpm (~> 3.6.0)
   nyulibraries_assets!
   nyulibraries_deploy!
+  peek
+  peek-dalli
+  peek-git
+  peek-mysql2
+  peek-performance_bar
+  peek-rblineprof
   progress_bar
   rails (~> 3.2.16)
   rails_config (~> 0.3.3)
   ruby-prof
-  sass-rails (~> 3.2.3)
+  sass-rails (~> 3.2.6)
   simplecov
   simplecov-rcov
   sorted (~> 0.4.3)
+  temporal-rails (~> 0.2.3)
   therubyracer (~> 0.12.0)
-  uglifier (~> 2.0.1)
+  timecop (~> 0.6.3)
+  tire (~> 0.6.1)
+  uglifier (~> 2.2.1)
+  vcr (~> 2.6.0)
+  webmock (~> 1.15.0)
   yui-compressor (~> 0.12.0)

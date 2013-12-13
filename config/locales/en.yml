@@ -1,5 +1,78 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  mailers:
+    reservation_mailer:
+      default_from: "Bobst Library Graduate Room Reservation System <gswg@library.nyu.edu>"
+      default_reply_to: "no-reply@library.nyu.edu"
+      cancellation_email:
+        subject: "NYU Libraries- Room reservation cancellation"
+      block_cancellation_email:
+        subject: "NYU Libraries- Room reservation cancellation"
+      block_cancellation_admin_email:
+        subject: "NYU Libraries- Room reservation cancellation"
+      confirmation_email:
+        subject: "NYU Libraries- Room reservation confirmation"
+  title: Reserve a study space
+  unauthorized:
+    create_today:
+      reservation: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"
+    create_for_same_day:
+      reservation: "Sorry, you are only allowed <strong>to have one reservation per day.</strong>"
+    create_for_length:
+      reservation: "Sorry, you are not authorized to book for the selected length of time."
+    manage:
+      all: Access denied!
+  room:
+    type:
+      collaborative: "Collaborative"
+    open_24_hours: "Open 24 hours"
+  reservation:
+    date_formatted_correctly: "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30."
+    reservations_exist_in_block: "Sorry, your selection is unavailable. Please check existing reservations."
+    reservation_available: "Sorry, your selected reservation slot was just taken. Please check the availability again."
+    validate_cc: "One or more of the e-mails you entered is invalid."
+    current_user_is_only_email: "For collaborative rooms, please add at least one other e-mail besides your own."
+    collaborative_requires_ccs: "For collaborative rooms, please add at least one other valid e-mail from your group."
+    policies:
+      title: "Policies:"
+      create_today: 
+        graduate: You can reserve up to three hours per day
+        undergraduate: You can reserve up to two hours per day
+      create_for_same_day: You can make only one reservation per day
+  reservations:
+    create:
+      success: "<strong>Reservation successful!</strong> You will be sent an email confirming your reservation."
+    update:
+      success: Reservation was successfully updated.
+    delete:
+      success: Reservation was successfully deleted.
+      error: "Could not delete this reservation. Please report this to the system administrator: gswg@library.nyu.edu."
+    resend_email:
+      success: "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
+  rooms:
+    create:
+      success: Room was successfully created.
+    update:
+      success: Room was successfully updated.
+    update_sort:
+      success: Room order was successfully updated.
+  blocks:
+    default_title: Scheduled closure
+    destroy:
+      success: Block was successfully deleted.
+    destroy_existing_reservations:
+      error: "Could not delete existing reservations. Please contact web administrator web.services@library.nyu.edu."
+      success: Block successfully created.
+      cancellation_email: "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact gswg@library.nyu.edu.\n\nSorry for the inconvenience."
+    create:
+      success: Block successfully created.
+  users:
+    update:
+      success: User was successfully updated.
+    create:
+      success: User was successfully created.
+  room_groups:
+    create:
+      success: Room group was successfully created.
+    update:
+      success: Room group was successfully updated.
+  

@@ -22,8 +22,10 @@ public/assets
 
 coverage
 doc
+/wiki
 
 *.sql
+sqldumps/
 
 config/settings.local.yml
 config/settings/*.local.yml

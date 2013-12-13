@@ -1,4 +1,4 @@
-<% h = @user.user_attributes %>
+<% h = @user.try(:user_attributes) || {} %>
 
 <h2>User: <%=h @user.username %></h2>
 <div id="show_user">
@@ -8,10 +8,10 @@
 <dd>&nbsp;<%=h @user.username %></dd>
 
 <dt>First name</dt>
-<dd>&nbsp;<%=h @user.firstname %></dd>
+<dd>&nbsp;<%=h @user.try(:firstname) %></dd>
 
 <dt>Last name:</dt>
-<dd>&nbsp;<%=h @user.lastname %></dd>
+<dd>&nbsp;<%=h @user.try(:lastname) %></dd>
 
 <dt>E-mail:</dt>
 <dd>&nbsp;<%=h @user.email %></dd>
@@ -31,21 +31,8 @@
 <dt>Patron status:</dt>
 <dd>&nbsp;<%=h h[:bor_status]%></dd>
 
-<dt>Graduate Student?</dt>
-<dd>
-  <% if !h[:bor_type].nil? %>
-	<%=h is_authorized? %>
-	<% else %>
-	<strong>not found</strong>
-	<% end %>
-</dd>
-
-<%= form_for @user, :remote => true, :class => "form-inline clearfix" do |f| %>
-  <dt>Admin?</dt>
-  <dd>
-  <%= f.check_box :room_reserve_admin, :checked => h[:room_reserve_admin], :disabled => (current_user.username == @user.username) %>
-  </dd>
-<% end -%>
+<dt>Roles:</dt>
+<dd>&nbsp;<%= @user.roles_list %>
 
 </dl>
 
@@ -58,6 +45,7 @@
 			<th>Location</th>
 			<th>Deleted by</th>
 			<th>Date created</th>
+			<th>Date deleted</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -66,7 +54,8 @@
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= get_deleted_by(r)%></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
+			<td><%= prettify_date(r.deleted_at)%> <%= r.deleted_at_timezone %></td>
 		</tr>
 		<% end %>
 		</tbody>
@@ -84,11 +73,11 @@
 		</tr>
 		</thead>
 		<tbody>
-		<% @user.reservations.active_non_blocks.past.one_month.each do |r| %>
+		<% @user.reservations.active.no_blocks.past.one_month.each do |r| %>
 		<tr id="<%= r.id%>" class="<%=highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title.html_safe %></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
 		</tr>
 		<% end %>
 		</tbody>
@@ -106,12 +95,12 @@
 		</tr>
 		</thead>
 		<tbody>
-		<% @user.reservations.active_non_blocks.current.each do |r| %>
+		<% @user.reservations.active.no_blocks.current.each do |r| %>
 		<tr id="<%= r.id %>" class="<%= highlight(r)%>">
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
-			<td><%= prettify_created_at_date(r.created_at)%></td>
-			<td><%= link_to "Destroy", admin_reservation_destroy_path(r), :confirm => "Are you sure?", :method => :delete %>
+			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
+			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, :confirm => "Are you sure?" %>
 		</tr>
 		<% end %>
 		</tbody>
@@ -119,6 +108,8 @@
 </p>
 
 <br />
+<%= icon_tag :edit %>
+<%= link_to 'Edit', edit_user_path(@user) %> | 
 <%= icon_tag :back %>
 <%= link_to 'Back', users_path %>
 </div>

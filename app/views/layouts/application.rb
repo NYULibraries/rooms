@@ -10,37 +10,32 @@ module Views
         meta << favicon_link_tag('https://library.nyu.edu/favicon.ico')
       end
       
-      # Stylesheets to include in layout
-      def stylesheets
-        catalog_stylesheets = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Muli"
-        catalog_stylesheets += stylesheet_link_tag "application"
-      end
-
-      # Javascripts to include in layout
-      def javascripts
-        catalog_javascripts = javascript_include_tag "application"
+      def header
+        
       end
       
       def application_title
-       "Reserve a room"
+        t('title')
       end
-      
+
       def gauges_tracking_code
         Settings.gauges.tracking_code
       end
       
       # Print breadcrumb navigation
       def breadcrumbs
-        breadcrumbs = super
+        breadcrumbs = []
+        breadcrumbs << link_to(views["breadcrumbs"]["title"], views["breadcrumbs"]["url"])
+        breadcrumbs << link_to('Services', "https://library.nyu.edu/services/")
         breadcrumbs << link_to_unless_current(application_title, root_url)
-        breadcrumbs << link_to('Admin', admin_url) if is_in_admin_view?
-        breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if is_in_admin_view?
+        breadcrumbs << link_to('Admin', admin_url) if in_admin_view?
+        breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if in_admin_view?
         return breadcrumbs
       end
       
       # Prepend modal dialog elements to the body
       def prepend_body
-        render :partial => "common/modal"
+        render 'common/prepend_body'
       end
       
       # Prepend the flash message partial before yield
@@ -56,12 +51,6 @@ module Views
         false
       end
       
-      # Boolean for whether or not to show search box
-      # For this application only show tabs when not in admin view
-      def show_search_box?
-        !is_in_admin_view?
-      end
-    
     end
   end
 end

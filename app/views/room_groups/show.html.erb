@@ -1,0 +1,22 @@
+
+<p>
+  <b>Title:</b>
+  <%=h @room_group.title %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%=h @room_group.code %>
+</p>
+
+<p>
+  <b>Roles:</b>
+  <%=h @room_group.admin_roles_list %>
+</p>
+
+<br />
+
+<%= icon_tag :edit %>
+<%= link_to 'Edit', edit_room_group_path(@room_group) %> |
+<%= icon_tag :back %>
+<%= link_to 'Back', room_groups_path %>

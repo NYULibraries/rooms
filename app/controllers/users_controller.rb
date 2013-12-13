@@ -1,67 +1,49 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_admin
+  load_and_authorize_resource
+  respond_to :js, :html, :csv
   
   # GET /users
   def index
-    @users = User.search(params[:q]).sorted(params[:sort], "lastname ASC").page(params[:page]).per(30)
+    @users = User.sorted(params[:sort], "lastname ASC").page(params[:page]).per(30)
+    @users = @users.with_query(params[:q]) unless params[:q].blank?
     
-    respond_to do |format|
-      format.html
+    respond_with(@users) do |format|
       format.csv { render :csv => @users, :filename => "room_reservation_users.#{Time.now.strftime("%Y%m%d%H%m")}" }
     end
   end
 
   # GET /users/1
-  # GET /users/1.xml
   def show
     @user = User.find(params[:id])
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
+    respond_with(@user)
   end
   
   # GET /users/new
    def new
      @user = User.new
+     respond_with(@user)
    end
   
   # POST /users
   def create
-    @user = User.new
-    @user.username = params[:user][:username]
-    @user.email = params[:user][:email]
-    @user.user_attributes = {}
-    @user.user_attributes[:room_reserve_admin] = params[:user][:room_reserve_admin].to_i == 1
-
-    respond_to do |format|
-      if @user.save
-        flash[:notice] = "Successfully created new user."
-        format.html { redirect_to users_url }
-      else
-        format.html { render :new }
-      end
-    end
+    @user = User.new(params[:user])
+    flash[:notice] = t('users.create.success') if @user.save
+    
+    respond_with(@user)
   end
   
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    respond_with(@user)
   end
-
+  
   # PUT /users/1
   def update
     @user = User.find(params[:id])
-    user_attributes = {}
-    user_attributes[:room_reserve_admin] = params[:user][:room_reserve_admin].to_i == 1
-    @user.update_attributes(:user_attributes => user_attributes)
-
-    respond_to do |format|
-      flash[:notice] = "Updated user successfully."
-      format.js { render :layout => false }
-      format.html { redirect_to(@user) }
-    end
+     
+    flash[:notice] = t('users.update.success') if @user.update_attributes(params[:user])
+    respond_with(@user)
   end
   
   # DELETE /users/1
@@ -69,15 +51,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-    end
+    respond_with(@user)
   end
-  
-  # Implement sort column function for this model
-  def sort_column
-    super "User", "lastname"
-  end
-  helper_method :sort_column
 
 end

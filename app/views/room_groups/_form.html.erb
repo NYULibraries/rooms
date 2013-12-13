@@ -1,0 +1,35 @@
+<%= form_for @room_group do |f| %>
+  <% if @room_group.errors.any? %>  
+    <div id="error_explanation" class="alert alert-error">  
+      <h2><%= pluralize(@room_group.errors.count, "error") %> prohibited this record from being saved:</h2>  
+      <ul>  
+      <% @room_group.errors.full_messages.each do |msg| %>  
+        <li><%= msg %></li>  
+      <% end %>  
+      </ul>  
+    </div>  
+  <% end %>
+  <fieldset>
+    <%= f.label :title, :class => "control-label" do %>
+    Title <br />
+    <%= f.text_field :title %>
+    <% end -%>
+
+    <%= f.label :code, :class => "control-label" do %>
+    Code <br />
+    <%= f.text_field :code %>
+    <% end -%>
+
+	<% for role in @room_group.all_admin_roles %>
+	<%= label_tag "room_group[admin_roles][#{role}]", :class => "control-label" do %>
+		<%= check_box_tag "room_group[admin_roles][#{role}]", role, @room_group.admin_roles.include?(role), {:name => "room_group[admin_roles][]"}%>
+		<%= role.humanize.titleize %>
+	<% end %>
+	<% end %>
+	<%= hidden_field_tag "user[admin_roles][]", "" %>
+
+  </fieldset>
+  <p>
+    <button class="btn" type="submit">Save changes</button>
+  </p>
+<% end %>

@@ -23,7 +23,7 @@
 <div class="control-group">
   <%= f.label :room_id, "Room:", :class => "control-label" %>
   <div class="controls">
-    <%= f.select :room_id, "<option value=\"all\">All</option>".html_safe + options_from_collection_for_select(Room.all, 'id', 'title', (@room) ? @room.id : '')%>
+    <%= f.select :room_id, "<option value=\"all\">All</option>".html_safe + options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title', (@room) ? @room.id : '')%>
   </div>
 </div>
 

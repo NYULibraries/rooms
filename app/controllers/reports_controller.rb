@@ -1,5 +1,9 @@
+##
+# Todo:
+#   * Create a model for this so we can add some validations
 class ReportsController < ApplicationController
-  before_filter :authenticate_admin
+  # Authorize as symbol without class since this is only for RESTful actions
+  authorize_resource :report, :class => false
 
   #Generate a report of reservations based on submitted params
   def index
@@ -50,7 +54,7 @@ class ReportsController < ApplicationController
           conditions.push("(user_id in (select id from users where user_attributes like '%bor_status: \"#{@patron_status}\"%'))") unless @patron_status.nil?
 
           # Find all reservations that fall between this selected date range      
-          @reservations = Reservation.active_non_blocks.where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)
+          @reservations = Reservation.active.no_blocks.accessible_by(current_ability).where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)
         
           # Populate a 'no data found' error if no reservations were found
           flash[:error] = "Could not find any data for the range you selected." if @reservations.empty?

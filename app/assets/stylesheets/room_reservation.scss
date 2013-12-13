@@ -1,26 +1,28 @@
 @import "nyulibraries";
 @import "jquery-ui-timepicker-addon";
 
+$unavailable_color: #ed1c24;
+$available_color: #e6e7e8;
+$preferred_color: #1c75bc;
+$table_header_color: #6d6e71;
+$table_border_color: #dddddd;
+
 h1.page_title { margin-top: 0; }
 
-.sidebar-padded {width:300px;margin-left:10px;}
-.legend_unavailable {margin-right:5px; padding-right:15px;background-color:#cc3333;border:1px solid #000;display:inline;}
-.legend_available {margin-right: 5px;padding-right:15px;background-color:#8bc18b;border:1px solid #1b511b;display:inline}
-.legend_selected {margin-right: 5px;padding-right:15px;background-color:#efefef;border:2px solid #6666ff;display:inline}
-.legend_text {margin-right:10px;display:inline;}
-.timeslot_unavailable {background-color:#cc3333;}
-.timeslot_available {background-color:#8bc18b;}
-.timeslot_selected {border:2px solid #6666ff !important;}
-.outset-border {border-bottom: 2px solid #ccc !important;border-right: 1px solid #999 !important;border-top: 1px solid #efefef !important;border-left: 1px solid #efefef !important;}
-
-div.policies { background-color:#efefef;padding: .3em .5em;width:323px;border: 1px solid #ccc; }
-div.policies ul li {color: #990000;}
-
-#generate_grid_form {
-  dl { padding: 10px; border: 1px solid #ccc; }
+div.policies {
+  margin: 1.5em 0;
+  h3 { margin: 0; }
+  ul li {
+    list-style-position: inside;
+  }
 }
 
-form#search_patron_statuses { margin-bottom: 10px; }
+fieldset[disabled=true] {
+  background-color: whitesmoke;
+  margin-bottom: 0;
+  opacity:0.4;
+  filter:alpha(opacity=40);
+}
 
 #date_example {
 	font-style: italic;
@@ -29,6 +31,204 @@ form#search_patron_statuses { margin-bottom: 10px; }
 
 dl * {
   padding: 5px;
+}
+
+.q {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  line-height: 20px !important;
+}
+
+.field_with_errors input {
+  border-color: rgb(185, 74, 72) !important;
+}
+
+#top_of_page { position: absolute; }
+
+img.preview { max-width: 300px ; }
+
+ul.admin_options > li > ul {
+  padding: 0 15px !important;
+  list-style-type: disc !important;
+  list-style-position: inside !important;
+}
+
+
+
+
+/****************
+ * Reservations *
+ ****************/
+@mixin striped-bg($bg-color: #ccc, $darken-amount: 5%, $stripe-color: $bg-color) {
+  @include background-image(linear-gradient(-45deg, $stripe-color 25%, transparent 25%, transparent 50%, $stripe-color 50%, $stripe-color 75%, transparent 75%, transparent));
+  background-size: 6px 6px;
+}
+
+.legend { margin: 20px 0 10px 0; }
+.legend_unavailable { margin-right:5px; padding-right:15px;background-color:$unavailable_color;border:1px solid black;display:inline; }
+.legend_preferred { margin-right:5px; padding-right:15px;background-color:$available_color;border:1px solid $preferred_color;display:inline;@include striped-bg($preferred_color, 4%); }
+.legend_selected { margin-right:5px; padding-right:15px;background-color:$preferred_color;border:1px solid $preferred_color;display:inline; }
+.legend_text { margin-right:10px;display:inline; }
+
+h1.availability_grid_desc {
+  font-size: 1.5em;
+}
+
+.full_date {
+  display: inline;
+}
+
+.date_header a.close_dialog {
+  position: absolute;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.timeslot_time_preferred {
+  font-weight: bold;
+}
+
+.room_title, .room_type, .room_size {
+  width: 60px;
+}
+
+.room_info { width: 120px; max-width: 120px; }
+
+.room_details {
+  display: none;
+}
+
+.room_title_text, .room_type_text {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.room_details_link {
+  font-size: 90%;
+}
+
+.sort_by_field i {
+  margin-left: 5px;
+}
+
+.header_fields {
+  background-color: $table_header_color; 
+  color: white;
+  a {
+    color: white;
+  }
+}
+
+.rebuild_grid, .timeslot_time { display: inline; }
+
+th.times {
+  text-align: center !important;
+  font-weight: normal;
+}
+
+.date_header {
+  text-align: center !important;
+  font-size: 18px; 
+}
+
+// Availability Grid
+#availability_grid_table {
+  .timeslot_unavailable {background-color:$unavailable_color;}
+  .timeslot_available {background-color:$available_color;}
+  .timeslot_preferred {
+    @include striped-bg($preferred_color, 4%);
+    border-top: 1px solid $preferred_color;
+    border-bottom: 1px solid $preferred_color;
+    &.timeslot_preferred_last {
+      border-right: 4px solid $preferred_color;
+    }
+    &.timeslot_preferred_first {
+      border-left: 4px solid $preferred_color;
+    }
+  }
+  .timeslot_selected {background-color:$preferred_color;}
+  tbody tr:first-child {
+   .timeslot_preferred {
+     border-top: 4px solid $preferred_color;
+   }
+  }
+  tbody tr:last-child {
+   .timeslot_preferred {
+     border-bottom: 4px solid $preferred_color;
+   }
+  }
+  td.timeslot { 
+   max-width: 120px !important;
+  }
+}
+
+tr.selected_room { font-weight: bold; }
+tr.disabled_row { color: #A7A9AB; }
+
+// Styles for fixed header when scrolling
+table#availability_grid_header_fixed { 
+  margin-bottom: -9px; 
+  border-bottom: 0;
+  border-bottom-right-radius: 0 !important;
+    -moz-border-radius-bottomright: 0 !important;
+    -webkit-border-bottom-right-radius: 0 !important;
+  tr:last-child {
+    th:last-child {
+      border-bottom-right-radius: 0 !important;
+        -moz-border-radius-bottomright: 0 !important;
+        -webkit-border-bottom-right-radius: 0 !important;
+    }
+    th:first-child {
+      border-bottom-left-radius: 0 !important;
+        -moz-border-radius-bottomleft: 0 !important;
+        -webkit-border-bottom-left-radius: 0 !important;
+    }
+  }
+}
+
+#backOptions, #forwardOptions {
+  a { font-weight: bold; }
+}
+
+#remote_progress {
+  margin-top: 10px;
+}
+
+.modal.fullscreen {
+  position: fixed;
+  top: 20px !important;
+  left: 20px;
+  right: 20px;
+  width: auto;
+  margin: 0;
+}
+
+.modal-header {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+#ajax-modal {
+  .ajax-loader { padding-bottom: 5px; }
+  .modal-footer .extra_fields {
+    & {
+      float: left;
+    }
+    .extra_field, label { float: left; }
+    #res_title_div, #res_cc_div {
+      padding: 5px;
+    }
+  }
+}
+
+
+
+
+/*********
+ * Rooms *
+ *********/
+.new_room, .edit_room {
+  label { margin-left: 0; }
 }
 
 .sortable_list {
@@ -52,47 +252,11 @@ ul#list_rooms {
 }
 
 
-.q {
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
-  line-height: 20px !important;
-}
 
-.legend {
-  margin: 10px 0;
-}
 
-.field_with_errors input {
-  border-color: rgb(185, 74, 72) !important;
-}
-
-#top_of_page { position: absolute; }
-
-.modal.fullscreen {
-  position: fixed;
-  top: 20px !important;
-  left: 20px;
-  right: 20px;
-  width: auto;
-  margin: 0;
-}
-
-#ajax-modal {
-  .ajax-loader { padding-bottom: 5px; }
-  .modal-footer .extra_fields {
-    & {
-      float: left;
-    }
-    .extra_field, label { float: left; }
-    #res_title_div, #res_cc_div {
-      padding: 5px;
-    }
-  }
-}
-
-img.preview { max-width: 300px ; }
-
-/* Mobile look for modal */ 
+/**************
+ * Responsive *
+ **************/
 @media (max-width: 480px) {
   .modal-header h1 {
     margin: 0;

@@ -4,10 +4,7 @@ class UserSession < Authlogic::Session::Base
   anonymous true
   redirect_logout_url Settings.login.redirect_logout_url
   
-  def additional_attributes
-    h = {}
-    return h unless pds_user
-    h[:room_reserve_admin] = true if Settings.login.default_admins.include? pds_user.uid
-    return h
+  def attempt_sso?
+    (Rails.env.development? || Rails.env.test?) ? false : super
   end
 end

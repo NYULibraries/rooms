@@ -1,0 +1,11 @@
+<div class="policies">
+<ul>
+  <h3><%= t('reservation.policies.title') %></h3>
+	<% if can? :ny_graduate, RoomGroup %>
+	<li><%= t('reservation.policies.create_today.graduate')%></li>
+	<% else %>
+	<li><%= t('reservation.policies.create_today.undergraduate')%></li>
+	<% end %>
+	<li><%= t('reservation.policies.create_for_same_day')%></li>
+</ul>
+</div>

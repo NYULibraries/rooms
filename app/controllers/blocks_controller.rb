@@ -1,86 +1,87 @@
 class BlocksController < ApplicationController
-  before_filter :authenticate_admin
+  # Authorize as symbol without class since this is only for RESTful actions
+  authorize_resource :block, :class => false
   respond_to :html, :js
   
   # GET /blocks
   def index
-    @blocks = Reservation.blocks.joins(:room).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
+    @blocks = Reservation.blocks.joins(:room).accessible_by(current_ability).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
     @rooms = Room.all
     respond_with(@blocks)
   end
   
   # GET /blocks/new
   def new
-    @block = Reservation.new
-  end
-  
-  # Generates new block request for approval before creating
-  def generate
-    @block = Reservation.new(params[:block]) 
-    @room = Room.find(params[:block][:room_id])
-    
-    @start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
-    @end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
-     
-    # Find all reservations that fall between this selected date range      
-    @existing_reservations = Reservation.active_non_blocks.where("room_id = ? AND start_dt >= ? AND ((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", params[:block][:room_id], Time.now, @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt)
-
-    # Set the fields to the proper datetime objects   
-    @block.start_dt = @start_dt
-    @block.end_dt = @end_dt
-    @block.title = "Scheduled closure" if params[:block][:title].blank?
-    
+    @block = Reservation.new(:is_block => true)
     respond_with(@block)
   end
   
   # POST /blocks
   def create
-    @block = Reservation.new(params[:block])
+    @block = Reservation.new(params[:reservation])
     @block.user_id = current_user.id
     @block.is_block = true
-    @room = Room.find(params[:block][:room_id])
-
-    @start_dt = params[:block][:start_dt] unless params[:block][:start_dt].blank?
-    @end_dt = params[:block][:end_dt] unless params[:block][:end_dt].blank?
+    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
     
-    # If there are existing reservations and a cancellation request has been submitted...
-    unless params[:cancel].blank?
-      # Delete all found reservations
+    respond_with(@block) do |format|
+      if @block.save
+        format.html { redirect_to blocks_url, notice: t('blocks.create.success') }
+      else
+        format.html { render :new }
+      end
+    end
+  end
+    
+  # DELETE /blocks/1
+  def destroy
+    @block = Reservation.find(params[:id])
+    flash[:notice] = t('blocks.destroy.success') if @block.destroy
+
+    respond_with(@block, :location => blocks_url)
+  end
+  
+  # POST /blocks/destroy_existing_reservations
+  def destroy_existing_reservations
+    @block = Reservation.new(params[:reservation])
+    @block.user_id = current_user.id
+    @block.is_block = true
+    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
+    
+    # If this has been submitted with a cancel request, delete conflicting reservations
+    unless params[:cancel].blank? || params[:reservations_to_delete].blank?
       formatted_reservations = ""
-      @existing_reservations = Reservation.find(params[:reservations_to_delete])
-      @existing_reservations.each do |res|
+      reservations_to_delete = Reservation.find(params[:reservations_to_delete])
+      reservations_to_delete.each do |res|
         # Mark reservation as deleted
         if res.update_attributes(:deleted => true, :deleted_by => { :by_block => true })
           # Send an email if choice to alert users was made
           ReservationMailer.block_cancellation_email(res, params[:cc_group], params[:cancellation_email]).deliver if params[:cancel].eql? "delete_with_alert"
+          # Format each deleted reservation to send email to admin
           formatted_reservations += "User: #{res.user.username}; Room: #{res.room.title}; Reservation: #{res.start_dt.strftime('%a. %b %d, %Y %I:%M %p')} -- #{res.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}\n"
-        else
-          flash[:error] = "Could not delete reservation with id: #{res.id}. Please report this to the system administrator: gswg@library.nyu.edu."
-          render :new and return false
         end
       end
       # Send an email to the administrator specified if the checkbox was selected
       ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
     end
-   
-    respond_with(@block) do |format|
+    
+    # Jumping through hoops here to avoid ElasticSearch caching class method existing_reservations when @block.save is called
+    reservations_still_exist = Reservation.where(:id => params[:reservations_to_delete], :deleted => false)
+    if reservations_still_exist.empty?
+      redirect_to blocks_url, notice: t('blocks.destroy_existing_reservations.success') if @block.save(:validate => false)
+    else
       if @block.save
-        format.html { redirect_to blocks_url, notice: "Block successfully created." }
+        redirect_to blocks_url, notice: t('blocks.destroy_existing_reservations.success')
       else
-        flash[:error] = "Could not save block. If this problem persists please report to administrator."
-        format.html { render :new }
+        # If the block can't save, you will render :new with a list of existing reservations and options
+        flash[:error] = t('blocks.destroy_existing_reservations.error')
+        render :new, params: params
       end
     end
   end
   
-  # DELETE /blocks/1
-  def destroy
-    @block = Reservation.find(params[:id])
-    @block.destroy
-
-    respond_with(@block) do |format|
-      format.html { redirect_to blocks_url, notice: "Block was successfully deleted." }
-    end
+  # GET /blocks/index_existing_reservations
+  def index_existing_reservations
+    @existing_reservations = Reservation.find(params[:reservations_to_delete])
   end
   
 end

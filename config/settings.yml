@@ -17,7 +17,7 @@ newrelic:
   app_name: ''
 
 login:
-  default_admins: []
+  default_admins: ['admin']
   pds_url: ""
   calling_system: ""
   
@@ -27,3 +27,25 @@ secret_token: 'dd6f1b6faf2511a744f3f08644e76edcb6be01d7019a6e62947e3a76a2c5f1ea7
   
 cookie: 
   domain: ".local"
+
+elasticsearch:
+  bonsai:
+    url: http://localhost:9200
+    
+roles:
+  admin:
+    - superuser
+    - ny_admin
+    - shanghai_admin
+  authorized:
+    shanghai_undergraduate:
+      - "0"
+    ny_undergraduate:
+      - "1"
+      - "2"
+    ny_graduate:
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"

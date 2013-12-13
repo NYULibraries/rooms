@@ -1,45 +1,44 @@
+<h1><%=h @room.title %></h1>
 
-<p>
-  <b>Title:</b>
-  <%=h @room.title %>
-</p>
+<dl class="dl-horizontal">
+  <dt>Location:</dt>
+  <dd><%=h @room.title %></dd>
 
-<% unless @room.type_of_room.blank? %>
-<p>
-  <b>Type:</b>
-  <%=h @room.type_of_room %>
-</p>
-<% end %>
+  <% unless @room.type_of_room.blank? %>
+  <dt>Type:</dt>
+  <dd><%=h @room.type_of_room %></dd>
+  <% end %>
+  
+  <% if current_user.is_admin? %>
+  <dt>Collaborative?</dt>
+  <dd><%=h @room.collaborative? %></dd>
+  <% end %>
 
-<% unless @room.description.blank? %>
-<p>
-  <b>Description:</b><br />
-  <%= simple_format(sanitize(@room.description, :tags => %w(b strong i em br p a ul li))) %>
-</p>
-<% end %>
+  <% unless @room.description.blank? %>
+  <dt>Details:</dt>
+  <dd><%= simple_format(sanitize(@room.description, :tags => %w(b strong i em br p a ul li))) %></dd>
+  <% end %>
 
-<% unless @room.size_of_room.blank? %>
-<p>
-  <b>Size:</b>
-  <%=h @room.size_of_room %>
-</p>
-<% end %>
+  <% unless @room.size_of_room.blank? %>
+  <dt>Capacity:</dt>
+  <dd><%=h @room.size_of_room %></dd>
+  <% end %>
 
-<% unless @room.image_link.blank? %>
-<p>
-  <b>Image URL:</b><br />
-  <%= link_to image_tag(@room.image_link, :width => "100"), @room.image_link %>
-</p>
-<% end %>
+  <% unless @room.image_link.blank? %>
+  <dt>Image:</dt>
+  <dd><%= link_to image_tag(@room.image_link, :width => "100"), @room.image_link, {:target => "_blank"} %></dd>
+  <% end %>
 
-<% unless @room.hours.blank? %>
-<p>
-  <b>Hours:</b><br />
-  <%=display_hours%>
-</p>
-<% end %>
+  <dt>Hours:</dt>
+  <dd><%=display_hours%></dd>
 
+</dl>
+
+<% if can? :edit, @room %>
 <%= icon_tag :edit %>
-<%= link_to 'Edit', edit_room_path(@room), :class => "nyulibrary_icons_wrench" %> |
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<% end %>
+<% if can? :index, @room %>
 <%= icon_tag :back %>
-<%= link_to 'Back', rooms_path, :class => "nyulibrary_icons_arrow_undo" %>
+<%= link_to 'Back', rooms_path %>
+<% end %>

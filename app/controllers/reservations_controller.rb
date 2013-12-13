@@ -24,27 +24,7 @@ class ReservationsController < ApplicationController
       authorize! action, @reservation
     end
 
-    # Default elasticsearch options
-    options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
-    # Get room groups this user can admin
-    room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
-    # Boolean if this is default sort or a re-sort
-    resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from elasticsearch through tire DSL
-    rooms = Room.tire.search do
-      filter :terms, :room_group => room_group_filter, :execution => "or"
-      # Default sort by room group and then default
-      sort do
-        by :room_group, 'asc'
-        by options[:sort], options[:direction]
-      end unless resort
-      sort { by options[:sort], options[:direction] } if resort
-      page = options[:page].to_i
-      search_size = options[:per].to_i
-      from (page -1) * search_size
-      size search_size
-    end
-    @rooms = RoomsDecorator.new(rooms)
+    @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
 
@@ -62,27 +42,7 @@ class ReservationsController < ApplicationController
       authorize! action, @reservation
     end
     
-    # Default elasticsearch options
-    options = { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
-    # Get room groups this user can admin
-    room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
-    # Boolean if this is default sort or a re-sort
-    resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from elasticsearch through tire DSL
-    rooms = Room.tire.search do
-      filter :terms, :room_group => room_group_filter, :execution => "or"
-      # Default sort by room group and then default
-      sort do
-        by :room_group, 'asc'
-        by options[:sort], options[:direction]
-      end unless resort
-      sort { by options[:sort], options[:direction] } if resort
-      page = options[:page].to_i
-      search_size = options[:per].to_i
-      from (page -1) * search_size
-      size search_size
-    end
-    @rooms = RoomsDecorator.new(rooms)
+    @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
 
@@ -92,7 +52,6 @@ class ReservationsController < ApplicationController
         ReservationMailer.confirmation_email(@reservation).deliver
         flash[:success] = t('reservations.create.success').html_safe
         format.html { render :index }
-        format.js 
       else
         format.html { render :new, params: params }
         format.js { render :new, params: params }
@@ -164,7 +123,7 @@ class ReservationsController < ApplicationController
           DateTime.parse(params[:reservation][:start_dt]) 
   rescue Exception => e
     flash[:error] = t('reservation.date_formatted_correctly')
-    @start_dt = DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
+    @start_dt ||= default_date
   end
   helper_method :start_dt
   
@@ -175,7 +134,7 @@ class ReservationsController < ApplicationController
         DateTime.parse(params[:reservation][:end_dt])
   rescue Exception => e
     flash[:error] = t('reservation.date_formatted_correctly')
-    @endt_dt = DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
+    @endt_dt ||= default_date
   end
   helper_method :end_dt
   
@@ -191,9 +150,39 @@ private
   
   # Convert 12 to 24 hours
   def hour
-    @hour ||= (params[:reservation][:ampm] == "pm" && params[:reservation][:hour] != "12") ? params[:reservation][:hour].to_i + 12 :
-                (params[:reservation][:ampm] == "am" && params[:reservation][:hour] == "12") ? hour = 0 :
-                  params[:reservation][:hour].to_i 
+    @hour ||= get_hour_in_24(params[:reservation])
+  end
+  
+  def default_elasticsearch_options
+    @default_elasticsearch_options ||= { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+  end
+  
+  def default_date
+    @default_date ||= DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
+  end
+  
+  def rooms_search
+    # Default elasticsearch options
+    options = default_elasticsearch_options
+    # Get room groups this user can admin
+    room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
+    # Boolean if this is default sort or a re-sort
+    resort = (sort_column.to_sym != options[:sort])
+    # Get Rooms from elasticsearch through tire DSL
+    rooms_search ||= Room.tire.search do
+      filter :terms, :room_group => room_group_filter, :execution => "or"
+      # Default sort by room group and then default
+      sort do
+        by :room_group, 'asc'
+        by options[:sort], options[:direction]
+      end unless resort
+      sort { by options[:sort], options[:direction] } if resort
+      page = options[:page].to_i
+      search_size = options[:per].to_i
+      from (page -1) * search_size
+      size search_size
+    end
+    return rooms_search
   end
   
 end

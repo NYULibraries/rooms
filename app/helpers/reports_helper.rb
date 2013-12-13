@@ -7,58 +7,34 @@ module ReportsHelper
   end
 
   def college_name_options
-    colleges = []
-    @user_college_names ||= Rails.cache.fetch "user_college_names", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%college_name%'").uniq.pluck(:user_attributes)
-    end
-    @user_college_names.each do |p|
-      colleges.push(p[:college_name]) unless colleges.include? p[:college_name] or p[:college_name].blank?
-    end
-    colleges
+    @college_name_options ||= options(:college_name)
   end
 
   def college_code_options
-    college_codes = []
-    @user_college_codes ||= Rails.cache.fetch "user_college_codes", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%college_code%'").uniq.pluck(:user_attributes)
-    end
-    @user_college_codes.each do |p|
-      college_codes.push(p[:college_code]) unless college_codes.include? p[:college_code] or p[:college_code].blank?
-    end
-    college_codes
+    @college_code_options ||= options(:college_code)
   end
 
   def dept_options
-    depts = []
-    @user_dept_names ||= Rails.cache.fetch "user_dept_names", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%dept_name%'").uniq.pluck(:user_attributes)
-    end
-    @user_dept_names.each do |p|
-      depts.push(p[:dept_name]) unless depts.include? p[:dept_name] or p[:dept_name].blank?
-    end
-    depts
+    @dept_options ||= options(:dept_name)
   end
 
   def major_options
-    majors = []
-    @user_majors ||= Rails.cache.fetch "user_majors", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%major%'").uniq.pluck(:user_attributes)
-    end
-    @user_majors.each do |p|
-      majors.push(p[:major]) unless majors.include? p[:major] or p[:major].blank?
-    end
-    majors
+    @major_options ||= options(:major)
   end
 
   def user_status_options
-    user_statuses = []
-    @user_bor_statuses ||= Rails.cache.fetch "user_bor_statuses", :expires_in => 30.days do
-      User.where("user_attributes LIKE '%bor_status%'").uniq.pluck(:user_attributes)
+    @user_status_options ||= options(:bor_status)
+  end
+  
+  def options(options_name)
+    options = []
+    user_options = Rails.cache.fetch "user_#{options_name.to_s.pluralize}", :expires_in => 30.days do
+      User.where("user_attributes LIKE '%#{options_name.to_s}%'").uniq.pluck(:user_attributes)
     end
-    @user_bor_statuses.each do |p|
-      user_statuses.push(p[:bor_status]) unless user_statuses.include? p[:bor_status] or p[:bor_status].blank?
+    user_options.each do |p|
+      options.push(p[options_name]) unless options.include? p[options_name] or p[options_name].blank?
     end
-    user_statuses
+    options
   end
   
 end

@@ -113,23 +113,24 @@ class RoomsController < ApplicationController
 private
 
   def opens_at
-    @opens_at ||= Time.new(1,1,1,opens_at_hour,params[:opens_at][:minute],0,0).strftime("%k:%M")
+    @opens_at ||= format_new_time(:opens_at)
+  end
+
+  def closes_at
+    @closes_at ||= format_new_time(:closes_at)
   end
   
-  def closes_at
-    @closes_at ||= Time.new(1,1,1,closes_at_hour,params[:closes_at][:minute],0,0).strftime("%k:%M")
+  def format_new_time(time_params)
+    hour_method = ([:opens_at, :closes_at].include? time_params) ? send("#{time_params.to_s}_hour") : 0
+    return Time.new(1,1,1,hour_method,params[time_params][:minute],0,0).strftime("%k:%M")
   end
   
   def opens_at_hour
-    @opens_at_hour ||= (params[:opens_at][:ampm] == "pm" && params[:opens_at][:hour] != "12") ? params[:opens_at][:hour].to_i + 12 :
-      (params[:opens_at][:ampm] == "am" && params[:opens_at][:hour] == "12") ? hour = 0 :
-        params[:opens_at][:hour].to_i
+    @opens_at_hour ||= get_hour_in_24(params[:opens_at])
   end
   
   def closes_at_hour
-    @closes_at_hour ||= (params[:closes_at][:ampm] == "pm" && params[:closes_at][:hour] != "12") ? params[:closes_at][:hour].to_i + 12 :
-      (params[:closes_at][:ampm] == "am" && params[:closes_at][:hour] == "12") ? hour = 0 :
-        params[:closes_at][:hour].to_i
+    @closes_at_hour ||= get_hour_in_24(params[:closes_at])
   end
   
 end

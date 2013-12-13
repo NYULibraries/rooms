@@ -43,6 +43,12 @@ class ApplicationController < ActionController::Base
   helper_method :sort_direction
   protected :sort_direction
   
+  def get_hour_in_24(hours_hash)
+    return (hours_hash[:ampm] == "pm" && hours_hash[:hour] != "12") ? hours_hash[:hour].to_i + 12 :
+            (hours_hash[:ampm] == "am" && hours_hash[:hour] == "12") ? hour = 0 :
+              hours_hash[:hour].to_i
+  end
+  
   # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] ||= exception.message.html_safe

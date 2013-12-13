@@ -1,16 +1,14 @@
 module RoomsHelper
   
   def default_opens_at_hour
-    hours = @room.opens_at
-    unless hours.nil?
-      hour = hours.split(":").first.to_i
-      return (hour <= 12) ? (hour == 0) ? 12 : hour : hour - 12
-    end
-    return 1
+    default_hour(@room.opens_at)
   end
   
   def default_closes_at_hour
-    hours = @room.closes_at
+    default_hour(@room.closes_at)
+  end
+  
+  def default_hour(hours)
     unless hours.nil?
       hour = hours.split(":").first.to_i
       return (hour <= 12) ? (hour == 0) ? 12 : hour : hour - 12
@@ -19,28 +17,27 @@ module RoomsHelper
   end
   
   def default_opens_at_minute
-    hours = @room.opens_at
-    return hours.split(":").last.to_i unless hours.nil?
-    return 0
+    default_minute(@room.opens_at)
   end
   
   def default_closes_at_minute
-    hours = @room.closes_at
+    default_minute(@room.closes_at)
+  end
+  
+  def default_minute(hours)
     return hours.split(":").last.to_i unless hours.nil?
     return 0
   end
   
   def default_opens_at_ampm
-    hours = @room.opens_at
-    unless hours.nil?
-      hour = hours.split(":").first.to_i
-      return (hour < 12) ? "am" : "pm"
-    end
-    return "am"
+    default_ampm(@room.opens_at)
   end
   
   def default_closes_at_ampm
-    hours = @room.closes_at
+    default_ampm(@room.closes_at)
+  end
+  
+  def default_ampm(hours)
     unless hours.nil?
       hour = hours.split(":").first.to_i
       return (hour < 12) ? "am" : "pm"
@@ -48,14 +45,20 @@ module RoomsHelper
     return "am"
   end
   
-  def display_hours
-    opens_at = Time.new(1,1,1,@room.opens_at.split(":").first.to_i,@room.opens_at.split(":").last.to_i,0).strftime("%l:%M %P")
-    closes_at = Time.new(1,1,1,@room.closes_at.split(":").first.to_i,@room.closes_at.split(":").last.to_i,0).strftime("%l:%M %P")
-    if opens_at == closes_at
-      t('room.open_24_hours')
-    elsif !opens_at.nil? && !closes_at.nil?
-      "#{opens_at} - #{closes_at}"
-    end
+  def display_hours    
+    return (opens_at == closes_at) ? t('room.open_24_hours') : (!opens_at.nil? && !closes_at.nil?) ? "#{opens_at} - #{closes_at}" : ''
+  end
+  
+  def opens_at
+    format_hours_time(@room.opens_at)
+  end
+  
+  def closes_at
+    format_hours_time(@room.closes_at)
+  end
+  
+  def format_hours_time(hours)
+    Time.new(1,1,1,hoursplit(":").first.to_i,hours.split(":").last.to_i,0).strftime("%l:%M %P")
   end
   
   def room_group_selected?(room_group)

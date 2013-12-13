@@ -1,5 +1,3 @@
-require "#{Rails.root}/app/models/room.rb" unless Rails.env.test?
-
 namespace :transfer do
 
   desc "Dump data from database into YAML"

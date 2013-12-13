@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20131211223156) do
+=======
+ActiveRecord::Schema.define(:version => 20131003170025) do
+>>>>>>> master
 
   create_table "reservations", :force => true do |t|
     t.integer  "user_id"
@@ -73,7 +77,11 @@ ActiveRecord::Schema.define(:version => 20131211223156) do
     t.datetime "last_login_at"
     t.text     "user_attributes"
     t.datetime "refreshed_at"
+<<<<<<< HEAD
     t.integer  "admin_roles_mask"
+=======
+    t.integer  "roles_mask"
+>>>>>>> master
   end
 
 end

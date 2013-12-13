@@ -1,6 +1,6 @@
 Rooms::Application.routes.draw do
   mount Peek::Railtie => '/peek'
-  
+
   scope "admin" do
     get 'rooms/sort' => "rooms#index_sort", :as => "sort_rooms"
     put 'rooms/sort' => "rooms#update_sort"

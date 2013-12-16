@@ -26,7 +26,7 @@ http_interactions:
       - '1196'
     body:
       encoding: US-ASCII
-      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
         "_source" : {"closes_at":"01:00","description":null,"id":1,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
         People","sort_order":1,"sort_size_of_room":2,"title":"Individual Room 1","type_of_room":"One
         person","room_group":"ny_graduate"},"sort":["ny_graduate",1]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
@@ -35,5 +35,5 @@ http_interactions:
         "_source" : {"closes_at":"01:00","description":"Smorgasbrd","id":4,"image_link":"http://bing.com","opens_at":"07:00","size_of_room":"2","sort_order":4,"sort_size_of_room":2,"title":"Garbage
         time","type_of_room":"Indy","room_group":"shanghai_undergraduate"},"sort":["shanghai_undergraduate",4]}]}}'
     http_version: 
-  recorded_at: Wed, 11 Dec 2013 23:06:57 GMT
+  recorded_at: Mon, 16 Dec 2013 21:31:56 GMT
 recorded_with: VCR 2.6.0

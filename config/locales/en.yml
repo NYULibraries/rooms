@@ -1,4 +1,6 @@
 en:
+  application:
+    title_html: Reserve a study space
   mailers:
     reservation_mailer:
       default_from: "Bobst Library Graduate Room Reservation System <gswg@library.nyu.edu>"
@@ -11,7 +13,6 @@ en:
         subject: "NYU Libraries- Room reservation cancellation"
       confirmation_email:
         subject: "NYU Libraries- Room reservation confirmation"
-  title: Reserve a study space
   unauthorized:
     create_today:
       reservation: "Sorry, you are only allowed <strong>to create one reservation per day.</strong>"

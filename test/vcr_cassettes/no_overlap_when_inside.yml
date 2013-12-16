@@ -26,10 +26,10 @@ http_interactions:
       - '419'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"3","_score":1.0,
-        "_source" : {"deleted":false,"end_dt":"3020-10-01T15:00:00+00:00","id":3,"is_block":false,"room_id":1,"start_dt":"3020-10-01T13:30:00+00:00","title":null,"user_id":1,"created_at_day":"2013-12-11","start_day":"3020-10-01"}}]}}'
+      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"3","_score":1.0,
+        "_source" : {"deleted":false,"end_dt":"3020-10-01T15:00:00+00:00","id":3,"is_block":false,"room_id":1,"start_dt":"3020-10-01T13:30:00+00:00","title":null,"user_id":1,"created_at_day":"2013-12-16","start_day":"3020-10-01"}}]}}'
     http_version: 
-  recorded_at: Wed, 11 Dec 2013 23:06:38 GMT
+  recorded_at: Mon, 16 Dec 2013 21:31:27 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
@@ -56,8 +56,8 @@ http_interactions:
       - '419'
     body:
       encoding: US-ASCII
-      string: ! '{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"3","_score":1.0,
-        "_source" : {"deleted":false,"end_dt":"3020-10-01T15:00:00+00:00","id":3,"is_block":false,"room_id":1,"start_dt":"3020-10-01T13:30:00+00:00","title":null,"user_id":1,"created_at_day":"2013-12-11","start_day":"3020-10-01"}}]}}'
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"test_reservations","_type":"reservation","_id":"3","_score":1.0,
+        "_source" : {"deleted":false,"end_dt":"3020-10-01T15:00:00+00:00","id":3,"is_block":false,"room_id":1,"start_dt":"3020-10-01T13:30:00+00:00","title":null,"user_id":1,"created_at_day":"2013-12-16","start_day":"3020-10-01"}}]}}'
     http_version: 
-  recorded_at: Wed, 11 Dec 2013 23:06:38 GMT
+  recorded_at: Mon, 16 Dec 2013 21:31:27 GMT
 recorded_with: VCR 2.6.0

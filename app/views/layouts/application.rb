@@ -2,24 +2,17 @@
 module Views
   module Layouts
     class Application < ActionView::Mustache
-      # Meta tags to include in layout
-      def meta
-        meta = super
-        meta << tag(:meta, :name => "HandheldFriendly", :content => "True")
-        meta << tag(:meta, :name => "cleartype", :content => "on")
-        meta << favicon_link_tag('https://library.nyu.edu/favicon.ico')
-      end
-      
-      def header
-        
-      end
-      
-      def application_title
-        t('title')
-      end
 
+      def header
+        nil
+      end
+      
       def gauges_tracking_code
         Settings.gauges.tracking_code
+      end
+      
+      def application_stylesheet
+        institutional_stylesheet
       end
       
       # Print breadcrumb navigation

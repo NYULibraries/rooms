@@ -49,3 +49,26 @@ roles:
       - "5"
       - "6"
       - "7"
+
+institutions:
+  NYU:
+    ip_addresses:
+      - 127.0.0.1
+  NYUAD:
+    ip_addresses:
+      - 127.0.0.1
+  NYUSH:
+    ip_addresses:
+      - 127.0.0.1
+  NYSID:
+    ip_addresses:
+      - 127.0.0.1
+  HSL:
+    ip_addresses:
+      - 127.0.0.1
+  CU:
+    ip_addresses:
+      - 127.0.0.1
+  NS:
+    ip_addresses:
+      - 127.0.0.1

@@ -3,7 +3,7 @@ class Reservation < ActiveRecord::Base
   include Tire::Model::Callbacks
   
   # elasticsearch index name
-  index_name("#{Rails.env}_reservations")
+  index_name("#{Rails.env}_rooms")
   
   belongs_to :room
   belongs_to :user

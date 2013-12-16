@@ -1,13 +1,10 @@
-unless Rails.env.test?
-require "#{Rails.root}/app/models/roles/authorization.rb"
-require "#{Rails.root}/app/models/room.rb"
-require "#{Rails.root}/app/models/room_group.rb"
-end
-
 namespace :transfer do
 
   desc "Dump data from database into YAML"
   task :dump, [:modelName] => :environment do |t, args|
+    require "#{Rails.root}/app/models/roles/authorization.rb"
+    require "#{Rails.root}/app/models/room.rb"
+    require "#{Rails.root}/app/models/room_group.rb"
     
     args.with_defaults(:modelName => "Room")
 
@@ -21,6 +18,9 @@ namespace :transfer do
 
   desc "Transfer room groups"
   task :room_groups => :environment do
+    require "#{Rails.root}/app/models/roles/authorization.rb"
+    require "#{Rails.root}/app/models/room.rb"
+    require "#{Rails.root}/app/models/room_group.rb"
     room_groups = YAML.load_file("#{Rails.root}/lib/tasks/roomgroups_staging.yml")
     room_groups.each do |room_group|
       rg = RoomGroup.new
@@ -33,6 +33,9 @@ namespace :transfer do
   
   desc "Transfer rooms from dev to production based on ID matching"
   task :rooms => :environment do
+    require "#{Rails.root}/app/models/roles/authorization.rb"
+    require "#{Rails.root}/app/models/room.rb"
+    require "#{Rails.root}/app/models/room_group.rb"
     rooms = YAML.load_file("#{Rails.root}/lib/tasks/rooms_staging.yml")
     rooms.each do |room|
       existing_room = Room.find_or_initialize_by_id(room.id)

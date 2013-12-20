@@ -3,7 +3,7 @@ en:
     title_html: Reserve a study space
   mailers:
     reservation_mailer:
-      default_from: "Bobst Library Graduate Room Reservation System <gswg@library.nyu.edu>"
+      default_from: "NYU Libraries Room Reservation <gswg@library.nyu.edu>"
       default_reply_to: "no-reply@library.nyu.edu"
       cancellation_email:
         subject: "NYU Libraries- Room reservation cancellation"

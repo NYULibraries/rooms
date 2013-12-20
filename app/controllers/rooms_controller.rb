@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   def index
     @room_groups = RoomGroup.all
     # Default elasticsearch options
-    options = params.merge({ :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) })
+    options = params.merge(default_elasticsearch_options)
     # Get room groups this user can admin
     room_group_filter = (params[:room_group].blank?) ? @room_groups.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
     # Boolean if this is default sort or a re-sort

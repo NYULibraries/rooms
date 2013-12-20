@@ -2,6 +2,7 @@ class BlocksController < ApplicationController
   # Authorize as symbol without class since this is only for RESTful actions
   authorize_resource :block, :class => false
   respond_to :html, :js
+  before_filter :set_block, :only => [:create, :destroy_existing_reservations]
   
   # GET /blocks
   def index
@@ -18,11 +19,6 @@ class BlocksController < ApplicationController
   
   # POST /blocks
   def create
-    @block = Reservation.new(params[:reservation])
-    @block.user_id = current_user.id
-    @block.is_block = true
-    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
-    
     respond_with(@block) do |format|
       if @block.save
         format.html { redirect_to blocks_url, notice: t('blocks.create.success') }
@@ -41,12 +37,7 @@ class BlocksController < ApplicationController
   end
   
   # POST /blocks/destroy_existing_reservations
-  def destroy_existing_reservations
-    @block = Reservation.new(params[:reservation])
-    @block.user_id = current_user.id
-    @block.is_block = true
-    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
-    
+  def destroy_existing_reservations 
     # If this has been submitted with a cancel request, delete conflicting reservations
     unless params[:cancel].blank? || params[:reservations_to_delete].blank?
       formatted_reservations = ""
@@ -82,6 +73,15 @@ class BlocksController < ApplicationController
   # GET /blocks/index_existing_reservations
   def index_existing_reservations
     @existing_reservations = Reservation.find(params[:reservations_to_delete])
+  end
+  
+private
+
+  def set_block
+    @block = Reservation.new(params[:reservation])
+    @block.user_id = current_user.id
+    @block.is_block = true
+    @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
   end
   
 end

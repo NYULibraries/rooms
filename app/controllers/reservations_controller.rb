@@ -153,10 +153,6 @@ private
     @hour ||= get_hour_in_24(params[:reservation])
   end
   
-  def default_elasticsearch_options
-    @default_elasticsearch_options ||= { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
-  end
-  
   def default_date
     @default_date ||= DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
   end

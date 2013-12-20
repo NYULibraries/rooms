@@ -49,6 +49,10 @@ class ApplicationController < ActionController::Base
               hours_hash[:hour].to_i
   end
   
+  def default_elasticsearch_options
+    @default_elasticsearch_options ||= { :direction => (params[:direction] || 'asc'), :sort => (params[:sort] || sort_column.to_sym), :page => (params[:page] || 1), :per => (params[:per] || 20) }  
+  end  
+  
   # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] ||= exception.message.html_safe

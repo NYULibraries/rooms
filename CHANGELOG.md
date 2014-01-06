@@ -1,5 +1,8 @@
 # Change Log
 
+## 2014-01-06
+- Almost full testing coverage and deploying changes implemented on 2013-11-01
+
 ## 2013-11-01
 
 ### Functional Changes

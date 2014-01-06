@@ -37,7 +37,7 @@ group :test do
   gem 'ruby-prof'
 end
 
-gem 'debugger', :groups => [:development, :test, :staging]
+gem 'debugger', :groups => [:development, :test, :staging, :qa]
 
 gem 'json', '~> 1.8.0'
 

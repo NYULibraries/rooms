@@ -21,7 +21,7 @@ namespace :transfer do
     require "#{Rails.root}/app/models/roles/authorization.rb"
     require "#{Rails.root}/app/models/room.rb"
     require "#{Rails.root}/app/models/room_group.rb"
-    room_groups = YAML.load_file("#{Rails.root}/lib/tasks/roomgroups_#{Rails.env}.yml")
+    room_groups = YAML.load_file("#{Rails.root}/lib/tasks/roomgroups_staging.yml")
     room_groups.each do |room_group|
       rg = RoomGroup.new
       rg.id = room_group.id
@@ -36,7 +36,7 @@ namespace :transfer do
     require "#{Rails.root}/app/models/roles/authorization.rb"
     require "#{Rails.root}/app/models/room.rb"
     require "#{Rails.root}/app/models/room_group.rb"
-    rooms = YAML.load_file("#{Rails.root}/lib/tasks/rooms_#{Rails.env}.yml")
+    rooms = YAML.load_file("#{Rails.root}/lib/tasks/rooms_staging.yml")
     rooms.each do |room|
       existing_room = Room.find_or_initialize_by_id(room.id)
       existing_room.assign_attributes(room.attributes.except("sort_order", "hours", "sort_size_of_room", "opens_at", "closes_at", "id", "created_at", "updated_at"))

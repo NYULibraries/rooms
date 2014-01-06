@@ -66,7 +66,7 @@ namespace :transfer do
       if r[:count].to_i != room.reservations.count
         #puts "(#{room.id}) #{room.title} still has #{r[:count]}"
         #else
-        puts "(#{room.id}) ERROR #{room.title} had #{r[:count]} but now has #{r.reservations.count}"
+        puts "(#{room.id}) ERROR #{room.title} had #{r[:count]} but now has #{room.reservations.count}"
         errored = true
       end
     end

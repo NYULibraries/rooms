@@ -1,11 +1,8 @@
-@import "nyulibraries";
+@import "jquery.ui.all";
+@import "peek";
+@import "peek/views/performance_bar";
+@import "peek/views/rblineprof";
 @import "jquery-ui-timepicker-addon";
-
-$unavailable_color: #ed1c24;
-$available_color: #e6e7e8;
-$preferred_color: #1c75bc;
-$table_header_color: #6d6e71;
-$table_border_color: #dddddd;
 
 h1.page_title { margin-top: 0; }
 
@@ -249,41 +246,4 @@ ul#list_rooms {
   margin-left: 0;
   h4 { padding-bottom: 3px; }
   > li { padding: 5px 0; }
-}
-
-
-
-
-/**************
- * Responsive *
- **************/
-@media (max-width: 480px) {
-  .modal-header h1 {
-    margin: 0;
-    padding: 0;
-  }
-  .modal-boder {
-    padding-top: 0;
-    nav.pagination {
-      margin-top: 10px;
-      margin-bottom: 0;
-    }
-  }
-  .modal-footer {
-    padding: 5px;
-    button {
-      padding: 5px;
-      font-size: 12px;
-    }
-    .extra_fields { width: 300px; }
-    #reservation_cc, #reservation_title {
-      width: auto;
-      margin: 0;
-    }
-  }
-  .modal.fullscreen { 
-    top: 5px !important;
-    left: 5px;
-    right: 5px;
-  }
 }

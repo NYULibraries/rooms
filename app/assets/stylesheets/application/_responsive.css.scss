@@ -1,0 +1,33 @@
+/**************
+ * Responsive *
+ **************/
+@media (max-width: 480px) {
+  .modal-header h1 {
+    margin: 0;
+    padding: 0;
+  }
+  .modal-boder {
+    padding-top: 0;
+    nav.pagination {
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+  }
+  .modal-footer {
+    padding: 5px;
+    button {
+      padding: 5px;
+      font-size: 12px;
+    }
+    .extra_fields { width: 300px; }
+    #reservation_cc, #reservation_title {
+      width: auto;
+      margin: 0;
+    }
+  }
+  .modal.fullscreen { 
+    top: 5px !important;
+    left: 5px;
+    right: 5px;
+  }
+}

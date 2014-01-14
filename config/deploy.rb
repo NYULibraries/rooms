@@ -1,3 +1,3 @@
 require 'nyulibraries/deploy/capistrano'
 set :app_title, "rooms"
-set :recipient, "web.services@library.nyu.edu"
+set :recipient, "rooms.admin@library.nyu.edu"

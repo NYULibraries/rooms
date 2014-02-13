@@ -35,5 +35,5 @@ http_interactions:
         "_source" : {"closes_at":"01:00","description":"Smorgasbrd","id":4,"image_link":"http://bing.com","opens_at":"07:00","size_of_room":"2","sort_order":4,"sort_size_of_room":2,"title":"Garbage
         time","type_of_room":"Indy","room_group":"shanghai_undergraduate"},"sort":["shanghai_undergraduate",4]}]}}'
     http_version: 
-  recorded_at: Mon, 16 Dec 2013 21:31:56 GMT
+  recorded_at: Thu, 13 Feb 2014 18:31:59 GMT
 recorded_with: VCR 2.6.0

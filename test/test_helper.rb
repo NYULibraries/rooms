@@ -20,7 +20,7 @@ if ENV["RAILS_ENV"] == "test"
     c.cassette_library_dir = 'test/vcr_cassettes'
     # webmock needed for HTTPClient testing
     c.hook_into :webmock 
-    #c.filter_sensitive_data("http://localhost:9200") { "" }
+    #c.filter_sensitive_data("http://localhost:9200") { Settings.elasticsearch.bonsai.url }
   end
 
   VCR.use_cassette('load elasticsearch models') do

@@ -40,6 +40,9 @@ window.select_room = (clicked_el) ->
       fit_modal_body($("#ajax-modal"))
   # Remove any current selected timeslot classes
   $(".timeslot_selected").removeClass("timeslot_selected")
+  # Unbind previous click element on every select
+  $("#ajax-modal").find(".modal-footer").find("button[type='submit']").addClass("disabled").unbind "click"
+  # Reset room info font weight each select as well
   $(clicked_el).closest("table").find("td.room_info").css("font-weight":"normal")
   # Make sure none of the clicked timeslots are unavailable
   unless $(clicked_el).closest("tr").find("td.timeslot_preferred.timeslot_unavailable").is("*")
@@ -60,6 +63,3 @@ window.select_room = (clicked_el) ->
     $(clicked_el).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').prop('checked', true)
     # Trigger the change event defined above
     $(clicked_el).closest('tr').find('td:first-child input:radio[name="reservation[room_id]"]').trigger('change')
-  else
-    # Unbind click element
-    $("#ajax-modal").find(".modal-footer").find("button[type='submit']").addClass("disabled").unbind "click"

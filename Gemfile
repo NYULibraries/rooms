@@ -6,7 +6,7 @@ gem 'mysql2', '~> 0.3.11'
 
 # Move this out here to use coffee in views
 gem 'coffee-rails', '~> 3.2.0'
-gem 'uglifier', '~> 2.2.1'
+gem 'uglifier', '~> 2.5.0'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.6'
@@ -69,7 +69,7 @@ gem 'dalli', '~> 2.6.0'
 gem 'comma', '~> 3.2.0'
 
 # ElasticSearch w/Tire
-gem 'tire', '~> 0.6.1'
+gem 'tire', '~> 0.6.2'
 
 # New Relic
 gem 'newrelic_rpm', '~> 3.6.0'

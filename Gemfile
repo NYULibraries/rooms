@@ -59,8 +59,8 @@ gem 'acts_as_indexed', '~> 0.8.3'
 # Settings
 gem 'rails_config', '~> 0.3.3'
 
-gem 'mustache', '0.99.4'
-gem 'mustache-rails', '~> 0.2.3', :require => 'mustache/railtie'
+gem "mustache", "0.99.4"
+gem "mustache-rails", git: "git://github.com/josh/mustache-rails.git", :require => "mustache/railtie"
 
 # memcached
 gem 'dalli', '~> 2.6.0'

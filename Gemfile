@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.17'
+gem 'rails', '~> 3.2.18'
 
 gem 'mysql2', '~> 0.3.11'
 
@@ -41,8 +41,8 @@ gem 'debugger', :groups => [:development, :test, :staging, :qa]
 
 gem 'json', '~> 1.8.0'
 
-gem 'jquery-rails', '~> 3.0.4'
-gem 'jquery-ui-rails', '~> 4.1.0'
+gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-ui-rails', '~> 4.2.0'
 
 # Authenticate gem
 gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
@@ -63,7 +63,7 @@ gem "mustache", "0.99.4"
 gem "mustache-rails", git: "git://github.com/josh/mustache-rails.git", :require => "mustache/railtie"
 
 # memcached
-gem 'dalli', '~> 2.6.0'
+gem 'dalli', '~> 2.7.0'
 
 # Comma
 gem 'comma', '~> 3.2.0'
@@ -72,10 +72,10 @@ gem 'comma', '~> 3.2.0'
 gem 'tire', '~> 0.6.2'
 
 # New Relic
-gem 'newrelic_rpm', '~> 3.6.0'
+gem 'newrelic_rpm', '~> 3.8.0'
 
 # For decorators
-gem 'draper', '~> 1.3'
+gem 'draper', '~> 1.3.0'
 
 # Peek and plugins
 gem 'peek'

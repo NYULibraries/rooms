@@ -33,5 +33,5 @@ http_interactions:
         People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",3]},{"_index":"test_rooms","_type":"room","_id":"4","_score":null,"_source":{"closes_at":"01:00","description":"Smorgasbrd","id":4,"image_link":"http://bing.com","opens_at":"07:00","size_of_room":"2","sort_order":4,"sort_size_of_room":2,"title":"Garbage
         time","type_of_room":"Indy","room_group":"shanghai_undergraduate"},"sort":["shanghai_undergraduate",4]}]}}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 19:03:42 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:43 GMT
 recorded_with: VCR 2.8.0

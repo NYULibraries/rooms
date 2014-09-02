@@ -145,10 +145,12 @@ private
     reservation_on_day ||= Reservation.tire.search :search_type => "count" do
       query do
         filtered do
-          filter :term, on_day_field.to_sym => on_day
           filter :term, :deleted => false
           filter :term, :is_block => false
           filter :term, :user_id => user_id
+          query do
+            string "#{on_day_field}:#{on_day}"
+          end
         end
       end
     end

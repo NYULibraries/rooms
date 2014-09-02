@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:9200/test_reservations/reservation/_search?size=1
     body:
       encoding: US-ASCII
-      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":1}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2019-09-02T15:03:18+00:00"}}},{"range":{"start_dt":{"lt":"2019-09-02T15:33:18+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2019-09-02T15:03:18+00:00"}}},{"range":{"end_dt":{"lte":"2019-09-02T15:33:18+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2019-09-02T15:03:18+00:00"}}},{"range":{"end_dt":{"gte":"2019-09-02T15:33:18+00:00"}}}]}]}]}}},"size":1}'
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":1}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2019-09-02T16:54:19+00:00"}}},{"range":{"start_dt":{"lt":"2019-09-02T17:24:19+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2019-09-02T16:54:19+00:00"}}},{"range":{"end_dt":{"lte":"2019-09-02T17:24:19+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2019-09-02T16:54:19+00:00"}}},{"range":{"end_dt":{"gte":"2019-09-02T17:24:19+00:00"}}}]}]}]}}},"size":1}'
     headers:
       Accept:
       - ! '*/*; q=0.5, application/xml'
@@ -28,5 +28,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 19:03:18 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:19 GMT
 recorded_with: VCR 2.8.0

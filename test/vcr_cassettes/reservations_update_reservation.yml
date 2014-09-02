@@ -29,5 +29,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"_index":"test_reservations","_type":"reservation","_id":"5","_version":3,"created":false}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 19:03:38 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:39 GMT
 recorded_with: VCR 2.8.0

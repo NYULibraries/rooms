@@ -32,5 +32,5 @@ http_interactions:
         and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
         People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",3]}]}}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 19:03:42 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:43 GMT
 recorded_with: VCR 2.8.0

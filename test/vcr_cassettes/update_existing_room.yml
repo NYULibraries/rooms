@@ -30,5 +30,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"_index":"test_rooms","_type":"room","_id":"1","_version":2,"created":false}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 19:03:44 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:45 GMT
 recorded_with: VCR 2.8.0

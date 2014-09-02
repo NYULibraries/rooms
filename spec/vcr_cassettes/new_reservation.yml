@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/test_rooms/room/_search?from=0&size=20
+    body:
+      encoding: US-ASCII
+      string: ! '{"sort":[{"room_group":"asc"},{"sort_order":"asc"}],"filter":{"terms":{"room_group":["ny_undergraduate"],"execution":"or"}},"size":20,"from":0}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '143'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '502'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,"_source":{"closes_at":"01:00","description":"This
+        and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
+        People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",1]}]}}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 20:55:00 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=200
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"terms":{"room_id":[3],"execution":"or"}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2014-09-02T12:00:00+00:00"}}},{"range":{"start_dt":{"lt":"2014-09-02T15:29:00+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2014-09-02T12:00:00+00:00"}}},{"range":{"end_dt":{"lte":"2014-09-02T15:29:00+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2014-09-02T12:00:00+00:00"}}},{"range":{"end_dt":{"gte":"2014-09-02T15:29:00+00:00"}}}]}]}]}}},"size":200}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '509'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":3,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 20:55:00 GMT
+recorded_with: VCR 2.8.0

@@ -23,12 +23,12 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '506'
+      - '502'
     body:
       encoding: US-ASCII
-      string: ! '{"took":12,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
-        "_source" : {"closes_at":"01:00","description":"This and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,"_source":{"closes_at":"01:00","description":"This
+        and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
         People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",3]}]}}'
     http_version: 
-  recorded_at: Thu, 13 Feb 2014 18:31:59 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Tue, 02 Sep 2014 20:54:44 GMT
+recorded_with: VCR 2.8.0

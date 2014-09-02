@@ -21,10 +21,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '84'
+      - '74'
     body:
       encoding: US-ASCII
-      string: ! '{"ok":true,"found":true,"_index":"test_rooms","_type":"room","_id":"2","_version":2}'
+      string: ! '{"found":true,"_index":"test_rooms","_type":"room","_id":"2","_version":2}'
     http_version: 
-  recorded_at: Thu, 13 Feb 2014 18:31:56 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Tue, 02 Sep 2014 20:54:41 GMT
+recorded_with: VCR 2.8.0

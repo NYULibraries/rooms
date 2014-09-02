@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   load_and_authorize_resource
   respond_to :html, :js
-  
+
   # GET /rooms
   def index
     @room_groups = RoomGroup.all
@@ -51,7 +51,7 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room_groups = RoomGroup.all
-    @room = Room.new(params[:room])   
+    @room = Room.new(params[:room])
     @room.opens_at = opens_at
     @room.closes_at = closes_at
 
@@ -65,7 +65,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @room.opens_at = opens_at
     @room.closes_at = closes_at
-     
+
     flash[:notice] = t("rooms.update.success") if @room.update_attributes(params[:room])
     respond_with(@room)
   end
@@ -74,10 +74,10 @@ class RoomsController < ApplicationController
   def destroy
     @room = Room.find(params[:id])
     @room.destroy
-    
+
     respond_with(@room)
   end
-  
+
   # GET /rooms/sort
   def index_sort
     @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
@@ -86,30 +86,30 @@ class RoomsController < ApplicationController
     respond_with(@rooms)
   end
 
-  # PUT /rooms/sort  
+  # PUT /rooms/sort
   def update_sort
     @rooms = Room.accessible_by(current_ability).joins(:room_group).reorder("room_groups.code asc",sort_column.to_sym)
     @rooms = @rooms.where(:room_groups => {:code => params[:room_group]}) unless params[:room_group].blank?
-    
+
     # Have to iterate through each room in order to reindex sort order
     # Could be a scalability issue moving forward
     params[:rooms].each_with_index do |id, index|
       room = Room.find(id)
       room.sort_order = index+1
       room.save
-    end 
+    end
 
     flash[:notice] = t("rooms.update_sort.success")
 
     respond_with(@rooms, :location => sort_rooms_url)
   end
-  
+
   # Implement sort column function for this model
   def sort_column
     super "Room", "sort_order"
   end
   helper_method :sort_column
-  
+
 private
 
   def opens_at
@@ -119,18 +119,18 @@ private
   def closes_at
     @closes_at ||= format_new_time(:closes_at)
   end
-  
+
   def format_new_time(time_params)
     hour_method = ([:opens_at, :closes_at].include? time_params) ? send("#{time_params.to_s}_hour") : 0
     return Time.new(1,1,1,hour_method,params[time_params][:minute],0,0).strftime("%k:%M")
   end
-  
+
   def opens_at_hour
     @opens_at_hour ||= get_hour_in_24(params[:opens_at])
   end
-  
+
   def closes_at_hour
     @closes_at_hour ||= get_hour_in_24(params[:closes_at])
   end
-  
+
 end

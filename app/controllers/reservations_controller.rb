@@ -41,7 +41,7 @@ class ReservationsController < ApplicationController
     [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
-    
+
     @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
   def edit
     @reservation = Reservation.find(params[:id])
     @user = current_user
-    
+
     respond_with(@reservation)
   end
 
@@ -88,48 +88,48 @@ class ReservationsController < ApplicationController
       flash[:success] = t('reservations.delete.success')
       # Send email
       ReservationMailer.cancellation_email(@reservation).deliver
-    else 
+    else
       flash[:error] = t('reservations.delete.error')
     end
-    
+
     respond_with(@reservation) do |format|
-      format.html { redirect_to (params[:return_url] || user_path(@user)) } 
+      format.html { redirect_to (params[:return_url] || user_path(@user)) }
     end
   end
-  
+
   # RESEND confirmation email
   def resend_email
-    @user = current_user    
+    @user = current_user
     @reservation = @user.reservations.find(params[:id])
-    
+
     # Send email
     if ReservationMailer.confirmation_email(@reservation).deliver
       flash[:success] = t('reservations.resend_email.success')
     end
-    
+
     respond_with(@reservation, :location => root_url)
   end
-  
+
   # Implement sort column function for this model
   def sort_column
     super "Room", "sort_order"
   end
   helper_method :sort_column
-   
+
   def start_dt
-    @start_dt ||= 
-      (params[:reservation][:start_dt].blank?) ? 
+    @start_dt ||=
+      (params[:reservation][:start_dt].blank?) ?
         DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
-          DateTime.parse(params[:reservation][:start_dt]) 
+          DateTime.parse(params[:reservation][:start_dt])
   rescue Exception => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @start_dt ||= default_date
   end
   helper_method :start_dt
-  
+
   def end_dt
     @end_dt ||=
-     (params[:reservation][:end_dt].nil?) ? 
+     (params[:reservation][:end_dt].nil?) ?
       start_dt + params[:reservation][:how_long].to_i.minutes :
         DateTime.parse(params[:reservation][:end_dt])
   rescue Exception => e
@@ -137,8 +137,8 @@ class ReservationsController < ApplicationController
     @endt_dt ||= default_date
   end
   helper_method :end_dt
-  
-private 
+
+private
 
   # Parse single date field into date object
   def which_date
@@ -147,16 +147,16 @@ private
     flash[:error] = t('reservation.date_formatted_correctly')
     @which_date = DateTime.today
   end
-  
+
   # Convert 12 to 24 hours
   def hour
     @hour ||= get_hour_in_24(params[:reservation])
   end
-  
+
   def default_date
     @default_date ||= DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
   end
-  
+
   def rooms_search
     # Default elasticsearch options
     options = default_elasticsearch_options
@@ -180,7 +180,5 @@ private
     end
     return rooms_search
   end
-  
+
 end
-
-

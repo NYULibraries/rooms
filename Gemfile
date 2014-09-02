@@ -20,10 +20,29 @@ group :assets do
   gem 'temporal-rails', '~> 0.2.3'
 end
 
+gem 'json', '~> 1.8.0'
+gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-ui-rails', '~> 4.2.0'
+gem 'cancan', '~> 1.6.10'
+gem 'kaminari', '~> 0.13'
+gem 'sorted', '~> 0.4.3'
+gem 'acts_as_indexed', '~> 0.8.3'
+gem 'mustache', '0.99.4'
+gem 'mustache-rails', git: 'git://github.com/josh/mustache-rails.git', :require => 'mustache/railtie'
+gem 'dalli', '~> 2.7.0'
+gem 'comma', '~> 3.2.0'
+gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
+gem 'draper', '~> 1.3.0'
+
+gem 'newrelic_rpm', '~> 3.8.0'
+
+gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
+gem 'nyulibraries-assets', :git => 'git://github.com/NYULibraries/nyulibraries-assets.git', :tag => 'v2.1.1'
+gem 'nyulibraries-deploy', :git => 'git://github.com/NYULibraries/nyulibraries-deploy.git', :tag => 'v4.0.0'
+gem 'rails_config', '~> 0.3.3'
+
 group :development do
   gem 'progress_bar'
-  # To use debugger
-  #gem 'reek'
 end
 
 group :test do
@@ -31,56 +50,14 @@ group :test do
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'coveralls', '~> 0.7.0', :require => false
-  gem 'vcr', '~> 2.6.0'
-  gem 'webmock', '~> 1.15.0'
+  gem 'vcr', '~> 2.8.0'
+  gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.6.3'
-  gem 'ruby-prof'
+  gem 'ruby-prof', '~> 0.15.1'
+  gem 'rspec-rails', '~> 2.14.0'
+  # Use factory girl for creating models
+  gem 'factory_girl_rails', '~> 4.4.0'
+  # Use pry-debugger as the REPL and for debugging
+  gem 'pry-debugger', '~> 0.2.2'
+  gem 'pry-remote', '~> 0.1.8'
 end
-
-gem 'debugger', :groups => [:development, :test, :staging, :qa]
-
-gem 'json', '~> 1.8.0'
-
-gem 'jquery-rails', '~> 3.1.0'
-gem 'jquery-ui-rails', '~> 4.2.0'
-
-# Authenticate gem
-gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
-gem 'nyulibraries-assets', :git => 'git://github.com/NYULibraries/nyulibraries-assets.git', :tag => 'v2.1.1'
-gem 'nyulibraries-deploy', :git => 'git://github.com/NYULibraries/nyulibraries-deploy.git', :tag => 'v4.0.0'
-gem 'cancan', '~> 1.6.10'
-
-# Pagination and sorting
-gem 'kaminari', '~> 0.13'
-gem 'sorted', '~> 0.4.3'
-#gem 'acts_as_paranoid', '~> 0.4.0'
-gem 'acts_as_indexed', '~> 0.8.3'
-
-# Settings
-gem 'rails_config', '~> 0.3.3'
-
-gem "mustache", "0.99.4"
-gem "mustache-rails", git: "git://github.com/josh/mustache-rails.git", :require => "mustache/railtie"
-
-# memcached
-gem 'dalli', '~> 2.7.0'
-
-# Comma
-gem 'comma', '~> 3.2.0'
-
-# ElasticSearch w/Tire
-gem 'tire', '~> 0.6.2'
-
-# New Relic
-gem 'newrelic_rpm', '~> 3.8.0'
-
-# For decorators
-gem 'draper', '~> 1.3.0'
-
-# Peek and plugins
-gem 'peek'
-gem 'peek-git'
-gem 'peek-mysql2'
-gem 'peek-dalli'
-gem 'peek-performance_bar'
-gem 'peek-rblineprof'

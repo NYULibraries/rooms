@@ -23,10 +23,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '123'
+      - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":39,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Thu, 13 Feb 2014 18:31:32 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Tue, 02 Sep 2014 20:54:18 GMT
+recorded_with: VCR 2.8.0

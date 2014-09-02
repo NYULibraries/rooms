@@ -23,19 +23,17 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '1173'
+      - '1164'
     body:
       encoding: US-ASCII
-      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,
-        "_source" : {"closes_at":"01:00","description":null,"id":1,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":3,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"1","_score":null,"_source":{"closes_at":"01:00","description":null,"id":1,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
         People","sort_order":1,"sort_size_of_room":2,"title":"Individual Room 1","type_of_room":"One
-        person","room_group":"ny_graduate"},"sort":["ny_graduate",1]},{"_index":"test_rooms","_type":"room","_id":"2","_score":null,
-        "_source" : {"closes_at":"01:00","description":null,"id":2,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
-        People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual","room_group":"ny_graduate"},"sort":["ny_graduate",2]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,
-        "_source" : {"closes_at":"01:00","description":"This and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
+        person","room_group":"ny_graduate"},"sort":["ny_graduate",1]},{"_index":"test_rooms","_type":"room","_id":"2","_score":null,"_source":{"closes_at":"01:00","description":null,"id":2,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
+        People","sort_order":2,"sort_size_of_room":2,"title":"Individual Room 2","type_of_room":"Individual","room_group":"ny_graduate"},"sort":["ny_graduate",2]},{"_index":"test_rooms","_type":"room","_id":"3","_score":null,"_source":{"closes_at":"01:00","description":"This
+        and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
         People","sort_order":3,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",3]}]}}'
     http_version: 
-  recorded_at: Thu, 13 Feb 2014 18:31:50 GMT
+  recorded_at: Tue, 02 Sep 2014 20:54:36 GMT
 - request:
     method: get
     uri: http://localhost:9200/test_reservations/reservation/_search?size=200
@@ -62,7 +60,7 @@ http_interactions:
       - '122'
     body:
       encoding: US-ASCII
-      string: ! '{"took":4,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
     http_version: 
-  recorded_at: Thu, 13 Feb 2014 18:31:50 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Tue, 02 Sep 2014 20:54:36 GMT
+recorded_with: VCR 2.8.0

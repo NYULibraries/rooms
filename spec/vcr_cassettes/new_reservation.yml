@@ -1,0 +1,152 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/test_rooms/room/_search?from=0&size=20
+    body:
+      encoding: US-ASCII
+      string: ! '{"sort":[{"room_group":"asc"},{"sort_order":"asc"}],"filter":{"terms":{"room_group":["ny_undergraduate"],"execution":"or"}},"size":20,"from":0}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '143'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '502'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,"_source":{"closes_at":"01:00","description":"This
+        and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
+        People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",1]}]}}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=200
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"terms":{"room_id":[3],"execution":"or"}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2014-09-02T12:00:00+00:00"}}},{"range":{"start_dt":{"lt":"2014-09-02T15:29:00+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2014-09-02T12:00:00+00:00"}}},{"range":{"end_dt":{"lte":"2014-09-02T15:29:00+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2014-09-02T12:00:00+00:00"}}},{"range":{"end_dt":{"gte":"2014-09-02T15:29:00+00:00"}}}]}]}]}}},"size":200}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '509'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/test_rooms/room/35
+    body:
+      encoding: US-ASCII
+      string: ! '{"closes_at":"01:00","description":null,"id":35,"image_link":null,"opens_at":"07:00","size_of_room":"1-2
+        People","sort_order":5,"sort_size_of_room":2,"title":"Room 1","type_of_room":"One
+        person","room_group":"ny_graduate"}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '222'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '77'
+    body:
+      encoding: US-ASCII
+      string: ! '{"_index":"test_rooms","_type":"room","_id":"35","_version":1,"created":true}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_reservations/reservation/_search?size=1
+    body:
+      encoding: US-ASCII
+      string: ! '{"query":{"filtered":{"filter":{"and":[{"term":{"room_id":35}},{"term":{"deleted":false}},{"or":[{"and":[{"range":{"start_dt":{"gte":"2014-09-02T15:46:57+00:00"}}},{"range":{"start_dt":{"lt":"2014-09-02T16:16:57+00:00"}}}]},{"and":[{"range":{"end_dt":{"gt":"2014-09-02T15:46:57+00:00"}}},{"range":{"end_dt":{"lte":"2014-09-02T16:16:57+00:00"}}}]},{"and":[{"range":{"start_dt":{"lte":"2014-09-02T15:46:57+00:00"}}},{"range":{"end_dt":{"gte":"2014-09-02T16:16:57+00:00"}}}]}]}]}}},"size":1}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '488'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '122'
+    body:
+      encoding: US-ASCII
+      string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 19:46:58 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/test_reservations/reservation/69
+    body:
+      encoding: US-ASCII
+      string: ! '{"deleted":false,"end_dt":"2014-09-02T16:16:57+00:00","id":69,"is_block":false,"room_id":35,"start_dt":"2014-09-02T15:46:57+00:00","title":null,"user_id":123,"created_at_day":"2014-09-02","start_day":"2014-09-02"}'
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '213'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '91'
+    body:
+      encoding: US-ASCII
+      string: ! '{"_index":"test_reservations","_type":"reservation","_id":"69","_version":1,"created":true}'
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 19:46:58 GMT
+recorded_with: VCR 2.8.0

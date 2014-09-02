@@ -12,10 +12,38 @@ SimpleCov.start
 
 ENV["RAILS_ENV"] ||= 'test'
 
-require File.expand_path('../../config/environment', __FILE__)
+if ENV["RAILS_ENV"] == "test"
+  require 'vcr'
+  require 'webmock'
+  WebMock.allow_net_connect!
+
+  VCR.configure do |c|
+    c.default_cassette_options = { allow_playback_repeats: true, record: :new_episodes }
+    c.cassette_library_dir = 'spec/vcr_cassettes'
+    c.configure_rspec_metadata!
+    c.hook_into :webmock
+    c.register_request_matcher :uri_ignoring_trailing_id do |request_1, request_2|
+      uri1, uri2 = request_1.uri, request_2.uri
+      regexp_trail_id = %r(/\d+/?\z)
+      if uri1.match(regexp_trail_id)
+        r1_without_id = uri1.gsub(regexp_trail_id, "")
+        r2_without_id = uri2.gsub(regexp_trail_id, "")
+        uri1.match(regexp_trail_id) && uri2.match(regexp_trail_id) && r1_without_id == r2_without_id
+      else
+        uri1 == uri2
+      end
+    end
+  end
+
+  VCR.use_cassette('load elasticsearch models') do
+    require File.expand_path('../../config/environment', __FILE__)
+  end
+else
+  require File.expand_path('../../config/environment', __FILE__)
+end
 require 'rspec/rails'
 require 'rspec/autorun'
-require 'vcr'
+
 require "authlogic/test_case"
 include Authlogic::TestCase
 
@@ -56,22 +84,4 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
-end
-
-VCR.configure do |c|
-  c.default_cassette_options = { allow_playback_repeats: true, record: :new_episodes }
-  c.cassette_library_dir = 'spec/vcr_cassettes'
-  c.configure_rspec_metadata!
-  c.hook_into :webmock
-  c.register_request_matcher :uri_ignoring_trailing_id do |request_1, request_2|
-    uri1, uri2 = request_1.uri, request_2.uri
-    regexp_trail_id = %r(/\d+/?\z)
-    if uri1.match(regexp_trail_id)
-      r1_without_id = uri1.gsub(regexp_trail_id, "")
-      r2_without_id = uri2.gsub(regexp_trail_id, "")
-      uri1.match(regexp_trail_id) && uri2.match(regexp_trail_id) && r1_without_id == r2_without_id
-    else
-      uri1 == uri2
-    end
-  end
 end

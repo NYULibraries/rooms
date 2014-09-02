@@ -29,7 +29,7 @@ http_interactions:
       string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":1,"max_score":null,"hits":[{"_index":"test_rooms","_type":"room","_id":"3","_score":null,"_source":{"closes_at":"01:00","description":"This
         and that in here","id":3,"image_link":"http://google.com","opens_at":"07:00","size_of_room":"6
         People","sort_order":1,"sort_size_of_room":6,"title":"Collaborative Room 123","type_of_room":"Collaborative","room_group":"ny_undergraduate"},"sort":["ny_undergraduate",1]}]}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
 - request:
     method: get
@@ -58,7 +58,7 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"took":2,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
 - request:
     method: post
@@ -89,7 +89,7 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"_index":"test_rooms","_type":"room","_id":"35","_version":1,"created":true}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 02 Sep 2014 19:46:57 GMT
 - request:
     method: get
@@ -118,7 +118,7 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 02 Sep 2014 19:46:58 GMT
 - request:
     method: post
@@ -147,6 +147,6 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"_index":"test_reservations","_type":"reservation","_id":"69","_version":1,"created":true}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 02 Sep 2014 19:46:58 GMT
 recorded_with: VCR 2.8.0

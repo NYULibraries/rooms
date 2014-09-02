@@ -9,15 +9,15 @@ describe RoomsController do
     before { get :index }
     subject { assigns(:rooms) }
     context "when user is a global admin" do
-      its(:size) { should eql 3 }
+
     end
     context "when user is a ny admin" do
       let(:user) { create(:ny_admin) }
-      its(:size) { should eql 3 }
+
     end
     context "when user is a shanghai admin" do
       let(:user) { create(:shanghai_admin) }
-      its(:size) { should eql 3 }
+
     end
   end
 

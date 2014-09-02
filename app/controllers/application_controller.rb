@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   # For dev purposes
   def current_user_dev
-   @current_user ||= User.find_by_username("ba36")
+    @current_user ||= User.new(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", user_attributes: {bor_status: "57"})
   end
   alias :current_user :current_user_dev if Rails.env.development?
 

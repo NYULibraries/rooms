@@ -1,7 +1,4 @@
 @import "jquery.ui.all";
-@import "peek";
-@import "peek/views/performance_bar";
-@import "peek/views/rblineprof";
 @import "jquery-ui-timepicker-addon";
 
 h1.page_title { margin-top: 0; }
@@ -109,7 +106,7 @@ h1.availability_grid_desc {
 }
 
 .header_fields {
-  background-color: $table_header_color; 
+  background-color: $table_header_color;
   color: white;
   a {
     color: white;
@@ -125,7 +122,7 @@ th.times {
 
 .date_header {
   text-align: center !important;
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 // Availability Grid
@@ -154,7 +151,7 @@ th.times {
      border-bottom: 4px solid $preferred_color;
    }
   }
-  td.timeslot { 
+  td.timeslot {
    max-width: 120px !important;
   }
 }
@@ -163,8 +160,8 @@ tr.selected_room { font-weight: bold; }
 tr.disabled_row { color: #A7A9AB; }
 
 // Styles for fixed header when scrolling
-table#availability_grid_header_fixed { 
-  margin-bottom: -9px; 
+table#availability_grid_header_fixed {
+  margin-bottom: -9px;
   border-bottom: 0;
   border-bottom-right-radius: 0 !important;
     -moz-border-radius-bottomright: 0 !important;

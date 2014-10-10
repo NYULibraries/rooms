@@ -6,15 +6,15 @@ module Views
       def header
         nil
       end
-      
+
       def gauges_tracking_code
-        Settings.gauges.tracking_code
+        ENV['ROOMS_GAUGES_TRACKING_CODE']
       end
-      
+
       def application_stylesheet
         institutional_stylesheet
       end
-      
+
       # Print breadcrumb navigation
       def breadcrumbs
         breadcrumbs = []

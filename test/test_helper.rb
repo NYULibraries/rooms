@@ -23,7 +23,7 @@ if ENV["RAILS_ENV"] == "test"
     c.cassette_library_dir = 'test/vcr_cassettes'
     # webmock needed for HTTPClient testing
     c.hook_into :webmock
-    #c.filter_sensitive_data("http://localhost:9200") { Settings.elasticsearch.bonsai.url }
+    #c.filter_sensitive_data("http://localhost:9200") { ENV['ROOMS_BONSAI_URL'] }
 
     # Register a custom request matcher to ignore trailing path ID
     # => POST /rooms/1 will match POST /rooms

@@ -5,20 +5,20 @@ module Roles
     ##
     # Gets Hash of all authorized roles
     def all_auth_roles
-      @auth_roles ||= Hash[Settings.roles.authorized]
+      @auth_roles ||= Figs.env.rooms_roles_authorized
     end
 
     ##
     # Gets Array of all admin roles
     def all_admin_roles
-      @admin_roles ||= Settings.roles.admin
+      @admin_roles ||= Figs.env.rooms_roles_admin
     end
 
     ##
     # Bitwise roles field in database per https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
     #
     # = Example
-    # 
+    #
     #   user.roles = ["global", "ny_admin"]
     def admin_roles=(roles)
       self.admin_roles_mask = (roles & all_admin_roles).map { |r| 2**all_admin_roles.index(r) }.inject(0, :+)

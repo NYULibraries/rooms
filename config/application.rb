@@ -8,7 +8,9 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
-
+require 'figs'
+# Don't run this initializer on travis.
+Figs.load(stage: Rails.env) unless ENV['TRAVIS']
 module Rooms
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

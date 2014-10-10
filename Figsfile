@@ -1,5 +1,6 @@
 --- !ruby/object:Figs::Figsfile
+repo: git@github.com:NYULibraries/configula.git
 locations:
-- ../configula/common
-- ../configula/rooms.yml
-method: path
+- common
+- rooms.yml
+method: git

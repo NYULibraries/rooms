@@ -36,13 +36,13 @@ module Roles
       all_auth_roles.reject {|k,v| !v.include? attrs[:bor_status] }.keys.map {|k| k.to_s}
     end
 
-    ## 
+    ##
     # Array of all roles, admin and authorized, this user has
     def roles
       @roles ||= Array[auth_roles, admin_roles].flatten
     end
 
-    ## 
+    ##
     # Full comma-delimited list of roles, authorized and admin
     def roles_list
       @roles_list ||= Array[admin_roles_list, auth_roles_list].flatten.reject {|r| r.empty?}.join(", ")
@@ -60,7 +60,7 @@ module Roles
       @auth_roles_list ||= listify(auth_roles)
     end
 
-    ## 
+    ##
     # Answer the question does this user have this role
     #
     # = Example

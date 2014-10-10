@@ -1,0 +1,5 @@
+--- !ruby/object:Figs::Figsfile
+locations:
+- ../configula/common
+- ../configula/rooms.yml
+method: path

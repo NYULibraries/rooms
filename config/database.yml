@@ -1,27 +1,23 @@
-development: &development
-  adapter: mysql2 
-  host: <%= Settings.databases.host %>
-  database: <%= Settings.databases.database %>
-  username: <%= Settings.databases.username %>
-  password: <%= Settings.databases.password %>
-  encoding: utf8
-
-test: 
+mysql2: &mysql2
   adapter: mysql2
   encoding: utf8
-  host: <%= Settings.databases.host %>
-  database: <%= Settings.databases.database %>
-  username: <%= Settings.databases.username %>
-  password: <%= Settings.databases.password %>
+
+
+development: &development
+  <<: *mysql2
+  host: <%= ENV['ROOMS_DB_HOST'] %>
+  database: <%= ENV['ROOMS_DB_DATABASE'] %>
+  username: <%= ENV['ROOMS_DB_USER'] %>
+  password: <%= ENV['ROOMS_DB_PASSWORD'] %>
+
+test:
+  <<: *development
 
 qa:
   <<: *development
-  host: <%= Settings.databases.host %>
 
 staging:
   <<: *development
-  host: <%= Settings.databases.host %>
 
-production:  
+production:
   <<: *development
-  host: <%= Settings.databases.host %>

@@ -1,5 +1,6 @@
 language: ruby
-
+env:
+  -ROOMS_DB_USER=root ROOMS_DB_DATABASE=nyu_rooms_test ROOMS_DB_HOST=localhost ROOMS_SECRET_TOKEN=dd6f1b6faf2511a744f3f08644e76edcb6be01d7019a6e62947e3a76a2c5f1ea7f3206af6bd0409ed222a56b2a53788da8de1d3528547889cc59c7dbc27f4503 ROOMS_COOKIE_DOMAIN=.local ROOMS_BONSAI_URL=http://localhost:9200
 before_script:
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load

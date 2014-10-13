@@ -5,13 +5,13 @@ module Roles
     ##
     # Gets Hash of all authorized roles
     def all_auth_roles
-      @auth_roles ||= Figs.env.rooms_roles_authorized
+      @auth_roles ||= YAML.load(ENV['ROOMS_ROLES_AUTHORIZED'])
     end
 
     ##
     # Gets Array of all admin roles
     def all_admin_roles
-      @admin_roles ||= Figs.env.rooms_roles_admin
+      @admin_roles ||= YAML.load(ENV['ROOMS_ROLES_ADMIN'])
     end
 
     ##

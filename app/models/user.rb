@@ -40,7 +40,7 @@ private
 
   def set_static_admins
     if Figs.env.rooms_default_admins.include? username
-      admin_roles = ["superuser", self.admin_roles].flatten.uniq
+      self.admin_roles = ["superuser", self.admin_roles].flatten.uniq
     end
   end
 

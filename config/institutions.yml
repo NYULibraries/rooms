@@ -1,6 +1,6 @@
 # Private institutional settings
 <% if(ENV.has_key?("INSTITUTIONS")) %>
-<%= Figs.env.institutions.to_yaml if ENV.has_key?("INSTITUTIONS") %>
+<%= Figs.env.institutions.to_yaml %>
 <% else %>
 ---
 NYU:
@@ -24,4 +24,5 @@ CU:
 NS:
   ip_addresses:
     - 127.0.0.1
+
 <% end %>

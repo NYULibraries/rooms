@@ -107,7 +107,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
-    columnize (0.8.9)
     comma (3.2.1)
       activesupport (>= 3.0.0)
     compass (0.12.7)
@@ -126,12 +125,6 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     dalli (2.7.2)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
     diff-lcs (1.2.5)
     docile (1.1.5)
     draper (1.4.0)
@@ -212,9 +205,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-debugger (0.2.3)
-      debugger (~> 1.3)
-      pry (>= 0.9.10, < 0.11.0)
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
@@ -346,7 +336,6 @@ DEPENDENCIES
   newrelic_rpm (~> 3.9.5.251)
   nyulibraries-assets!
   progress_bar
-  pry-debugger (~> 0.2.3)
   pry-remote (~> 0.1.8)
   rails (~> 3.2.19)
   rspec-rails (~> 2.99.0)

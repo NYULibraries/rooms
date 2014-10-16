@@ -5,10 +5,10 @@ mysql2: &mysql2
 
 development: &development
   <<: *mysql2
-  host: <%= ENV['ROOMS_DB_HOST'] %>
-  database: <%= ENV['ROOMS_DB_DATABASE'] %>
-  username: <%= ENV['ROOMS_DB_USER'] %>
-  password: <%= ENV['ROOMS_DB_PASSWORD'] %>
+  host: <%= (ENV['ROOMS_DB_HOST'] || 'localhost') %>
+  database: <%= (ENV['ROOMS_DB_DATABASE'] || 'rooms_development') %>
+  username: <%= (ENV['ROOMS_DB_USER'] || 'root') %>
+  password: <%= (ENV['ROOMS_DB_PASSWORD'] || '') %>
 
 test:
   <<: *development

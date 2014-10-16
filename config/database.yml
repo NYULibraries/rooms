@@ -12,6 +12,10 @@ development: &development
 
 test:
   <<: *development
+  host: <%= ENV['ROOMS_DB_HOST'] %>
+  database: <%= ENV['ROOMS_DB_DATABASE'] %>
+  username: <%= (ENV['ROOMS_DB_USER'] || ENV['JENKINS_DB_USER'] || 'root') %>
+  password: <%= (ENV['ROOMS_DB_PASSWORD'] || ENV['JENKINS_DB_PASSWORD'] || '') %>
 
 qa:
   <<: *development

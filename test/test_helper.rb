@@ -23,7 +23,7 @@ if ENV["RAILS_ENV"] == "test"
     c.cassette_library_dir = 'test/vcr_cassettes'
     # webmock needed for HTTPClient testing
     c.hook_into :webmock
-    #c.filter_sensitive_data("http://localhost:9200") { Settings.elasticsearch.bonsai.url }
+    #c.filter_sensitive_data("http://localhost:9200") { ENV['ROOMS_BONSAI_URL'] }
 
     # Register a custom request matcher to ignore trailing path ID
     # => POST /rooms/1 will match POST /rooms
@@ -81,3 +81,52 @@ class ActiveSupport::TestCase
   #
 
 end
+
+ENV['INSTITUTIONS'] = <<YAML
+---
+NYU:
+  ip_addresses:
+    - 127.0.0.1
+NYUAD:
+  ip_addresses:
+    - 127.0.0.1
+NYUSH:
+  ip_addresses:
+    - 127.0.0.1
+NYSID:
+  ip_addresses:
+    - 127.0.0.1
+HSL:
+  ip_addresses:
+    - 127.0.0.1
+CU:
+  ip_addresses:
+    - 127.0.0.1
+NS:
+  ip_addresses:
+    - 127.0.0.1
+YAML
+ENV['ROOMS_ROLES_ADMIN'] = <<YAML
+---
+- superuser
+- ny_admin
+- shanghai_admin
+YAML
+ENV['ROOMS_DEFAULT_ADMINS'] = <<YAML
+---
+- admin
+YAML
+ENV['ROOMS_ROLES_AUTHORIZED'] = <<YAML
+---
+shanghai_undergraduate:
+  - '0'
+ny_undergraduate:
+  - '1'
+  - '2'
+ny_graduate:
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+YAML

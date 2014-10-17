@@ -5,20 +5,20 @@ module Roles
     ##
     # Gets Hash of all authorized roles
     def all_auth_roles
-      @auth_roles ||= Hash[Settings.roles.authorized]
+      @auth_roles ||= YAML.load(ENV['ROOMS_ROLES_AUTHORIZED'])
     end
 
     ##
     # Gets Array of all admin roles
     def all_admin_roles
-      @admin_roles ||= Settings.roles.admin
+      @admin_roles ||= YAML.load(ENV['ROOMS_ROLES_ADMIN'])
     end
 
     ##
     # Bitwise roles field in database per https://github.com/ryanb/cancan/wiki/Role-Based-Authorization#many-roles-per-user
     #
     # = Example
-    # 
+    #
     #   user.roles = ["global", "ny_admin"]
     def admin_roles=(roles)
       self.admin_roles_mask = (roles & all_admin_roles).map { |r| 2**all_admin_roles.index(r) }.inject(0, :+)
@@ -36,13 +36,13 @@ module Roles
       all_auth_roles.reject {|k,v| !v.include? attrs[:bor_status] }.keys.map {|k| k.to_s}
     end
 
-    ## 
+    ##
     # Array of all roles, admin and authorized, this user has
     def roles
       @roles ||= Array[auth_roles, admin_roles].flatten
     end
 
-    ## 
+    ##
     # Full comma-delimited list of roles, authorized and admin
     def roles_list
       @roles_list ||= Array[admin_roles_list, auth_roles_list].flatten.reject {|r| r.empty?}.join(", ")
@@ -60,7 +60,7 @@ module Roles
       @auth_roles_list ||= listify(auth_roles)
     end
 
-    ## 
+    ##
     # Answer the question does this user have this role
     #
     # = Example

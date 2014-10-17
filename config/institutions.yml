@@ -1,20 +1,28 @@
+# Private institutional settings
+<% if(ENV.has_key?("INSTITUTIONS")) %>
+<%= Figs.env.institutions.to_yaml %>
+<% else %>
+---
 NYU:
-  ip_addresses: <%= Settings.institutions.NYU.ip_addresses %>
-
+  ip_addresses:
+    - 127.0.0.1
 NYUAD:
-  ip_addresses: <%= Settings.institutions.NYUAD.ip_addresses %>
-
+  ip_addresses:
+    - 127.0.0.1
 NYUSH:
-  ip_addresses: <%= Settings.institutions.NYUAD.ip_addresses %>
-
-CU:
-  ip_addresses: <%= Settings.institutions.CU.ip_addresses %>
-
-NS:
-  ip_addresses: <%= Settings.institutions.NS.ip_addresses %>
-
+  ip_addresses:
+    - 127.0.0.1
 NYSID:
-  ip_addresses: <%= Settings.institutions.NYSID.ip_addresses %>
-
+  ip_addresses:
+    - 127.0.0.1
 HSL:
-  ip_addresses: <%= Settings.institutions.HSL.ip_addresses %>
+  ip_addresses:
+    - 127.0.0.1
+CU:
+  ip_addresses:
+    - 127.0.0.1
+NS:
+  ip_addresses:
+    - 127.0.0.1
+
+<% end %>

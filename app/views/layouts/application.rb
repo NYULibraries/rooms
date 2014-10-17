@@ -6,15 +6,15 @@ module Views
       def header
         nil
       end
-      
+
       def gauges_tracking_code
-        Settings.gauges.tracking_code
+        ENV['ROOMS_GAUGES_TRACKING_CODE']
       end
-      
+
       def application_stylesheet
         institutional_stylesheet
       end
-      
+
       # Print breadcrumb navigation
       def breadcrumbs
         breadcrumbs = []
@@ -25,12 +25,12 @@ module Views
         breadcrumbs << link_to_unless_current(controller.controller_name.humanize, {:action => :index }) if in_admin_view?
         return breadcrumbs
       end
-      
+
       # Prepend modal dialog elements to the body
       def prepend_body
         render 'common/prepend_body'
       end
-      
+
       # Prepend the flash message partial before yield
       def prepend_yield
         content_tag :div, :id => "main-flashses" do
@@ -43,7 +43,7 @@ module Views
       def show_tabs
         false
       end
-      
+
     end
   end
 end

@@ -38,7 +38,7 @@ gem 'newrelic_rpm', '~> 3.9.5.251'
 
 gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
 gem 'nyulibraries-assets', :git => 'git://github.com/NYULibraries/nyulibraries-assets.git', :tag => 'v2.1.1'
-gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.0.0'
+gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.0.1'
 
 group :development do
   gem 'progress_bar'

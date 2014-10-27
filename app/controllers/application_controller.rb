@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include Authpds::Controllers::AuthpdsController
+  # include Authpds::Controllers::AuthpdsController
   layout Proc.new{ |controller| (controller.request.xhr?) ? false : "application" }
 
   helper :all # include all helpers, all the time

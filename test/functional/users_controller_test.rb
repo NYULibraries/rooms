@@ -1,16 +1,16 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   setup do
-    activate_authlogic
-    current_user = UserSession.create(users(:admin))
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    sign_in FactoryGirl.create(:admin)
   end
 
   test "gets user index" do
     get :index
     assert assigns(:users)
-
     assert_template :index
   end
 
@@ -20,11 +20,9 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "get show action" do
-    VCR.use_cassette('get users reservations in show action') do
-      get :show, :id => users(:admin)
-      assert assigns(:user)
-      assert_template :show
-    end
+    get :show, :id => FactoryGirl.create(:admin)
+    assert assigns(:user)
+    assert_template :show
   end
 
   test "get new action" do

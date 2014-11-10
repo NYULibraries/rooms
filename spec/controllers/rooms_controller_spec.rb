@@ -5,7 +5,7 @@ describe RoomsController do
   let(:user) { create(:admin) }
   before(:each) { controller.stub(:current_user).and_return(user) }
 
-  describe 'GET /rooms/new', vcr: {cassette_name: 'new room'} do
+  describe 'GET /rooms/new' do
     before { get :index }
     subject { assigns(:rooms) }
     context "when user is a global admin" do

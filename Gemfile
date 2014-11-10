@@ -36,7 +36,6 @@ gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.9.6.257'
 
-gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
 gem 'nyulibraries-assets', :git => 'git://github.com/NYULibraries/nyulibraries-assets.git', :tag => 'v2.1.1'
 gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.0.1'
 gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries'
@@ -45,19 +44,21 @@ gem 'devise'
 group :development do
   gem 'progress_bar'
 end
-
+# gem 'database_cleaner'
+gem 'faker'
 group :test do
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'coveralls', '~> 0.7.1', :require => false
-  gem 'vcr', '~> 2.9.3'
-  gem 'webmock', '~> 1.20.4'
+  gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
   gem 'ruby-prof', '~> 0.15.2'
   gem 'rspec-rails', '~> 2.99.0'
   # Use factory girl for creating models
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'pry-remote', '~> 0.1.8'
+  gem 'database_cleaner'
 end
 
 gem 'pry', '~> 0.10.1', group: [:development, :test]

@@ -183,7 +183,7 @@ class ReservationsControllerTest < ActionController::TestCase
   #  current_user = UserSession.create(users(:no_bookings_undergrad))
   #  VCR.use_cassette('reservations create new undergraduate') do
   #    assert_difference('Reservation.count', 1) do
-  #      post :create, :reservation => { :id => 11, :room_id => rooms(:collaborative).id, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 30.minutes, :cc => "dummy@silly.org" }
+  #      post :create, :reservation => { :id => 11, :room_id => FactoryGirl.create(:collaborative).id, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 30.minutes, :cc => "dummy@silly.org" }
   #    end
   #    assert assigns(:user)
   #    assert assigns(:reservation)

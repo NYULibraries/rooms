@@ -35,30 +35,31 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference('User.count', 1) do
       post :create, :user => { :username => "abc12", :email => "barney@dinosaur.org" }
     end
-    assert User.find_by_username("abc12")
     assert assigns(:user)
     assert_redirected_to user_url(assigns(:user))
   end
 
   test "get edit action" do
-    get :edit, :id => users(:admin)
+    get :edit, :id => FactoryGirl.create(:admin)
     assert assigns(:user)
     assert_template :edit
   end
 
   test "update existing user" do
-    assert !users(:nonadmin).is_admin?
+    nonadmin = FactoryGirl.create(:user)
+    assert !nonadmin.is_admin?
 
-    put :update, :id => users(:nonadmin), :user => { :admin_roles => ["superuser"] }
+    put :update, :id => nonadmin, :user => { :admin_roles => ["superuser"] }
 
     assert_equal flash[:notice], I18n.t('users.update.success')
-    assert User.find(users(:nonadmin).to_param).is_admin?
-    assert_redirected_to user_url(users(:nonadmin))
+    assert User.find(nonadmin.to_param).is_admin?
+    assert_redirected_to user_url(nonadmin)
   end
 
   test "destroy user" do
+    user = FactoryGirl.create(:user)
     assert_difference('User.count', -1) do
-      delete :destroy, :id => users(:delete_me).to_param
+      delete :destroy, :id => user.to_param
     end
 
     assert assigns(:user)

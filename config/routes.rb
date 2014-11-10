@@ -7,9 +7,7 @@ Rooms::Application.routes.draw do
     match 'blocks/destroy_existing_reservations' => "blocks#destroy_existing_reservations", :as => 'destroy_existing_reservations'
     match 'blocks/index_existing_reservations' => "blocks#index_existing_reservations", :as => 'index_existing_reservations'
 
-    # resources :users do
-      resources :users
-    # end
+    resources :users
     resources :rooms
     resources :blocks
     resources :reports
@@ -28,7 +26,7 @@ Rooms::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   devise_scope :user do
     get 'logout', to: 'devise/sessions#destroy', as: :logout
-    get 'login/', to: redirect('/users/auth/nyulibraries'), as: :login
+    get 'login', to: redirect('/users/auth/nyulibraries'), as: :login
   end
 
 

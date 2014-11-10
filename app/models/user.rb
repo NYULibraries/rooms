@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   has_many :reservations, :dependent => :destroy
 
   attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :admin_roles, :institution, :aleph_id, :access_token
-  attr_accessible :crypted_password, :current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id
 
   scope :non_admin, where("admin_roles_mask = 0")
   scope :admin, where("admin_roles_mask > 0")
@@ -16,13 +15,6 @@ class User < ActiveRecord::Base
 
   before_save :set_static_admins
 
-  # Configure authlogic
-  # acts_as_authentic do |c|
-  #   c.validations_scope = :username
-  #   c.validate_password_field = false
-  #   c.require_password_confirmation = false
-  #   c.disable_perishable_token_maintenance = true
-  # end
 
   ##
   # Create a CSV format with comma DSL

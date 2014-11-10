@@ -11,8 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def find_user_with_or_without_provider
-    @user = User.where(username: omniauth.uid, provider: omniauth.provider)
-    @user = User.where(username: omniauth.uid) if @user.empty?
+    @user ||= User.where(username: omniauth.uid, provider: omniauth.provider) || User.where(username: omniauth.uid, provider: "")
   end
 
   def require_valid_omniauth
@@ -36,7 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       email: omniauth_email,
       firstname: omniauth_firstname,
       lastname: omniauth_lastname,
-      institution_code: omniauth_institution_code,
+      institution: omniauth_institution,
       aleph_id: omniauth_aleph_id
     }
   end
@@ -53,8 +52,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @omniauth_lastname ||= omniauth.info.last_name
   end
 
-  def omniauth_institution_code
-    @omniauth_institution_code ||= omniauth.extra.institution_code
+  def omniauth_institution
+    @omniauth_institution ||= omniauth.extra.institution
   end
 
   def omniauth_identities

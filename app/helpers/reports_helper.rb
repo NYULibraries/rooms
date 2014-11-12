@@ -1,7 +1,7 @@
 module ReportsHelper
 
   def room_type_options
-    @room_types ||= Rails.cache.read "room_types"
+    @room_types ||= Rails.cache.read "room_types" || []
   end
 
   def college_name_options
@@ -25,7 +25,7 @@ module ReportsHelper
   end
 
   def options(options_name)
-    Rails.cache.read "user_#{options_name.to_s.pluralize}"
+    Rails.cache.read "user_#{options_name.to_s.pluralize}" || []
   end
 
 end

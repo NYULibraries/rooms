@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
     Time.zone = cookies[:timezone] || 'Eastern Time (US & Canada)'
   end
 
+  def new_session_path(scope)
+    new_user_session_path
+  end
+
+
   # For dev purposes
   def current_user_dev
     @current_user = User.find_or_create_by(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX") do |user|

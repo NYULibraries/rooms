@@ -205,9 +205,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-remote (0.1.8)
-      pry (~> 0.9)
-      slop (~> 3.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -336,7 +333,7 @@ DEPENDENCIES
   newrelic_rpm (~> 3.9.5.251)
   nyulibraries-assets!
   progress_bar
-  pry-remote (~> 0.1.8)
+  pry (~> 0.10.1)
   rails (~> 3.2.19)
   rspec-rails (~> 2.99.0)
   ruby-prof (~> 0.15.1)

@@ -56,5 +56,6 @@ group :test do
   gem 'rspec-rails', '~> 2.99.0'
   # Use factory girl for creating models
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'pry-remote', '~> 0.1.8'
 end
+
+gem 'pry', '~> 0.10.1', group: [:development, :test]

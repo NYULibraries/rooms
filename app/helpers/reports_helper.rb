@@ -25,7 +25,7 @@ module ReportsHelper
   end
 
   def options(options_name)
-    Rails.cache.read "user_#{options_name.to_s.pluralize}" || []
+    options = Rails.cache.read("user_#{options_name.to_s.pluralize}") || []
   end
 
 end

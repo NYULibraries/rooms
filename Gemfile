@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.19'
+gem 'rails', '~> 3.2.20'
 
-gem 'mysql2', '~> 0.3.16'
+gem 'mysql2', '~> 0.3.17'
 
 # Move this out here to use coffee in views
 gem 'coffee-rails', '~> 3.2.2'
@@ -25,16 +25,16 @@ gem 'jquery-rails', '~> 3.1.2'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'cancan', '~> 1.6.10'
 gem 'kaminari', '~> 0.16.1'
-gem 'sorted', '~> 0.4.3'
+gem 'sorted', '~> 1.0.1'
 gem 'acts_as_indexed', '~> 0.8.3'
 gem 'mustache', '0.99.4'
 gem 'mustache-rails', git: 'git://github.com/josh/mustache-rails.git', :require => 'mustache/railtie'
 gem 'dalli', '~> 2.7.2'
-gem 'comma', '~> 3.2.1'
+gem 'comma', '~> 3.2.2'
 gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
 gem 'draper', '~> 1.4.0'
 
-gem 'newrelic_rpm', '~> 3.9.5.251'
+gem 'newrelic_rpm', '~> 3.9.6.257'
 
 gem 'authpds-nyu', :git => 'git://github.com/NYULibraries/authpds-nyu.git', :tag => 'v1.1.2'
 gem 'nyulibraries-assets', :git => 'git://github.com/NYULibraries/nyulibraries-assets.git', :tag => 'v2.1.1'
@@ -50,12 +50,12 @@ group :test do
   gem 'simplecov-rcov', :require => false
   gem 'coveralls', '~> 0.7.1', :require => false
   gem 'vcr', '~> 2.9.3'
-  gem 'webmock', '>= 1.8.0', '< 1.16'
+  gem 'webmock', '~> 1.20.4'
   gem 'timecop', '~> 0.7.1'
-  gem 'ruby-prof', '~> 0.15.1'
+  gem 'ruby-prof', '~> 0.15.2'
   gem 'rspec-rails', '~> 2.99.0'
   # Use factory girl for creating models
-  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'factory_girl_rails', '~> 4.5.0'
 end
 
 gem 'pry', '~> 0.10.1', group: [:development, :test]

@@ -10,6 +10,8 @@ before_script:
   - sleep 10
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
+  - RAILS_ENV=test bundle exec rake environment tire:import CLASS=Room FORCE=true
+  - RAILS_ENV=test bundle exec rake environment tire:import CLASS=Reservation FORCE=true
 
 rvm:
   - 1.9.3

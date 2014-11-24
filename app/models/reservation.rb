@@ -60,7 +60,7 @@ class Reservation < ActiveRecord::Base
     user 'College Code' do |user| user.user_attributes[:college_code] end
     user 'Department Affiliation' do |user| (user.user_attributes[:dept_name]) ? user.user_attributes[:dept_code] : user.user_attributes[:dept_name] end
     user 'Major' do |user| (user.user_attributes[:major]) ? user.user_attributes[:major_code] : user.user_attributes[:major] end
-    user 'Patron Status' do |user| user.user_attributes[:bor_status] end
+    user 'Patron Status' do |user| user.user_attributes[:status] end
     room 'Room Name' do |room| room.title end
     room 'Room Type' do |room| room.type_of_room end
   end

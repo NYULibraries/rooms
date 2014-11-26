@@ -6,30 +6,22 @@ FactoryGirl.define do
     lastname "Fisher"
     user_attributes do
       {
-        type: "",
-        major: "00000",
-        status: "3",
-        college: "CO",
-        department: "00 ",
-        identifier: "N00000000",
-        ill_library: "LIBRARY",
-        plif_status: "PLIF STATUS",
-        ill_permission: "?"
+        nyuidn: "BOR_ID",
+        primary_institution: "INST01",
+        institutions: ["INST01"],
+        bor_status: "3",
+        aleph_permissions: {}
       }
     end
 
     factory :undergraduate do
       user_attributes do
         {
-          type: "",
-          major: "00000",
-          status: "1",
-          college: "CO",
-          department: "00 ",
-          identifier: "N00000000",
-          ill_library: "LIBRARY",
-          plif_status: "PLIF STATUS",
-          ill_permission: "?"
+          nyuidn: "BOR_ID",
+          primary_institution: "INST01",
+          institutions: ["INST01"],
+          bor_status: "1",
+          aleph_permissions: {}
         }
       end
     end
@@ -37,15 +29,11 @@ FactoryGirl.define do
     factory :hasnt_been_used_undergrad do
       user_attributes do
         {
-          type: "",
-          major: "00000",
-          status: "2",
-          college: "CO",
-          department: "00 ",
-          identifier: "N00000000",
-          ill_library: "LIBRARY",
-          plif_status: "PLIF STATUS",
-          ill_permission: "?"
+          nyuidn: "N0000001",
+          primary_institution: "INST01",
+          institutions: ["INST01"],
+          bor_status: "2",
+          aleph_permissions:  {}
         }
       end
     end
@@ -53,32 +41,23 @@ FactoryGirl.define do
     factory :no_bookings_undergrad do
       user_attributes do
         {
-          type: "",
-          major: "00000",
-          status: "2",
-          college: "CO",
-          department: "00 ",
-          identifier: "N00000000",
-          ill_library: "LIBRARY",
-          plif_status: "PLIF STATUS",
-          ill_permission: "?"
+          nyuidn: "N0000001",
+          primary_institution: "INST01",
+          institutions: ["INST01"],
+          bor_status: "2",
+          aleph_permissions:  {}
         }
       end
     end
 
     factory :nonadmin do
       admin_roles_mask nil
-      user_attributes do
-        {
-          type: "",
-          major: "00000",
-          status: "52",
-          college: "CO",
-          department: "00 ",
-          identifier: "N00000000",
-          ill_library: "LIBRARY",
-          plif_status: "PLIF STATUS",
-          ill_permission: "?"
+      user_attributes do {
+          nyuidn: "N0000000",
+          primary_institution: "INST01",
+          institutions: ["INST01"],
+          bor_status: "52",
+          aleph_permissions: {}
         }
       end
     end
@@ -88,15 +67,11 @@ FactoryGirl.define do
       lastname "La"
       user_attributes do
         {
-          type: "",
-          major: "00000",
-          status: "0",
-          college: "CO",
-          department: "00 ",
-          identifier: "N00000000",
-          ill_library: "LIBRARY",
-          plif_status: "PLIF STATUS",
-          ill_permission: "?"
+          nyuidn: "N0000001",
+          primary_institution: "INST01",
+          institutions: ["INST01"],
+          bor_status: "0",
+          aleph_permissions: {}
         }
       end
     end

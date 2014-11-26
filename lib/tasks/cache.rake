@@ -6,7 +6,7 @@ namespace :cache do
       Rails.cache.write "room_types", :expires_in => 30.days do
         Room.where("type_of_room IS NOT NULL and type_of_room != ''").uniq.pluck(:type_of_room)
       end
-      user_fields = [:college_name,:college_code,:dept_name,:major,:status]
+      user_fields = [:college_name,:college_code,:dept_name,:major,:bor_status]
       user_fields.each do |user_field|
         options = []
         user_attributes = User.where("user_attributes LIKE '%#{user_field}%'").uniq.pluck(:user_attributes)

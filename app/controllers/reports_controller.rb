@@ -51,7 +51,7 @@ class ReportsController < ApplicationController
           # Add specific major
           conditions.push("(user_id in (select id from users where user_attributes like '%major: #{@major}%'))") unless @major.nil?
           # Add specific user status
-          conditions.push("(user_id in (select id from users where user_attributes like '%status: \"#{@patron_status}\"%'))") unless @patron_status.nil?
+          conditions.push("(user_id in (select id from users where user_attributes like '%bor_status: \"#{@patron_status}\"%'))") unless @patron_status.nil?
 
           # Find all reservations that fall between this selected date range      
           @reservations = Reservation.active.no_blocks.accessible_by(current_ability).where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)

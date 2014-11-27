@@ -65,18 +65,18 @@ class ReportsController < ApplicationController
         # Print an error message if dates are invalid
         flash[:error] = "Please select a valid date and time in the format YYYY-MM-DD HH:MM for start and end fields. Note that minutes must be either 00 or 30."
       end
-  
+
       # If there were no errors from the above checks, render report grid
       if flash[:error].blank?
         respond_to do |format|
           format.html { render :report }
           format.csv { render :csv => @reservations, :filename => "reservations_report.#{Time.now.strftime("%Y%m%d%H%m")}" }
         end
-      else 
+      else
         # If there were error messages, render with errors
         render :index
-      end  
+      end
     end
   end
-  
+
 end

@@ -80,12 +80,6 @@ module Roles
       all_admin_roles.any? {|role| self.is? role}
     end
 
-    ##
-    # Get current user's attributes, or user attributes on the current object
-    # Or return an empty hash if neither
-    def attrs
-      (user_attributes.nil?) ? Hash.new : user_attributes
-    end
 
     ##
     # Allows calling of functions like is_arbitrary_role?

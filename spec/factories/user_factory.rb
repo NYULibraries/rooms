@@ -4,76 +4,32 @@ FactoryGirl.define do
     sequence(:email) { |n| "user#{n}@nyu.edu" }
     firstname "Derek"
     lastname "Fisher"
-    user_attributes do
-      {
-        nyuidn: "BOR_ID",
-        primary_institution: "INST01",
-        institutions: ["INST01"],
-        bor_status: "3",
-        aleph_permissions: {}
-      }
-    end
+    major "00000"
+    patron_status "3"
+    college "CO"
+    department "00 "
 
     factory :undergraduate do
-      user_attributes do
-        {
-          nyuidn: "BOR_ID",
-          primary_institution: "INST01",
-          institutions: ["INST01"],
-          bor_status: "1",
-          aleph_permissions: {}
-        }
-      end
+      patron_status "1"
     end
 
     factory :hasnt_been_used_undergrad do
-      user_attributes do
-        {
-          nyuidn: "N0000001",
-          primary_institution: "INST01",
-          institutions: ["INST01"],
-          bor_status: "2",
-          aleph_permissions:  {}
-        }
-      end
+      patron_status "2"
     end
 
     factory :no_bookings_undergrad do
-      user_attributes do
-        {
-          nyuidn: "N0000001",
-          primary_institution: "INST01",
-          institutions: ["INST01"],
-          bor_status: "2",
-          aleph_permissions:  {}
-        }
-      end
+      patron_status "2"
     end
 
     factory :nonadmin do
       admin_roles_mask nil
-      user_attributes do {
-          nyuidn: "N0000000",
-          primary_institution: "INST01",
-          institutions: ["INST01"],
-          bor_status: "52",
-          aleph_permissions: {}
-        }
-      end
+      patron_status "52"
     end
 
     factory :shanghai_undergraduate do
       firstname "Shangri"
       lastname "La"
-      user_attributes do
-        {
-          nyuidn: "N0000001",
-          primary_institution: "INST01",
-          institutions: ["INST01"],
-          bor_status: "0",
-          aleph_permissions: {}
-        }
-      end
+      patron_status "0"
     end
     factory :admin do
       admin_roles_mask 1

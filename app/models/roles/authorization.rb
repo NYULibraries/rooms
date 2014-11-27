@@ -33,7 +33,7 @@ module Roles
     ##
     # This user's authorized roles based off their bor status
     def auth_roles
-      all_auth_roles.reject {|k,v| !v.include? attrs[:bor_status] }.keys.map {|k| k.to_s}
+      all_auth_roles.reject {|k,v| !v.include? self.patron_status }.keys.map {|k| k.to_s}
     end
 
     ##
@@ -71,8 +71,8 @@ module Roles
     end
 
     def is_authorized?
-      @is_authorized ||= Rails.cache.fetch "#{attrs[:bor_status]}_authorized", :expires_in => 24.hours do
-        all_auth_roles.delete_if {|key,value| !value.include? attrs[:bor_status] }.blank?
+      @is_authorized ||= Rails.cache.fetch "#{self.patron_status}_authorized", :expires_in => 24.hours do
+        all_auth_roles.delete_if {|key,value| !value.include? self.patron_status }.blank?
       end
     end
 

@@ -21,7 +21,7 @@ module ReportsHelper
   end
 
   def user_status_options
-    @user_status_options ||= options(:bor_status)
+    @user_status_options ||= options(:patron_status)
   end
 
   def options(options_name)

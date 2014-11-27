@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141028203632) do
+ActiveRecord::Schema.define(:version => 20141126183034) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "user_id"
@@ -71,12 +71,17 @@ ActiveRecord::Schema.define(:version => 20141028203632) do
     t.datetime "current_login_at"
     t.datetime "expiration_date"
     t.datetime "last_login_at"
-    t.text     "user_attributes"
     t.datetime "refreshed_at"
     t.integer  "admin_roles_mask"
     t.string   "provider"
     t.string   "aleph_id"
-    t.string   "institution"
+    t.string   "institution_code"
+    t.string   "college"
+    t.string   "dept_code"
+    t.string   "department"
+    t.string   "major_code"
+    t.string   "major"
+    t.string   "patron_status"
   end
 
 end

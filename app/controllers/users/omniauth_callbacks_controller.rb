@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def nyulibraries
-    @user = find_user_with_or_without_provider.first_or_create(attributes_from_omniauth.merge(user_attributes_from_aleph))
+    @user = find_user_with_or_without_provider.first_or_create(attributes_from_omniauth)
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: "NYU Libraries") #if is_navigational_format?
@@ -11,7 +11,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def find_user_with_or_without_provider
-    @user ||= User.where(username: omniauth.uid, provider: omniauth.provider) || User.where(username: omniauth.uid, provider: "")
+    @user ||= (find_user_with_provider.present?) ? find_user_with_provider : find_user_without_provider
+  end
+
+  def find_user_with_provider
+    @find_user_with_provider ||= User.where(username: omniauth.uid, provider: omniauth.provider)
+  end
+
+  def find_user_without_provider
+    @find_user_without_provider ||= User.where(username: omniauth.uid, provider: "")
   end
 
   def require_valid_omniauth
@@ -31,9 +39,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def user_attributes_from_aleph
-    {
-      user_attributes: omniauth_aleph_properties
-    }
+    omniauth_aleph_properties
   end
 
   def omniauth_aleph_properties

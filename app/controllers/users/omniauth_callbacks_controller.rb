@@ -45,8 +45,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       email: omniauth_email,
       firstname: omniauth_firstname,
       lastname: omniauth_lastname,
-      institution: omniauth_institution,
-      aleph_id: omniauth_aleph_id
+      institution_code: omniauth_institution,
+      aleph_id: omniauth_aleph_id,
+      patron_status: omniauth_aleph_properties.patron_status,
+      college: omniauth_aleph_properties.college,
+      dept_code: omniauth_aleph_properties.dept_code,
+      department: omniauth_aleph_properties.department,
+      major_code: omniauth_aleph_properties.major_code,
+      major: omniauth_aleph_properties.major
     }
   end
 

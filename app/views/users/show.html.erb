@@ -1,4 +1,3 @@
-<% h = @user.try(:user_attributes) || {} %>
 
 <h2>User: <%=h @user.username %></h2>
 <div id="show_user">
@@ -17,19 +16,16 @@
 <dd>&nbsp;<%=h @user.email %></dd>
 
 <dt>College name:</dt>
-<dd>&nbsp;<%=h h[:college_name]%></dd>
-
-<dt>College code:</dt>
-<dd>&nbsp;<%=h h[:college_code]%></dd>
+<dd>&nbsp;<%=h @user.college%></dd>
 
 <dt>Departmental affiliation:</dt>
-<dd>&nbsp;<%=h h[:dept_name]%></dd>
+<dd>&nbsp;<%=h @user.department%></dd>
 
 <dt>Major:</dt>
-<dd>&nbsp;<%=h h[:major]%></dd>
+<dd>&nbsp;<%=h @user.major%></dd>
 
 <dt>Patron status:</dt>
-<dd>&nbsp;<%=h h[:bor_status]%></dd>
+<dd>&nbsp;<%=h @user.patron_status%></dd>
 
 <dt>Roles:</dt>
 <dd>&nbsp;<%= @user.roles_list %>

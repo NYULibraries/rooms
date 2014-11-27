@@ -3,13 +3,12 @@ class User < ActiveRecord::Base
   devise :omniauthable,:omniauth_providers => [:nyulibraries]
   has_many :reservations, :dependent => :destroy
 
-  attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :admin_roles, :institution, :aleph_id, :access_token
+  attr_accessible :email, :firstname, :lastname, :username, :admin_roles, :institution_code, :aleph_id,
+                  :patron_status, :college, :dept_code, :department, :major_code, :major
 
   scope :non_admin, where("admin_roles_mask = 0")
   scope :admin, where("admin_roles_mask > 0")
   scope :inactive, where("last_request_at < ?", 1.year.ago)
-
-  serialize :user_attributes
 
   acts_as_indexed :fields => [:firstname, :lastname, :username, :email]
 

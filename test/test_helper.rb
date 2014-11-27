@@ -28,7 +28,7 @@ DatabaseCleaner.strategy = :transaction
 
 class User
   def nyuidn
-    user_attributes[:nyuidn]
+    self.aleph_id
   end
 
   def error; end

@@ -75,7 +75,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def omniauth_institution
-    @omniauth_institution ||= omniauth.extra.institution
+    @omniauth_institution ||= omniauth.extra.institution_code
   end
 
   def omniauth_identities

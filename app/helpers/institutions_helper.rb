@@ -11,8 +11,8 @@ module InstitutionsHelper
         institutions[institution_param]
       when institution_from_ip.present?
         institution_from_ip
-      when (@current_user && current_user.institution && !current_user.institution.empty?)
-        current_user.institution
+      when (@current_user && current_user.institution_code && !current_user.institution_code.empty?)
+        institutions[current_user.institution_code.to_sym]
       else
         Institutions.defaults.first
       end

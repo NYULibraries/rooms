@@ -1,6 +1,7 @@
 class PopulateUserAttributesFromUserAttributeHash < ActiveRecord::Migration
   def up
     say_with_time "Migrating user attributes from user_attributes hash." do
+      User.class_eval { serialize :user_attributes }
       User.all.each do |user|
         user.update_attribute :institution_code,  user.user_attributes[:institution]
         user.update_attribute :college,           user.user_attributes[:college_name]

@@ -61,7 +61,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       dept_code: omniauth_aleph_properties.dept_code,
       department: omniauth_aleph_properties.department,
       major_code: omniauth_aleph_properties.major_code,
-      major: omniauth_aleph_properties.major
+      major: omniauth_aleph_properties.major,
+      provider:  omniauth.provider
     }
   end
 

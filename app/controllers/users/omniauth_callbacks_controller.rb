@@ -1,6 +1,8 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def nyulibraries
-    @user = find_user_with_or_without_provider.first_or_create(attributes_from_omniauth)
+    @user = find_user_with_or_without_provider.first_or_initialize(attributes_from_omniauth)
+    @user.update_attributes(attributes_from_omniauth)
+
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: "NYU Libraries") #if is_navigational_format?
@@ -11,7 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def find_user_with_or_without_provider
-    @user ||= (find_user_with_provider.present?) ? find_user_with_provider : find_user_without_provider
+    @find_user_with_or_without_provider ||= (find_user_with_provider.present?) ? find_user_with_provider : find_user_without_provider
   end
 
   def find_user_with_provider

@@ -46,7 +46,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def omniauth_aleph_properties
-    omniauth_aleph_identity.properties unless omniauth_aleph_identity.nil?
+    omniauth_aleph_identity.properties unless omniauth_aleph_identity.blank?
   end
 
   def attributes_from_omniauth
@@ -61,7 +61,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def aleph_attributes_from_omniauth
-    return {} if omniauth_aleph_properties.nil?
+    return {} if omniauth_aleph_identity.blank?
     {
       patron_status: omniauth_aleph_properties.patron_status,
       college: omniauth_aleph_properties.college,

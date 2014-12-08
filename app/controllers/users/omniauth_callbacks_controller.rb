@@ -46,7 +46,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def omniauth_aleph_properties
-    omniauth_aleph_identity.properties
+    omniauth_aleph_identity.properties unless omniauth_aleph_identity.nil?
   end
 
   def attributes_from_omniauth
@@ -56,13 +56,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       lastname: omniauth_lastname,
       institution_code: omniauth_institution,
       aleph_id: omniauth_aleph_id,
+      provider:  omniauth.provider
+    }.merge(aleph_attributes_from_omniauth)
+  end
+
+  def aleph_attributes_from_omniauth
+    return {} if omniauth_aleph_properties.nil?
+    {
       patron_status: omniauth_aleph_properties.patron_status,
       college: omniauth_aleph_properties.college,
       dept_code: omniauth_aleph_properties.dept_code,
       department: omniauth_aleph_properties.department,
       major_code: omniauth_aleph_properties.major_code,
-      major: omniauth_aleph_properties.major,
-      provider:  omniauth.provider
+      major: omniauth_aleph_properties.major
     }
   end
 

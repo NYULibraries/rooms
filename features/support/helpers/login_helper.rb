@@ -7,6 +7,19 @@ module RoomsFeatures
       hash
     end
 
+    def non_aleph_omniauth_hash
+      hash = OmniAuth::AuthHash.new(provider: :nyulibraries, uid: 'dev123')
+      hash.info = omniauth_info
+      hash.extra =  OmniAuth::AuthHash.new(
+        {
+          provider: 'nyu_shibboleth',
+          identities: [nyu_shibboleth_identity],
+          institution: 'NYU'
+        }
+      )
+      hash
+    end
+
     def omniauth_info
       hash = OmniAuth::AuthHash.new(
       {

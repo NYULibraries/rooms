@@ -13,6 +13,15 @@ Given(/^I am not logged in$/) do
   OmniAuth.config.mock_auth[:nyulibraries] = nil
 end
 
+Given(/^I am logged in as a non aleph user$/) do
+  OmniAuth.config.mock_auth[:nyulibraries] = non_aleph_omniauth_hash
+  visit '/login'
+end
+
+Then(/^I should have access denied$/) do
+  expect(page).to have_text 'Access denied'
+end
+
 Then(/^I should be redirected to login page$/) do
   expect(page).to have_text 'Select your affiliation'
 end

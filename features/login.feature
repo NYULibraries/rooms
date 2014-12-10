@@ -13,7 +13,7 @@ Scenario: A logged in user on the search page should see a logout link
   Given I am logged in
   And I am on the homepage
   Then I should see a logout link
-  And I should see "Log-out dev123" as the text of the logout link
+  And I should see "Log-out Dev" as the text of the logout link
 
 @omniauth_test
 Scenario: A non aleph logged in user should have access denied

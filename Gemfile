@@ -37,7 +37,7 @@ gem 'draper', '~> 1.4.0'
 gem 'newrelic_rpm', '~> 3.9.6.257'
 
 gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v2.2.0'
-gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.0.1'
+gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.4.2'
 gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries' , tag: "v1.1.2"
 gem 'devise'
 

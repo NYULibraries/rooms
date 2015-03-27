@@ -2,8 +2,8 @@
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require nyulibraries
-//= require bootstrap-modal
-//= require bootstrap-popover
+//= require bootstrap/modal
+//= require bootstrap/popover
 //= require jquery-ui-timepicker-addon.js
 //= require temporal
 //= require_tree ./partials

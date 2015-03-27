@@ -1,6 +1,6 @@
 <%= form_for @room do |f| %>
   <% if @room.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
+    <div id="error_explanation" class="alert alert-danger">  
       <h2><%= pluralize(@room.errors.count, "error") %> prohibited this record from being saved:</h2>  
       <ul>  
       <% @room.errors.full_messages.each do |msg| %>  

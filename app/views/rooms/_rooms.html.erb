@@ -1,9 +1,10 @@
+
 <p><%= page_entries_info @rooms, :entry_name => 'room' %></p>
 
 <%= paginate @rooms, theme: "bootstrap" %>
 
 <div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
     Action
     <span class="caret"></span>
   </a>
@@ -14,7 +15,7 @@
 </div>
 
 <div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
     Filter
     <span class="caret"></span>
   </a>
@@ -36,10 +37,10 @@
       <th>
         <%= sortable :title, "Title", {}, false %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= sortable :type_of_room, "Type of room", {}, false %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= sortable :sort_size_of_room, "Size of room", {}, false %>
       </th>
       <th>Options</th>
@@ -49,8 +50,8 @@
     <% @rooms.each do |room| %>
     <tr>
       <td><%=h room.title %></td>
-      <td class="hidden-phone"><%=h room.type_of_room %></td>
-      <td class="hidden-phone"><%=h room.size_of_room %></td>
+      <td class="hidden-xs"><%=h room.type_of_room %></td>
+      <td class="hidden-xs"><%=h room.size_of_room %></td>
       <td><%= link_to 'Show', room %></td>
       <td><%= link_to 'Edit', edit_room_path(room) %></td>
       <td><%= link_to 'Destroy', room, :confirm => 'Are you sure?', :method => :delete %></td>

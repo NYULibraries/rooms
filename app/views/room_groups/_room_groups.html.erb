@@ -3,7 +3,7 @@
 <%= paginate @room_groups, theme: "bootstrap" %>
 
 <div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
     Action
     <span class="caret"></span>
   </a>
@@ -20,7 +20,7 @@
       <th>
         <%= sortable :title, "Title", {}, false %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= sortable :code, "Code", {}, false %>
       </th>
       <th>Options</th>

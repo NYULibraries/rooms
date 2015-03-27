@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
 
   # For dev purposes
   def current_user_dev
-    @current_user = User.new(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", user_attributes: {bor_status: "57"})
+    @current_user = User.find_or_create_by(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX") do |user|
+      user.user_attributes = {bor_status: "57"}
+    end
     @current_user.admin_roles_mask = 1
     return @current_user
   end

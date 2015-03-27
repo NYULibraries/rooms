@@ -25,14 +25,14 @@ class Reservation < ActiveRecord::Base
 
   # Scopes
   # Active non blocks still used in reporting controller
-  scope :blocks, :conditions => { :is_block => true }, :order => "start_dt ASC"
-  scope :active, :conditions => { :deleted => false }, :order => "start_dt ASC"
-  scope :no_blocks, :conditions => { :is_block => false }, :order => "start_dt ASC"
-  scope :deleted, :conditions => { :is_block => false, :deleted => true }, :order => "start_dt ASC"
-  scope :current, lambda { where("end_dt > ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
-  scope :past, lambda { where("end_dt <= ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
-  scope :one_week, lambda { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
-  scope :one_month, lambda { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
+  scope :blocks,    -> { where("is_block = ?", true).order("start_dt ASC") }
+  scope :active,    -> { where("deleted = ?", false).order("start_dt ASC") }
+  scope :no_blocks, -> { where("is_block = ?", false).order("start_dt ASC") }
+  scope :deleted,   -> { where("is_block = ? AND deleted = ?", false,  true).order("start_dt ASC") }
+  scope :current,   -> { where("end_dt > ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
+  scope :past,      -> { where("end_dt <= ?", Time.zone.now.strftime("%Y-%m-%d %H:%M")) }
+  scope :one_week,  -> { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
+  scope :one_month, -> { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
   # Tire ElasticSearch mapping
   mapping do

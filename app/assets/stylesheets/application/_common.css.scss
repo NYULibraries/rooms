@@ -193,8 +193,16 @@ table#availability_grid_header_fixed {
   top: 20px !important;
   left: 20px;
   right: 20px;
-  width: auto;
+  // width: 100%;
   margin: 0;
+  .modal-dialog {
+    width: 100%;
+  }
+}
+
+
+.modal-dialog.fullscreen {
+  width: 100%;
 }
 
 .modal-header {
@@ -234,7 +242,7 @@ table#availability_grid_header_fixed {
   list-style: none;
   li {
     list-style: none;
-    margin-bottom: $paddingSmall;
+    margin-bottom: $padding-small-vertical;
     padding-left: 0 !important;
   }
 }

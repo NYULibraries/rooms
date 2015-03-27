@@ -6,7 +6,7 @@
 
 <%= form_for @reservation, :html => {:class => "form-horizontal ajax_form"}, :remote => true do |f| %>
   <% if @reservation.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
+    <div id="error_explanation" class="alert alert-danger">  
       <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>  
       <ul>  
       <% @reservation.errors.full_messages.each do |msg| %>  

@@ -8,7 +8,7 @@ window.fit_modal_body = (modal) ->
   bodypaddings = parseInt(body.css("padding-top")) + parseInt(body.css("padding-bottom"))
   footerheight = parseInt(footer.css("height")) + parseInt(footer.css("padding-top")) + parseInt(footer.css("padding-bottom"))
   height = windowheight - headerheight - bodypaddings - footerheight - 40 # Top and bottom spacings
-  body.css("max-height", "#{height}px")
+  body.css({"max-height": "#{height}px", "overflow": "auto"})
 
 # Adjust fixed header widths to match the real table widths
 window.adjust_table_header_widths = ->
@@ -21,10 +21,10 @@ window.adjust_table_grid_widths = ->
     if parseInt($(this).css('width')) <= 120
       $(this).closest("tr").find(".room_info").css('width':$(this).css('width'))
       $(this).css('height':$(this).css('width'))
-      
+
 # Show and animate progress bar
 window.animate_progress_bar = ->
-  if (!$("#ajax-modal #remote_progress").is("*")) 
+  if (!$("#ajax-modal #remote_progress").is("*"))
     $("#ajax-modal").find(".modal-header .availability_grid_desc").after($("<div />").attr({'id': 'remote_progress'}).addClass("progress progress-striped active").append($("<div />").addClass("bar").css({width: '5%'})))
     setTimeout ->
       $("#remote_progress > div.bar").css({width: "98%"})

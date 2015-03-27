@@ -3,20 +3,20 @@ class BlocksController < ApplicationController
   authorize_resource :block, :class => false
   respond_to :html, :js
   before_filter :set_block, :only => [:create, :destroy_existing_reservations]
-  
+
   # GET /blocks
   def index
     @blocks = Reservation.blocks.joins(:room).accessible_by(current_ability).sorted(params[:sort], "start_dt asc").page(params[:page]).per(30)
     @rooms = Room.all
     respond_with(@blocks)
   end
-  
+
   # GET /blocks/new
   def new
     @block = Reservation.new(:is_block => true)
     respond_with(@block)
   end
-  
+
   # POST /blocks
   def create
     respond_with(@block) do |format|
@@ -27,7 +27,7 @@ class BlocksController < ApplicationController
       end
     end
   end
-    
+
   # DELETE /blocks/1
   def destroy
     @block = Reservation.find(params[:id])
@@ -35,9 +35,9 @@ class BlocksController < ApplicationController
 
     respond_with(@block, :location => blocks_url)
   end
-  
+
   # POST /blocks/destroy_existing_reservations
-  def destroy_existing_reservations 
+  def destroy_existing_reservations
     # If this has been submitted with a cancel request, delete conflicting reservations
     unless params[:cancel].blank? || params[:reservations_to_delete].blank?
       formatted_reservations = ""
@@ -54,7 +54,7 @@ class BlocksController < ApplicationController
       # Send an email to the administrator specified if the checkbox was selected
       ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
     end
-    
+
     # Jumping through hoops here to avoid ElasticSearch caching class method existing_reservations when @block.save is called
     reservations_still_exist = Reservation.where(:id => params[:reservations_to_delete], :deleted => false)
     if reservations_still_exist.empty?
@@ -69,19 +69,22 @@ class BlocksController < ApplicationController
       end
     end
   end
-  
+
   # GET /blocks/index_existing_reservations
   def index_existing_reservations
     @existing_reservations = Reservation.find(params[:reservations_to_delete])
   end
-  
+
 private
 
   def set_block
-    @block = Reservation.new(params[:reservation])
+    @block = Reservation.new(reservation_params)
     @block.user_id = current_user.id
     @block.is_block = true
     @block.title = (params[:reservation][:title].blank?) ? t('blocks.default_title') : params[:reservation][:title]
   end
-  
+
+  def reservation_params
+    params.require(:reservation).permit(:room_id, :end_dt, :start_dt)
+  end
 end

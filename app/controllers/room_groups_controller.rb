@@ -1,7 +1,7 @@
 class RoomGroupsController < ApplicationController
   load_and_authorize_resource
   respond_to :html, :js
-  
+
   def index
     @room_groups = RoomGroup.sorted(params[:sort], "title asc").page(params[:page]).per(30)
     respond_with(@room_groups)
@@ -18,7 +18,7 @@ class RoomGroupsController < ApplicationController
   end
 
   def create
-    @room_group = RoomGroup.new(params[:room_group])
+    @room_group = RoomGroup.new(room_group_params)
     flash[:notice] = t('room_groups.create.success') if @room_group.save
     respond_with(@room_group)
   end
@@ -30,7 +30,7 @@ class RoomGroupsController < ApplicationController
 
   def update
     @room_group = RoomGroup.find(params[:id])
-    flash[:notice] = t('room_groups.update.success') if @room_group.update_attributes(params[:room_group])
+    flash[:notice] = t('room_groups.update.success') if @room_group.update_attributes(room_group_params)
     respond_with(@room_group)
   end
 
@@ -39,9 +39,15 @@ class RoomGroupsController < ApplicationController
     @room_group.destroy
     respond_with(@room_group)
   end
-  
+
   def sort_column
     super "RoomGroup", "title"
   end
   helper_method :sort_column
+
+  private
+
+  def room_group_params
+    params.require(:room_group).permit(:title, :code, admin_roles: [])
+  end
 end

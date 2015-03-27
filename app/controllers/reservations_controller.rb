@@ -23,7 +23,6 @@ class ReservationsController < ApplicationController
     [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
-
     @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
@@ -34,7 +33,7 @@ class ReservationsController < ApplicationController
   # POST /reservations
   def create
     @user = current_user
-    @reservation = @user.reservations.new(params[:reservation])
+    @reservation = @user.reservations.new(create_params)
     @room = @reservation.room
 
     # Manually authorize these actions so that we can load a custom message
@@ -72,7 +71,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     @user = @reservation.user
 
-    flash[:success] = t('reservations.update.success') if @reservation.update_attributes(params[:reservation])
+    flash[:success] = t('reservations.update.success') if @reservation.update_attributes(update_params)
 
     respond_with(@reservation, :location => root_url)
   end
@@ -179,6 +178,16 @@ private
       size search_size
     end
     return rooms_search
+  end
+
+  private
+
+  def update_params
+    params.require(:reservation).permit(:title)
+  end
+
+  def create_params
+    params.require(:reservation).permit(:room_id, :start_dt, :end_dt, :cc)
   end
 
 end

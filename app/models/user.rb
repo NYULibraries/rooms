@@ -2,12 +2,9 @@ class User < ActiveRecord::Base
   include Roles::Authorization
   has_many :reservations, :dependent => :destroy
 
-  attr_accessible :email, :firstname, :lastname, :user_attributes, :username, :admin_roles
-  attr_accessible :crypted_password, :current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :login_count, :mobile_phone, :password_salt, :persistence_token, :refreshed_at, :session_id
-
-  scope :non_admin, where("admin_roles_mask = 0")
-  scope :admin, where("admin_roles_mask > 0")
-  scope :inactive, where("last_request_at < ?", 1.year.ago)
+  scope :non_admin, -> { where("admin_roles_mask = 0") }
+  scope :admin, -> { where("admin_roles_mask > 0") }
+  scope :inactive, -> { where("last_request_at < ?", 1.year.ago)}
 
   serialize :user_attributes
 

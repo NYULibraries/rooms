@@ -1,19 +1,17 @@
 class Room < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  
+
   # elasticsearch index name
   index_name("#{Rails.env}_rooms")
 
-  attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link, :room_group_id, :collaborative
-  
   has_many :reservations, :dependent => :destroy
   belongs_to :room_group
 
   validates_presence_of :title, :opens_at, :closes_at, :room_group_id
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
-  
+
   # Tire mapping to ElasticSearch index
   mapping do
     indexes :id, :index => :not_analyzed
@@ -27,10 +25,10 @@ class Room < ActiveRecord::Base
     indexes :room_group, :as => 'room_group.code', :index => :not_analyzed
     indexes :opens_at, :as => 'opens_at'
     indexes :closes_at, :as => 'closes_at'
-  end 
-  
+  end
+
   serialize :hours
-  
+
 private
 
   ##
@@ -39,7 +37,7 @@ private
     previous_max = Room.maximum("sort_order")
     write_attribute(:sort_order, previous_max +1)
   end
-  
+
   ##
   # Set the sort_size_of_room attribute to an integer based on the string in size_of_room
   #

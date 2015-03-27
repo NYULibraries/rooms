@@ -8,8 +8,6 @@ class Reservation < ActiveRecord::Base
   belongs_to :room
   belongs_to :user
 
-  attr_accessible :room_id, :user_id, :start_dt, :end_dt, :cc, :title, :is_block, :deleted, :deleted_by, :deleted_at
-
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
 
   validate :reservation_available, :if => :room_id?, :unless => :is_block?, :on => :create

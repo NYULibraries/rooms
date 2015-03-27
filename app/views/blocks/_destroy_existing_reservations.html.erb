@@ -1,7 +1,7 @@
 <%= form_for @block, :url => {:controller => "blocks", :action => "destroy_existing_reservations"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
 
 	<% if @block.errors.any? %>  
-	  <div id="error_explanation" class="alert alert-error">  
+	  <div id="error_explanation" class="alert alert-danger">  
 	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
 	    <ul>  
 	    <% @block.errors.full_messages.each do |msg| %>  

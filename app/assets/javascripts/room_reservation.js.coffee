@@ -1,10 +1,10 @@
 $ ->
   # Set cookie finding user's timezone
   detected_zone = Temporal.detect()
-  
+
   # Hide objects not important for JS
   $(".js_hide").hide()
-  
+
   # Disable anchor tags linking to #
   $(document).on "click", "a[href='#']", ->
     false
@@ -33,7 +33,7 @@ $ ->
     opacity: 0.4
     cursor: 'move'
   }
-  
+
   # Set date picker for reservation date to readonly and autocomplete off
   $("#room_reservation_which_date").attr {
     "readonly": "true",
@@ -61,11 +61,11 @@ $ ->
     $("#ajax-modal").find(".ajax-loader").show()
     $("#ajax-modal").modal('show')
     window.location.hash = '#reservations'
-    
+
   $(window).on 'hashchange', ->
     if window.location.hash != '#reservations'
       $("#ajax-modal").modal('hide')
-  
+
   $(document).on 'click', "#ajax-modal a.close_dialog", (e) ->
     e.preventDefault()
     $("#ajax-modal").modal('hide')
@@ -84,7 +84,7 @@ $ ->
     }
     $(this).popover('show')
     false
-  
+
   $(document).on "click", ".cc", (e) ->
     e.preventDefault()
     $(this).popover {
@@ -114,11 +114,11 @@ $ ->
   # Make preferred slot selectable by clicking table
   $(".modal-body").on "click", "td.timeslot_preferred", ->
     select_room(this)
-  
+
   $(".modal-body").on "click", ".room_title_text, .room_type_text, .room_size", ->
     unless $(this).closest("tr").find("td.timeslot_preferred.timeslot_unavailable").is("*")
       select_room($(this).closest("tr").find("td.timeslot_preferred"))
-    
+
   # Make loading bar reappear and animate when remote links or forms are called
   $(document).on "click", "#ajax-modal a[data-remote='true']", ->
     animate_progress_bar()

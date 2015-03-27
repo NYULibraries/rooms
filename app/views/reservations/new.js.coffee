@@ -23,19 +23,19 @@ $("#ajax-modal").find(".modal-title").html($("#ajax-modal").find(".modal-body .m
 $("#ajax-modal").find(".modal-body .modal-body-content").find("h1.page_title").hide()
 
 # Move submit action to modal-footer and set to remotely submit form
-if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*")) 
+if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*"))
   $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-large btn-primary disabled").on 'click', ->
     false
 
 #Move extra fields in availability grid to modal-footer, just pretties it up a bit
 $("#ajax-modal").find(".ajax_form table tfoot").hide()
 
-if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*")) 
+if (!$("#ajax-modal").find(".modal-footer .extra_fields").is("*"))
   $("#ajax-modal").find(".modal-footer").prepend($("#ajax-modal .ajax_form").find(".extra_fields div"))
   $("#ajax-modal").find(".modal-footer div").wrapAll($("<div />").addClass("extra_fields"))
   $("#ajax-modal").find(".modal-footer").find("#res_title_label_div, #res_title_div").wrapAll($("<div />").addClass("extra_field"))
   $("#ajax-modal").find(".modal-footer").find("#res_cc_label_div, #res_cc_div").wrapAll($("<div />").addClass("extra_field"))
-  
+
   # Set labels as placeholder text inside inputs
   $("#ajax-modal").find("#reservation_cc").attr("placeholder", $("#ajax-modal").find("#res_cc_label_div").text())
   $("#ajax-modal").find("#reservation_title").attr("placeholder", $("#ajax-modal").find("#res_title_label_div").text())
@@ -76,7 +76,7 @@ $(".modal-body").bind "scroll", ->
   # Show fixedHeader when scrolling down table
   if (offset >= tableOffset && fixedHeader.is(":hidden"))
     fixedHeader.show()
-    adjust_table_header_widths() 
+    adjust_table_header_widths()
     fit_modal_body($("#ajax-modal"))
   # And hide when back at the top
   else if (offset < tableOffset)

@@ -18,6 +18,7 @@ if ENV["RAILS_ENV"] == "test"
 
   VCR.configure do |c|
     c.default_cassette_options = { allow_playback_repeats: true, record: :new_episodes }
+    c.ignore_localhost = true
     c.cassette_library_dir = 'spec/vcr_cassettes'
     c.configure_rspec_metadata!
     c.hook_into :webmock
@@ -34,9 +35,7 @@ if ENV["RAILS_ENV"] == "test"
     end
   end
 
-  VCR.use_cassette('load elasticsearch models') do
-    require File.expand_path('../../config/environment', __FILE__)
-  end
+  require File.expand_path('../../config/environment', __FILE__)
 else
   require File.expand_path('../../config/environment', __FILE__)
 end

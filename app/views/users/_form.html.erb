@@ -1,37 +1,51 @@
-<%= form_for @user do |f| %>
-  <% if @user.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this record from being saved:</h2>  
-      <ul>  
-      <% @user.errors.full_messages.each do |msg| %>  
-        <li><%= msg %></li>  
-      <% end %>  
-      </ul>  
-    </div>  
+<%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
+  
   <fieldset>
-    <%= f.label :username, :class => "control-label" do %>
-    Username <br />
-    <%= f.text_field :username, :disabled => !@user.id.nil? %>
-    <% end -%>
+    <div class="form-group">
+      <%= f.label :username, "Username: ", :class => "control-label col-sm-3" %>
+      <div class="col-sm-3">
+        <%= f.text_field :username, :disabled => !@user.id.nil?, :class => "form-control" %>
+      </div>
+    </div>
 
-    <%= f.label :email, :class => "control-label" do %>
-    E-mail <br />
-    <%= f.text_field :email, :disabled => !@user.id.nil? %>
-    <% end -%>
+    <div class="form-group">
+      <%= f.label :email, "E-mail: ", :class => "control-label col-sm-3" %>
+      <div class="col-sm-3">
+        <%= f.text_field :email, :disabled => !@user.id.nil?, :class => "form-control" %>
+      </div>
+    </div>
 
-	<% for role in @user.all_admin_roles %>
-		<% if current_user.is?(:superuser) or current_user.is? role.to_sym %>
-			<%= label_tag "user[admin_roles][#{role}]", :class => "control-label" do %>
-				<%= check_box_tag "user[admin_roles][#{role}]", role, @user.admin_roles.include?(role), {:name => "user[admin_roles][]"}%>
-				<%= role.humanize.titleize %>
-			<% end %>
-		<% end %>
-	<% end %>
-	<%= hidden_field_tag "user[admin_roles][]", "" %>
+    <% for role in @user.all_admin_roles %>
+      <% if current_user.is?(:superuser) or current_user.is? role.to_sym %>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <%= label_tag "user[admin_roles][#{role}]", :class => "control-label" do %>
+                <%= check_box_tag "user[admin_roles][#{role}]", role, @user.admin_roles.include?(role), {:name => "user[admin_roles][]"}%>
+                <%= role.humanize.titleize %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+  		<% end %>
+  	<% end %>
+	  <%= hidden_field_tag "user[admin_roles][]", "" %>
 
   </fieldset>
-  <p>
-    <button class="btn" type="submit">Save changes</button>
-  </p>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Save changes</button>
+    </div>
+  </div>
 <% end %>

@@ -3,7 +3,7 @@
 <%= paginate @users, theme: "bootstrap" %>
 
 <div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
     Action
     <span class="caret"></span>
   </a>
@@ -21,16 +21,16 @@
       <th>
         <%= link_to_sorted "Username", :username %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= link_to_sorted "First name", :firstname %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= link_to_sorted "Last name", :lastname %>
       </th>
-      <th class="hidden-phone">
+      <th class="hidden-xs">
         <%= link_to_sorted "Email", :email %>
       </th>
-      <th class="hidden-phone">Admin?</th>
+      <th class="hidden-xs">Admin?</th>
       <th>Options</th>
     </tr>
   </thead>
@@ -39,10 +39,10 @@
     <% h = user.user_attributes %>
     <tr>
       <td><%=h user.username %></td>
-      <td class="hidden-phone"><%=h user.firstname %></td>
-      <td class="hidden-phone"><%=h user.lastname %></td>
-      <td class="hidden-phone"><%=h user.email %></td>
-      <td class="hidden-phone"><%=h user.is_admin? %></td>
+      <td class="hidden-xs"><%=h user.firstname %></td>
+      <td class="hidden-xs"><%=h user.lastname %></td>
+      <td class="hidden-xs"><%=h user.email %></td>
+      <td class="hidden-xs"><%=h user.is_admin? %></td>
       <td><%= link_to 'Show', user %></td>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
       <td><%= (can? :destroy, user) ? link_to('Destroy', user, :confirm => 'Are you sure?', :method => :delete) : 'Destroy' %></td>

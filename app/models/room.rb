@@ -34,7 +34,7 @@ private
   ##
   # Find maximum set_order attr and set current one to be after that
   def set_sort_order
-    previous_max = Room.maximum("sort_order")
+    previous_max = Room.maximum("sort_order") || 0
     write_attribute(:sort_order, previous_max +1)
   end
 

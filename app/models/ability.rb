@@ -80,6 +80,7 @@ private
   # Actions that all bookers can do based on their group access and role name
   def shared_booker(group_access, method_name)
     can group_access, RoomGroup
+
     can [:read, :create, :delete, :update, :resend_email], Reservation, { :user_id => @user.id, :room => {:room_group => { :code => group_access.map {|g| g.to_s } } } }
     # Grads can't make a reservations if they've made one today
     can :create_today, Reservation do |reservation|

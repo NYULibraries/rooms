@@ -33,7 +33,7 @@
       <td><%=h room_group.code %></td>
       <td><%= link_to 'Show', room_group %></td>
       <td><%= link_to 'Edit', edit_room_group_path(room_group) %></td>
-      <td><%= link_to 'Destroy', room_group, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to 'Destroy', room_group, data: { confirm: 'Are you sure?' }, :method => :delete %></td>
     </tr>
     <% end %>
   </tbody>

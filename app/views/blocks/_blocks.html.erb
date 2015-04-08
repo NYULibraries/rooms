@@ -19,7 +19,7 @@
     	<td><%=h prettify_date(block.start_dt) %></td>
     	<td><%=h prettify_date(block.end_dt) %></td>
     	<td><%=h block.room.title %></td>
-    	<td><%= link_to 'Destroy', destroy_block_path(block), :confirm => 'Are you sure?', :method => :delete, :title => "Delete block" %>
+    	<td><%= link_to 'Destroy', destroy_block_path(block), data: {confirm: 'Are you sure?'}, :method => :delete, :title => "Delete block" %>
     </tr>
     <% end %>
   </tbody>

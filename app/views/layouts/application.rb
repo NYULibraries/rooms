@@ -34,7 +34,7 @@ module Views
       # Prepend the flash message partial before yield
       def prepend_yield
         content_tag :div, :id => "main-flashses" do
-         render :partial => 'common/flash_msg'
+          render :partial => 'common/flash_msg'
         end
       end
 

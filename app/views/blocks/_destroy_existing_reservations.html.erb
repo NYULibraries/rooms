@@ -1,14 +1,14 @@
 <%= form_for @block, :url => {:controller => "blocks", :action => "destroy_existing_reservations"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
 
-	<% if @block.errors.any? %>  
-	  <div id="error_explanation" class="alert alert-danger">  
-	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
-	    <ul>  
-	    <% @block.errors.full_messages.each do |msg| %>  
-	      <li><%= msg %></li>  
-	    <% end %>  
-	    </ul>  
-	  </div>  
+	<% if @block.errors.any? %>
+	  <div id="error_explanation" class="alert alert-danger">
+	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>
+	    <ul>
+	    <% @block.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	  </div>
 	<% end %>
 
 	<dl class="dl-horizontal">
@@ -21,19 +21,19 @@
 		<dt>Room: </dt>
 		<dd><%= Room.find(params[:reservation][:room_id]).title %></dd>
 	</dl>
-	
+
 	<%= f.hidden_field :room_id, :value => params[:reservation][:room_id] %>
 	<%= f.hidden_field :start_dt, :value => params[:reservation][:start_dt] %>
 	<%= f.hidden_field :end_dt, :value => params[:reservation][:end_dt] %>
 	<%= f.hidden_field :title, :value => params[:reservation][:title]%>
-	
+
 	<%= icon_tag :back %>
 	<%= link_to "Edit block", new_block_url %>
 
 	<% unless @block.existing_reservations.blank? %>
 		<h1>Existing reservations</h1>
 
-		<div class="alert alert-block">
+		<div class="alert alert-danger">
 
 		<h4>Note: </h4>
 
@@ -51,41 +51,47 @@
 		</div>
 
 		<div id="edit_cancellation_email">
-			<%= text_area_tag "cancellation_email", t("blocks.destroy_existing_reservations.cancellation_email"), :rows => 5, :class => "span12" %>
+			<%= text_area_tag "cancellation_email", t("blocks.destroy_existing_reservations.cancellation_email"), :rows => 5, :class => "form-control" %>
 		</div>
 
-		<label class="radio inline">
-			<input type="radio" name="cancel" value="delete_with_alert" checked="checked" />
-			Cancel and alert
-		</label>
-
-		<label class="radio inline">
-			<input type="radio" name="cancel" value="delete_no_alert" />
-			Cancel without alert
-		</label>
-
-		<br />
-
-		<label class="checkbox">
-			<input type="checkbox" name="cc_admin" id="cc_admin" />
-			Send a copy to <input type="text" class="large_text_field" name="cc_admin_email" id="cc_admin_email" value="patron.question@library.nyu.edu" />
-		</label>
+		<div class="radio">
+		  <label>
+				<input type="radio" name="cancel" value="delete_with_alert" checked="checked" />
+				Cancel and alert
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+				<input type="radio" name="cancel" value="delete_no_alert" />
+				Cancel without alert
+		  </label>
+		</div>
 
 		<br />
 
-		<label class="checkbox">
-			<input type="checkbox" name="cc_group" id="cc_group" />
-			Send a copy to reservation CCs
-		</label>
+		<div class="checkbox">
+		  <label>
+				<input type="checkbox" name="cc_admin" id="cc_admin" />
+				Send a copy to <input type="text" class="form-control col-sm-12" name="cc_admin_email" id="cc_admin_email" value="patron.question@library.nyu.edu" />
+		  </label>
+		</div>
+		<div class="checkbox">
+		  <label>
+				<input type="checkbox" name="cc_group" id="cc_group" />
+				Send a copy to reservation CCs
+		  </label>
+		</div>
+
 
 		<% @block.existing_reservations.each do |res| %>
 			<%= hidden_field_tag "reservations_to_delete[]", res.id %>
 		<% end %>
 
 		<br /><br />
-		<%= f.submit "Continue" %>
+		<%= f.submit "Continue", class: "btn btn-primary" %>
 	<% else %>
-		<%= f.submit "Create" %>
+		<%= f.submit "Create", class: "btn btn-primary" %>
 	<% end %>
+	<br /><br />
 
 <% end %>

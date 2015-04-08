@@ -94,9 +94,11 @@
 				<%= hidden_field_tag :page, params[:page] unless params[:page].blank? %>
 				<%= hidden_field_tag :direction, params[:direction] unless params[:direction].blank? %>
 				<%= hidden_field_tag :sort, params[:sort] unless params[:sort].blank? %>
-				<button type="submit" class="btn">
-					Reserve<span class="hidden-xs"> selected timeslot</span>
-				</button>
+        <div class="col-xs-12 col-md-4">
+          <button type="submit" class="btn btn-lg btn-primary">
+            Reserve selected timeslot
+          </button>
+        </div>
 			</td>
 		</tr>
 	</tfoot>

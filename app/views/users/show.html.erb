@@ -2,7 +2,7 @@
 
 <h2>User: <%=h @user.username %></h2>
 <div id="show_user">
-  
+
 <dl class="dl-horizontal">
 <dt>NetID</dt>
 <dd>&nbsp;<%=h @user.username %></dd>
@@ -60,7 +60,7 @@
 		<% end %>
 		</tbody>
 	</table>
-</p>	
+</p>
 
 <p>
 	<b>Past Reservations (up to 1 month):</b>
@@ -100,7 +100,7 @@
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
-			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, :confirm => "Are you sure?" %>
+			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, data: { confirm: "Are you sure?" } %>
 		</tr>
 		<% end %>
 		</tbody>
@@ -109,7 +109,7 @@
 
 <br />
 <%= icon_tag :edit %>
-<%= link_to 'Edit', edit_user_path(@user) %> | 
+<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= icon_tag :back %>
 <%= link_to 'Back', users_path %>
 </div>

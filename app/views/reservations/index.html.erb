@@ -17,10 +17,10 @@
     </div>
   <% end %>
 
-	<div class="well well-small">
+	<div class="well well-sm">
 	  <div class="form-group has-feedback">
 	    <label class="control-label col-sm-3" for="inputDate">Select a date:</label>
-	    <div class="col-sm-9">
+	    <div class="col-sm-6">
 	      <input type="text" name="reservation[which_date]" class="form-control" id="room_reservation_which_date">
 	      <a class ="select_date_icon"><span class="glyphicon glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span></a>
 	    </div>
@@ -39,7 +39,7 @@
 	  </div>
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="inputStartTime">Select length:</label>
-			<div class="col-sm-2">
+			<div class="col-sm-6">
 				<% if can? :ny_graduate, RoomGroup %>
 					<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), class: "form-control"%>
 				<% else %>
@@ -49,10 +49,12 @@
 		</div>
 	</div>
 
-  <fieldset>
-  <%= button_tag(:type => "submit", :class => "btn launch_modal", :id => "generate_grid") do %>
-    Determine availability
-  <% end -%>
-  </fieldset>
+	<div class="row no-gutter">
+	  <fieldset class="col-sm-12 col-md-4">
+	  <%= button_tag(:type => "submit", :class => "btn btn-block btn-lg btn-primary launch_modal", :id => "generate_grid") do %>
+	    Determine availability
+	  <% end -%>
+		</fieldset>
+	</div>
 
 <% end %>

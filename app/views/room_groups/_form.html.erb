@@ -1,35 +1,40 @@
 <%= form_for @room_group do |f| %>
-  <% if @room_group.errors.any? %>  
-    <div id="error_explanation" class="alert alert-danger">  
-      <h2><%= pluralize(@room_group.errors.count, "error") %> prohibited this record from being saved:</h2>  
-      <ul>  
-      <% @room_group.errors.full_messages.each do |msg| %>  
-        <li><%= msg %></li>  
-      <% end %>  
-      </ul>  
-    </div>  
+  <% if @room_group.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@room_group.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+      <% @room_group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
   <fieldset>
-    <%= f.label :title, :class => "control-label" do %>
-    Title <br />
-    <%= f.text_field :title %>
-    <% end -%>
+    <p>
+    <%= f.label :title, :class => "control-label" %>
+    <%= f.text_field :title, class: 'form-control' %>
+    </p>
+    <p>
+    <%= f.label :code, :class => "control-label" %>
+    <%= f.text_field :code, class: 'form-control' %>
+    </p>
 
-    <%= f.label :code, :class => "control-label" do %>
-    Code <br />
-    <%= f.text_field :code %>
-    <% end -%>
-
-	<% for role in @room_group.all_admin_roles %>
-	<%= label_tag "room_group[admin_roles][#{role}]", :class => "control-label" do %>
-		<%= check_box_tag "room_group[admin_roles][#{role}]", role, @room_group.admin_roles.include?(role), {:name => "room_group[admin_roles][]"}%>
-		<%= role.humanize.titleize %>
-	<% end %>
-	<% end %>
-	<%= hidden_field_tag "user[admin_roles][]", "" %>
-
+    <p>
+      <%= f.label :admin_roles %>
+  	<% for role in @room_group.all_admin_roles %>
+      <div>
+        <div class="checkbox">
+          <label>
+            <%= check_box_tag "room_group[admin_roles][#{role}]", role, @room_group.admin_roles.include?(role), {:name => "room_group[admin_roles][]"}%>
+            <%= role.humanize.titleize %>
+          </label>
+        </div>
+      </div>
+  	<% end %>
+  	<%= hidden_field_tag "user[admin_roles][]", "" %>
   </fieldset>
+  <br />
   <p>
-    <button class="btn" type="submit">Save changes</button>
+    <%= f.button 'Save changes', class: 'btn btn-primary' %>
   </p>
 <% end %>

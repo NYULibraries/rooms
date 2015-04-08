@@ -24,7 +24,7 @@ $("#ajax-modal").find(".modal-body .modal-body-content").find("h1.page_title").h
 
 # Move submit action to modal-footer and set to remotely submit form
 if (!$("#ajax-modal").find(".modal-footer button[type='submit']").is("*"))
-  $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-large btn-primary disabled").on 'click', ->
+  $("#ajax-modal").find(".modal-footer").append $("#ajax-modal .ajax_form").find("button[type='submit']").addClass("btn-lg btn-primary disabled").on 'click', ->
     false
 
 #Move extra fields in availability grid to modal-footer, just pretties it up a bit

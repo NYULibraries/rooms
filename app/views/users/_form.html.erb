@@ -9,7 +9,7 @@
       </ul>
     </div>
   <% end %>
-  
+
   <fieldset>
     <div class="form-group">
       <%= f.label :username, "Username: ", :class => "control-label col-sm-3" %>
@@ -24,10 +24,10 @@
         <%= f.text_field :email, :disabled => !@user.id.nil?, :class => "form-control" %>
       </div>
     </div>
-
+    <div class="form-group">
+    <%= f.label :admin_roles, "Roles: ", :class => "control-label col-sm-3" %>
     <% for role in @user.all_admin_roles %>
       <% if current_user.is?(:superuser) or current_user.is? role.to_sym %>
-        <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <%= label_tag "user[admin_roles][#{role}]", :class => "control-label" do %>
@@ -36,16 +36,17 @@
               <% end %>
             </div>
           </div>
-        </div>
+
   		<% end %>
   	<% end %>
+  </div>
 	  <%= hidden_field_tag "user[admin_roles][]", "" %>
 
   </fieldset>
 
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Save changes</button>
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Save changes</button>
     </div>
   </div>
 <% end %>

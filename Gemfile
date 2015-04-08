@@ -4,19 +4,17 @@ gem 'rails', '~> 4.1.9'
 
 gem 'mysql2', '~> 0.3.17'
 
-# Move this out here to use coffee in views
-gem 'coffee-rails'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '~> 2.5.3'
 gem 'therubyracer', '~> 0.12.1'
 gem 'compass-rails', '~> 2.0.0'
 gem 'yui-compressor', '~> 0.12.0'
 gem 'temporal-rails', '~> 0.2.3'
-gem 'sass-rails'
-gem 'rails-perftest'
+gem 'sass-rails', '~> 5.0.1'
 gem 'json', '~> 1.8.1'
 gem 'jquery-rails', '~> 3.1.2'
 gem 'jquery-ui-rails', '~> 4.2.1'
-gem 'cancancan'
+gem 'cancancan', '~> 1.10.1'
 gem 'kaminari', '~> 0.16.1'
 gem 'sorted', '~> 1.0.1'
 gem 'acts_as_indexed', '~> 0.8.3'
@@ -29,14 +27,13 @@ gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.9.6.257'
 
-
 gem 'exlibris-aleph', github: 'barnabyalter/exlibris-aleph'
 gem 'authpds', github: 'barnabyalter/authpds'
 gem 'authpds-nyu', github: 'barnabyalter/authpds-nyu'
 gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.2.1'
 gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.4.2'
 
-
+gem 'font-awesome-rails', '~> 4.2.0'
 
 group :development do
   gem 'progress_bar'

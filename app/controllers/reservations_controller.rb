@@ -17,7 +17,11 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @user = current_user
-    @reservation = @user.reservations.new(:start_dt => start_dt, :end_dt => end_dt)
+    @reservation = @user.reservations.new
+    # Need to reset these to properly formatted dates in UTC
+    # b/c using strong parameters somehow formats them
+    @reservation.start_dt = start_dt
+    @reservation.end_dt = end_dt
 
     # Manually authorize these actions so that we can load a custom message
     [:create_today, :create_for_same_day, :create_for_length].each do |action|
@@ -34,6 +38,10 @@ class ReservationsController < ApplicationController
   def create
     @user = current_user
     @reservation = @user.reservations.new(create_params)
+    # Need to reset these to properly formatted dates in UTC
+    # b/c using strong parameters somehow formats them
+    @reservation.start_dt = start_dt
+    @reservation.end_dt = end_dt
     @room = @reservation.room
 
     # Manually authorize these actions so that we can load a custom message
@@ -115,17 +123,21 @@ class ReservationsController < ApplicationController
   end
   helper_method :sort_column
 
+  # Get the Start DateTime from the start_dt param or from the which_date param,
+  # depending on which is present,
+  # which_date present on #new and start_dt present on #create
   def start_dt
     @start_dt ||=
       (params[:reservation][:start_dt].blank?) ?
         DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
-          DateTime.parse(params[:reservation][:start_dt])
+        DateTime.parse(params[:reservation][:start_dt])
   rescue Exception => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @start_dt ||= default_date
   end
   helper_method :start_dt
 
+  # Get the End DateTime, by adding the how_long param to Start DateTime
   def end_dt
     @end_dt ||=
      (params[:reservation][:end_dt].nil?) ?
@@ -144,7 +156,7 @@ private
     @which_date ||= Date.parse(params[:reservation][:which_date])
   rescue Exception => e
     flash[:error] = t('reservation.date_formatted_correctly')
-    @which_date = DateTime.today
+    @which_date = Date.today
   end
 
   # Convert 12 to 24 hours
@@ -152,6 +164,7 @@ private
     @hour ||= get_hour_in_24(params[:reservation])
   end
 
+  # Default date to NOW
   def default_date
     @default_date ||= DateTime.new(Time.now.year, Time.now.mon, Time.now.mday, Time.now.hour, 0)
   end
@@ -180,14 +193,12 @@ private
     return rooms_search
   end
 
-  private
-
   def update_params
     params.require(:reservation).permit(:title)
   end
 
   def create_params
-    params.require(:reservation).permit(:room_id, :start_dt, :end_dt, :cc)
+    params.require(:reservation).permit(:room_id, :cc, :title, :user_id, :start_dt, :end_dt)
   end
 
 end

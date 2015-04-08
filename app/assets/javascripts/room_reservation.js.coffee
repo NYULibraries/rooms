@@ -28,7 +28,7 @@ $ ->
 
   # Set up sortable list for rooms
   $('ul#list_rooms').sortable {
-    handle: "i.icon-move"
+    handle: "i.fa.fa-arrows"
     update: -> $(this).closest("form").submit()
     opacity: 0.4
     cursor: 'move'
@@ -53,7 +53,7 @@ $ ->
   # Initialize modal dialog boxes
   $(document).on 'click', ".launch_modal", ->
     $("#ajax-modal").removeClass("fullscreen")
-    $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-large">Cancel</button>'))
+    $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-default btn-lg">Cancel</button>'))
     $("#ajax-modal").find(".modal-title").html("Loading...")
     $("#ajax-modal").find(".modal-header").find(".legend, p").remove()
     $("#ajax-modal").find(".modal-body-content").html('')

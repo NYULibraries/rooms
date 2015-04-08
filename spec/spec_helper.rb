@@ -18,7 +18,8 @@ if ENV["RAILS_ENV"] == "test"
 
   VCR.configure do |c|
     c.default_cassette_options = { allow_playback_repeats: true, record: :new_episodes }
-    c.ignore_localhost = true
+    # c.ignore_localhost = true
+    c.allow_http_connections_when_no_cassette = true
     c.cassette_library_dir = 'spec/vcr_cassettes'
     c.configure_rspec_metadata!
     c.hook_into :webmock

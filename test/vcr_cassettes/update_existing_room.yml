@@ -1,0 +1,34 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/test_rooms/room/1
+    body:
+      encoding: UTF-8
+      string: '{"id":1,"sort_order":1,"title":"Changing Titles","description":null,"type_of_room":"One
+        person","size_of_room":"1-2 People","image_link":null,"sort_size_of_room":2,"opens_at":"
+        7:00","closes_at":" 7:00","room_group":"ny_graduate"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '230'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '78'
+    body:
+      encoding: UTF-8
+      string: '{"_index":"test_rooms","_type":"room","_id":"1","_version":11,"created":false}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 22:12:15 GMT
+recorded_with: VCR 2.9.3

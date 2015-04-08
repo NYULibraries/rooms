@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/test_reservations/reservation/5
+    body:
+      encoding: UTF-8
+      string: '{"id":5,"user_id":4,"room_id":3,"start_dt":"3020-11-11T18:00:00+00:00","end_dt":"3020-11-11T18:30:00+00:00","title":"What
+        a class this will be!","is_block":false,"deleted":false,"created_at_day":"2015-04-08","start_day":"3020-11-11"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '233'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '92'
+    body:
+      encoding: UTF-8
+      string: '{"_index":"test_reservations","_type":"reservation","_id":"5","_version":12,"created":false}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 22:12:15 GMT
+recorded_with: VCR 2.9.3

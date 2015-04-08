@@ -19,8 +19,8 @@ if ENV["RAILS_ENV"] == "test"
 
   VCR.configure do |c|
     c.default_cassette_options = { allow_playback_repeats: true, record: :once }
-    c.ignore_localhost = true
-    #c.ignore_hosts '127.0.0.1', 'localhost'
+    c.allow_http_connections_when_no_cassette = true
+    # c.ignore_localhost = true
     c.cassette_library_dir = 'test/vcr_cassettes'
     # webmock needed for HTTPClient testing
     c.hook_into :webmock
@@ -69,15 +69,6 @@ class ActiveSupport::TestCase
   def set_dummy_pds_user(user_session)
     user_session.instance_variable_set("@pds_user".to_sym, users(:real_user))
   end
-  #
-  # VCR.use_cassette('reindex models') do
-  #  Reservation.index.delete
-  #  Reservation.index.import Reservation.all
-  #
-  #  Room.index.delete
-  #  Room.index.import Room.all
-  # end
-
 
 end
 

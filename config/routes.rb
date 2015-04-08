@@ -1,11 +1,17 @@
 Rooms::Application.routes.draw do
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      get 'rooms' => 'rooms#index'
+    end
+  end
+
   scope "admin" do
     get 'rooms/sort' => "rooms#index_sort", :as => "sort_rooms"
     put 'rooms/sort' => "rooms#update_sort"
-    match 'blocks/destroy/:id' => "blocks#destroy", :as => "destroy_block", via: [:get, :post]
-    match 'blocks/destroy_existing_reservations' => "blocks#destroy_existing_reservations", :as => 'destroy_existing_reservations', via: [:get, :post]
-    match 'blocks/index_existing_reservations' => "blocks#index_existing_reservations", :as => 'index_existing_reservations', via: [:get, :post]
+    delete 'blocks/destroy/:id' => "blocks#destroy", :as => :destroy_block
+    post 'blocks/destroy_existing_reservations' => "blocks#destroy_existing_reservations", :as => 'destroy_existing_reservations'
+    get 'blocks/index_existing_reservations' => "blocks#index_existing_reservations", :as => 'index_existing_reservations'
 
     resources :user_sessions
     resources :users

@@ -9,7 +9,7 @@ namespace :cache do
       user_fields = [:college_name,:college_code,:dept_name,:major,:bor_status]
       user_fields.each do |user_field|
         options = []
-        user_attributes = User.where("user_attributes LIKE '%college_name%'").uniq.pluck(:user_attributes)
+        user_attributes = User.where("user_attributes LIKE '%#{user_field}%'").uniq.pluck(:user_attributes)
         user_attributes.each do |attrs|
           options.push(attrs[user_field]) unless options.include?(attrs[user_field]) || attrs[user_field].blank?
         end

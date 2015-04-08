@@ -21,7 +21,7 @@ class BlocksController < ApplicationController
   def create
     respond_with(@block) do |format|
       if @block.save
-        format.html { redirect_to blocks_url, notice: t('blocks.create.success') }
+        format.html { redirect_to blocks_url, flash: {success: t('blocks.create.success')} }
       else
         format.html { render :new }
       end
@@ -85,6 +85,6 @@ private
   end
 
   def reservation_params
-    params.require(:reservation).permit(:room_id, :end_dt, :start_dt)
+    params.require(:reservation).permit(:room_id, :end_dt, :start_dt, :title)
   end
 end

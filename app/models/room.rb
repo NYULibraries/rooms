@@ -29,6 +29,11 @@ class Room < ActiveRecord::Base
 
   serialize :hours
 
+  # Convenience method for use in API
+  def current_reservations
+    self.reservations.current.active
+  end
+
 private
 
   ##

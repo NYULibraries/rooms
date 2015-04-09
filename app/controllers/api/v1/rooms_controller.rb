@@ -7,9 +7,9 @@ module Api
       respond_to :json
 
       def index
-        @info = { params: api_params }
         @rooms = Room.all
         @rooms = @rooms.limit(api_params[:rows] || 10).order("sort_order ASC")
+        @rooms = @rooms.find(api_params[:id]) if api_params[:id]
         @rooms = @rooms.where(title: api_params[:title]) if api_params[:title]
         @rooms = @rooms.reorder("#{sort_field} #{sort_dir}") if api_params[:sort]
 

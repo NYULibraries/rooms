@@ -1,5 +1,5 @@
 <noscript>
-	<div class="alert alert-error">Sorry, you cannot update the order without JavaScript enabled.</div>
+	<div class="alert alert-danger">Sorry, you cannot update the order without JavaScript enabled.</div>
 </noscript>
 
 <h1>Listing rooms</h1>
@@ -8,14 +8,14 @@
 
 <div id="box_container">
 
-<blockquote>	
-  <%= form_tag({:controller => "rooms", :action => "update_sort"}, :method => :put, :remote => true) do |f| %>
+<blockquote>
+  <%= form_tag({:controller => "rooms", :action => "update_sort"}, :method => :put) do |f| %>
 
   <ul id="list_rooms" class="sortable_list">
   <% @rooms.each do |room| %>
   	<%= content_tag_for :li, room do %>
   	  <%= hidden_field_tag "rooms[]", room.id %>
-      <h4 id="room_span_<%=room.id%>" class="room_header"><i class="icon-move"></i>&nbsp;<%=h room.title %></h4>
+      <h4 id="room_span_<%=room.id%>" class="room_header"><%= fa_icon "arrows" %>&nbsp;<%=h room.title %></h4>
   	<% end %>
   <% end %>
   </ul>

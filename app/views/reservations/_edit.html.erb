@@ -4,22 +4,22 @@
 	<h1>Rename your event</h1>
 <% end %>
 
-<%= form_for @reservation, :html => {:class => "form-horizontal ajax_form"}, :remote => true do |f| %>
-  <% if @reservation.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
-      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>  
-      <ul>  
-      <% @reservation.errors.full_messages.each do |msg| %>  
-        <li><%= msg %></li>  
-      <% end %>  
-      </ul>  
-    </div>  
+<%= form_for @reservation, :html => {:class => "form ajax_form"}, :remote => true do |f| %>
+  <% if @reservation.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
 
-  <div class="control-group">
-    <%= f.label :title, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :title %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <div>
+      <%= f.text_field :title, class: "form-control" %>
     </div>
   </div>
 

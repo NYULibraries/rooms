@@ -4,13 +4,13 @@ http_interactions:
     method: post
     uri: http://localhost:9200/test_rooms/room/1
     body:
-      encoding: US-ASCII
-      string: ! '{"closes_at":" 7:00","description":null,"id":1,"image_link":null,"opens_at":"
-        7:00","size_of_room":"1-2 People","sort_order":1,"sort_size_of_room":2,"title":"Changing
-        Titles","type_of_room":"One person","room_group":"ny_graduate"}'
+      encoding: UTF-8
+      string: '{"id":1,"sort_order":1,"title":"Changing Titles","description":null,"type_of_room":"One
+        person","size_of_room":"1-2 People","image_link":null,"sort_size_of_room":2,"opens_at":"
+        7:00","closes_at":" 7:00","room_group":"ny_graduate"}'
     headers:
       Accept:
-      - ! '*/*; q=0.5, application/xml'
+      - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
@@ -25,10 +25,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '77'
+      - '78'
     body:
-      encoding: US-ASCII
-      string: ! '{"_index":"test_rooms","_type":"room","_id":"1","_version":2,"created":false}'
+      encoding: UTF-8
+      string: '{"_index":"test_rooms","_type":"room","_id":"1","_version":11,"created":false}'
     http_version: 
-  recorded_at: Tue, 02 Sep 2014 20:54:45 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Wed, 08 Apr 2015 22:12:15 GMT
+recorded_with: VCR 2.9.3

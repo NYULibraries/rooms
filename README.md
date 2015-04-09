@@ -11,9 +11,9 @@ Allows authorized users to book rooms.
 
 ## Notes
 
-- ElasticSearch index with Tire gem for searching room availability 
+- ElasticSearch index with Tire gem for searching room availability
 - Memcached through Dalli for robust caching
-- CanCan for role authorization
+- CanCanCan for role authorization
 - Authpds-nyu for NYU authentication through Shibboleth
-- nyulibraries_assets for Bootstrap themed styles
-- nyulibraries_deploy for capistrano deploy
+- nyulibraries-assets for Bootstrap themed styles
+- formaggio for Capistrano deploy

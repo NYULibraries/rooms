@@ -1,50 +1,57 @@
 <%= form_for @block, :url => {:controller => "blocks", :action => "create"}, :html => {:id => "existing_reservations_form", :class => "form-horizontal"} do |f| %>
-	
-	<% if @block.errors.any? %>  
-	  <div id="error_explanation" class="alert alert-error">  
-	    <h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>  
-	    <ul>  
-	    <% @block.errors.full_messages.each do |msg| %>  
-	      <li><%= msg %></li>  
-	    <% end %>  
-	    </ul>  
-	  </div>  
+
+	<% if @block.errors.any? %>
+		<div id="error_explanation" class="alert alert-danger">
+			<h2><%= pluralize(@block.errors.count, "error") %> prohibited this record from being saved:</h2>
+			<ul>
+			<% @block.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
 	<% end %>
 
-	<div class="control-group">
-	  <%= f.label :title, "Title:", :class => "control-label" %>
-	  <div class="controls"><%= f.text_field :title, :class => "large_text_field" %></div>
+	<div class="form-group">
+		<%= f.label :title, "Title:", :class => "control-label col-sm-3" %>
+		<div class="col-sm-3">
+			<%= f.text_field :title, :class => "large_text_field form-control" %>
+		</div>
 	</div>
 
-	<div class="control-group">
-	  <%= f.label :start_dt, "Start date:", :class => "control-label" %>
-	  <div class="controls">
-	    <%= f.text_field :start_dt, :class => "large_text_field block_datetime" %>
-	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png")%>
-	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
-	  </div>
+
+	<div class="form-group has-feedback">
+		<%= f.label :start_dt, "Start date:", :class => "control-label col-sm-3" %>
+		<div class="col-sm-3">
+			<%= f.text_field :start_dt, :class => "large_text_field block_datetime form-control" %>
+			<span class="glyphicon glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+			<span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+		</div>
 	</div>
 
-	<div class="control-group">
-	  <%= f.label :end_dt, "End date:", :class => "control-label" %>
-	  <div class="controls">
-	    <%= f.text_field :end_dt, :class => "large_text_field block_datetime" %>
-	    <%= link_to image_tag("https://library.nyu.edu/images/famfamfam/date.png") %>
-	  <span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
-	  </div>
+
+	<div class="form-group has-feedback">
+		<%= f.label :end_dt, "End date:", :class => "control-label col-sm-3" %>
+		<div class="col-sm-3">
+			<%= f.text_field :end_dt, :class => "large_text_field block_datetime form-control" %>
+			<span class="glyphicon glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+			<span id="date_example" class="js_hide">MM/DD/YYYY HH:MM</span>
+		</div>
 	</div>
 
-	<div class="control-group">
-	  <%= f.label :room_id, "Room:", :class => "control-label" %>
-	  <div class="controls">
-		<% if params[:reservation].blank? || params[:reservation][:room_id].blank? %>
-			<%= f.select :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title') %>
-		<% else %>
-			<%= select :reservation, :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title', params[:reservation][:room_id]) %>
-		<% end %>
-	  </div>
+	<div class="form-group">
+		<%= f.label :room_id, "Room:", :class => "control-label col-sm-3" %>
+		<div class="controls col-sm-3">
+			<% if params[:reservation].blank? || params[:reservation][:room_id].blank? %>
+				<%= f.select :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title'), {}, { class: "form-control" } %>
+			<% else %>
+				<%= select :reservation, :room_id, options_from_collection_for_select(Room.accessible_by(current_ability), 'id', 'title', params[:reservation][:room_id]), {}, { class: "form-control" } %>
+			<% end %>
+		</div>
 	</div>
 
-	<%= f.submit "Create" %>
-
+	<div class="form-group">
+		<div class="col-sm-12">
+			<%= f.submit "Create", class: "btn btn-primary"%>
+		</div>
+	</div>
 <% end %>

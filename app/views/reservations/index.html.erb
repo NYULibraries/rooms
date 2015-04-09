@@ -3,55 +3,58 @@
 	<%= render "policies" %>
 
   <h3>Specify your desired time slot below for a list of available rooms.</h3>
-  
+
   <%= form_for :reservation, :url => { :action => :new }, :html => {:class => "form-horizontal" }, :remote => true, :method => :get do |f| %>
 
-  <% if @reservation.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
-      <h2>The form has been disabled for the following reason:</h2>  
-      <ul>  
-      <% @reservation.errors.full_messages.each do |msg| %>  
-        <li><%= msg %></li>  
-      <% end %>  
-      </ul>  
-    </div>  
+  <% if @reservation.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2>The form has been disabled for the following reason:</h2>
+      <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
-  
-  <div class="well well-small">
-  <fieldset>
-    <div class="control-group">
-      <label class="control-label" for="inputDate">Select a date:</label>
-      <div class="controls">
-        <input type="text" name="reservation[which_date]" id="room_reservation_which_date" /> 
-        <%= link_to icon_tag(:date), nil, :class => "select_date_icon" %>
-  		  <span id="date_example" class="js_hide">YYYY-MM-DD</span>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="inputStartTime">Select start time:</label>
-      <div class="controls">
-        <%= select_tag "reservation[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], set_default_hour), :class => "span2" %>
-        <%= select_tag "reservation[minute]", options_for_select([['00',0],['30',30]], set_default_minute), :class => "span2" %>	
-        <%= select_tag "reservation[ampm]", options_for_select(['am','pm'], set_default_ampm), :class => "span2" %>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="inputStartTime">Select length:</label>
-      <div class="controls">
-		<% if can? :ny_graduate, RoomGroup %>
-        <%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), :class => "span6"%>
-		<% else %>
-		<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120]]), :class => "span6"%>
-		<% end %>
-      </div>
-    </div>
-  </fieldset>
-  </div>
 
-  <fieldset>
-  <%= button_tag(:type => "submit", :class => "btn launch_modal", :id => "generate_grid") do %>
-    Determine availability
-  <% end -%>
-  </fieldset>
+	<div class="well well-sm">
+	  <div class="form-group has-feedback">
+	    <label class="control-label col-sm-3" for="inputDate">Select a date:</label>
+	    <div class="col-sm-6">
+	      <input type="text" name="reservation[which_date]" class="form-control" id="room_reservation_which_date">
+	      <a class ="select_date_icon"><span class="glyphicon glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span></a>
+	    </div>
+	  </div>
+		<div class="form-group">
+      <label class="control-label col-sm-3" for="inputStartTime">Select start time:</label>
+	    <div class="col-sm-2">
+				<%= select_tag "reservation[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], set_default_hour), class: "form-control" %>
+	    </div>
+	    <div class="col-sm-2">
+      	<%= select_tag "reservation[minute]", options_for_select([['00',0],['30',30]], set_default_minute), :class => "form-control" %>
+	    </div>
+	    <div class="col-sm-2">
+      	<%= select_tag "reservation[ampm]", options_for_select(['am','pm'], set_default_ampm), :class => "form-control" %>
+	    </div>
+	  </div>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="inputStartTime">Select length:</label>
+			<div class="col-sm-6">
+				<% if can? :ny_graduate, RoomGroup %>
+					<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120],['2 1/2 hours',150],['3 hours',180]]), class: "form-control"%>
+				<% else %>
+					<%= select_tag "reservation[how_long]", options_for_select([['1/2 hour',30],['1 hour',60],['1 1/2 hours',90],['2 hours',120]]), class: "form-control"%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row no-gutter">
+	  <fieldset class="col-sm-12 col-md-4">
+	  <%= button_tag(:type => "submit", :class => "btn btn-block btn-lg btn-primary launch_modal", :id => "generate_grid") do %>
+	    Determine availability
+	  <% end -%>
+		</fieldset>
+	</div>
 
 <% end %>

@@ -28,7 +28,7 @@ class RoomsControllerTest < ActionController::TestCase
     VCR.use_cassette('search rooms') do
       get :index, :q => "google.com"
       assert assigns(:rooms)
-      assert_equal assigns(:rooms).count, 1
+      assert_equal 1, assigns(:rooms).count
       assert_template :index
     end
   end

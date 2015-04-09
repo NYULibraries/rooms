@@ -1,3 +1,4 @@
+@import "font-awesome";
 @import "jquery.ui.all";
 @import "jquery-ui-timepicker-addon";
 
@@ -190,11 +191,10 @@ table#availability_grid_header_fixed {
 
 .modal.fullscreen {
   position: fixed;
-  top: 20px !important;
-  left: 20px;
-  right: 20px;
-  width: auto;
   margin: 0;
+  .modal-dialog {
+    width: 95%;
+  }
 }
 
 .modal-header {
@@ -215,8 +215,17 @@ table#availability_grid_header_fixed {
   }
 }
 
+#sortable_table {
+  margin-top: 1em;
+}
 
-
+.extra_fields {
+  div {
+    input {
+      width: 100%;
+    }
+  }
+}
 
 /*********
  * Rooms *
@@ -234,7 +243,7 @@ table#availability_grid_header_fixed {
   list-style: none;
   li {
     list-style: none;
-    margin-bottom: $paddingSmall;
+    margin-bottom: $padding-small-vertical;
     padding-left: 0 !important;
   }
 }

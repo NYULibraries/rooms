@@ -1,6 +1,6 @@
 <h1 class="availability_grid_desc">Click on your preferred time slot to select your study space</h1>
 
-<div class="legend hidden-phone">
+<div class="legend hidden-xs">
   <div class="legend_unavailable"></div><div class="legend_text">Unavailable</div>
   <div class="legend_preferred"></div><div class="legend_text">Your preferred time slot</div>
   <div class="legend_selected"></div><div class="legend_text">Your selected time slot</div>
@@ -11,15 +11,15 @@
 <div class="availability_grid_content">
 
 <%= form_for @reservation, :remote => true, :html => {:class => "ajax_form"} do |f| %>
-<% if @reservation.errors.any? %>  
-  <div id="error_explanation" class="alert alert-error">  
-    <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>  
-    <ul>  
-    <% @reservation.errors.full_messages.each do |msg| %>  
-      <li><%= msg %></li>  
-    <% end %>  
-    </ul>  
-  </div>  
+<% if @reservation.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+    <ul>
+    <% @reservation.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <table id="availability_grid_table" class="table table-bordered">
@@ -29,21 +29,21 @@
 			<th rowspan="2" class="header_fields"><div class="sort_by_field">
 			  <%= sortable :title, "Location", {:action => "new"}, true %>
 			</div></th>
-			<th rowspan="2" class="hidden-phone header_fields"><div class="sort_by_field">
+			<th rowspan="2" class="hidden-xs header_fields"><div class="sort_by_field">
 			  <%= sortable :sort_size_of_room, "Capacity", {:action => "new"}, true %>
 			</div></th>
       <% dates_array.keys.each do |date| %>
         <th class="date_header" colspan="<%=dates_array[date].count%>">
-          <span class="hidden-phone">
-            <div class="full_date"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%>
+          <span class="hidden-xs">
+            <div class="full_date"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<span class='glyphicon glyphicon-chevron-left'></span>".html_safe }%>
             <%= simple_date_header(date) %>
-            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<i class='icon-chevron-right'></i>".html_safe }%></div>
-            <span id="change_date_full"><%= link_to('<i class="icons-famfamfam-date"></i>change date'.html_safe, root_url, :class => "close_dialog")%></span>
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<span class='glyphicon glyphicon-chevron-right'></span>".html_safe }%></div>
+            <span id="change_date_full"><%= link_to('<span class="glyphicon glyphicon glyphicon-calendar"></span>change date'.html_safe, root_url, :class => "close_dialog")%></span>
           </span>
-          <span class="visible-phone">
-            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%>
+          <span class="visible-xs">
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 1.day, :end_dt => end_dt.to_datetime - 1.day, :submit_text => "<span class='glyphicon glyphicon-chevron-left'></span>".html_safe }%>
             <%= prettify_simple_date(date) %>
-            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<i class='icon-chevron-right'></i>".html_safe }%>
+            <%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 1.day, :end_dt => end_dt.to_datetime + 1.day, :submit_text => "<span class='glyphicon glyphicon-chevron-right'></span>".html_safe }%>
           </span>
         </th>
       <% end %>
@@ -52,21 +52,21 @@
 			<% times_array.each do |timeslot| %>
       <th class="times">
       <% if timeslot == times_array[0] %>
-      <div class="rebuild_grid rebuild_grid_prev"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "<i class='icon-chevron-left'></i>".html_safe }%></div>
+      <div class="rebuild_grid rebuild_grid_prev"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime - 30.minutes, :end_dt => end_dt.to_datetime - 30.minutes, :submit_text => "<span class='glyphicon glyphicon-chevron-left'></span>".html_safe }%></div>
       <% end %>
       <div class="timeslot_time<%= " timeslot_time_preferred" if (selected_times.include? timeslot) %>"><%= prettify_time(timeslot) %></div>
       <% if timeslot == times_array[-1] %>
-      <div class="rebuild_grid rebuild_grid_next"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "<i class='icon-chevron-right'></i> ".html_safe }%></div>
+      <div class="rebuild_grid rebuild_grid_next"><%= render :partial => "rebuild_grid", :locals => { :start_dt => start_dt.to_datetime + 30.minutes, :end_dt => end_dt.to_datetime + 30.minutes, :submit_text => "<span class='glyphicon glyphicon-chevron-right'></span> ".html_safe }%></div>
       <% end %>
       </th>
       <% end %>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<%= render "rooms_reservations" %>
 	</tbody>
-	
+
 	<tfoot>
 		<tr>
 			<td class="hide_radio"></td>
@@ -74,7 +74,7 @@
 				<div id="res_title_label_div"><%= label_tag "reservation[title]", "<strong>Name your event</strong> <em>(optional)</em>".html_safe %> </div>
 			</td>
 			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-				<div id="res_title_div"><%= text_field :reservation, :title %></div>
+				<div id="res_title_div"><%= text_field :reservation, :title, class: "form-control" %></div>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +83,7 @@
 				<div id="res_cc_label_div"><%= label_tag "reservation[cc]", "<strong>Add additional e-mails</strong> <a class=\"tip-simple nyulibrary_icons_information\" title=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" alt=\"Collaborative rooms are intended for use by groups; please enter the email of another member of your group to indicate that this booking meets this requirement.\" ></a>".html_safe %></div>
 			</td>
 			<td colspan="<%= times_array.size + 2%>" class="extra_fields">
-				<div id="res_cc_div"><%= text_field :reservation, :cc, :class => "cc" %></div>
+				<div id="res_cc_div"><%= text_field :reservation, :cc, :class => "cc form-control" %></div>
 			</td>
 		</tr>
 		<tr>
@@ -94,9 +94,11 @@
 				<%= hidden_field_tag :page, params[:page] unless params[:page].blank? %>
 				<%= hidden_field_tag :direction, params[:direction] unless params[:direction].blank? %>
 				<%= hidden_field_tag :sort, params[:sort] unless params[:sort].blank? %>
-				<button type="submit" class="btn">
-					Reserve<span class="hidden-phone"> selected timeslot</span>
-				</button>
+        <div class="col-xs-12 col-md-4">
+          <button type="submit" class="btn btn-lg btn-primary">
+            Reserve selected timeslot
+          </button>
+        </div>
 			</td>
 		</tr>
 	</tfoot>
@@ -113,6 +115,3 @@
   <div class="legend_available"></div><div class="legend_text">Available</div>
   <div class="legend_selected"></div><div class="legend_text">Your preferred timeslot</div>
 </div>
-
-
-

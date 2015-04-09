@@ -1,22 +1,22 @@
 <%= form_for @room do |f| %>
-  <% if @room.errors.any? %>  
-    <div id="error_explanation" class="alert alert-error">  
-      <h2><%= pluralize(@room.errors.count, "error") %> prohibited this record from being saved:</h2>  
-      <ul>  
-      <% @room.errors.full_messages.each do |msg| %>  
-        <li><%= msg %></li>  
-      <% end %>  
-      </ul>  
-    </div>  
+  <% if @room.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@room.errors.count, "error") %> prohibited this record from being saved:</h2>
+      <ul>
+      <% @room.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
 
   <p>
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class:'form-control' %>
   </p>
   <p>
     <%= f.label :type_of_room %>
-    <%= f.text_field :type_of_room %>
+    <%= f.text_field :type_of_room, class:'form-control' %>
   </p>
   <p>
     <%= f.label :collaborative, "Collaborative?" %>
@@ -24,43 +24,65 @@
   </p>
   <p>
     <%= f.label :description %>
-    <%= f.text_area :description, :rows => 3 %>
+    <%= f.text_area :description, class:'form-control', :rows => 10 %>
   </p>
   <p>
     <%= f.label :size_of_room %>
-    <%= f.text_field :size_of_room %>
+    <%= f.text_field :size_of_room, class:'form-control' %>
   </p>
   <p>
     <%= f.label :image_link, "Use image from the Web (URL)" %>
-    <%= f.text_field :image_link %>
+    <%= f.text_field :image_link, class:'form-control' %>
   </p>
 
   <p>
-    <%= f.label :hours, "Hours of operation (leave as default if 24 hours)" %> 
-    
-	Opening:
-	<%= select_tag "opens_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_opens_at_hour), :class => "span2" %>
-	<%= select_tag "opens_at[minute]", options_for_select([['00',0],['30',30]], default_opens_at_minute), :class => "span2" %>	
-	<%= select_tag "opens_at[ampm]", options_for_select(['am','pm'], default_opens_at_ampm), :class => "span2" %>
-	<br />
-	Closing:
-	<%= select_tag "closes_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_closes_at_hour), :class => "span2" %>
-	<%= select_tag "closes_at[minute]", options_for_select([['00',0],['30',30]], default_closes_at_minute), :class => "span2" %>	
-	<%= select_tag "closes_at[ampm]", options_for_select(['am','pm'], default_closes_at_ampm), :class => "span2" %>
+    <%= f.label :hours, "Hours of operation (leave as default if 24 hours)", class: 'control-label' %>
   </p>
 
-  <p>
-	<%= f.label :room_group_id, "Room group" %>
-	<select name="room[room_group_id]" id="room_room_group_id">
+  <div class="well well-sm">
+    <div class="form-group">
+      <%= f.label :hours, "Opening", class: 'control-label col-sm-12' %>
+      <div class="col-sm-12">
+        <div class="col-sm-4">
+      	   <%= select_tag "opens_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_opens_at_hour), :class => "form-control" %>
+        </div>
+        <div class="col-sm-4">
+      	   <%= select_tag "opens_at[minute]", options_for_select([['00',0],['30',30]], default_opens_at_minute), :class => "form-control" %>
+        </div>
+        <div class="col-sm-4">
+      	   <%= select_tag "opens_at[ampm]", options_for_select(['am','pm'], default_opens_at_ampm), :class => "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :hours, "Closing", class: 'control-label col-sm-12' %>
+      <div class="col-sm-12">
+        <div class="col-sm-4">
+        	<%= select_tag "closes_at[hour]", options_for_select([1,2,3,4,5,6,7,8,9,10,11,12], default_closes_at_hour), :class => "form-control" %>
+        </div>
+        <div class="col-sm-4">
+        	<%= select_tag "closes_at[minute]", options_for_select([['00',0],['30',30]], default_closes_at_minute), :class => "form-control" %>
+        </div>
+        <div class="col-sm-4">
+        	<%= select_tag "closes_at[ampm]", options_for_select(['am','pm'], default_closes_at_ampm), :class => "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <div class="form-group">
+	<%= f.label :room_group_id, "Room group", class: 'control-label' %>
+	<select name="room[room_group_id]" id="room_room_group_id" class="form-control">
 	<% @room_groups.each do |room_group| %>
 		<% if can? room_group.code_sym, RoomGroup %>
     	<option value="<%= room_group.id %>"<%=(room_group_selected?(room_group)) ? " selected" : ''%>><%= room_group.title %></option>
 		<% end %>
 	<% end %>
 	</select>
-  </p>
+</div>
 
   <p>
-    <%= f.submit 'Save changes' %>
+    <%= f.submit 'Save changes', class: 'btn btn-primary'%>
   </p>
 <% end %>

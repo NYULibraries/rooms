@@ -12,7 +12,7 @@
       <%= link_to "See more", show_room_details_path(:id => room.id), :target => "_blank" %>
   		</div>
     </td>
-		<td class="hidden-phone room_size room_info"><%= room.size_of_room %></td>
+		<td class="hidden-xs room_size room_info"><%= room.size_of_room %></td>
 		<%= construct_grid_data(room) %>
 	</tr>
 <% end %>

@@ -5,13 +5,13 @@ class RoomsDecorator < Draper::CollectionDecorator
     start_dt = start_dt.to_datetime.change(:offset => "+0000")
     end_dt = end_dt.to_datetime.change(:offset => "+0000")
     rooms = self.results
-
-    reservations = Reservation.tire.search do 
+    ActiveSupport::JSON::Encoding.time_precision = 0
+    reservations = Reservation.tire.search do
       query do
         filtered do
           filter :terms, :room_id => rooms.map {|r| r.id.to_i }, :execution => "or"
           filter :term, :deleted => false
-          filter :or, 
+          filter :or,
             { :and => [
                 { :range => { :start_dt => { :gte => start_dt } } },
                 { :range => { :start_dt => { :lt => end_dt } } }

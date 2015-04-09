@@ -51,7 +51,7 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room_groups = RoomGroup.all
-    @room = Room.new(params[:room])
+    @room = Room.new(create_params)
     @room.opens_at = opens_at
     @room.closes_at = closes_at
 
@@ -66,7 +66,7 @@ class RoomsController < ApplicationController
     @room.opens_at = opens_at
     @room.closes_at = closes_at
 
-    flash[:notice] = t("rooms.update.success") if @room.update_attributes(params[:room])
+    flash[:notice] = t("rooms.update.success") if @room.update_attributes(update_params)
     respond_with(@room)
   end
 
@@ -131,6 +131,14 @@ private
 
   def closes_at_hour
     @closes_at_hour ||= get_hour_in_24(params[:closes_at])
+  end
+
+  def create_params
+    params.require(:room).permit(:room_group_id, :title)
+  end
+
+  def update_params
+    params.require(:room).permit(:title)
   end
 
 end

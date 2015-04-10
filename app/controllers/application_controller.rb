@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
 
   # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] ||= exception.message.html_safe
     if current_user.nil?
       redirect_to login_url unless performed?
     elsif can? :create, Reservation

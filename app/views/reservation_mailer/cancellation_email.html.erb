@@ -1,19 +1,20 @@
-You have successfully cancelled a study space. Reservation details below:
-
+You have successfully cancelled a study space. Reservation details below:<br />
+<br /><br />
 ===================================================
-
+<br /><br />
 Name: <%= @reservation.user.firstname %> <%= @reservation.user.lastname %>
-
+<br /><br />
 Date: <%= @date %>
-
+<br /><br />
 Time: <%= @time_range %>
-
+<br /><br />
 Location: <%= @reservation.room.title %>
-
+<br /><br />
 ===================================================
-
+<br /><br />
 If you need help finding your study room or need to report a problem, visit the Circulation Services Desk (on the 1st floor of Bobst Library) or use <%= link_to 'Ask a Librarian', 'http://library.nyu.edu/ask' %>
-
+<br /><br />
 To adjust or cancel your reservation, <%= link_to 'http://library.nyu.edu/services/group_study.html', 'http://library.nyu.edu/services/group_study.html' %>
-
+<br /><br />
 Please help us improve this service by taking <%= link_to 'this brief survey', 'https://nyu.qualtrics.com/jfe/form/SV_3fTab30NE6XdnsF' %>
+<br />

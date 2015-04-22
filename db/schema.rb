@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20141210191418) do
     t.datetime "last_login_at"
     t.datetime "refreshed_at"
     t.integer  "admin_roles_mask"
-    t.string   "provider"
+    t.string   "provider",          default: ""
     t.string   "aleph_id"
     t.string   "institution_code"
     t.string   "college"

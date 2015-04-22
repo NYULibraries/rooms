@@ -19,14 +19,13 @@ class ApplicationController < ActionController::Base
     login_path
   end
 
-
   # For dev purposes
   def current_user_dev
     @current_user = User.new(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", patron_status: "57")
     @current_user.admin_roles_mask = 1
     return @current_user
   end
-  alias :current_user :current_user_dev if Rails.env.development?
+  # alias :current_user :current_user_dev if Rails.env.development?
 
   # Return boolean matching the url to find out if we are in the admin view
   def in_admin_view?

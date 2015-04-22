@@ -5,8 +5,6 @@ class Room < ActiveRecord::Base
   # elasticsearch index name
   index_name("#{Rails.env}_rooms")
 
-  attr_accessible :title, :type_of_room, :description, :size_of_room, :image_link, :room_group_id, :collaborative
-
   has_many :reservations, :dependent => :destroy
   belongs_to :room_group
 

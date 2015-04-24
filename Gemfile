@@ -64,6 +64,7 @@ group :development, :test do
   # Use factory girl for creating models
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'faker'
+  gem 'pry-remote'
 end
 
 group :test do

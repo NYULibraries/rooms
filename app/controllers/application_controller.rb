@@ -57,16 +57,17 @@ class ApplicationController < ActionController::Base
 
   # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] ||= exception.message.html_safe
     if current_user.nil?
       redirect_to login_url unless performed?
     elsif can? :create, Reservation
+      flash[:error] ||= exception.message.html_safe
       if request.xhr?
         render "user_sessions/unauthorized_action", :alert => exception.message, :formats => :js
       else
         render "user_sessions/unauthorized_action", :alert => exception.message
       end
     else
+      flash[:error] ||= exception.message.html_safe
       if request.xhr?
         render "user_sessions/unauthorized_patron", :alert => exception.message, :formats => :js
       else

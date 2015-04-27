@@ -47,7 +47,12 @@ gem 'dalli', '~> 2.7.2'
 
 # Comma
 gem 'comma', '~> 3.2.2'
+
+# Tire for elasticsearch
 gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
+gem 'rest-client', '~> 1.8.0'
+
+# Draper for decorators
 gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.9.6.257'

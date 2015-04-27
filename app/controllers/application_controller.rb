@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
       if request.xhr?
         render "user_sessions/unauthorized_action", :alert => exception.message, :formats => :js
       else
-        render "user_sessions/unauthorized_action", :alert => exception.message, :formats => :js
+        render "user_sessions/unauthorized_action", :alert => exception.message
       end
     else
       flash[:error] ||= exception.message.html_safe

@@ -23,6 +23,7 @@ gem 'mustache-rails', git: 'git://github.com/josh/mustache-rails.git', :require 
 gem 'dalli', '~> 2.7.2'
 gem 'comma', '~> 3.2.2'
 gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
+gem 'rest-client', '~> 1.8.0'
 gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.9.6.257'

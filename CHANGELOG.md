@@ -1,5 +1,9 @@
 # Change Log
 
+## 2015-04-29
+- Rails 4, Ruby 2.x
+- Upgraded nyulibraries-assets with Bootstrap 3 branch
+
 ## 2014-01-06
 - Almost full testing coverage and deploying changes implemented on 2013-11-01
 

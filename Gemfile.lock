@@ -15,6 +15,14 @@ GIT
       rvm-capistrano (~> 1.5)
 
 GIT
+  remote: git://github.com/NYULibraries/mustache-rails.git
+  revision: d219b298ddc94ca0c4b749125a803f74157ddd03
+  specs:
+    mustache-rails (0.2.3)
+      actionpack (>= 3.1)
+      mustache (~> 0.99.4)
+
+GIT
   remote: git://github.com/NYULibraries/nyulibraries-assets.git
   revision: 4bc784f765a1d994ae37e993edb1fd3ce690a962
   tag: v4.4.0
@@ -32,14 +40,6 @@ GIT
   specs:
     omniauth-nyulibraries (1.1.0)
       omniauth-oauth2 (~> 1.2.0)
-
-GIT
-  remote: git://github.com/josh/mustache-rails.git
-  revision: d219b298ddc94ca0c4b749125a803f74157ddd03
-  specs:
-    mustache-rails (0.2.3)
-      actionpack (>= 3.1)
-      mustache (~> 0.99.4)
 
 GEM
   remote: https://rubygems.org/

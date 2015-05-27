@@ -40,7 +40,7 @@ gem 'acts_as_indexed', '~> 0.8.3'
 
 # Mustache for templating
 gem 'mustache', '0.99.4'
-gem 'mustache-rails', git: 'git://github.com/josh/mustache-rails.git', :require => 'mustache/railtie'
+gem 'mustache-rails', github: 'NYULibraries/mustache-rails', require: 'mustache/railtie'
 
 # Dalli for memcached
 gem 'dalli', '~> 2.7.2'

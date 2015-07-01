@@ -48,7 +48,7 @@ class RoomsControllerTest < ActionController::TestCase
   test "create new room" do
     VCR.use_cassette('create new room', match_requests_on: [:method, :uri_ignoring_trailing_id]) do
       assert_difference('Room.count', 1) do
-        post :create, :room => { :room_group_id => room_groups(:one).to_param, :title => "Cool new room" }, :opens_at => { :hour => '7', :minute => '0', :ampm => 'am'}, :closes_at => { :hour => '7', :minute => '0', :ampm => 'am'}
+        post :create, :room => { :room_group_id => room_groups(:one).to_param, :title => "Cool new room", :type_of_room => "Graduate study", :collaborative => "1", :description => "A cooler, newer room", :size_of_room => "1 Person", :image_link => "http://localhost"}, :opens_at => { :hour => '7', :minute => '0', :ampm => 'am'}, :closes_at => { :hour => '7', :minute => '0', :ampm => 'am'}
       end
       assert assigns(:room)
       assert_redirected_to room_url(assigns(:room))

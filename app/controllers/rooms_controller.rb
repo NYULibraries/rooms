@@ -138,7 +138,7 @@ private
   end
 
   def update_params
-    params.require(:room).permit(:title)
+    params.require(:room).permit(:title, :type_of_room, :collaborative, :description, :size_of_room, :image_link)
   end
 
 end

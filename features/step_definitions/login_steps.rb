@@ -30,7 +30,7 @@ Then(/^I should see a logout link$/) do
   expect(page).to have_css('.nyu-login i.icons-famfamfam-lock')
   expect(page).to have_css('.nyu-login a.logout')
 end
-#
+
 Then(/^I should see "(.*?)" as the text of the logout link$/) do |text|
   logout_link = find(:css, '.nyu-login a.logout')
   expect(logout_link).to have_text text
@@ -38,4 +38,12 @@ end
 
 Given(/^I am on the homepage$/) do
   visit '/'
+end
+
+When(/^I click on "(.*?)"$/) do |link|
+  click_on link
+end
+
+Then(/^I should be logged out$/) do
+  expect(page).to have_text 'LOGGED OUT'
 end

@@ -19,9 +19,8 @@ rvm:
   - 2.0.0
   - 2.1.5
 
-git:
-  submodules: false
-
 notifications:
   email:
-    - web.services@library.nyu.edu
+    - lib-webservices@nyu.edu
+
+sudo: false

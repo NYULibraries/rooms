@@ -24,10 +24,10 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/nyulibraries-assets.git
-  revision: 1eb8ecd619c90b6cebf8f11a3575b6dfbb721b95
-  tag: v4.4.2
+  revision: 91cc320fa400ad720d5c41e11ea705cc41986256
+  tag: v4.4.3
   specs:
-    nyulibraries-assets (4.4.2)
+    nyulibraries-assets (4.4.3)
       bootstrap-sass (~> 3.2.0.2)
       compass (~> 1.0.1)
       font-awesome-rails (~> 4.2.0.0)

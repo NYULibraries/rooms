@@ -3,6 +3,7 @@ Feature: Log in/out links
   As a user
   I want to see the appropriate link
 
+  @wip
   Scenario: A non logged in guest user should be redirected to login page
     Given I am not logged in
     And I am on the homepage

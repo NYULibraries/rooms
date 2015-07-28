@@ -1,6 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
-Rooms::Application.config.session_store :cookie_store, key: '_room_reservation_session', domain: :all
+Rooms::Application.config.session_store :cookie_store, key: '_room_reservation_session', domain: ENV['LOGIN_COOKIE_DOMAIN'] unless Rails.env.test?
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information

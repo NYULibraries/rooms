@@ -35,8 +35,8 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/omniauth-nyulibraries.git
-  revision: 73e527844b90a7fdf3faf4a7a57d39fb1566f4c7
-  tag: v1.1.2
+  revision: c5aaa0eb46ce0082a940b145bf0a1fc6f1a8a2d0
+  branch: feature/configurable_oauth_host
   specs:
     omniauth-nyulibraries (1.1.0)
       omniauth-oauth2 (~> 1.2.0)
@@ -198,7 +198,7 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.3)
-    jwt (1.5.0)
+    jwt (1.5.1)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)

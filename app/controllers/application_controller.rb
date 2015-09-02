@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   # redirect to the logout path for the Login app
   def after_sign_out_path_for(resource_or_scope)
     if ENV['SSO_LOGOUT_PATH'].present?
-      "#{ENV['LOGIN_APP_HOST']}#{ENV['SSO_LOGOUT_PATH']}"
+      "#{ENV['LOGIN_URL']}#{ENV['SSO_LOGOUT_PATH']}"
     else
       super(resource_or_scope)
     end

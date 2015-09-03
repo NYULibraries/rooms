@@ -59,7 +59,7 @@ gem 'newrelic_rpm', '~> 3.9.6.257'
 
 gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.4.3'
 gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.4.2'
-gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', branch: 'feature/configurable_oauth_host' #tag: "v1.1.2"
+gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
 gem 'devise', '~> 3.4.1'
 
 gem 'font-awesome-rails', '~> 4.2.0'

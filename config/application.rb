@@ -2,15 +2,19 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# Load the figs variables before the rest of the bundle
+# so we can use env vars in other gems
+require 'figs'
+# Don't run this initializer on travis.
+Figs.load(stage: Rails.env) unless ENV['TRAVIS']
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
-require 'figs'
-# Don't run this initializer on travis.
-Figs.load(stage: Rails.env) unless ENV['TRAVIS']
+
 module Rooms
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

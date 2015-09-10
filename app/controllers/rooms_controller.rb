@@ -134,11 +134,11 @@ private
   end
 
   def create_params
-    params.require(:room).permit(:room_group_id, :title)
+    params.require(:room).permit(:room_group_id, :title, :type_of_room, :collaborative, :description, :size_of_room, :image_link)
   end
 
   def update_params
-    params.require(:room).permit(:title)
+    params.require(:room).permit(:title, :type_of_room, :collaborative, :description, :size_of_room, :image_link)
   end
 
 end

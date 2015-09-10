@@ -36,7 +36,6 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-    <% h = user.user_attributes %>
     <tr>
       <td><%=h user.username %></td>
       <td class="hidden-xs"><%=h user.firstname %></td>

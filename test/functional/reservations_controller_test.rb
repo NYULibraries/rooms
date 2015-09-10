@@ -1,20 +1,22 @@
 require 'test_helper'
 
 class ReservationsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   setup do
-    activate_authlogic
-    current_user = UserSession.create(users(:undergraduate))
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    sign_in FactoryGirl.create(:undergraduate)
   end
 
   test "reservations main page" do
-    VCR.use_cassette('reservations index') do
-      get :index
-      assert assigns(:user)
-      assert assigns(:reservation)
-      assert assigns(:reservations)
-      assert_equal assigns(:user), users(:undergraduate)
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    undergraduate = FactoryGirl.create(:undergraduate)
+    sign_in undergraduate
+    get :index
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert assigns(:reservations)
+    assert_equal assigns(:user), undergraduate
   end
 
   test "reservations index with forced time" do
@@ -40,47 +42,51 @@ class ReservationsControllerTest < ActionController::TestCase
   end
 
   test "get edit action" do
-    VCR.use_cassette('reservations get edit page') do
-      get :edit, :id => reservations(:undergraduate).to_param
-      assert assigns(:user)
-      assert assigns(:reservation)
-      assert_template :edit
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    user = FactoryGirl.create(:undergraduate)
+    sign_in user
+    room = FactoryGirl.create(:collaborative)
+    reservation = FactoryGirl.create(:reservation, user_id: user.id, room_id: room.id, cc: Faker::Internet.email)
+    get :edit, :id => reservation.to_param
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_template :edit
   end
 
   test "update reservation" do
-    VCR.use_cassette('reservations update reservation') do
-      put :update, :id => reservations(:undergraduate).to_param, :reservation => { :title => "What a class this will be!" }
-      assert assigns(:user)
-      assert assigns(:reservation)
-      assert_equal Reservation.find(reservations(:undergraduate).to_param).title, "What a class this will be!"
-      assert_redirected_to root_url
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    user = FactoryGirl.create(:undergraduate)
+    sign_in user
+    room = FactoryGirl.create(:collaborative)
+    reservation = FactoryGirl.create(:reservation, user_id: user.id, room_id: room.id, cc: Faker::Internet.email)
+    put :update, :id => reservation.to_param, :reservation => { :title => "What a class this will be!" }
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_equal Reservation.find(reservation).title, "What a class this will be!"
+    assert_redirected_to root_url
   end
 
   test "get new action" do
-    current_user = UserSession.create(users(:hasnt_been_used_grad))
-    VCR.use_cassette('reservations get new page') do
-     get :new, :reservation => { :start_dt => '3020-01-01 11:30:00'.to_time, :end_dt => '3020-01-01 11:30:00'.to_time + 60.minutes }
-     assert assigns(:user)
-     assert assigns(:reservation)
-     assert_template :new
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryGirl.create(:user)
+    get :new, :reservation => { :start_dt => '3020-01-01 11:30:00'.to_time, :end_dt => '3020-01-01 11:30:00'.to_time + 60.minutes }
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_template :new
   end
 
   test "fail with invalid date" do
-    current_user = UserSession.create(users(:hasnt_been_used_grad))
-    VCR.use_cassette('reservations fail with invalid date') do
-     get :new, :reservation => { :which_date => "blah", :hour => "1", :minute => "00", :ampm => "pm", :how_long => 300 }
-     assert_equal flash[:error], I18n.t('reservation.date_formatted_correctly')
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryGirl.create(:user)
+    get :new, :reservation => { :which_date => "blah", :hour => "1", :minute => "00", :ampm => "pm", :how_long => 300 }
+    assert_equal flash[:error], I18n.t('reservation.date_formatted_correctly')
   end
 
   #test "already created reservation today" do
   #  current_user = UserSession.create(users(:no_bookings_undergrad))
   #  VCR.use_cassette('reservations already created today') do
   #    #assert_difference('Reservation.count', 1) do
-  #    #  post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 60.minutes, :cc => "silly@dummy.org" }
+  #    #  post :create, :reservation => { :room_id => FactoryGirl.create(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 60.minutes, :cc => "silly@dummy.org" }
   #    #end
   #    get :new, :reservation => { :start_dt => Time.now, :end_dt => Time.now + 60.minutes }
   #    assert assigns(:user)
@@ -94,77 +100,82 @@ class ReservationsControllerTest < ActionController::TestCase
   #end
 
   test "already created reservation for day" do
-    current_user = UserSession.create(users(:hasnt_been_used_undergrad))
-    VCR.use_cassette('reservations created for same day') do
-     get :new, :reservation => { :start_dt => reservations(:for_different_day).start_dt, :end_dt => reservations(:for_different_day).start_dt + 60.minutes }
-     assert assigns(:user)
-     assert assigns(:reservation)
-     assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.create_for_same_day.reservation')
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    user = FactoryGirl.create(:undergraduate)
+    sign_in user
+    reservation = FactoryGirl.create(:reservation, user_id: user.id, created_at: Time.now - 24.hours, updated_at: Time.now - 24.hours)
+    wait_for_tire_index
+    get :new, :reservation => { :start_dt => reservation.start_dt + 2.hours, :end_dt => reservation.start_dt + 2.hours }
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_template "user_sessions/unauthorized_action"
+    assert_equal flash[:error], I18n.t('unauthorized.create_for_same_day.reservation')
   end
 
   test "invalid length of time grad" do
-    current_user = UserSession.create(users(:hasnt_been_used_grad))
-    VCR.use_cassette('invalid length of time for grad') do
-     get :new, :reservation => { :which_date => Time.now.strftime("%Y/%m/%d"), :hour => "1", :minute => "00", :ampm => "pm", :how_long => 300 }
-     assert assigns(:user)
-     assert assigns(:reservation)
-     assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryGirl.create(:user)
+    get :new, :reservation => { :which_date => Time.now.strftime("%Y/%m/%d"), :hour => "1", :minute => "00", :ampm => "pm", :how_long => 300 }
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_template "user_sessions/unauthorized_action"
+    assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
   end
 
   test "invalid length of time undergrad" do
-    current_user = UserSession.create(users(:hasnt_been_used_undergrad))
-    VCR.use_cassette('invalid length of time for undergrad') do
-     get :new, :reservation => { :which_date => Time.now.strftime("%Y/%m/%d"), :hour => "1", :minute => "00", :ampm => "pm", :how_long => 150 }
-     assert assigns(:user)
-     assert assigns(:reservation)
-     assert_template "user_sessions/unauthorized_action"
-     assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:hasnt_been_used_undergrad]
+    sign_in FactoryGirl.create(:hasnt_been_used_undergrad)
+    get :new, :reservation => { :which_date => Time.now.strftime("%Y/%m/%d"), :hour => "1", :minute => "00", :ampm => "pm", :how_long => 150 }
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_template "user_sessions/unauthorized_action"
+    assert_equal flash[:error], I18n.t('unauthorized.create_for_length.reservation')
+    # end
   end
 
   test "array of emails in cc" do
-    current_user = UserSession.create(users(:admin))
-    VCR.use_cassette('reservations cant create with invalid ccs') do
-      assert_no_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "dummy@silly.org, mr.invalid.in.array" }
-      end
-      assert assigns(:reservation).invalid?
-      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
-      assert_no_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes }
-      end
-      assert assigns(:reservation).invalid?
-      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.collaborative_requires_ccs')
-      assert_no_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "mr.invalid" }
-      end
-      assert assigns(:reservation).invalid?
-      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
-      assert_no_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "admin@university.edu" }
-      end
-      assert assigns(:reservation).invalid?
-      assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.current_user_is_only_email')
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    user = FactoryGirl.create(:admin)
+    sign_in user
+    room = FactoryGirl.create(:collaborative)
+    wait_for_tire_index
+    assert_no_difference('Reservation.count', 1) do
+      post :create, :reservation => { :room_id => room.to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "dummy@silly.org, mr.invalid.in.array" }
     end
+    assert assigns(:reservation).invalid?
+    assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
+
+    assert_no_difference('Reservation.count', 1) do
+      post :create, :reservation => { :room_id => room.to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes }
+    end
+    assert assigns(:reservation).invalid?
+    assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.collaborative_requires_ccs')
+
+    assert_no_difference('Reservation.count', 1) do
+      post :create, :reservation => { :room_id => room.to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => "mr.invalid" }
+    end
+    assert assigns(:reservation).invalid?
+    assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.validate_cc')
+
+    assert_no_difference('Reservation.count', 1) do
+      post :create, :reservation => { :room_id => room.to_param, :start_dt => Time.now, :end_dt => Time.now + 150.minutes, :cc => user.email }
+    end
+    assert assigns(:reservation).invalid?
+    assert_equal assigns(:reservation).errors.full_messages.first, I18n.t('reservation.current_user_is_only_email')
   end
 
   test "create new reservation grad" do
-    current_user = UserSession.create(users(:no_bookings_grad))
-    VCR.use_cassette('reservations create new gradute', match_requests_on: [:method, :uri_ignoring_trailing_id]) do
-      assert_difference('Reservation.count', 1) do
-        post :create, :reservation => { :room_id => rooms(:collaborative).to_param, :start_dt => '3020-03-01 11:30:00'.to_time + 2.days, :end_dt => '3020-03-01 11:30:00'.to_time + 2.days + 150.minutes, :cc => "dummy@silly.org" }
-      end
-      assert assigns(:user)
-      assert assigns(:reservation)
-      assert_response :success
-      assert_template :index
-      assert_difference('Reservation.count', -1) do
-        Reservation.find(assigns(:reservation).to_param).destroy
-      end
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryGirl.create(:user)
+    assert_difference('Reservation.count', 1) do
+      post :create, :reservation => { :room_id => FactoryGirl.create(:collaborative).to_param, :start_dt => '3020-03-01 11:30:00'.to_time + 2.days, :end_dt => '3020-03-01 11:30:00'.to_time + 2.days + 150.minutes, :cc => "dummy@silly.org" }
+    end
+    assert assigns(:user)
+    assert assigns(:reservation)
+    assert_response :success
+    assert_template :index
+    assert_difference('Reservation.count', -1) do
+      Reservation.find(assigns(:reservation).to_param).destroy
     end
   end
 
@@ -172,7 +183,7 @@ class ReservationsControllerTest < ActionController::TestCase
   #  current_user = UserSession.create(users(:no_bookings_undergrad))
   #  VCR.use_cassette('reservations create new undergraduate') do
   #    assert_difference('Reservation.count', 1) do
-  #      post :create, :reservation => { :id => 11, :room_id => rooms(:collaborative).id, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 30.minutes, :cc => "dummy@silly.org" }
+  #      post :create, :reservation => { :id => 11, :room_id => FactoryGirl.create(:collaborative).id, :start_dt => Time.now + 2.days, :end_dt => Time.now + 2.days + 30.minutes, :cc => "dummy@silly.org" }
   #    end
   #    assert assigns(:user)
   #    assert assigns(:reservation)
@@ -185,10 +196,11 @@ class ReservationsControllerTest < ActionController::TestCase
   #end
 
   test "deletes existing reservation" do
-    current_user = UserSession.create(users(:undergraduate))
-    VCR.use_cassette("reservation delete existing") do
-      put :delete, :reservation_id => reservations(:undergraduate).id
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:undergraduate]
+    user = FactoryGirl.create(:undergraduate)
+    sign_in user
+    reservation = FactoryGirl.create(:reservation, user_id: user.id )
+    put :delete, :reservation_id => reservation.id
     assert assigns(:user)
     assert assigns(:reservation)
     assert_equal flash[:success], I18n.t('reservations.delete.success')
@@ -203,8 +215,11 @@ class ReservationsControllerTest < ActionController::TestCase
   end
 
   test "resend mail action" do
-    current_user = UserSession.create(users(:admin))
-    get :resend_email, :id => reservations(:admin_res).id
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    admin = FactoryGirl.create(:admin)
+    sign_in admin
+    reservation = FactoryGirl.create(:reservation, user_id: admin.id)
+    get :resend_email, :id => reservation.id
     assert assigns(:user)
     assert assigns(:reservation)
     assert_equal flash[:success], I18n.t('reservations.resend_email.success')

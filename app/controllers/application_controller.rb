@@ -2,7 +2,6 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include Authpds::Controllers::AuthpdsController
   layout Proc.new{ |controller| (controller.request.xhr?) ? false : "application" }
 
   helper :all # include all helpers, all the time
@@ -16,15 +15,27 @@ class ApplicationController < ActionController::Base
     Time.zone = cookies[:timezone] || 'Eastern Time (US & Canada)'
   end
 
+  def new_session_path(scope)
+    login_path
+  end
+
   # For dev purposes
   def current_user_dev
-    @current_user = User.find_or_create_by(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX") do |user|
-      user.user_attributes = {bor_status: "57"}
-    end
+    @current_user = User.new(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", patron_status: "57")
     @current_user.admin_roles_mask = 1
     return @current_user
   end
-  alias :current_user :current_user_dev if Rails.env.development?
+  # alias :current_user :current_user_dev if Rails.env.development?
+
+  # After signing out from the local application,
+  # redirect to the logout path for the Login app
+  def after_sign_out_path_for(resource_or_scope)
+    if ENV['SSO_LOGOUT_PATH'].present?
+      "#{ENV['LOGIN_URL']}#{ENV['SSO_LOGOUT_PATH']}"
+    else
+      super(resource_or_scope)
+    end
+  end
 
   # Return boolean matching the url to find out if we are in the admin view
   def in_admin_view?

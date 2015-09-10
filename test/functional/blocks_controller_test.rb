@@ -1,10 +1,11 @@
 require 'test_helper'
 
 class BlocksControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   setup do
-    activate_authlogic
-    current_user = UserSession.create(users(:admin))
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    sign_in FactoryGirl.create(:admin)
   end
 
   test "should get index" do
@@ -23,10 +24,8 @@ class BlocksControllerTest < ActionController::TestCase
   end
 
   test "should create" do
-    VCR.use_cassette("block create", match_requests_on: [:method, :uri_ignoring_trailing_id]) do
-      assert_difference('Reservation.count', 1) do
-        post :create, :reservation => {:room_id => 3, :end_dt => "2012-11-01 00:00", :start_dt => "2012-10-01 00:00"}
-      end
+    assert_difference('Reservation.count', 1) do
+      post :create, :reservation => {:room_id => 3, :end_dt => "2012-11-01 00:00", :start_dt => "2012-10-01 00:00"}
     end
     assert assigns(:block)
     assert_equal assigns(:block).title, I18n.t('blocks.default_title')
@@ -34,10 +33,9 @@ class BlocksControllerTest < ActionController::TestCase
   end
 
   test "should destroy" do
-    VCR.use_cassette("block destroy") do
-      assert_difference('Reservation.count', -1) do
-        delete :destroy, :id => reservations(:block)
-      end
+    reservation = FactoryGirl.create(:reservation)
+    assert_difference('Reservation.count', -1) do
+      delete :destroy, :id => reservation
     end
     assert assigns(:block)
     assert_equal flash[:notice], I18n.t('blocks.destroy.success')
@@ -45,20 +43,23 @@ class BlocksControllerTest < ActionController::TestCase
   end
 
   test "should render destroy existing reservations" do
-    VCR.use_cassette("block cannot create until delete existing", match_requests_on: [:method, :uri_ignoring_trailing_id]) do
-      post :create, :reservation => {:room_id => 1, :start_dt => "3020-04-01 00:00", :end_dt => "3020-06-01 00:00"}
-      assert assigns(:block).invalid?
-      assert !assigns(:block).errors.empty?
-      assert_template :new
-
-      post :destroy_existing_reservations, :reservation => {:room_id => 1, :start_dt => "3020-04-01 00:00", :end_dt => "3020-06-01 00:00"}, :cancel => "delete_with_alert", :reservations_to_delete => [9,10]
-      assert_equal flash[:notice], I18n.t('blocks.destroy_existing_reservations.success')
-      assert_redirected_to blocks_url
-    end
+    existing_reservation = FactoryGirl.create(:reservation)
+    wait_for_tire_index
+    post :create, reservation: { room_id: existing_reservation.room_id, start_dt: existing_reservation.start_dt, end_dt: existing_reservation.end_dt }
+    assert assigns(:block).invalid?
+    assert !assigns(:block).errors.empty?
+    assert_template :new
+    post :destroy_existing_reservations, reservation: { room_id: existing_reservation.room_id, start_dt: existing_reservation.start_dt, end_dt: existing_reservation.end_dt }, :cancel => "delete_with_alert", :reservations_to_delete => [existing_reservation.id]
+    assert_equal flash[:notice], I18n.t('blocks.destroy_existing_reservations.success')
+    assert_redirected_to blocks_url
   end
 
   test "should get existing reservations" do
-    get :index_existing_reservations, :reservations_to_delete => [9,10]
+    test_reservation_one    = FactoryGirl.create(:reservation)
+    test_reservation_two    = FactoryGirl.create(:reservation)
+    test_reservation_three  = FactoryGirl.create(:reservation)
+    test_reservation_four   = FactoryGirl.create(:reservation)
+    get :index_existing_reservations, :reservations_to_delete => [test_reservation_one.id,test_reservation_two.id]
     assert assigns(:existing_reservations)
     assert_equal assigns(:existing_reservations).count, 2
     assert_template :index_existing_reservations

@@ -66,14 +66,22 @@ ActiveRecord::Schema.define(version: 20141210191418) do
     t.string   "mobile_phone"
     t.string   "crypted_password"
     t.string   "password_salt"
-    t.string   "persistence_token",              null: false
+    t.string   "persistence_token"
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "expiration_date"
     t.datetime "last_login_at"
-    t.text     "user_attributes"
     t.datetime "refreshed_at"
     t.integer  "admin_roles_mask"
+    t.string   "provider",          default: ""
+    t.string   "aleph_id"
+    t.string   "institution_code"
+    t.string   "college"
+    t.string   "dept_code"
+    t.string   "department"
+    t.string   "major_code"
+    t.string   "major"
+    t.string   "patron_status"
   end
 
 end

@@ -57,34 +57,34 @@ gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.9.6.257'
 
-gem 'exlibris-aleph', github: 'barnabyalter/exlibris-aleph'
-gem 'authpds', github: 'barnabyalter/authpds'
-gem 'authpds-nyu', github: 'barnabyalter/authpds-nyu'
-gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.4.0'
+gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.4.3'
 gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.4.2'
+gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
+gem 'devise', '~> 3.4.1'
 
 gem 'font-awesome-rails', '~> 4.2.0'
 
-group :development do
-  gem 'progress_bar'
+group :development, :test do
+  gem 'pry', '~> 0.10.1'
+  # Use factory girl for creating models
+  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'faker'
+  gem 'pry-remote'
 end
 
 group :test do
+  gem 'progress_bar'
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'coveralls', '~> 0.7.1', :require => false
-  gem 'vcr', '~> 2.9.3'
-  gem 'webmock', '~> 1.20.4'
+  gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
   gem 'ruby-prof', '~> 0.15.2'
   gem 'rspec-rails', '~> 2.99.0'
-  # Use factory girl for creating models
-  gem 'factory_girl_rails', '~> 4.5.0'
-end
-
-
-group :development, :test do
-  gem 'pry', '~> 0.10.1'
-  gem 'faker'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+  gem 'phantomjs', '>= 1.9.0'
+  gem 'poltergeist', '~> 1.5.0'
+  gem 'selenium-webdriver'
 end

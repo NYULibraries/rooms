@@ -21,7 +21,7 @@ describe ReservationsController do
   end
   before(:each) { controller.stub(:current_user).and_return(user) }
 
-  describe "GET /new", vcr: { cassette_name: 'new reservation', match_requests_on: [:method, :uri_ignoring_trailing_id] } do
+  describe "GET /new" do
     before { get :new, reservation: reservation_params }
     subject { assigns(:rooms) }
     context "when user is an undergraduate" do

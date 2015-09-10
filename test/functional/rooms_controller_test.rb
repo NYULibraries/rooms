@@ -1,40 +1,38 @@
 require 'test_helper'
 
 class RoomsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   setup do
-    activate_authlogic
-    current_user = UserSession.create(users(:admin))
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    sign_in FactoryGirl.create(:admin)
   end
 
   test "gets index of rooms" do
-    VCR.use_cassette('rooms index') do
-      get :index
-      assert assigns(:rooms)
-      assert_template :index
-    end
+    get :index
+    assert assigns(:rooms)
+    assert_template :index
   end
 
   test "gets index of ny rooms" do
-    current_user = UserSession.create(users(:ny_admin))
-    VCR.use_cassette('rooms ny index') do
-      get :index
-      assert assigns(:rooms)
-      assert_template :index
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:ny_admin]
+    sign_in FactoryGirl.create(:ny_admin)
+    get :index
+    assert assigns(:rooms)
+    assert_template :index
   end
 
   test "gets index of rooms with search results" do
-    VCR.use_cassette('search rooms') do
-      get :index, :q => "google.com"
-      assert assigns(:rooms)
-      assert_equal 1, assigns(:rooms).count
-      assert_template :index
-    end
+    FactoryGirl.create(:room, image_link: "google.com")
+    wait_for_tire_index
+    get :index, :q => "google.com"
+    assert assigns(:rooms)
+    assert(assigns(:rooms).count > 0)
+    assert_template :index
   end
 
   test "get show action" do
-    get :show, :id => rooms(:individual)
+    get :show, :id => FactoryGirl.create(:room)
     assert assigns(:room)
     assert_template :show
   end
@@ -84,7 +82,7 @@ class RoomsControllerTest < ActionController::TestCase
   end
 
   test "get edit action" do
-    get :edit, :id => rooms(:individual)
+    get :edit, :id => FactoryGirl.create(:room)
     assert assigns(:room)
     assert_template :edit
   end
@@ -123,13 +121,12 @@ class RoomsControllerTest < ActionController::TestCase
   end
 
   test "deletes room" do
-    VCR.use_cassette('destroy a room') do
-      assert_difference('Room.count', -1) do
-        delete :destroy, :id => rooms(:individual_with_hours)
-      end
-      assert assigns(:room)
-      assert_redirected_to rooms_url
+    room = FactoryGirl.create(:room)
+    assert_difference('Room.count', -1) do
+      delete :destroy, :id => room
     end
+    assert assigns(:room)
+    assert_redirected_to rooms_url
   end
 
   test "gets sort index of rooms" do
@@ -139,14 +136,15 @@ class RoomsControllerTest < ActionController::TestCase
   end
 
   test "updates order of rooms" do
-    VCR.use_cassette('reordering rooms') do
-      put :update_sort, :rooms => [3,2,1]
-      assert_equal flash[:notice], I18n.t("rooms.update_sort.success")
-      assert_redirected_to sort_rooms_url
-    end
-    assert_equal Room.find(3).sort_order, 1
-    assert_equal Room.find(2).sort_order, 2
-    assert_equal Room.find(1).sort_order, 3
+    room_one    = FactoryGirl.create(:room)
+    room_two    = FactoryGirl.create(:room)
+    room_three  = FactoryGirl.create(:room)
+    put :update_sort, :rooms => [room_three,room_two,room_one]
+    assert_equal flash[:notice], I18n.t("rooms.update_sort.success")
+    assert_redirected_to sort_rooms_url
+    assert_equal Room.find(room_three).sort_order, 1
+    assert_equal Room.find(room_two).sort_order, 2
+    assert_equal Room.find(room_one).sort_order, 3
   end
 
 end

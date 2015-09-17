@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   # Manage access denied error messages from CanCan
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
-      redirect_to login_url unless performed?
+      redirect_to login_url(origin: request.url) unless performed?
     elsif can? :create, Reservation
       flash[:error] ||= exception.message.html_safe
       if request.xhr?
@@ -118,7 +118,7 @@ class ApplicationController < ActionController::Base
   end
 
   def login_path_escaped
-    CGI::escape("#{Rails.application.config.action_controller.relative_url_root}/users/auth/nyulibraries")
+    CGI::escape("#{Rails.application.config.action_controller.relative_url_root}/login")
   end
 
 end

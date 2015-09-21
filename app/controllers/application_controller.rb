@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     @current_user.admin_roles_mask = 1
     return @current_user
   end
-  # alias :current_user :current_user_dev if Rails.env.development?
+  alias :current_user :current_user_dev if Rails.env.development?
 
   prepend_before_filter :passive_login
   def passive_login

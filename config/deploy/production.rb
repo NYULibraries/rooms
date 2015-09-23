@@ -1,2 +1,2 @@
 set :rails_env, "production"
-set :branch, "master-pre-login"
+set :branch, "master-before-login"

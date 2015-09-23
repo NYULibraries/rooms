@@ -7,7 +7,7 @@ gem 'mysql2', '~> 0.3.17'
 # Use CoffeeScript in assets and views
 gem 'coffee-rails', '~> 4.1.0'
 
-gem 'uglifier', '~> 2.5.3'
+gem 'uglifier', '~> 2.7.0'
 gem 'therubyracer', '~> 0.12.1'
 
 # Use Compass

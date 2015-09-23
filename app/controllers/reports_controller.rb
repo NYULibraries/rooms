@@ -54,7 +54,8 @@ class ReportsController < ApplicationController
           conditions.push("(user_id in (select id from users where patron_status like '%#{@patron_status}%'))") unless @patron_status.nil?
 
           # Find all reservations that fall between this selected date range
-          @reservations = Reservation.active.no_blocks.accessible_by(current_ability).where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt).page(params[:page]).per(30)
+          @reservations_select = Reservation.active.no_blocks.accessible_by(current_ability).where("#{conditions.join(' AND ')}#{" AND " unless conditions.empty?}((start_dt BETWEEN ? AND ?) OR (end_dt BETWEEN ? AND ?) OR (start_dt <= ? AND end_dt >= ?))", @start_dt, @end_dt, @start_dt, @end_dt, @start_dt, @end_dt)
+          @reservations = @reservations_select.page(params[:page]).per(30)
 
           # Populate a 'no data found' error if no reservations were found
           flash[:error] = "Could not find any data for the range you selected." if @reservations.empty?
@@ -70,7 +71,7 @@ class ReportsController < ApplicationController
       if flash[:error].blank?
         respond_to do |format|
           format.html { render :report }
-          format.csv { render :csv => @reservations, :filename => "reservations_report.#{Time.now.strftime("%Y%m%d%H%m")}" }
+          format.csv { render :csv => @reservations_select, :filename => "reservations_report.#{Time.now.strftime("%Y%m%d%H%m")}" }
         end
       else
         # If there were error messages, render with errors

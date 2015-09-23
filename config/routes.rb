@@ -39,7 +39,7 @@ Rooms::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   devise_scope :user do
     get 'logout', to: 'devise/sessions#destroy', as: :logout
-    get 'login', to: redirect('/users/auth/nyulibraries'), as: :login
+    get 'login', to: redirect { |params, request| "/users/auth/nyulibraries?#{request.query_string}" }, as: :login
   end
 
   # Default route

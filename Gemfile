@@ -43,7 +43,7 @@ gem 'mustache', '0.99.4'
 gem 'mustache-rails', github: 'NYULibraries/mustache-rails', require: 'mustache/railtie'
 
 # Dalli for memcached
-gem 'dalli', '~> 2.7.2'
+gem 'dalli', '~> 2.7.4'
 
 # Comma
 gem 'comma', '~> 3.2.2'

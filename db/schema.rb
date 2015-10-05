@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210191418) do
+ActiveRecord::Schema.define(version: 20151005202327) do
 
   create_table "reservations", force: true do |t|
     t.integer  "user_id"
@@ -62,18 +62,11 @@ ActiveRecord::Schema.define(version: 20141210191418) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",          default: "", null: false
-    t.string   "mobile_phone"
-    t.string   "crypted_password"
-    t.string   "password_salt"
-    t.string   "persistence_token"
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
+    t.string   "username",         default: "", null: false
     t.datetime "expiration_date"
-    t.datetime "last_login_at"
     t.datetime "refreshed_at"
     t.integer  "admin_roles_mask"
-    t.string   "provider",          default: ""
+    t.string   "provider",         default: "", null: false
     t.string   "aleph_id"
     t.string   "institution_code"
     t.string   "college"

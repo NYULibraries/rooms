@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20151005202327) do
     t.datetime "expiration_date"
     t.datetime "refreshed_at"
     t.integer  "admin_roles_mask"
-    t.string   "provider",         default: "", null: false
+    t.string   "provider",         default: ""
     t.string   "aleph_id"
     t.string   "institution_code"
     t.string   "college"

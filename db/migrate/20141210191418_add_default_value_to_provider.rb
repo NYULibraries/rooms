@@ -3,7 +3,7 @@ class AddDefaultValueToProvider < ActiveRecord::Migration
     say_with_time "Migrating provider from NULL to blank" do
       User.all.each do |user|
         user.provider = '' if user.provider.nil?
-        user.save
+        user.save(:validate => false)
       end
     end
     change_column :users, :provider, :string, default: "", null: false

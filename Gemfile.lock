@@ -392,7 +392,7 @@ DEPENDENCIES
   compass-rails (~> 2.0.4)
   coveralls (~> 0.7.1)
   cucumber-rails
-  dalli (~> 2.7.2)
+  dalli (~> 2.7.4)
   database_cleaner
   devise (~> 3.4.1)
   draper (~> 1.4.0)

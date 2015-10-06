@@ -19,7 +19,7 @@ namespace :cleanup do
       users_with_dupes = User.group(:username).having("count(*) > 1").order("created_at DESC")
       users_with_dupes.each do |user|
         dupes = User.where(username: user.username)
-        new_user = dupes.first.dup
+        new_user = dupes.first
         total_reservations = 0
         puts "================="
         puts "Creating new user with #{new_user.username}"
@@ -38,7 +38,7 @@ namespace :cleanup do
           end
         end
         if total_reservations == new_user.reservations.count
-          dupes.delete_all
+          dupes.where("id != ?", new_user.id).delete_all
         else
           puts "Reservations not correctly assigned!"
           exit

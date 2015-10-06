@@ -20,6 +20,7 @@ namespace :cleanup do
       users_with_dupes.each do |user|
         dupes = User.where(username: user.username)
         new_user = dupes.first.dup
+        total_reservations = 0
         puts "================="
         puts "Creating new user with #{new_user.username}"
         dupe_with_admin = dupes.find {|dupe| dupe.is_admin? }
@@ -30,12 +31,18 @@ namespace :cleanup do
         new_user.save!
         dupes.each do |dupe|
           puts "Reassigning #{dupe.reservations.count} reservations"
+          total_reservations += dupe.reservations.count
           dupe.reservations.each do |res|
             res.user = new_user
             res.save!
           end
         end
-        dupes.delete_all
+        if total_reservations == new_user.reservations.count
+          dupes.delete_all
+        else
+          puts "Reservations not correctly assigned!"
+          exit
+        end
         puts "New user has #{new_user.reservations.count} reservations"
       end
     end

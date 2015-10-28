@@ -1,4 +1,5 @@
-namespace :cleanup do
+namespace :rooms do
+  namespace :cleanup do
 
     desc "Cleanup users who have been inactive for over a year"
     task :users => :environment do
@@ -47,4 +48,5 @@ namespace :cleanup do
       end
     end
 
+  end
 end

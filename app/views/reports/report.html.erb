@@ -64,6 +64,7 @@
     	<td><%= prettify_simple_date(res.start_dt)%> <%= prettify_time(res.start_dt) %></td>
     	<td><%= prettify_simple_date(res.end_dt)%> <%= prettify_time(res.end_dt) %></td>
     	<td><%= link_to "#{res.user.lastname}, #{res.user.firstname} (#{res.user.username})", res.user %></td>
+      <td><%= res.user.college_code %></td>
     	<td><%= res.user.college %></td>
     	<td><%= (res.user.department) ? res.user.dept_code : res.user.department %></td>
     	<td><%= (res.user.major) ? res.user.major_code : res.user.major %></td>

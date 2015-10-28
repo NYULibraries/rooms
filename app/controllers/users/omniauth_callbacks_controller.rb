@@ -64,6 +64,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     return {} if omniauth_aleph_identity.blank?
     {
       patron_status: omniauth_aleph_properties.patron_status,
+      college_code: omniauth_aleph_properties.college_code,
       college: omniauth_aleph_properties.college,
       dept_code: omniauth_aleph_properties.dept_code,
       department: omniauth_aleph_properties.department,

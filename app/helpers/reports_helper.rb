@@ -5,7 +5,7 @@ module ReportsHelper
   end
 
   def college_name_options
-    @college_name_options ||= options(:college_name)
+    @college_name_options ||= options(:college)
   end
 
   def college_code_options
@@ -13,7 +13,7 @@ module ReportsHelper
   end
 
   def dept_options
-    @dept_options ||= options(:dept_name)
+    @dept_options ||= options(:department)
   end
 
   def major_options

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006010942) do
+ActiveRecord::Schema.define(version: 20151028195637) do
 
   create_table "reservations", force: true do |t|
     t.integer  "user_id"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20151006010942) do
     t.string   "major_code"
     t.string   "major"
     t.string   "patron_status"
+    t.string   "college_code"
   end
 
   add_index "users", ["username", "provider"], name: "index_users_on_username_and_provider", unique: true, using: :btree

@@ -4,7 +4,7 @@ en:
   mailers:
     reservation_mailer:
       default_from: "NYU Libraries Room Reservation <patron.question@library.nyu.edu>"
-      default_reply_to: "no-reply@library.nyu.edu"
+      default_reply_to: "lib-no-reply@nyu.edu"
       cancellation_email:
         subject: "NYU Libraries- Room reservation cancellation"
       block_cancellation_email:
@@ -35,7 +35,7 @@ en:
     collaborative_requires_ccs: "For collaborative rooms, please add at least one other valid e-mail from your group."
     policies:
       title: "Policies:"
-      create_today: 
+      create_today:
         graduate: You can reserve up to three hours per day
         undergraduate: You can reserve up to two hours per day
       create_for_same_day: You can make only one reservation per day
@@ -61,7 +61,7 @@ en:
     destroy:
       success: Block was successfully deleted.
     destroy_existing_reservations:
-      error: "Could not delete existing reservations. Please contact web administrator web.services@library.nyu.edu."
+      error: "Could not delete existing reservations. Please contact web administrator lib-webservices@nyu.edu."
       success: Block successfully created.
       cancellation_email: "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact patron.question@library.nyu.edu.\n\nSorry for the inconvenience."
     create:
@@ -76,4 +76,3 @@ en:
       success: Room group was successfully created.
     update:
       success: Room group was successfully updated.
-  

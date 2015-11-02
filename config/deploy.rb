@@ -1,9 +1,7 @@
 require 'formaggio/capistrano'
 set :app_title, "rooms"
-set :recipient, "rooms.admin@library.nyu.edu"
+set :recipient, "lib-rooms-admin@nyu.edu"
 # Run using ruby 2.1.5
-set :rvm_ruby_string, "ruby-2.1.5"
-
 set :rvm_ruby_string, "ruby-2.1.5"
 
 namespace :reporting do

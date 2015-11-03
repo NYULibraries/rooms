@@ -15,9 +15,9 @@ before_script:
   - sleep 30
 
 rvm:
-  - 1.9.3
   - 2.0.0
   - 2.1.5
+  - 2.2.3
 
 notifications:
   email:

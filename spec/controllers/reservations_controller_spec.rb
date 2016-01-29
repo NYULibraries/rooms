@@ -19,7 +19,7 @@ describe ReservationsController do
       how_long: how_long
     }
   end
-  before(:each) { controller.stub(:current_user).and_return(user) }
+  before(:each) { allow(controller).to receive(:current_user).and_return(user) }
 
   describe "GET /new" do
     before { get :new, reservation: reservation_params }

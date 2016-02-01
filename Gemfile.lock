@@ -438,6 +438,3 @@ DEPENDENCIES
   uglifier (~> 2.7.0)
   webmock (>= 1.8.0, < 1.16)
   yui-compressor (~> 0.12.0)
-
-BUNDLED WITH
-   1.11.2

@@ -73,6 +73,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'json_spec'
   gem 'progress_bar'
   #Testing coverage
   gem 'simplecov', :require => false

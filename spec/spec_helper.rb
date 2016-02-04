@@ -37,6 +37,9 @@ RSpec.configure do |config|
   #   DatabaseCleaner.strategy = :transaction
   #   DatabaseCleaner.clean_with(:truncation)
   # end
+  
+  # Include helpers for JSON
+  config.include JsonSpec::Helpers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

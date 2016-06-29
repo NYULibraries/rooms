@@ -215,7 +215,7 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.99.1)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.8.4)
     multi_json (1.11.2)
     multi_test (0.1.2)
@@ -232,8 +232,9 @@ GEM
       net-ssh (>= 2.6.5)
     netrc (0.11.0)
     newrelic_rpm (3.9.6.257)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -251,6 +252,7 @@ GEM
     options (2.3.2)
     orm_adapter (0.5.0)
     phantomjs (2.1.1.0)
+    pkg-config (1.1.7)
     poltergeist (1.5.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -448,4 +450,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

@@ -1,4 +1,6 @@
 en:
+  nyulibraries_errors:
+    application_title: "Room Reservation System"
   application:
     title_html: Reserve a study space
   mailers:

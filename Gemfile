@@ -87,6 +87,6 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'phantomjs', '>= 1.9.0'
-  gem 'poltergeist', '~> 1.5.0'
+  gem 'poltergeist'#, '~> 1.5.0'
   gem 'selenium-webdriver'
 end

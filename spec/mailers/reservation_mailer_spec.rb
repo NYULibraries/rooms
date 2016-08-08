@@ -14,7 +14,7 @@ describe ReservationMailer do
     it { should include "Time: #{reservation.start_dt.strftime('%I:%M %p')} - #{reservation.end_dt.strftime('%I:%M %p')}" }
     it { should include "Location: #{reservation.room.title}" }
     it { should include "If you need help finding your study room or need to report a problem, visit the Circulation Services Desk (on the 1st floor of Bobst Library) or use <a href=\"http://library.nyu.edu/ask\">Ask a Librarian</a>" }
-    it { should include "To adjust or cancel your reservation, <a href=\"http://library.nyu.edu/services/group_study.html\">http://library.nyu.edu/services/group_study.html</a>" }
+    it { should include "To adjust or cancel your reservation, <a href=\"https://library.nyu.edu/services/study-spaces/reservable-study-spaces/reservable-study-rooms-bobst-library/\">https://library.nyu.edu/services/study-spaces/reservable-study-spaces/reservable-study-rooms-bobst-library/</a>" }
     it { should include "Please help us improve this service by taking <a href=\"https://nyu.qualtrics.com/jfe/form/SV_3fTab30NE6XdnsF\">this brief survey</a>" }
   end
 
@@ -26,7 +26,7 @@ describe ReservationMailer do
     it { should include "Time: #{reservation.start_dt.strftime('%I:%M %p')} - #{reservation.end_dt.strftime('%I:%M %p')}" }
     it { should include "Location: #{reservation.room.title}" }
     it { should include "If you need help finding your study room or need to report a problem, visit the Circulation Services Desk (on the 1st floor of Bobst Library) or use <a href=\"http://library.nyu.edu/ask\">Ask a Librarian</a>" }
-    it { should include "To adjust or cancel your reservation, <a href=\"http://library.nyu.edu/services/group_study.html\">http://library.nyu.edu/services/group_study.html</a>" }
+    it { should include "To adjust or cancel your reservation, <a href=\"https://library.nyu.edu/services/study-spaces/reservable-study-spaces/reservable-study-rooms-bobst-library/\">https://library.nyu.edu/services/study-spaces/reservable-study-spaces/reservable-study-rooms-bobst-library/</a>" }
     it { should include "Please help us improve this service by taking <a href=\"https://nyu.qualtrics.com/jfe/form/SV_3fTab30NE6XdnsF\">this brief survey</a>" }
   end
 

@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.14.2'
+gem 'rails', '~> 4.2.0'
 
 gem 'mysql2', '~> 0.3.17'
 
 # Use CoffeeScript in assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'#, '~> 4.1.0'
 
 gem 'uglifier', '~> 2.7.0'
 gem 'therubyracer', '~> 0.12.1'
@@ -61,7 +61,7 @@ gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.
 gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
 gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
-gem 'devise', '~> 3.5.4'
+gem 'devise', '~> 3.5'
 
 gem 'font-awesome-rails', '~> 4.2.0'
 
@@ -82,11 +82,13 @@ group :test do
   gem 'coveralls', '~> 0.7.1', :require => false
   gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
-  gem 'ruby-prof', '~> 0.15.2'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'phantomjs', '>= 1.9.0'
-  gem 'poltergeist', '~> 1.5.0'
+  gem 'poltergeist', '~> 1.10.0'
   gem 'selenium-webdriver'
+  gem 'rails-perftest'
+  gem 'ruby-prof'
+  gem 'ffi', '=1.9.10' 
 end

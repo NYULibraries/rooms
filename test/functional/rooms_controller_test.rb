@@ -105,7 +105,7 @@ class RoomsControllerTest < ActionController::TestCase
                                             }
 
     assert_equal flash[:notice], I18n.t("rooms.update.success")
-    room = Room.find(room)
+    room.reload
     assert_equal "Changing Titles", room.title
     assert_equal "Changing Type", room.type_of_room
     assert_equal false, room.collaborative
@@ -139,9 +139,12 @@ class RoomsControllerTest < ActionController::TestCase
     put :update_sort, :rooms => [room_three,room_two,room_one]
     assert_equal flash[:notice], I18n.t("rooms.update_sort.success")
     assert_redirected_to sort_rooms_url
-    assert_equal Room.find(room_three).sort_order, 1
-    assert_equal Room.find(room_two).sort_order, 2
-    assert_equal Room.find(room_one).sort_order, 3
+    room_three.reload
+    assert_equal room_three.sort_order, 1
+    room_two.reload
+    assert_equal room_two.sort_order, 2
+    room_one.reload
+    assert_equal room_one.sort_order, 3
   end
 
 end

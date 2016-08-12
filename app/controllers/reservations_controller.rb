@@ -56,7 +56,7 @@ class ReservationsController < ApplicationController
     respond_with(@reservation) do |format|
       if @reservation.save
         # Send email
-        ReservationMailer.confirmation_email(@reservation).deliver
+        ReservationMailer.confirmation_email(@reservation).deliver_now
         flash[:success] = t('reservations.create.success').html_safe
         format.html { render :index }
       else
@@ -94,7 +94,7 @@ class ReservationsController < ApplicationController
     if @reservation.save
       flash[:success] = t('reservations.delete.success')
       # Send email
-      ReservationMailer.cancellation_email(@reservation).deliver
+      ReservationMailer.cancellation_email(@reservation).deliver_now
     else
       flash[:error] = t('reservations.delete.error')
     end
@@ -110,7 +110,7 @@ class ReservationsController < ApplicationController
     @reservation = @user.reservations.find(params[:id])
 
     # Send email
-    if ReservationMailer.confirmation_email(@reservation).deliver
+    if ReservationMailer.confirmation_email(@reservation).deliver_now
       flash[:success] = t('reservations.resend_email.success')
     end
 

@@ -62,7 +62,8 @@ class ReservationsControllerTest < ActionController::TestCase
     put :update, :id => reservation.to_param, :reservation => { :title => "What a class this will be!" }
     assert assigns(:user)
     assert assigns(:reservation)
-    assert_equal Reservation.find(reservation).title, "What a class this will be!"
+    reservation.reload
+    assert_equal reservation.title, "What a class this will be!"
     assert_redirected_to root_url
   end
 

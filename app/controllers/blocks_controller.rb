@@ -46,13 +46,13 @@ class BlocksController < ApplicationController
         # Mark reservation as deleted
         if res.update_attributes(:deleted => true, :deleted_by => { :by_block => true })
           # Send an email if choice to alert users was made
-          ReservationMailer.block_cancellation_email(res, params[:cc_group], params[:cancellation_email]).deliver if params[:cancel].eql? "delete_with_alert"
+          ReservationMailer.block_cancellation_email(res, params[:cc_group], params[:cancellation_email]).deliver_now if params[:cancel].eql? "delete_with_alert"
           # Format each deleted reservation to send email to admin
           formatted_reservations += "User: #{res.user.username}; Room: #{res.room.title}; Reservation: #{res.start_dt.strftime('%a. %b %d, %Y %I:%M %p')} -- #{res.end_dt.strftime('%a. %b %d, %Y %I:%M %p')}\n"
         end
       end
       # Send an email to the administrator specified if the checkbox was selected
-      ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver if params[:cc_admin]
+      ReservationMailer.block_cancellation_admin_email(@block, formatted_reservations, params[:cc_admin_email], params[:cancel]).deliver_now if params[:cc_admin]
     end
 
     # Jumping through hoops here to avoid ElasticSearch caching class method existing_reservations when @block.save is called

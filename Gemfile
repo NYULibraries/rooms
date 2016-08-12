@@ -82,7 +82,6 @@ group :test do
   gem 'coveralls', '~> 0.7.1', :require => false
   gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
-  gem 'ruby-prof', '~> 0.15.2'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
@@ -90,4 +89,6 @@ group :test do
   gem 'poltergeist', '~> 1.10.0'
   gem 'selenium-webdriver'
   gem 'rails-perftest'
+  gem 'ruby-prof'
+  gem 'ffi', '=1.9.10' 
 end

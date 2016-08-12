@@ -44,7 +44,8 @@ class RoomGroupsControllerTest < ActionController::TestCase
     room_group = FactoryGirl.create(:room_group)
     put :update, :id => room_group, :room_group => {:title => "Jeepers Creepers"}
     assert assigns(:room_group)
-    assert_equal RoomGroup.find(room_group).title, "Jeepers Creepers"
+    room_group.reload
+    assert_equal room_group.title, "Jeepers Creepers"
     assert_redirected_to (room_group_path(assigns(:room_group)))
   end
 

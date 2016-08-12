@@ -24,7 +24,7 @@
 	<li><%= link_to "<None>", rooms_url %>
 	<% @room_groups.each do |room_group| %>
 		<% if can? room_group.code_sym, RoomGroup %>
-    	<li><%= link_to rooms_url(params.merge({:room_group => room_group.code})) do %> <%= room_group.title %><% end -%></li>
+    	<li><%= link_to rooms_url(**params.symbolize_keys.merge(room_group: room_group.code)) do %> <%= room_group.title %><% end -%></li>
 		<% end %>
 	<% end %>
   </ul>

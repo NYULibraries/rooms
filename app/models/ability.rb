@@ -64,7 +64,6 @@ private
     can :manage, Reservation, {:room => {:room_group => { :code => group_access.map {|g| g.to_s } }}}
     can [:create_today, :create_for_same_day, :create_for_length], Reservation
     can :manage, :block
-    can :manage, :report
     can [:read, :update, :create], User
     # Destroy user if it isn't you, it isn't an admin or it is an admin you can edit
     can :destroy, User do |user|

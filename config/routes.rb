@@ -20,10 +20,7 @@ Rooms::Application.routes.draw do
     resources :users
     resources :rooms
     resources :blocks
-    resources :reports
     resources :room_groups
-
-    match 'reports' => "reservations#generate_report", via: [:get, :post]
   end
 
   # Alias rooms#show to show_room_details

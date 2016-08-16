@@ -24,7 +24,6 @@ class Reservation < ActiveRecord::Base
   serialize :deleted_by, Hash
 
   # Scopes
-  # Active non blocks still used in reporting controller
   scope :blocks,    -> { where("is_block = ?", true).order("start_dt ASC") }
   scope :active,    -> { where("deleted = ?", false).order("start_dt ASC") }
   scope :no_blocks, -> { where("is_block = ?", false).order("start_dt ASC") }

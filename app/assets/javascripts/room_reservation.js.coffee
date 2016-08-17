@@ -15,7 +15,7 @@ $ ->
     $('#room_reservation_which_date').focus()
 
   # Set up date picker objects
-  $(".report_datetime, .block_datetime").datetimepicker {
+  $(".block_datetime").datetimepicker {
     stepMinute: 30,
     minuteMax: 30,
     dateFormat: 'yy-mm-dd'

@@ -11,7 +11,7 @@ class Reservation < ActiveRecord::Base
   validates_presence_of :user_id, :room_id, :start_dt, :end_dt
 
   validate :reservation_available, :if => :room_id?, :unless => :is_block?, :on => :create
-  validate :reservations_exist_in_block, :if => :is_block?, :unless => Proc.new {|start_dt| start_dt.blank? }, :unless => Proc.new {|end_dt| end_dt.blank? }, :on => :create
+  validate :reservations_exist_in_block, :if => :is_block?, :unless => Proc.new {|r| r.start_dt.blank? && r.end_dt.blank? }, :on => :create
   validate :validate_cc, :unless => :is_block?
   validate :collaborative_requires_ccs, :unless => :is_block?
 

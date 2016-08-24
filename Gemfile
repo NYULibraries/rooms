@@ -55,7 +55,7 @@ gem 'rest-client', '~> 1.8.0'
 # Draper for decorators
 gem 'draper', '~> 1.4.0'
 
-gem 'newrelic_rpm', '~> 3.9.6.257'
+gem 'newrelic_rpm', '~> 3.16'
 
 gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.4.3'
 gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
@@ -90,5 +90,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'rails-perftest'
   gem 'ruby-prof'
-  gem 'ffi', '=1.9.10' 
+  gem 'ffi', '=1.9.10'
 end

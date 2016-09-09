@@ -309,7 +309,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-perftest (0.0.6)
     railties (4.2.7.1)
       actionpack (= 4.2.7.1)
       activesupport (= 4.2.7.1)
@@ -349,7 +348,6 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    ruby-prof (0.15.9)
     rubyzip (1.2.0)
     rvm-capistrano (1.5.6)
       capistrano (~> 2.15.4)
@@ -442,7 +440,6 @@ DEPENDENCIES
   draper (~> 1.4.0)
   factory_girl_rails (~> 4.5.0)
   faker
-  ffi (= 1.9.10)
   font-awesome-rails (~> 4.2.0)
   formaggio!
   jquery-rails (~> 3.1.2)
@@ -463,10 +460,8 @@ DEPENDENCIES
   pry (~> 0.10.1)
   pry-remote
   rails (~> 4.2.0)
-  rails-perftest
   rest-client (~> 1.8.0)
   rspec-rails (~> 3.4.1)
-  ruby-prof
   sass-rails (~> 5.0.1)
   selenium-webdriver
   simplecov

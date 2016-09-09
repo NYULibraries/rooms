@@ -55,7 +55,7 @@ gem 'rest-client', '~> 1.8.0'
 # Draper for decorators
 gem 'draper', '~> 1.4.0'
 
-gem 'newrelic_rpm', '~> 3.9.6.257'
+gem 'newrelic_rpm', '~> 3.16'
 
 gem 'nyulibraries_stylesheets', github: 'NYULibraries/nyulibraries_stylesheets'
 gem 'nyulibraries_templates', github: 'NYULibraries/nyulibraries_templates', branch: 'feature/better_testing'

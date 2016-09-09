@@ -24,7 +24,7 @@ gem 'json', '~> 1.8.1'
 
 # Use jQuery
 gem 'jquery-rails', '~> 3.1.2'
-gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 5.0.5'
 
 # CanCanCan for authorization
 gem 'cancancan', '~> 1.10.1'

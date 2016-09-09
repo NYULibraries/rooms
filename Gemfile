@@ -88,7 +88,4 @@ group :test do
   gem 'phantomjs', '>= 1.9.0'
   gem 'poltergeist', '~> 1.10.0'
   gem 'selenium-webdriver'
-  gem 'rails-perftest'
-  gem 'ruby-prof'
-  gem 'ffi', '=1.9.10'
 end

@@ -31,10 +31,10 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/nyulibraries_institutions.git
-  revision: c0ba9b8606cdeb6ded2a329511caa4418eeef077
+  revision: a120b0a668125d7b5ccbb104a57c177879e56521
   branch: feature/improve_tests
   specs:
-    nyulibraries_institutions (1.0.0)
+    nyulibraries_institutions (0.0.0)
       institutions (~> 0.1.3)
       rails (>= 4)
 
@@ -54,7 +54,7 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/nyulibraries_templates.git
-  revision: 4a06d15438af56f2d35f734d63ecb0be3df01688
+  revision: a668821e097ea754c0cb26b2899ab6ead828e730
   branch: feature/better_testing
   specs:
     nyulibraries_templates (0.0.1)
@@ -257,7 +257,7 @@ GEM
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
-    mime-types (2.99.2)
+    mime-types (2.99.3)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)

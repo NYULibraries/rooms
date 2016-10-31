@@ -31,8 +31,7 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/nyulibraries_institutions.git
-  revision: a120b0a668125d7b5ccbb104a57c177879e56521
-  branch: feature/improve_tests
+  revision: f9c82d7deceee55805ae08cebfc993e3a1115b0f
   specs:
     nyulibraries_institutions (0.0.0)
       institutions (~> 0.1.3)
@@ -54,8 +53,7 @@ GIT
 
 GIT
   remote: git://github.com/NYULibraries/nyulibraries_templates.git
-  revision: a668821e097ea754c0cb26b2899ab6ead828e730
-  branch: feature/better_testing
+  revision: b36dfe044223630ab79f431dd3266a663a95401d
   specs:
     nyulibraries_templates (0.0.1)
       rails (>= 4)
@@ -259,7 +257,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99.3)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     multi_json (1.12.1)
     multi_test (0.1.2)
     multi_xml (0.5.5)
@@ -275,9 +273,8 @@ GEM
       net-ssh (>= 2.6.5)
     netrc (0.11.0)
     newrelic_rpm (3.16.2.321)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -295,7 +292,6 @@ GEM
     options (2.3.2)
     orm_adapter (0.5.0)
     phantomjs (2.1.1.0)
-    pkg-config (1.1.7)
     poltergeist (1.10.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)

@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/NYULibraries/formaggio.git
+  remote: https://github.com/NYULibraries/formaggio
   revision: 05290d119a0f9f15df12206c798494d1554c4c58
   tag: v1.5.2
   specs:
@@ -15,22 +15,14 @@ GIT
       rvm-capistrano (~> 1.5)
 
 GIT
-  remote: git://github.com/NYULibraries/mustache-rails.git
-  revision: d219b298ddc94ca0c4b749125a803f74157ddd03
-  specs:
-    mustache-rails (0.2.3)
-      actionpack (>= 3.1)
-      mustache (~> 0.99.4)
-
-GIT
-  remote: git://github.com/NYULibraries/nyulibraries_errors.git
+  remote: https://github.com/NYULibraries/nyulibraries_errors
   revision: c77c8c8a8699d5af7ceb2775fe6ac7aa81f6a5f5
   tag: v1.0.0
   specs:
     nyulibraries_errors (1.0.0)
 
 GIT
-  remote: git://github.com/NYULibraries/nyulibraries_institutions.git
+  remote: https://github.com/NYULibraries/nyulibraries_institutions
   revision: f9c82d7deceee55805ae08cebfc993e3a1115b0f
   specs:
     nyulibraries_institutions (0.0.0)
@@ -38,13 +30,13 @@ GIT
       rails (>= 4)
 
 GIT
-  remote: git://github.com/NYULibraries/nyulibraries_javascripts.git
-  revision: 52cc82ba72d26445204b2be143b4e8e346d243fe
+  remote: https://github.com/NYULibraries/nyulibraries_javascripts
+  revision: b7391f5bdd52ef2633015e747750369dd7c585e8
   specs:
     nyulibraries_javascripts (0.0.1)
 
 GIT
-  remote: git://github.com/NYULibraries/nyulibraries_stylesheets.git
+  remote: https://github.com/NYULibraries/nyulibraries_stylesheets
   revision: cf9f0aa9f38c593e97149c2a85398921348e3166
   specs:
     nyulibraries_stylesheets (0.0.0)
@@ -52,14 +44,14 @@ GIT
       compass (>= 1.0.1)
 
 GIT
-  remote: git://github.com/NYULibraries/nyulibraries_templates.git
+  remote: https://github.com/NYULibraries/nyulibraries_templates
   revision: b36dfe044223630ab79f431dd3266a663a95401d
   specs:
     nyulibraries_templates (0.0.1)
       rails (>= 4)
 
 GIT
-  remote: git://github.com/NYULibraries/omniauth-nyulibraries.git
+  remote: https://github.com/NYULibraries/omniauth-nyulibraries
   revision: 352bd2c76350483667c603c1a7e63735e4a283b8
   tag: v2.0.0
   specs:
@@ -118,7 +110,7 @@ GEM
     cancancan (1.10.1)
     cap_git_tools (0.9.1)
       capistrano (~> 2.0)
-    capistrano (2.15.7)
+    capistrano (2.15.9)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -225,7 +217,7 @@ GEM
     git (1.2.9.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    hashie (3.4.3)
+    hashie (3.4.6)
     hashr (0.0.22)
     highline (1.7.8)
     hike (1.2.3)
@@ -245,7 +237,7 @@ GEM
     json_spec (1.1.4)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    jwt (1.5.2)
+    jwt (1.5.6)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -262,25 +254,24 @@ GEM
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mustache (0.99.4)
     mysql2 (0.3.20)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (3.0.2)
+    net-ssh (3.2.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     netrc (0.11.0)
     newrelic_rpm (3.16.2.321)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-    oauth2 (1.0.0)
+    oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
-      rack (~> 1.2)
+      rack (>= 1.2, < 3)
     omniauth (1.3.1)
       hashie (>= 1.2, < 4)
       rack (>= 1.0, < 3)
@@ -466,8 +457,6 @@ DEPENDENCIES
   json (~> 1.8.1)
   json_spec
   kaminari (~> 0.16.1)
-  mustache (= 0.99.4)
-  mustache-rails!
   mysql2 (~> 0.3.17)
   newrelic_rpm (~> 3.16)
   nyulibraries_errors!

@@ -24,7 +24,7 @@ gem 'json', '~> 1.8.1'
 
 # Use jQuery
 gem 'jquery-rails', '~> 3.1.2'
-gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 5.0.5'
 
 # CanCanCan for authorization
 gem 'cancancan', '~> 1.10.1'
@@ -37,10 +37,6 @@ gem 'sorted', '~> 1.0.1'
 
 # ActsAsIndexed for searching activemodel
 gem 'acts_as_indexed', '~> 0.8.3'
-
-# Mustache for templating
-gem 'mustache', '0.99.4'
-gem 'mustache-rails', github: 'NYULibraries/mustache-rails', require: 'mustache/railtie'
 
 # Dalli for memcached
 gem 'dalli', '~> 2.7.4'
@@ -57,10 +53,13 @@ gem 'draper', '~> 1.4.0'
 
 gem 'newrelic_rpm', '~> 3.16'
 
-gem 'nyulibraries-assets', github: 'NYULibraries/nyulibraries-assets', tag: 'v4.4.3'
-gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
-gem 'formaggio', github: "NYULibraries/formaggio", tag: 'v1.5.2'
-gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
+gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets'
+gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates'
+gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions'
+gem 'nyulibraries_javascripts', git: 'https://github.com/NYULibraries/nyulibraries_javascripts'
+gem 'nyulibraries_errors', git: 'https://github.com/NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
+gem 'formaggio', git: "https://github.com/NYULibraries/formaggio", tag: 'v1.5.2'
+gem 'omniauth-nyulibraries', git: 'https://github.com/NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
 gem 'devise', '~> 3.5'
 
 gem 'font-awesome-rails', '~> 4.2.0'

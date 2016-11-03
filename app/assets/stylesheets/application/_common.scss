@@ -1,5 +1,7 @@
 @import "font-awesome";
-@import "jquery.ui.all";
+@import "jquery-ui/core";
+@import "jquery-ui/datepicker";
+@import "jquery-ui/theme";
 @import "jquery-ui-timepicker-addon";
 
 h1.page_title { margin-top: 0; }

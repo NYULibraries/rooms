@@ -15,6 +15,7 @@
 /tmp
 
 public/assets
+app/assets/images/nyulibraries_stylesheets/icons-*.png
 
 *.bak
 

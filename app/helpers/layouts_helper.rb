@@ -4,7 +4,11 @@ module LayoutsHelper
   end
 
   def gauges_tracking_code
-    ENV['ROOMS_GAUGES_TRACKING_CODE']
+    ENV['GAUGES_TRACKING_CODE']
+  end
+
+  def google_analytics_tracking_code
+    ENV['GOOGLE_ANALYTICS_TRACKING_CODE']
   end
 
   def application_stylesheet

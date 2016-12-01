@@ -6,7 +6,7 @@ class RoomsDecorator < Draper::CollectionDecorator
     end_dt = end_dt.to_datetime.change(:offset => "+0000")
     rooms = self.results
     ActiveSupport::JSON::Encoding.time_precision = 0
-    reservations = Reservation.tire.search do
+    reservations = Elasticsearch::DSL::Search.search do
       query do
         filtered do
           filter :terms, :room_id => rooms.map {|r| r.id.to_i }, :execution => "or"
@@ -32,7 +32,7 @@ class RoomsDecorator < Draper::CollectionDecorator
     # Create an array of hashes from elasticsearch results
     #
     # = Example
-    #   [{'room_id' => [Hash[Tire::Result], ... ]}]
+    #   [{'room_id' => [Hash[Result], ... ]}]
     return reservations.results.group_by(&:room_id).map{|k,v| {k => v.map{|r| Hash[r]}}}
   end
 

@@ -1,9 +1,11 @@
+require 'elasticsearch/model'
+
 class Reservation < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # elasticsearch index name
-  index_name("#{Rails.env}_reservations")
+  index_name { "#{Rails.env}_reservations" }
 
   belongs_to :room
   belongs_to :user
@@ -33,20 +35,28 @@ class Reservation < ActiveRecord::Base
   scope :one_week,  -> { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
   scope :one_month, -> { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
-  # Tire ElasticSearch mapping
-  mapping do
-    # Map to database values
-    indexes :id, :index => :not_analyzed
-    indexes :room_id, :index => :not_analyzed
-    indexes :user_id, :index => :not_analyzed
-    indexes :title, :index => :not_analyzed
-    indexes :start_dt, :as => 'start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-    indexes :end_dt, :as => 'end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-    indexes :is_block, :type => 'boolean'
-    indexes :deleted, :type => 'boolean'
-    # Mappings for non-database values
-    indexes :created_at_day, :as => 'created_at.in_time_zone.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
-    indexes :start_day, :as => 'start_dt.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: "false" do
+      indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
+      indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
+      indexes :created_at_day, type: "date"
+      indexes :start_day, type: "date"
+    end
+  end
+
+  def as_indexed_json(options={})
+    {
+      id: id,
+      room_id: room_id,
+      user_id: user_id,
+      title: title,
+      start_dt: start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime,
+      end_dt: end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime,
+      is_block: is_block,
+      deleted: deleted,
+      created_at_day: created_at.in_time_zone.strftime("%Y-%m-%d"),
+      start_day: start_dt.strftime("%Y-%m-%d")
+    }
   end
 
   # CSV mapping
@@ -77,7 +87,7 @@ class Reservation < ActiveRecord::Base
       room_id = self.room.id
       results_size = (self.is_block?) ? 1000 : 1
 
-      existing_reservations = Reservation.tire.search do
+      existing_reservations = Elasticsearch::DSL::Search.search do
         query do
           filtered do
             filter :term, :is_block => false if is_block
@@ -138,7 +148,7 @@ private
     user_id = user.id
     on_day_field = on_day_field
     on_day = on_day
-    reservation_on_day ||= Reservation.tire.search :search_type => "count" do
+    reservation_on_day ||= Elasticsearch::DSL::Search.search :search_type => "count" do
       query do
         filtered do
           filter :term, :deleted => false

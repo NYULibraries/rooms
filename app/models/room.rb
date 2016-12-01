@@ -1,9 +1,11 @@
+require 'elasticsearch/model'
+
 class Room < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # elasticsearch index name
-  index_name("#{Rails.env}_rooms")
+  index_name { "#{Rails.env}_rooms" }
 
   has_many :reservations, :dependent => :destroy
   belongs_to :room_group
@@ -12,19 +14,20 @@ class Room < ActiveRecord::Base
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
 
-  # Tire mapping to ElasticSearch index
-  mapping do
-    indexes :id, :index => :not_analyzed
-    indexes :title, :index => :not_analyzed
-    indexes :type_of_room, :index => :not_analyzed
-    indexes :description
-    indexes :size_of_room
-    indexes :image_link, :index => :not_analyzed
-    indexes :sort_order, :type => 'integer'
-    indexes :sort_size_of_room, :type => 'integer'
-    indexes :room_group, :as => 'room_group.code', :index => :not_analyzed
-    indexes :opens_at, :as => 'opens_at'
-    indexes :closes_at, :as => 'closes_at'
+  def as_indexed_json(options={})
+    {
+      id: id,
+      title: title,
+      type_of_room: type_of_room,
+      description: description,
+      size_of_room: size_of_room,
+      image_link: image_link,
+      sort_order: sort_order,
+      sort_size_of_room: sort_size_of_room,
+      room_group: room_group.code,
+      opens_at: opens_at,
+      closes_at: closes_at
+    }
   end
 
   serialize :hours

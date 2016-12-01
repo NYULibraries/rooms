@@ -44,8 +44,11 @@ gem 'dalli', '~> 2.7.4'
 # Comma
 gem 'comma', '~> 3.2.2'
 
-# Tire for elasticsearch
-gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
+# Elasticsearch
+gem 'elasticsearch-model', '~> 0.1.9'
+gem 'elasticsearch-rails', '~> 0.1.9'
+gem 'elasticsearch-dsl', '~> 0.1.4'
+
 gem 'rest-client', '~> 1.8.0'
 
 # Draper for decorators

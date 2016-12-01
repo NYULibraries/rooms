@@ -12,7 +12,7 @@ class RoomsController < ApplicationController
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym == options[:sort])
     # Elasticsearch DSL
-    @rooms = Room.tire.search do
+    @rooms = Elasticsearch::DSL::Search.search do
       query { string options[:q] } unless options[:q].blank?
       filter :terms, :room_group => room_group_filter, :execution => "or"
       sort do

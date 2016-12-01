@@ -1,7 +1,9 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+require 'elasticsearch/dsl'
 
 class ApplicationController < ActionController::Base
+  include Elasticsearch::DSL
   layout Proc.new{ |controller| (controller.request.xhr?) ? false : "application" }
 
   helper :all # include all helpers, all the time

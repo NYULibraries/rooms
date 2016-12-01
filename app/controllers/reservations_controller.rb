@@ -176,8 +176,8 @@ private
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from elasticsearch through tire DSL
-    rooms_search ||= Room.tire.search do
+    # Get Rooms from elasticsearch through DSL
+    rooms_search ||= Elasticsearch::DSL::Search.search do
       filter :terms, :room_group => room_group_filter, :execution => "or"
       # Default sort by room group and then default
       sort do

@@ -13,11 +13,16 @@ class RoomsController < ApplicationController
     resort = (sort_column.to_sym == options[:sort])
     # Elasticsearch DSL
     query = Elasticsearch::DSL::Search.search do
-      query {
-        string options[:q] unless options[:q].blank?
-        # match title: 'test'
-        terms room_group: room_group_filter, execution: "or"
-      }
+      query do
+        filtered do
+          query do
+            match "_all" => options[:q]
+          end unless options[:q].blank?
+          filter do
+            terms room_group: room_group_filter, execution: "or"
+          end
+        end
+      end
     #   sort do
     #     by :room_group, 'asc'
     #     by options[:sort], options[:direction]
@@ -28,6 +33,14 @@ class RoomsController < ApplicationController
     #   from (page -1) * search_size
     #   size search_size
     end
+    # "filtered": {
+    #   "query": {
+    #     "match": { "tweet": "full text search" }
+    #   },
+    #   "filter": {
+    #     "range": { "created": { "gte": "now-1d/d" }}
+    #   }
+    # }
     @rooms = Room.search(query)
     respond_with(@rooms)
   end

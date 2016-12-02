@@ -1,5 +1,12 @@
-class RoomsDecorator < Draper::CollectionDecorator
-  delegate :current_page, :total_pages, :limit_value, :results
+class RoomsDecorator
+  attr_accessor :rooms_search
+
+  def initialize(rooms_search)
+    @rooms_search = rooms_search
+  end
+
+  extend Forwardable
+  def_delegators :@rooms_search, :current_page, :total_pages, :limit_value, :results
 
   def find_reservations_by_range(start_dt, end_dt)
     start_dt = start_dt.to_datetime.change(:offset => "+0000")

@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
   respond_to :html, :js
 
   # GET /rooms
@@ -12,19 +12,23 @@ class RoomsController < ApplicationController
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym == options[:sort])
     # Elasticsearch DSL
-    @rooms = Elasticsearch::DSL::Search.search do
-      query { string options[:q] } unless options[:q].blank?
-      filter :terms, :room_group => room_group_filter, :execution => "or"
-      sort do
-        by :room_group, 'asc'
-        by options[:sort], options[:direction]
-      end if resort
-      sort { by options[:sort], options[:direction] } unless resort
-      page = options[:page].to_i
-      search_size = options[:per].to_i
-      from (page -1) * search_size
-      size search_size
+    query = Elasticsearch::DSL::Search.search do
+      query {
+        string options[:q] unless options[:q].blank?
+        # match title: 'test'
+        terms room_group: room_group_filter, execution: "or"
+      }
+    #   sort do
+    #     by :room_group, 'asc'
+    #     by options[:sort], options[:direction]
+    #   end if resort
+    #   sort { by options[:sort], options[:direction] } unless resort
+    #   page = options[:page].to_i
+    #   search_size = options[:per].to_i
+    #   from (page -1) * search_size
+    #   size search_size
     end
+    @rooms = Room.search(query)
     respond_with(@rooms)
   end
 

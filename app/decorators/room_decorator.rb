@@ -5,8 +5,10 @@ class RoomDecorator
     @room = room
   end
 
+  # Catch-all for all the Room attributes we're delegating but don't want to specify
+  # TODO: This is lazy and will cause debugging issues
   def method_missing(sym, *args, &block)
-    @room.send(sym, *args, &block)
+    room.send(sym, *args, &block)
   end
 
   ##
@@ -20,10 +22,10 @@ class RoomDecorator
     timeslot = timeslot
 
     # Get existing reservations in this room from previously queries elasticsearch result
-    room_reservations = existing_reservations.find {|r| r[model.id.to_i]}
+    room_reservations = existing_reservations.find {|r| r[id.to_i]}
     unless room_reservations.blank?
       # Return a has with the reservation information if it is found in the collection of reservations for this room in this timeslot
-      reservation = room_reservations[model.id.to_i].find {|r| (r[:start_dt].to_datetime >= timeslot and r[:end_dt].to_datetime <= t_next) or (r[:start_dt].to_datetime <= timeslot and r[:end_dt].to_datetime >= t_next) }
+      reservation = room_reservations[id.to_i].find {|r| (r[:start_dt].to_datetime >= timeslot and r[:end_dt].to_datetime <= t_next) or (r[:start_dt].to_datetime <= timeslot and r[:end_dt].to_datetime >= t_next) }
       return reservation
     end
 
@@ -31,7 +33,7 @@ class RoomDecorator
 
   def is_open?(timeslot)
     # Base case: room is open is hours are missing or equal
-    return true if (model.opens_at.blank? or model.closes_at.blank?) or (model.opens_at == model.closes_at)
+    return true if (opens_at.blank? or closes_at.blank?) or (opens_at == closes_at)
     # If closes_at comes before opens_at e.g. hours are 7am-2am,
     # then return true if current timeslot is less than closes_at, e.g. 12am, 1am
     return true if (closes_at_comparable < opens_at_comparable and current_timeslot_comparable(timeslot) < closes_at_comparable)
@@ -47,11 +49,11 @@ class RoomDecorator
   end
 
   def closes_at_comparable
-    closes_at_comparable ||= comparable_room_hours(model.closes_at)
+    closes_at_comparable ||= comparable_room_hours(closes_at)
   end
 
   def opens_at_comparable
-    opens_at_comparable ||= comparable_room_hours(model.opens_at)
+    opens_at_comparable ||= comparable_room_hours(opens_at)
   end
 
   def comparable_room_hours(hours)

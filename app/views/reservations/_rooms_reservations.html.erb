@@ -1,5 +1,5 @@
 <% @rooms.results.each do |room| %>
-<% room = RoomDecorator.decorate(room) %>
+<% room = RoomDecorator.new(room) %>
 
 	<tr <%= (params[:reservation][:room_id] == room.id) ? "class=selected_room" : ''%>>
 		<td class="hide_radio"><%= radio_button :reservation, :room_id, room.id, :disabled => disable_reservation_button(room), :class => "new_reservation_radio_select", :checked => check_reservation_button(room) %></td>

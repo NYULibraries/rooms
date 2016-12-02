@@ -131,7 +131,7 @@ class ReservationsController < ApplicationController
       (params[:reservation][:start_dt].blank?) ?
         DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
         DateTime.parse(params[:reservation][:start_dt])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @start_dt ||= default_date
   end
@@ -143,7 +143,7 @@ class ReservationsController < ApplicationController
      (params[:reservation][:end_dt].nil?) ?
       start_dt + params[:reservation][:how_long].to_i.minutes :
         DateTime.parse(params[:reservation][:end_dt])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @endt_dt ||= default_date
   end
@@ -154,7 +154,7 @@ private
   # Parse single date field into date object
   def which_date
     @which_date ||= Date.parse(params[:reservation][:which_date])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @which_date = Date.today
   end
@@ -177,8 +177,10 @@ private
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
     # Get Rooms from elasticsearch through DSL
-    rooms_search ||= Elasticsearch::DSL::Search.search do
-      filter :terms, :room_group => room_group_filter, :execution => "or"
+    query = Elasticsearch::DSL::Search.search do
+      query do
+        terms room_group: room_group_filter, execution: "or"
+      end
       # Default sort by room group and then default
       sort do
         by :room_group, 'asc'
@@ -190,6 +192,7 @@ private
       from (page -1) * search_size
       size search_size
     end
+    rooms_search = Room.search(query)
     return rooms_search
   end
 

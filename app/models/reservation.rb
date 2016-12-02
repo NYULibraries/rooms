@@ -35,7 +35,7 @@ class Reservation < ActiveRecord::Base
   scope :one_week,  -> { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
   scope :one_month, -> { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
-  settings index: { number_of_shards: 1 } do
+  settings index: { number_of_shards: 5 } do
     mappings dynamic: "false" do
       indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
       indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"

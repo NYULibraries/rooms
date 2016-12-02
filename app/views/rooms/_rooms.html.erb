@@ -48,7 +48,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @rooms.each do |room| %>
+    <% @rooms.records.each do |room| %>
     <tr>
       <td><%=h room.title %></td>
       <td class="hidden-xs"><%=h room.type_of_room %></td>

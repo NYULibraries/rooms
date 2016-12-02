@@ -13,28 +13,48 @@ class RoomsDecorator
     end_dt = end_dt.to_datetime.change(:offset => "+0000")
     rooms = self.results
     ActiveSupport::JSON::Encoding.time_precision = 0
-    reservations = Elasticsearch::DSL::Search.search do
-      query do
-        filtered do
-          filter :terms, :room_id => rooms.map {|r| r.id.to_i }, :execution => "or"
-          filter :term, :deleted => false
-          filter :or,
-            { :and => [
-                { :range => { :start_dt => { :gte => start_dt } } },
-                { :range => { :start_dt => { :lt => end_dt } } }
-            ]},
-            { :and => [
-                { :range => { :end_dt => { :gt => start_dt } } },
-                { :range => { :end_dt => { :lte => end_dt } } }
-            ]},
-            { :and => [
-                { :range => { :start_dt => { :lte => start_dt } } },
-                { :range => { :end_dt => { :gte => end_dt } } }
-            ]}
-        end
-      end
-      size 200
-    end
+    query =
+    {
+      query: {
+        bool: {
+          must: [
+            { terms: { room_id: rooms.map {|r| r.id.to_i } } },
+            { term: { deleted: false } },
+            bool: {
+              should: [
+                {
+                  bool: {
+                    must: [
+                      { range: { start_dt: { gte: start_dt } } },
+                      { range: { start_dt: { lt: end_dt } } }
+                    ]
+                  }
+                },
+                {
+                  bool: {
+                    must: [
+                      { range: { end_dt: { gt: start_dt } } },
+                      { range: { end_dt: { lte: end_dt } } }
+                    ]
+                  }
+                },
+                {
+                  bool: {
+                    must: [
+                      { range: { start_dt: { lte: start_dt } } },
+                      { range: { end_dt: { gte: end_dt } } }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      size: 200
+    }
+
+    reservations = Reservation.search(query)
 
     # Create an array of hashes from elasticsearch results
     #

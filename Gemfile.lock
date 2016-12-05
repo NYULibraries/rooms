@@ -23,31 +23,35 @@ GIT
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_institutions
-  revision: f9c82d7deceee55805ae08cebfc993e3a1115b0f
+  revision: 809799538d1e08e6b096da567ec4278a412b8779
+  tag: v1.0.0
   specs:
-    nyulibraries_institutions (0.0.0)
+    nyulibraries_institutions (1.0.0)
       institutions (~> 0.1.3)
       rails (>= 4)
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_javascripts
-  revision: b7391f5bdd52ef2633015e747750369dd7c585e8
+  revision: f2637c4891f273a6227b4f0fed9245a88539f9b2
+  tag: v1.0.0
   specs:
-    nyulibraries_javascripts (0.0.1)
+    nyulibraries_javascripts (1.0.0)
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_stylesheets
-  revision: cf9f0aa9f38c593e97149c2a85398921348e3166
+  revision: 8556ead9e51dc13c4dad883a9c30ea6aed6eaca6
+  tag: v1.0.0
   specs:
-    nyulibraries_stylesheets (0.0.0)
+    nyulibraries_stylesheets (1.0.0)
       bootstrap-sass (~> 3.2)
       compass (>= 1.0.1)
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_templates
-  revision: b36dfe044223630ab79f431dd3266a663a95401d
+  revision: 68466155fbaa21cda97e106a502c90bff4c73c4e
+  tag: v1.0.0
   specs:
-    nyulibraries_templates (0.0.1)
+    nyulibraries_templates (1.0.0)
       rails (>= 4)
 
 GIT
@@ -100,7 +104,7 @@ GEM
     addressable (2.4.0)
     ansi (1.5.0)
     arel (6.0.3)
-    autoprefixer-rails (6.5.1.1)
+    autoprefixer-rails (6.5.3.1)
       execjs
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)

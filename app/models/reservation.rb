@@ -35,12 +35,18 @@ class Reservation < ActiveRecord::Base
   scope :one_week,  -> { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
   scope :one_month, -> { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
-  settings index: { number_of_shards: 5 } do
+  settings index: { number_of_shards: 1 } do
     mappings dynamic: "false" do
       indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
       indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
-      indexes :created_at_day, type: "date"
-      indexes :start_day, type: "date"
+      indexes :created_at_day, type: "date", format: "yyyy-MM-dd"
+      indexes :start_day, type: "date", format: "yyyy-MM-dd"
+      indexes :room_id, type: "integer"
+      indexes :is_block, type: "boolean"
+      indexes :deleted, type: "boolean"
+      indexes :user_id, type: "integer"
+      indexes :title, type: "string"
+      indexes :id, type: "integer"
     end
   end
 
@@ -78,43 +84,67 @@ class Reservation < ActiveRecord::Base
   #
   # = Example
   #
-  #   @reservation.existing_reservations # Returns array of tire results
+  #   @reservation.existing_reservations # Returns array of elasticsearch results
   def existing_reservations
     if !self.start_dt.blank? && !self.end_dt.blank? && !self.room.blank?
       start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
       end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
-      is_block = self.is_block?
       room_id = self.room.id
       results_size = (self.is_block?) ? 1000 : 1
 
-      existing_reservations = Elasticsearch::DSL::Search.search do
-        query do
-          filtered do
-            filter :term, :is_block => false if is_block
-            filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
-            filter :term, :room_id => room_id
-            filter :term, :deleted => false
-            filter :or,
-              { :and => [
-                  { :range => { :start_dt => { :gte => start_dt } } },
-                  { :range => { :start_dt => { :lt => end_dt } } }
-              ]},
-              { :and => [
-                  { :range => { :end_dt => { :gt => start_dt } } },
-                  { :range => { :end_dt => { :lte => end_dt } } }
-              ]},
-              { :and => [
-                  { :range => { :start_dt => { :lte => start_dt } } },
-                  { :range => { :end_dt => { :gte => end_dt } } }
-              ]}
-          end
-        end
-        size results_size
-      end
-
-      return existing_reservations.results
+      block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(:offset => "+0000") } } }]
+      query =
+      {
+        query: {
+          constant_score: {
+            filter: {
+              bool: {
+                must: [
+                  { term: { room_id: room_id } },
+                  { term: { deleted: false }},
+                  { bool:
+                    {
+                      should: [
+                        {
+                          bool: {
+                            must: [
+                              { range: { start_dt: { gte: start_dt } } },
+                              { range: { start_dt: { lt: end_dt } } }
+                            ]
+                          }
+                        },
+                        {
+                          bool: {
+                            must: [
+                              { range: { end_dt: { gt: start_dt } } },
+                              { range: { end_dt: { lte: end_dt } } }
+                            ]
+                          }
+                        },
+                        {
+                          bool: {
+                            must: [
+                              { range: { start_dt: { lte: start_dt } } },
+                              { range: { end_dt: { gte: end_dt } } }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        size: results_size
+      }
+      query[:query][:constant_score][:filter][:bool][:must] += block_query if self.is_block?
+      # binding.pry
+      return Reservation.search(query).results
     end
-    []
+    # Ensure an empty array is sent instead of nil on no results
+    return []
   end
 
   ##
@@ -148,19 +178,25 @@ private
     user_id = user.id
     on_day_field = on_day_field
     on_day = on_day
-    reservation_on_day ||= Elasticsearch::DSL::Search.search :search_type => "count" do
-      query do
-        filtered do
-          filter :term, :deleted => false
-          filter :term, :is_block => false
-          filter :term, :user_id => user_id
-          query do
-            string "#{on_day_field}:#{on_day}"
-          end
-        end
-      end
-    end
-    return reservation_on_day.total > 0
+    query =
+    {
+      query: {
+        constant_score: {
+          filter: {
+            bool: {
+              must: [
+                { term: { deleted: false } },
+                { term: { is_block: false } },
+                { term: { user_id: user_id } },
+                { term: { "#{on_day_field}" => on_day }}
+              ]
+            }
+          }
+        }
+      },
+      size: 0
+    }
+    return Reservation.search(query).response.hits.total > 0
   end
 
   ##

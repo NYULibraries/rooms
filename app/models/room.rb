@@ -14,6 +14,22 @@ class Room < ActiveRecord::Base
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
 
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: "false" do
+      indexes :id, type: "integer"
+      indexes :title, type: "string"
+      indexes :type_of_room, type: "string"
+      indexes :description, type: "string"
+      indexes :size_of_room, type: "string"
+      indexes :image_link, type: "string"
+      indexes :sort_order, type: "integer"
+      indexes :sort_size_of_room, type: "integer"
+      indexes :room_group, type: "string"
+      indexes :opens_at, type: "string"
+      indexes :closes_at, type: "string"
+    end
+  end
+
   def as_indexed_json(options={})
     {
       id: id,

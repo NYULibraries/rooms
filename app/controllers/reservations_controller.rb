@@ -27,6 +27,7 @@ class ReservationsController < ApplicationController
     [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
+
     @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
@@ -176,23 +177,28 @@ private
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
+    page = options[:page].to_i
     # Get Rooms from elasticsearch through DSL
     query = Elasticsearch::DSL::Search.search do
       query do
         terms room_group: room_group_filter, execution: "or"
       end
       # Default sort by room group and then default
-      sort do
-        by :room_group, 'asc'
-        by options[:sort], options[:direction]
-      end unless resort
-      sort { by options[:sort], options[:direction] } if resort
-      page = options[:page].to_i
+      if resort
+        sort do
+          by options[:sort], { order: options[:direction] }
+        end
+      else
+        sort do
+          by :room_group, { order: :asc }
+          by options[:sort], { order: options[:direction] }
+        end
+      end
       search_size = options[:per].to_i
       from (page -1) * search_size
       size search_size
     end
-    rooms_search = Room.search(query)
+    rooms_search = Room.search(query).page(page)
     return rooms_search
   end
 

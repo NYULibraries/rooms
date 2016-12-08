@@ -11,37 +11,29 @@ class RoomsController < ApplicationController
     room_group_filter = (params[:room_group].blank?) ? @room_groups.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup } : [params[:room_group]]
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym == options[:sort])
+    page = options[:page].to_i
     # Elasticsearch DSL
     query = Elasticsearch::DSL::Search.search do
       query do
         filtered do
           query do
-            match "_all" => options[:q]
+            match '_all' => { query: options[:q], type: :phrase }
           end unless options[:q].blank?
           filter do
             terms room_group: room_group_filter, execution: "or"
           end
         end
       end
-    #   sort do
-    #     by :room_group, 'asc'
-    #     by options[:sort], options[:direction]
-    #   end if resort
-    #   sort { by options[:sort], options[:direction] } unless resort
-    #   page = options[:page].to_i
-    #   search_size = options[:per].to_i
-    #   from (page -1) * search_size
-    #   size search_size
+      sort do
+        by :room_group, 'asc'
+        by options[:sort], options[:direction]
+      end if resort
+      sort { by options[:sort], options[:direction] } unless resort
+      search_size = options[:per].to_i
+      from (page -1) * search_size
+      size search_size
     end
-    # "filtered": {
-    #   "query": {
-    #     "match": { "tweet": "full text search" }
-    #   },
-    #   "filter": {
-    #     "range": { "created": { "gte": "now-1d/d" }}
-    #   }
-    # }
-    @rooms = Room.search(query)
+    @rooms = Room.search(query).page(page)
     respond_with(@rooms)
   end
 

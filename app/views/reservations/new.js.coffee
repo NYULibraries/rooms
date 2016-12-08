@@ -3,7 +3,7 @@
 $("#ajax-modal #remote_progress").remove()
 $("#ajax-modal").find(".modal-body .ajax-loader").hide()
 $("#ajax-modal").modal 'hide'
-$("#main-flashses").html("<%=j render 'common/flash_msg'%>")
+$("#main-flashes").html("<%=j render 'common/flash_msg'%>")
 
 <% else %>
 

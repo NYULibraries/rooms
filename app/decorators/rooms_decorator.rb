@@ -16,51 +16,54 @@ class RoomsDecorator
     query =
     {
       query: {
-        bool: {
-          must: [
-            { terms: { room_id: rooms.map {|r| r.id.to_i } } },
-            { term: { deleted: false } },
+        constant_score: {
+          filter: {
             bool: {
-              should: [
-                {
-                  bool: {
-                    must: [
-                      { range: { start_dt: { gte: start_dt } } },
-                      { range: { start_dt: { lt: end_dt } } }
-                    ]
-                  }
-                },
-                {
-                  bool: {
-                    must: [
-                      { range: { end_dt: { gt: start_dt } } },
-                      { range: { end_dt: { lte: end_dt } } }
-                    ]
-                  }
-                },
-                {
-                  bool: {
-                    must: [
-                      { range: { start_dt: { lte: start_dt } } },
-                      { range: { end_dt: { gte: end_dt } } }
-                    ]
-                  }
+              must: [
+                { terms: { room_id: rooms.map {|r| r.id.to_i } } },
+                { term: { deleted: false } },
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          { range: { start_dt: { gte: start_dt } } },
+                          { range: { start_dt: { lt: end_dt } } }
+                        ]
+                      }
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { range: { end_dt: { gt: start_dt } } },
+                          { range: { end_dt: { lte: end_dt } } }
+                        ]
+                      }
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { range: { start_dt: { lte: start_dt } } },
+                          { range: { end_dt: { gte: end_dt } } }
+                        ]
+                      }
+                    }
+                  ]
                 }
               ]
             }
-          ]
+          }
         }
       },
       size: 200
     }
-
     reservations = Reservation.search(query)
 
-    # Create an array of hashes from elasticsearch results
+    # Create an array of results from elasticsearch, grouped by room id
     #
     # = Example
-    #   [{'room_id' => [Hash[Result], ... ]}]
-    return reservations.results.group_by(&:room_id).map{|k,v| {k => v.map{|r| Hash[r]}}}
+    #   [{'room_id' => [Result, ... ]}]
+    return reservations.results.group_by(&:room_id).map{|k,v| {k => v.map{|r| r}}}
   end
 
 end

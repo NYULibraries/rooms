@@ -21,11 +21,11 @@ class RoomDecorator
     t_next = timeslot + 30.minutes #next iteration's time
     timeslot = timeslot
 
-    # Get existing reservations in this room from previously queries elasticsearch result
+    # Get existing reservations in this room from previously queried elasticsearch result
     room_reservations = existing_reservations.find {|r| r[id.to_i]}
     unless room_reservations.blank?
       # Return a has with the reservation information if it is found in the collection of reservations for this room in this timeslot
-      reservation = room_reservations[id.to_i].find {|r| (r[:start_dt].to_datetime >= timeslot and r[:end_dt].to_datetime <= t_next) or (r[:start_dt].to_datetime <= timeslot and r[:end_dt].to_datetime >= t_next) }
+      reservation = room_reservations[id.to_i].find {|r| (r._source.start_dt.to_datetime >= timeslot and r._source.end_dt.to_datetime <= t_next) or (r._source.start_dt.to_datetime <= timeslot and r._source.end_dt.to_datetime >= t_next) }
       return reservation
     end
 

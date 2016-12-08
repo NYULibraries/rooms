@@ -44,8 +44,8 @@ class BlocksControllerTest < ActionController::TestCase
 
   test "should render destroy existing reservations" do
     existing_reservation = FactoryGirl.create(:reservation)
-    wait_for_tire_index
     post :create, reservation: { room_id: existing_reservation.room_id, start_dt: existing_reservation.start_dt, end_dt: existing_reservation.end_dt }
+    reindex_es
     assert assigns(:block).invalid?
     assert !assigns(:block).errors.empty?
     assert_template :new

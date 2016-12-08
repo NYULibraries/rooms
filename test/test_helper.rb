@@ -54,7 +54,9 @@ class ActiveSupport::TestCase
   end
   include FactoryGirl::Syntax::Methods
 
-  def wait_for_tire_index
+  def reindex_es
+    Room.import
+    Reservation.import
     sleep 3
   end
 end

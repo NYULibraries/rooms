@@ -24,7 +24,7 @@ class RoomsControllerTest < ActionController::TestCase
 
   test "gets index of rooms with search results" do
     FactoryGirl.create(:room, image_link: "google.com")
-    wait_for_tire_index
+    reindex_es
     get :index, :q => "google.com"
     assert assigns(:rooms)
     assert(assigns(:rooms).count > 0)

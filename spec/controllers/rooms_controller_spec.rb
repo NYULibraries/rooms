@@ -5,8 +5,12 @@ describe RoomsController do
   let(:user) { create(:admin) }
   before(:each) { controller.stub(:current_user).and_return(user) }
 
-  describe 'GET /rooms/new' do
+  describe 'GET /rooms' do
     before { get :index }
+  end
+
+  describe 'GET /rooms/new' do
+    before { get :new }
     subject { assigns(:rooms) }
     context "when user is a global admin" do
 

@@ -16,6 +16,10 @@ if ENV["RAILS_ENV"] == "test"
 end
 require 'rspec/rails'
 
+require 'rake'
+require 'elasticsearch/extensions/test/cluster/tasks'
+require 'devise'
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -37,9 +41,11 @@ RSpec.configure do |config|
   #   DatabaseCleaner.strategy = :transaction
   #   DatabaseCleaner.clean_with(:truncation)
   # end
-  
+
   # Include helpers for JSON
   config.include JsonSpec::Helpers
+
+  config.include Devise::TestHelpers, :type => :controller
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -59,6 +65,31 @@ RSpec.configure do |config|
 
   # Automatically infer an example group's spec type
   config.infer_spec_type_from_file_location!
+
+  # config.before :all, elasticsearch: true do
+  #   Elasticsearch::Extensions::Test::Cluster.start(port: 9200) unless Elasticsearch::Extensions::Test::Cluster.running?
+  # end
+  # config.after :suite do
+  #   Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) if Elasticsearch::Extensions::Test::Cluster.running?
+  # end
+
+  ES_CLASSES = [Room, Reservation]
+
+  config.before :all do
+   ES_CLASSES.each do |esc|
+     esc.__elasticsearch__.create_index! force: true
+   end
+  end
+  #
+  # config.after :all do
+  #  ES_CLASSES.each do |esc|
+  #    esc.__elasticsearch__.client.indices.delete index: esc.index_name
+  #  end
+  # end
+  #
+  # config.before(:each, elasticsearch: true) do
+  #  ES_CLASSES.each { |esc| esc.__elasticsearch__.import(refresh: true, force: true) }
+  # end
 end
 
 ENV['INSTITUTIONS'] = <<YAML

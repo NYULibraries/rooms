@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Reservation do
+describe Reservation, elasticsearch: true do
   before(:all) do
     room = create(:room)
     @overlapping_reservation = create(:reservation, room: room)

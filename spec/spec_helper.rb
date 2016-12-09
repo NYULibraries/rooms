@@ -66,30 +66,32 @@ RSpec.configure do |config|
   # Automatically infer an example group's spec type
   config.infer_spec_type_from_file_location!
 
-  # config.before :all, elasticsearch: true do
-  #   Elasticsearch::Extensions::Test::Cluster.start(port: 9200) unless Elasticsearch::Extensions::Test::Cluster.running?
-  # end
-  # config.after :suite do
-  #   Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) if Elasticsearch::Extensions::Test::Cluster.running?
-  # end
-
   ES_CLASSES = [Room, Reservation]
-
-  config.before :all do
-   ES_CLASSES.each do |esc|
-     esc.__elasticsearch__.create_index! force: true
-   end
+  config.before :suite do
+    Elasticsearch::Extensions::Test::Cluster.start(port: 9200) unless Elasticsearch::Extensions::Test::Cluster.running?
+    ES_CLASSES.each do |esc|
+      esc.__elasticsearch__.create_index! force: true
+    end
   end
-  #
-  # config.after :all do
-  #  ES_CLASSES.each do |esc|
-  #    esc.__elasticsearch__.client.indices.delete index: esc.index_name
-  #  end
-  # end
-  #
-  # config.before(:each, elasticsearch: true) do
-  #  ES_CLASSES.each { |esc| esc.__elasticsearch__.import(refresh: true, force: true) }
-  # end
+
+  config.after :suite  do
+    ES_CLASSES.each do |esc|
+     esc.__elasticsearch__.client.indices.delete index: esc.index_name
+    end
+    Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) #if Elasticsearch::Extensions::Test::Cluster.running?
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
 end
 
 ENV['INSTITUTIONS'] = <<YAML

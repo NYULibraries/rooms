@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ReservationMailer do
+describe ReservationMailer, elasticsearch: true do
 
   let(:reservation) { create(:reservation) }
   let(:confirmation_email) { ReservationMailer.confirmation_email(reservation) }

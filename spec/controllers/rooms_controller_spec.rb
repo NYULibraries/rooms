@@ -3,7 +3,7 @@ require 'spec_helper'
 describe RoomsController do
 
   let(:user) { create(:admin) }
-  before(:each) { controller.stub(:current_user).and_return(user) }
+  before { allow(controller).to receive(:current_user).and_return(user) }
 
   describe 'GET /rooms' do
     before { get :index }

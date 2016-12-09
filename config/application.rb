@@ -67,7 +67,7 @@ module Rooms
     config.assets.version = '1.0'
 
     config.active_record.raise_in_transactional_callbacks = true
-    
+
     ActiveSupport::JSON::Encoding.time_precision = 0
   end
 end

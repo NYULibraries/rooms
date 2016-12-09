@@ -1,7 +1,9 @@
 class ReservationsController < ApplicationController
   load_and_authorize_resource
-  # Can't autoload new action because params don't match up to column names in DB
-  skip_load_resource :only => [:new]
+  # Can't auto load or authorize the following actions because
+  # params don't match up to column names in DB, so CanCanCan can't infer
+  skip_load_resource only: [:new, :create, :delete]
+  skip_authorize_resource only: [:delete]
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 
@@ -88,6 +90,7 @@ class ReservationsController < ApplicationController
   # PUT /reservations/1
   def delete
     @reservation = Reservation.find(params[:reservation_id])
+    authorize! :delete, @reservation
     @reservation.deleted = true
     @reservation.deleted_by = { :by_user => current_user.id }
     @user = @reservation.user
@@ -105,12 +108,12 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # RESEND confirmation email
+  # POST /reservations/1/resend_email
   def resend_email
     @user = current_user
     @reservation = @user.reservations.find(params[:id])
 
-    # Send email
+    # Send confirmation email now!
     if ReservationMailer.confirmation_email(@reservation).deliver_now
       flash[:success] = t('reservations.resend_email.success')
     end

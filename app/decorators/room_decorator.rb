@@ -12,7 +12,7 @@ class RoomDecorator
   end
 
   ##
-  # Return Tire result from idnex where reservation falls within the given timeslot
+  # Return ElasticSearch result from index where reservation falls within the given timeslot
   #
   # = Example
   #

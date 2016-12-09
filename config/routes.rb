@@ -29,7 +29,7 @@ Rooms::Application.routes.draw do
   # Reservation routes
   match 'reservations/resend_email' => "reservations#resend_email", via: [:get, :post]
   resources :reservations do
-    put "delete" => "reservations#delete"
+    patch "delete" => "reservations#delete"
   end
 
   # Devise routes

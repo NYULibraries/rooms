@@ -20,11 +20,22 @@ $ ->
     minuteMax: 30,
     dateFormat: 'yy-mm-dd'
   }
-  $("#room_reservation_which_date").datepicker {
-    numberOfMonths: 2,
-    minDate: 0,
-    dateFormat: 'yy-mm-dd'
-  }
+
+  # Show 2 months on large screens and
+  # one month on small screens
+  if (parseInt($(window).width()) > 768)
+    $("#room_reservation_which_date").datepicker {
+      numberOfMonths: 2,
+      minDate: 0,
+      dateFormat: 'yy-mm-dd'
+    }
+  else
+    $("#room_reservation_which_date").datepicker {
+      numberOfMonths: 1,
+      minDate: 0,
+      dateFormat: 'yy-mm-dd'
+    }
+
 
   # Set up sortable list for rooms
   $('ul#list_rooms').sortable {
@@ -52,6 +63,7 @@ $ ->
 
   # Initialize modal dialog boxes
   $(document).on 'click', ".launch_modal", ->
+    animate_progress_bar()
     $("#ajax-modal").removeClass("fullscreen")
     $("#ajax-modal").find(".modal-footer").html($('<button type="button" data-dismiss="modal" class="btn btn-default btn-lg">Cancel</button>'))
     $("#ajax-modal").find(".modal-title").html("Loading...")

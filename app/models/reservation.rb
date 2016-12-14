@@ -140,7 +140,6 @@ class Reservation < ActiveRecord::Base
         size: results_size
       }
       query[:query][:constant_score][:filter][:bool][:must] += block_query if self.is_block?
-      # binding.pry
       return Reservation.search(query).results
     end
     # Ensure an empty array is sent instead of nil on no results

@@ -15,6 +15,7 @@ if ENV["RAILS_ENV"] == "test"
   require File.expand_path('../../config/environment', __FILE__)
 end
 require 'rspec/rails'
+require 'rspec/its'
 
 require 'rake'
 require 'elasticsearch/extensions/test/cluster/tasks'

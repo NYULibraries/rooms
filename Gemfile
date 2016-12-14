@@ -82,6 +82,7 @@ group :test do
   gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
   gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-its'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'phantomjs', '>= 1.9.0'

@@ -13,7 +13,7 @@ class BlocksController < ApplicationController
 
   # GET /blocks/new
   def new
-    @block = Reservation.new(:is_block => true)
+    @block = Reservation.new(is_block: true)
     respond_with(@block)
   end
 
@@ -44,7 +44,7 @@ class BlocksController < ApplicationController
       reservations_to_delete = Reservation.find(params[:reservations_to_delete])
       reservations_to_delete.each do |res|
         # Mark reservation as deleted
-        if res.update_attributes(:deleted => true, :deleted_by => { :by_block => true })
+        if res.update_attributes(deleted: true, deleted_by: { by_block: true })
           # Send an email if choice to alert users was made
           ReservationMailer.block_cancellation_email(res, params[:cc_group], params[:cancellation_email]).deliver_now if params[:cancel].eql? "delete_with_alert"
           # Format each deleted reservation to send email to admin

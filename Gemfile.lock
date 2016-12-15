@@ -30,12 +30,6 @@ GIT
       rails (>= 4)
 
 GIT
-  remote: https://github.com/NYULibraries/nyulibraries_javascripts
-  revision: f2637c4891f273a6227b4f0fed9245a88539f9b2
-  specs:
-    nyulibraries_javascripts (1.0.0)
-
-GIT
   remote: https://github.com/NYULibraries/nyulibraries_stylesheets
   revision: 8556ead9e51dc13c4dad883a9c30ea6aed6eaca6
   specs:
@@ -57,6 +51,11 @@ GIT
   specs:
     omniauth-nyulibraries (1.1.0)
       omniauth-oauth2 (~> 1.2.0)
+
+PATH
+  remote: /apps/nyulibraries_javascripts
+  specs:
+    nyulibraries_javascripts (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -447,7 +446,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_indexed (~> 0.8.3)
   cancancan (~> 1.10.1)
-  coffee-rails
+  coffee-rails (~> 4.2.0)
   comma (~> 3.2.2)
   compass-rails (~> 2.0.4)
   coveralls (~> 0.7.1)

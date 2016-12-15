@@ -86,12 +86,12 @@ RSpec.configure do |config|
     end
   end
 
-  # config.after :suite  do
-  #   ES_CLASSES.each do |esc|
-  #    esc.__elasticsearch__.client.indices.delete index: esc.index_name
-  #   end
-  #   Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) #if Elasticsearch::Extensions::Test::Cluster.running?
-  # end
+  config.after :suite  do
+    ES_CLASSES.each do |esc|
+     esc.__elasticsearch__.client.indices.delete index: esc.index_name
+    end
+    Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) #if Elasticsearch::Extensions::Test::Cluster.running?
+  end
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

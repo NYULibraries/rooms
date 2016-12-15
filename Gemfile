@@ -5,7 +5,7 @@ gem 'rails', '~> 4.2.0'
 gem 'mysql2', '~> 0.3.17'
 
 # Use CoffeeScript in assets and views
-gem 'coffee-rails'#, '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2.0'
 
 gem 'uglifier', '~> 2.7.0'
 gem 'therubyracer', '~> 0.12.1'
@@ -53,10 +53,10 @@ gem 'rest-client', '~> 1.8.0'
 
 gem 'newrelic_rpm', '~> 3.16'
 
-gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.0'
-gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates', tag: 'v1.0.0'
-gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions', tag: 'v1.0.0'
-gem 'nyulibraries_javascripts', git: 'https://github.com/NYULibraries/nyulibraries_javascripts', tag: 'v1.0.0'
+gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets'
+gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates'
+gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions'
+gem 'nyulibraries_javascripts', path: '/apps/nyulibraries_javascripts' #, git: 'https://github.com/NYULibraries/nyulibraries_javascripts'
 gem 'nyulibraries_errors', git: 'https://github.com/NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
 gem 'formaggio', git: "https://github.com/NYULibraries/formaggio", tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', git: 'https://github.com/NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'

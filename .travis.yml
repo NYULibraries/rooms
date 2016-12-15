@@ -1,5 +1,8 @@
 language: ruby
 
+services:
+  - elasticsearch
+
 env:
   global:
     - ROOMS_DB_USER=root
@@ -14,6 +17,7 @@ env:
 before_script:
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
+  - sleep 5
 
 rvm:
   - 2.2.6

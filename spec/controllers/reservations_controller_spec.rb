@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ReservationsController, elasticsearch: true do
   let(:user) { create(:undergraduate) }

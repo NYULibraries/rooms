@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RoomsController do
 
@@ -35,10 +35,8 @@ describe RoomsController do
       collaborative: collaborative,
       description: description,
       size_of_room: size_of_room,
-      image_link: image_link,
-      :opens_at => opens_at,
-      :closes_at => closes_at
-    }.with_indifferent_access
+      image_link: image_link
+    }
   end
   let(:room) { create(:room) }
   let(:user) { create(:admin) }
@@ -105,7 +103,7 @@ describe RoomsController do
   end
 
   describe 'POST /admin/rooms' do
-    before { post :create, room: room_params }
+    before { post :create, room: room_params, opens_at: opens_at, closes_at: closes_at }
     subject { response }
     it { is_expected.to redirect_to '' }
     it 'should create a new room' do
@@ -124,7 +122,7 @@ describe RoomsController do
 
   describe 'PATCH /admin/rooms/1' do
     let(:title) { 'a new title' }
-    before { patch :update, id: room.id, room_group: { title: title } }
+    before { patch :update, id: room.id, room: { title: title }, opens_at: room.opens_at, closes_at: room.closes_at }
     subject { response }
     it { is_expected.to redirect_to room_url(assigns(:room).id) }
     it 'should update an existing room' do
@@ -138,7 +136,7 @@ describe RoomsController do
 
   end
 
-  describe 'PUT /admin/rooms/update_sort' do
+  describe 'PATCH /admin/rooms/update_sort' do
 
   end
 

@@ -5,26 +5,31 @@ gem 'rails', '~> 4.2.0'
 gem 'mysql2', '~> 0.3.17'
 
 # Use CoffeeScript in assets and views
-gem 'coffee-rails', '~> 4.2.0'
+gem 'coffee-rails', '~> 4.2.1'
 
-gem 'uglifier', '~> 2.7.0'
-gem 'therubyracer', '~> 0.12.1'
+gem 'uglifier', '~> 3.0.4'
+gem 'therubyracer', '~> 0.12.2'
 
 # Use Compass
-gem 'compass-rails', '~> 2.0.4'
+gem 'compass-rails', '~> 3.0.2'
 gem 'yui-compressor', '~> 0.12.0'
 
 # Temporal-rails for manipulating timezones via javascript cookies
 gem 'temporal-rails', '~> 0.2.3'
 
 # Use Sass
-gem 'sass-rails', '~> 5.0.1'
+gem 'sass-rails', '~> 5.0.6'
 
 gem 'json', '~> 1.8.1'
 
 # Use jQuery
-gem 'jquery-rails', '~> 3.1.2'
-gem 'jquery-ui-rails', '~> 5.0.5'
+gem 'jquery-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
+
+# Froze this at 1.11, because 1.12 exploded my application
+# namely "ExecJS::ProgramError: ReferenceError: CoffeeScript is not defined"
+# hopefully this will be fixed in the next version
+gem 'coffee-script-source', '1.11.0'
 
 # CanCanCan for authorization
 gem 'cancancan', '~> 1.10.1'
@@ -53,10 +58,10 @@ gem 'rest-client', '~> 1.8.0'
 
 gem 'newrelic_rpm', '~> 3.16'
 
-gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets'
-gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates'
-gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions'
-gem 'nyulibraries_javascripts', path: '/apps/nyulibraries_javascripts' #, git: 'https://github.com/NYULibraries/nyulibraries_javascripts'
+gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.0'
+gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates', tag: 'v1.0.0'
+gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions', tag: 'v1.0.0'
+gem 'nyulibraries_javascripts', git: 'https://github.com/NYULibraries/nyulibraries_javascripts', tag: 'v1.0.0'
 gem 'nyulibraries_errors', git: 'https://github.com/NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
 gem 'formaggio', git: "https://github.com/NYULibraries/formaggio", tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', git: 'https://github.com/NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'

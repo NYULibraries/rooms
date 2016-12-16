@@ -7,9 +7,6 @@ addons:
     packages:
       elasticsearch
 
-services:
-  - elasticsearch
-
 env:
   global:
     - ROOMS_DB_USER=root

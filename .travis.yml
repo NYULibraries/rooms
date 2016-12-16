@@ -1,5 +1,15 @@
 language: ruby
 
+addons:
+  apt:
+    sources:
+      - elasticsearch-2.x
+    packages:
+      elasticsearch
+
+services:
+  - elasticsearch
+
 env:
   global:
     - ROOMS_DB_USER=root
@@ -7,20 +17,16 @@ env:
     - ROOMS_DB_HOST=localhost
     - ROOMS_SECRET_TOKEN=1234
     - ROOMS_COOKIE_DOMAIN=.local
-    - ROOMS_BONSAI_URL=http://localhost:9200
     - LOGIN_URL=https://dev.login.library.nyu.edu
     - SSO_LOGOUT_PATH=/logout
 
 before_script:
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
-  - service start elasticsearch
 
 rvm:
   - 2.2.6
   - 2.3.3
-
-cache: bundler
 
 notifications:
   email:

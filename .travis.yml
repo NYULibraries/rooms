@@ -21,6 +21,13 @@ before_script:
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
 
+script:
+  - elasticsearch -d --default.path.conf=config
+  - sleep 15
+  - elasticsearch -v
+  - curl http://localhost:9200/
+  - bundle exec rspec
+
 rvm:
   - 2.2.6
   - 2.3.3

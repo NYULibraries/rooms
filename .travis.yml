@@ -1,8 +1,5 @@
 language: ruby
 
-services:
-  - elasticsearch
-
 env:
   global:
     - ROOMS_DB_USER=root
@@ -10,14 +7,17 @@ env:
     - ROOMS_DB_HOST=localhost
     - ROOMS_SECRET_TOKEN=1234
     - ROOMS_COOKIE_DOMAIN=.local
-    - ROOMS_BONSAI_URL=http://localhost:9200
     - LOGIN_URL=https://dev.login.library.nyu.edu
     - SSO_LOGOUT_PATH=/logout
 
 before_script:
+  - ls -la /usr/share/elasticsearch/bin/elasticsearch
+  - elasticsearch -v
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
-  - sleep 20
+
+script:
+  - SERVER=launch TEST_CLUSTER_COMMAND=/usr/share/elasticsearch/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=/etc/elasticsearch/ -Des.default.path.logs==/var/log/elasticsearch/' bundle exec rake
 
 rvm:
   - 2.2.6

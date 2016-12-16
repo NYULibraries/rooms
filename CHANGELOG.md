@@ -1,5 +1,10 @@
 # Change Log
 
+## 2016-12-16
+- Upgraded from retire to elasticsearch-rails
+- Upgraded ElasticSearch syntax to 2.x
+- Moved all tests to RSpec
+
 ## 2015-04-29
 - Rails 4, Ruby 2.x
 - Upgraded nyulibraries-assets with Bootstrap 3 branch

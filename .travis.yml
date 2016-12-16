@@ -1,5 +1,12 @@
 language: ruby
 
+addons:
+  apt:
+    sources:
+      - elasticsearch-2.x
+    packages:
+      elasticsearch
+
 env:
   global:
     - ROOMS_DB_USER=root
@@ -10,11 +17,8 @@ env:
     - LOGIN_URL=https://dev.login.library.nyu.edu
     - SSO_LOGOUT_PATH=/logout
 
-before_install:
-  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.0/elasticsearch-2.4.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.4.0.deb && sudo service elasticsearch restart
-
 before_script:
-  - ls -la /usr/share/elasticsearch/bin/elasticsearch
+  - which elasticsearch
   - elasticsearch -v
   - mysql -e 'create database nyu_rooms_test;'
   - bundle exec rake db:schema:load
@@ -32,4 +36,4 @@ notifications:
   email:
     - lib-webservices@nyu.edu
 
-sudo: required
+sudo: false

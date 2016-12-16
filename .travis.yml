@@ -10,6 +10,9 @@ env:
     - LOGIN_URL=https://dev.login.library.nyu.edu
     - SSO_LOGOUT_PATH=/logout
 
+before_install:
+  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.0/elasticsearch-2.4.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.4.0.deb && sudo service elasticsearch restart
+
 before_script:
   - ls -la /usr/share/elasticsearch/bin/elasticsearch
   - elasticsearch -v

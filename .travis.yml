@@ -11,7 +11,7 @@ env:
     - SSO_LOGOUT_PATH=/logout
 
 before_install:
-  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.0/elasticsearch-2.4.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.4.0.deb && sudo service elasticsearch restart
+  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.0/elasticsearch-2.4.0.deb && dpkg -i --force-confnew elasticsearch-2.4.0.deb && service elasticsearch restart
 
 before_script:
   - ls -la /usr/share/elasticsearch/bin/elasticsearch

@@ -5,7 +5,7 @@ addons:
     sources:
       - elasticsearch-2.x
     packages:
-      elasticsearch
+      - elasticsearch
 
 env:
   global:
@@ -17,17 +17,6 @@ env:
     - LOGIN_URL=https://dev.login.library.nyu.edu
     - SSO_LOGOUT_PATH=/logout
 
-before_script:
-  - mysql -e 'create database nyu_rooms_test;'
-  - bundle exec rake db:schema:load
-
-script:
-  - elasticsearch -d --default.path.conf=config
-  - sleep 15
-  - elasticsearch -v
-  - curl http://localhost:9200/
-  - bundle exec rspec
-
 rvm:
   - 2.2.6
   - 2.3.3
@@ -36,4 +25,18 @@ notifications:
   email:
     - lib-webservices@nyu.edu
 
-sudo: false
+sudo: required
+
+cache: bundler
+
+install:
+  - bundle install --path vendor/bundle
+
+before_script:
+  - mysql -e 'create database nyu_rooms_test;'
+  - bundle exec rake db:schema:load
+
+script:
+  - elasticsearch --version
+  - sudo chmod 775 /etc/elasticsearch/scripts
+  - SERVER=launch TEST_CLUSTER_COMMAND=/usr/local/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=/etc/elasticsearch/ -Des.default.path.logs=/var/log/elasticsearch/' bundle exec rake

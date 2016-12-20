@@ -28,15 +28,15 @@ describe ReservationsController do
       let(:user) { create(:undergraduate) }
       context "and time request is greater than 90 minutes" do
         let(:how_long) { "150" }
-        it { should be_nil }
+        it { is_expected.to be_nil }
       end
       context "and time request is less than 90 minutes" do
         let(:how_long) { "89" }
-        it { should_not be_nil }
+        it { is_expected.to_not be_nil }
       end
       context "and time request is equal to 90 minutes" do
         let(:how_long) { "90" }
-        it { should_not be_nil }
+        it { is_expected.to_not be_nil }
       end
     end
 

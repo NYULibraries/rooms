@@ -85,17 +85,17 @@ describe ReservationsController, elasticsearch: true do
         context 'and user is a undergraduate' do
           context "and time request is greater than 90 minutes" do
             let(:how_long) { "150" }
-            it { should be_nil }
+            it { is_expected.to be_nil }
             it { is_expected.to render_template('user_sessions/unauthorized_action') }
           end
           context "and time request is less than 90 minutes" do
             let(:how_long) { "89" }
-            it { should_not be_nil }
+            it { is_expected.to_not be_nil }
             it { is_expected.to render_template(:new) }
           end
           context "and time request is equal to 90 minutes" do
             let(:how_long) { "90" }
-            it { should_not be_nil }
+            it { is_expected.to_not be_nil }
             it { is_expected.to render_template(:new) }
           end
         end
@@ -103,22 +103,22 @@ describe ReservationsController, elasticsearch: true do
           let(:user) { create(:user) }
           context "and time request is greater than 3 hours" do
             let(:how_long) { "181" }
-            it { should be_nil }
+            it { is_expected.to be_nil }
             it { is_expected.to render_template('user_sessions/unauthorized_action') }
           end
           context "and time request is greater than 90 minutes" do
             let(:how_long) { "150" }
-            it { should_not be_nil }
+            it { is_expected.to_not be_nil }
             it { is_expected.to render_template(:new) }
           end
           context "and time request is less than 90 minutes" do
             let(:how_long) { "89" }
-            it { should_not be_nil }
+            it { is_expected.to_not be_nil }
             it { is_expected.to render_template(:new) }
           end
           context "and time request is equal to 90 minutes" do
             let(:how_long) { "90" }
-            it { should_not be_nil }
+            it { is_expected.to_not be_nil }
             it { is_expected.to render_template(:new) }
           end
         end

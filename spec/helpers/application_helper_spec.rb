@@ -53,18 +53,18 @@ describe ApplicationHelper do
     after { Timecop.return }
     context 'when hour is not midnight or noon' do
      context 'and minutes are greater than half past the hour' do
-        before { Timecop.freeze(Time.local(2008, 9, 1, 1, 30, 0)) }
+        before { Timecop.freeze(Time.zone.local(2008, 9, 1, 1, 30, 0)) }
         it { is_expected.to eql 2 }
       end
     end
     context 'when hour is midnight or noon' do
       context 'and minutes are greater than half past the hour' do
-        before { Timecop.freeze(Time.local(2008, 9, 1, 12, 30, 0)) }
+        before { Timecop.freeze(Time.zone.local(2008, 9, 1, 12, 30, 0)) }
         it { is_expected.to eql 1 }
       end
     end
     context 'and minutes are less than half past the hour' do
-      before { Timecop.freeze(Time.local(2008, 9, 1, 1, 29, 0)) }
+      before { Timecop.freeze(Time.zone.local(2008, 9, 1, 1, 29, 0)) }
       it { is_expected.to eql 1 }
     end
   end
@@ -73,11 +73,11 @@ describe ApplicationHelper do
     subject { helper.set_default_minute }
     after { Timecop.return }
     context 'when minutes are less than half past the hour' do
-      before { Timecop.freeze(Time.local(2008, 9, 1, 1, 29, 0)) }
+      before { Timecop.freeze(Time.zone.local(2008, 9, 1, 1, 29, 0)) }
       it { is_expected.to eql 30 }
     end
     context 'when minutes are greater than half past the hour' do
-      before { Timecop.freeze(Time.local(2008, 9, 1, 1, 35, 0)) }
+      before { Timecop.freeze(Time.zone.local(2008, 9, 1, 1, 35, 0)) }
       it { is_expected.to eql 0 }
     end
   end
@@ -86,11 +86,11 @@ describe ApplicationHelper do
     subject { helper.set_default_ampm }
     after { Timecop.return }
     context 'when hour is 11 and minutes are more than half past the hour' do
-      before { Timecop.freeze(Time.local(2008, 9, 1, 11, 31, 0)) }
+      before { Timecop.freeze(Time.zone.local(2008, 9, 1, 11, 31, 0)) }
       it { is_expected.to eql 'pm' }
     end
     context 'when hour is not 11' do
-      before { Timecop.freeze(Time.local(2008, 9, 1, 1, 35, 0)) }
+      before { Timecop.freeze(Time.zone.local(2008, 9, 1, 1, 35, 0)) }
       it { is_expected.to eql 'am' }
     end
   end

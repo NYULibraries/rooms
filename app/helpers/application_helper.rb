@@ -3,7 +3,7 @@ module ApplicationHelper
 
   def prettify_time(t)
     t_ampm = if t.hour >= 12 then "pm" else "am" end
-    t_hour = if t.hour == 0 then 12 elsif t.hour > 12 then t.hour - 12 else '%02d' % t.hour  end
+    t_hour = if t.hour == 0 then 12 elsif t.hour > 12 then ('%02d' % (t.hour - 12)) else ('%02d' % t.hour) end
     t_min = '%02d' % t.min
     t_time =  "<span class=\"hidden-xs\">#{t_hour.to_s}:#{t_min.to_s} #{t_ampm}</span><span class=\"visible-xs\">#{t_hour.to_s}:#{t_min.to_s}</span>"
     return t_time.html_safe

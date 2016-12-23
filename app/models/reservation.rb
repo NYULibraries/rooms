@@ -86,64 +86,60 @@ class Reservation < ActiveRecord::Base
   #
   #   @reservation.existing_reservations # Returns array of elasticsearch results
   def existing_reservations
-    if !self.start_dt.blank? && !self.end_dt.blank? && !self.room.blank?
-      start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
-      end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
-      room_id = self.room.id
-      results_size = (self.is_block?) ? 1000 : 1
+    start_dt = self.start_dt&.to_datetime&.change(offset: "+0000")
+    end_dt = self.end_dt&.to_datetime&.change(offset: "+0000")
+    room_id = self.room&.id
+    results_size = (self.is_block?) ? 1000 : 1
 
-      block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(:offset => "+0000") } } }]
-      query =
-      {
-        query: {
-          constant_score: {
-            filter: {
-              bool: {
-                must: [
-                  { term: { room_id: room_id } },
-                  { term: { deleted: false }},
-                  { bool:
-                    {
-                      should: [
-                        {
-                          bool: {
-                            must: [
-                              { range: { start_dt: { gte: start_dt } } },
-                              { range: { start_dt: { lt: end_dt } } }
-                            ]
-                          }
-                        },
-                        {
-                          bool: {
-                            must: [
-                              { range: { end_dt: { gt: start_dt } } },
-                              { range: { end_dt: { lte: end_dt } } }
-                            ]
-                          }
-                        },
-                        {
-                          bool: {
-                            must: [
-                              { range: { start_dt: { lte: start_dt } } },
-                              { range: { end_dt: { gte: end_dt } } }
-                            ]
-                          }
+    block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(:offset => "+0000") } } }]
+    query =
+    {
+      query: {
+        constant_score: {
+          filter: {
+            bool: {
+              must: [
+                { term: { room_id: room_id } },
+                { term: { deleted: false }},
+                { bool:
+                  {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { gte: start_dt } } },
+                            { range: { start_dt: { lt: end_dt } } }
+                          ]
                         }
-                      ]
-                    }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { end_dt: { gt: start_dt } } },
+                            { range: { end_dt: { lte: end_dt } } }
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { lte: start_dt } } },
+                            { range: { end_dt: { gte: end_dt } } }
+                          ]
+                        }
+                      }
+                    ]
                   }
-                ]
-              }
+                }
+              ]
             }
           }
-        },
-        size: results_size
-      }
-      query[:query][:constant_score][:filter][:bool][:must] += block_query if self.is_block?
-      return Reservation.search(query).results
-    end
-    # Ensure an empty array is sent instead of nil on no results
-    return []
+        }
+      },
+      size: results_size
+    }
+    query[:query][:constant_score][:filter][:bool][:must] += block_query if self.is_block?
+    return Reservation.search(query).results
   end
 
   ##

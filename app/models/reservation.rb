@@ -86,12 +86,12 @@ class Reservation < ActiveRecord::Base
   #
   #   @reservation.existing_reservations # Returns array of elasticsearch results
   def existing_reservations
-    start_dt = self.start_dt&.to_datetime&.change(offset: "+0000")
-    end_dt = self.end_dt&.to_datetime&.change(offset: "+0000")
-    room_id = self.room&.id
+    start_dt = self.start_dt.try(:to_datetime).try(:change, offset: "+0000")
+    end_dt = self.end_dt.try(:to_datetime).try(:change, offset: "+0000")
+    room_id = self.room.try(:id)
     results_size = (self.is_block?) ? 1000 : 1
 
-    block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(:offset => "+0000") } } }]
+    block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(offset: "+0000") } } }]
     query =
     {
       query: {

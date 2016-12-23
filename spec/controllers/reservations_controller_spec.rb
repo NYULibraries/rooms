@@ -21,8 +21,9 @@ describe ReservationsController, elasticsearch: true do
   before { Room.import; Reservation.import }
 
   describe 'GET /reservations' do
+    let(:format) { :html }
     before { allow(controller).to receive(:current_user).and_return(user) }
-    before { get :index }
+    before { get :index, format: format }
     subject { response }
     it 'should assign a user instance' do
       expect(assigns(:user)).to eql user
@@ -32,6 +33,10 @@ describe ReservationsController, elasticsearch: true do
     end
     it 'should assign an existing reservations instance' do
       expect(assigns(:reservations)).to_not be_nil
+    end
+    context 'when a csv download is requested' do
+      let(:format) { :csv }
+      its(:content_type) { is_expected.to eql 'text/csv' }
     end
   end
 
@@ -208,6 +213,16 @@ describe ReservationsController, elasticsearch: true do
 
 
   describe '#new and #create policies' do
+    context 'when a user is trying to create a reservation for the first time today and for a certain day' do
+      let(:room) { create(:room) }
+      let(:user) { create(:user) }
+      before { allow(controller).to receive(:current_user).and_return(user) }
+      it 'should create a new reservation' do
+        expect { post :create, reservation: { start_dt: start_dt, end_dt: end_dt, room_id: room.to_param } }.to change { Reservation.count }.by(1)
+        expect(response).to render_template(:index)
+        expect(flash[:success]).to eql I18n.t('reservations.create.success')
+      end
+    end
     context 'when a user already created a reservation today' do
       before(:all) do
         room = create(:room)

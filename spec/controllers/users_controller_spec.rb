@@ -7,8 +7,9 @@ describe UsersController do
   before { allow(controller).to receive(:current_user).and_return(admin) }
 
   describe 'GET /admin/users' do
+    let(:format) { :html }
     let(:q) { nil }
-    before { get :index, q: q }
+    before { get :index, q: q, format: format }
     subject { response }
     context 'when user is an admin' do
       context 'when there is no search term' do
@@ -34,6 +35,10 @@ describe UsersController do
       it 'should return an access denied error' do
         expect(subject).to render_template 'user_sessions/unauthorized_action'
       end
+    end
+    context 'when a csv download is requested' do
+      let(:format) { :csv }
+      its(:content_type) { is_expected.to eql 'text/csv' }
     end
   end
 

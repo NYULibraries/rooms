@@ -61,7 +61,7 @@ describe BlocksController do
     context 'when there are some existing reservations in the submitted block' do
       before(:all) do
         @existing_reservation = create(:reservation)
-        @existing_block = create(:block)
+        @existing_block = create(:block, room: create(:collaborative))
         Room.import; Reservation.import
         sleep 3
       end
@@ -72,6 +72,7 @@ describe BlocksController do
         it 'should assign an existing reservations instance variable' do
           expect(assigns(:block).existing_reservations).to_not be_empty
           expect(assigns(:block).existing_reservations.size).to eql 1
+          expect(assigns(:block).errors.messages[:base]).to include I18n.t('reservation.reservations_exist_in_block')
         end
       end
       context 'but those reservations ARE blocks' do

@@ -45,16 +45,11 @@ describe Room do
       end
     end
   end
+
+  describe '#current_reservations' do
+    let!(:room) { create(:room) }
+    let!(:reservation) { create(:reservation, room: room) }
+    subject { room.current_reservations }
+    it { is_expected.to_not be_empty }
+  end
 end
-# test "title is not empty" do
-#  @room = FactoryGirl.create(:room)
-#  @room.title = nil
-#  assert_raises(ActiveRecord::RecordInvalid) { @room.save! }
-#  assert_not_empty(@room.errors)
-# end
-#
-# test "reservations belong to room" do
-#   room = FactoryGirl.create(:room, reservations: [FactoryGirl.create(:reservation)])
-#   assert_nothing_raised() { room.reservations }
-#   assert_equal 1, room.reservations.count
-# end

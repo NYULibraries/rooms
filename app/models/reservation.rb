@@ -91,6 +91,7 @@ class Reservation < ActiveRecord::Base
     room_id = self.room.try(:id)
     results_size = (self.is_block?) ? 1000 : 1
 
+    return [] if room_id.blank? || start_dt.blank? || end_dt.blank?
     block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(offset: "+0000") } } }]
     query =
     {

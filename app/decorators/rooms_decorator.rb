@@ -22,33 +22,35 @@ class RoomsDecorator
               must: [
                 { terms: { room_id: rooms.map {|r| r.id.to_i } } },
                 { term: { deleted: false } },
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          { range: { start_dt: { gte: start_dt } } },
-                          { range: { start_dt: { lt: end_dt } } }
-                        ]
+                { bool:
+                  {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { gte: start_dt } } },
+                            { range: { start_dt: { lt: end_dt } } }
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { end_dt: { gt: start_dt } } },
+                            { range: { end_dt: { lte: end_dt } } }
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { lte: start_dt } } },
+                            { range: { end_dt: { gte: end_dt } } }
+                          ]
+                        }
                       }
-                    },
-                    {
-                      bool: {
-                        must: [
-                          { range: { end_dt: { gt: start_dt } } },
-                          { range: { end_dt: { lte: end_dt } } }
-                        ]
-                      }
-                    },
-                    {
-                      bool: {
-                        must: [
-                          { range: { start_dt: { lte: start_dt } } },
-                          { range: { end_dt: { gte: end_dt } } }
-                        ]
-                      }
-                    }
-                  ]
+                    ]
+                  }
                 }
               ]
             }

@@ -62,7 +62,7 @@ gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibrari
 gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates', tag: 'v1.0.0'
 gem 'nyulibraries_institutions', git: 'https://github.com/NYULibraries/nyulibraries_institutions', tag: 'v1.0.0'
 gem 'nyulibraries_javascripts', git: 'https://github.com/NYULibraries/nyulibraries_javascripts', tag: 'v1.0.0'
-gem 'nyulibraries_errors', git: 'https://github.com/NYULibraries/nyulibraries_errors', tag: 'v1.0.0'
+gem 'nyulibraries_errors', git: 'https://github.com/NYULibraries/nyulibraries_errors', tag: 'v1.0.1'
 gem 'formaggio', git: "https://github.com/NYULibraries/formaggio", tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', git: 'https://github.com/NYULibraries/omniauth-nyulibraries', tag: 'v2.0.0'
 gem 'devise', '~> 3.5'

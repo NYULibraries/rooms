@@ -16,10 +16,10 @@ GIT
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_errors
-  revision: c77c8c8a8699d5af7ceb2775fe6ac7aa81f6a5f5
-  tag: v1.0.0
+  revision: 16c7a14892e439c48e6fc1f8ce261c3cbe635e4c
+  tag: v1.0.1
   specs:
-    nyulibraries_errors (1.0.0)
+    nyulibraries_errors (1.0.1)
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_institutions
@@ -105,7 +105,7 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     ansi (1.5.0)
     arel (6.0.3)
-    autoprefixer-rails (6.5.4)
+    autoprefixer-rails (6.6.1)
       execjs
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)

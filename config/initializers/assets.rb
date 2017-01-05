@@ -10,11 +10,9 @@ Rails.application.config.assets.precompile += %w[
   application_ns.css
   application_nyuad.css
   application_nyush.css
+  header.png
   nyulibraries/nyu/header.png
   nyulibraries/nyush/shanghai.png
   nyulibraries/nyuad/header.png
-  jquery/ui-bg_flat_75_ffffff_40x100.png
-  jquery/ui-bg_glass_75_e6e6e6_1x400.png
-  jquery/ui-bg_glass_75_dadada_1x400.png
-  jquery/ui-bg_highlight-soft_75_cccccc_1x100.png
+  jquery/*.png
 ]

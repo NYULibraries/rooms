@@ -75,7 +75,7 @@
 	<%= f.label :room_group_id, "Room group", class: 'control-label' %>
 	<select name="room[room_group_id]" id="room_room_group_id" class="form-control">
 	<% @room_groups.each do |room_group| %>
-		<% if can? room_group.code_sym, RoomGroup %>
+		<% if can? room_group.code.to_sym, RoomGroup %>
     	<option value="<%= room_group.id %>"<%=(room_group_selected?(room_group)) ? " selected" : ''%>><%= room_group.title %></option>
 		<% end %>
 	<% end %>

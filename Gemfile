@@ -5,26 +5,31 @@ gem 'rails', '~> 4.2.0'
 gem 'mysql2', '~> 0.3.17'
 
 # Use CoffeeScript in assets and views
-gem 'coffee-rails'#, '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2.1'
 
-gem 'uglifier', '~> 2.7.0'
-gem 'therubyracer', '~> 0.12.1'
+gem 'uglifier', '~> 3.0.4'
+gem 'therubyracer', '~> 0.12.2'
 
 # Use Compass
-gem 'compass-rails', '~> 2.0.4'
+gem 'compass-rails', '~> 3.0.2'
 gem 'yui-compressor', '~> 0.12.0'
 
 # Temporal-rails for manipulating timezones via javascript cookies
 gem 'temporal-rails', '~> 0.2.3'
 
 # Use Sass
-gem 'sass-rails', '~> 5.0.1'
+gem 'sass-rails', '~> 5.0.6'
 
 gem 'json', '~> 1.8.1'
 
 # Use jQuery
-gem 'jquery-rails', '~> 3.1.2'
-gem 'jquery-ui-rails', '~> 5.0.5'
+gem 'jquery-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
+
+# Froze this at 1.11, because 1.12 exploded my application
+# namely "ExecJS::ProgramError: ReferenceError: CoffeeScript is not defined"
+# hopefully this will be fixed in the next version
+gem 'coffee-script-source', '1.11.0'
 
 # CanCanCan for authorization
 gem 'cancancan', '~> 1.10.1'
@@ -44,12 +49,12 @@ gem 'dalli', '~> 2.7.4'
 # Comma
 gem 'comma', '~> 3.2.2'
 
-# Tire for elasticsearch
-gem 'tire', '~> 0.6.2' # Doesn't officially support ElasticSearch 1.x
-gem 'rest-client', '~> 1.8.0'
+# Elasticsearch
+gem 'elasticsearch-model', '~> 0.1.9'
+gem 'elasticsearch-rails', '~> 0.1.9'
+gem 'elasticsearch-dsl', '~> 0.1.4'
 
-# Draper for decorators
-gem 'draper', '~> 1.4.0'
+gem 'rest-client', '~> 1.8.0'
 
 gem 'newrelic_rpm', '~> 3.16'
 
@@ -81,10 +86,12 @@ group :test do
   gem 'coveralls', '~> 0.7.1', :require => false
   gem 'webmock', '>= 1.8.0', '< 1.16'
   gem 'timecop', '~> 0.7.1'
-  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-its'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'phantomjs', '>= 1.9.0'
   gem 'poltergeist', '~> 1.10.0'
   gem 'selenium-webdriver'
+  gem 'elasticsearch-extensions'
 end

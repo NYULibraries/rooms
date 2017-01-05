@@ -5,7 +5,7 @@ en:
     title_html: Reserve a study space
   mailers:
     reservation_mailer:
-      default_from: "NYU Libraries Room Reservation <patron.question@library.nyu.edu>"
+      default_from: "NYU Libraries Room Reservation <lib-marli@nyu.edu>"
       default_reply_to: "lib-no-reply@nyu.edu"
       cancellation_email:
         subject: "NYU Libraries- Room reservation cancellation"
@@ -48,7 +48,7 @@ en:
       success: Reservation was successfully updated.
     delete:
       success: Reservation was successfully deleted.
-      error: "Could not delete this reservation. Please report this to the system administrator: patron.question@library.nyu.edu."
+      error: "Could not delete this reservation. Please report this to the system administrator: lib-marli@nyu.edu."
     resend_email:
       success: "E-mail successfully resent: A confirmation for this reservation has been sent to your email address."
   rooms:
@@ -65,7 +65,7 @@ en:
     destroy_existing_reservations:
       error: "Could not delete existing reservations. Please contact web administrator lib-webservices@nyu.edu."
       success: Block successfully created.
-      cancellation_email: "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact patron.question@library.nyu.edu.\n\nSorry for the inconvenience."
+      cancellation_email: "Your room reservation for the room :room and period of :start-:end has been cancelled by an administrator. \n\nIf you have any questions please contact lib-marli@nyu.edu.\n\nSorry for the inconvenience."
     create:
       success: Block successfully created.
   users:

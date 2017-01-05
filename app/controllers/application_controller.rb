@@ -1,7 +1,9 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+require 'elasticsearch/dsl'
 
 class ApplicationController < ActionController::Base
+  include Elasticsearch::DSL
   layout Proc.new{ |controller| (controller.request.xhr?) ? false : "application" }
 
   helper :all # include all helpers, all the time
@@ -21,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   # For dev purposes
   def current_user_dev
-    @current_user = User.new(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", patron_status: "57")
+    @current_user = User.find_or_create_by(:email => "user@nyu.edu", :firstname => "Ptolemy", :username => "ppXX", patron_status: "57")
     @current_user.admin_roles_mask = 1
     return @current_user
   end

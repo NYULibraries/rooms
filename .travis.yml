@@ -1,29 +1,42 @@
 language: ruby
 
-services:
-  - elasticsearch
+addons:
+  apt:
+    sources:
+      - elasticsearch-2.x
+    packages:
+      - elasticsearch
 
 env:
-  -ROOMS_DB_USER=root ROOMS_DB_DATABASE=nyu_rooms_test ROOMS_DB_HOST=localhost ROOMS_SECRET_TOKEN=dd6f1b6faf2511a744f3f08644e76edcb6be01d7019a6e62947e3a76a2c5f1ea7f3206af6bd0409ed222a56b2a53788da8de1d3528547889cc59c7dbc27f4503 ROOMS_COOKIE_DOMAIN=.local ROOMS_BONSAI_URL=http://localhost:9200 LOGIN_URL=https://dev.login.library.nyu.edu SSO_LOGOUT_PATH=/logout
-
-before_script:
-  - sleep 30
-  - mysql -e 'create database nyu_rooms_test;'
-  - bundle exec rake db:schema:load
-  - RAILS_ENV=test bundle exec rake environment tire:import CLASS=Room FORCE=true
-  - RAILS_ENV=test bundle exec rake environment tire:import CLASS=Reservation FORCE=true
-  - sleep 30
+  global:
+    - ROOMS_DB_USER=root
+    - ROOMS_DB_DATABASE=nyu_rooms_test
+    - ROOMS_DB_HOST=localhost
+    - ROOMS_SECRET_TOKEN=1234
+    - ROOMS_COOKIE_DOMAIN=.local
+    - LOGIN_URL=https://dev.login.library.nyu.edu
+    - SSO_LOGOUT_PATH=/logout
 
 rvm:
-  - 2.0.0
-  - 2.1.5
-  - 2.2.5
-  - 2.3.1
-
-cache: bundler
+  - 2.2.6
+  - 2.3.3
 
 notifications:
   email:
     - lib-webservices@nyu.edu
 
-sudo: false
+sudo: required
+
+cache: bundler
+
+install:
+  - bundle install --path vendor/bundle
+
+before_script:
+  - mysql -e 'create database nyu_rooms_test;'
+  - bundle exec rake db:schema:load
+
+script:
+  - elasticsearch --version
+  - sudo chmod 775 /etc/elasticsearch/scripts
+  - SERVER=launch TEST_CLUSTER_COMMAND=/usr/local/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=/etc/elasticsearch/ -Des.default.path.logs=/var/log/elasticsearch/' bundle exec rake

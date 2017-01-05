@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
 
   before_save :set_static_admins
 
-
   ##
   # Create a CSV format with comma DSL
   #

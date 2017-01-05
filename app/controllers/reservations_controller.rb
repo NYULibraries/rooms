@@ -1,7 +1,9 @@
 class ReservationsController < ApplicationController
   load_and_authorize_resource
-  # Can't autoload new action because params don't match up to column names in DB
-  skip_load_resource :only => [:new]
+  # Can't auto load or authorize the following actions because
+  # params don't match up to column names in DB, so CanCanCan can't infer
+  skip_load_resource only: [:new, :create, :delete]
+  skip_authorize_resource only: [:delete]
   respond_to :html, :js
   respond_to :json, :csv, :except => [:new, :edit]
 
@@ -27,6 +29,7 @@ class ReservationsController < ApplicationController
     [:create_today, :create_for_same_day, :create_for_length].each do |action|
       authorize! action, @reservation
     end
+
     @rooms = RoomsDecorator.new(rooms_search)
     # Existing reservations for this collection of rooms in this range
     @existing_reservations = @rooms.find_reservations_by_range(start_dt - 1.hour, end_dt + 1.hour)
@@ -87,6 +90,7 @@ class ReservationsController < ApplicationController
   # PUT /reservations/1
   def delete
     @reservation = Reservation.find(params[:reservation_id])
+    authorize! :delete, @reservation
     @reservation.deleted = true
     @reservation.deleted_by = { :by_user => current_user.id }
     @user = @reservation.user
@@ -104,12 +108,12 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # RESEND confirmation email
+  # POST /reservations/1/resend_email
   def resend_email
     @user = current_user
     @reservation = @user.reservations.find(params[:id])
 
-    # Send email
+    # Send confirmation email now!
     if ReservationMailer.confirmation_email(@reservation).deliver_now
       flash[:success] = t('reservations.resend_email.success')
     end
@@ -131,7 +135,7 @@ class ReservationsController < ApplicationController
       (params[:reservation][:start_dt].blank?) ?
         DateTime.new(which_date.year, which_date.mon, which_date.mday, hour, params[:reservation][:minute].to_i) :
         DateTime.parse(params[:reservation][:start_dt])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @start_dt ||= default_date
   end
@@ -143,7 +147,7 @@ class ReservationsController < ApplicationController
      (params[:reservation][:end_dt].nil?) ?
       start_dt + params[:reservation][:how_long].to_i.minutes :
         DateTime.parse(params[:reservation][:end_dt])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @endt_dt ||= default_date
   end
@@ -154,7 +158,7 @@ private
   # Parse single date field into date object
   def which_date
     @which_date ||= Date.parse(params[:reservation][:which_date])
-  rescue Exception => e
+  rescue StandardError => e
     flash[:error] = t('reservation.date_formatted_correctly')
     @which_date = Date.today
   end
@@ -176,20 +180,28 @@ private
     room_group_filter = RoomGroup.all.map(&:code).reject { |r| cannot? r.to_sym, RoomGroup }
     # Boolean if this is default sort or a re-sort
     resort = (sort_column.to_sym != options[:sort])
-    # Get Rooms from elasticsearch through tire DSL
-    rooms_search ||= Room.tire.search do
-      filter :terms, :room_group => room_group_filter, :execution => "or"
+    page = options[:page].to_i
+    # Get Rooms from elasticsearch through DSL
+    query = Elasticsearch::DSL::Search.search do
+      query do
+        terms room_group: room_group_filter, execution: "or"
+      end
       # Default sort by room group and then default
-      sort do
-        by :room_group, 'asc'
-        by options[:sort], options[:direction]
-      end unless resort
-      sort { by options[:sort], options[:direction] } if resort
-      page = options[:page].to_i
+      if resort
+        sort do
+          by options[:sort], { order: options[:direction] }
+        end
+      else
+        sort do
+          by :room_group, { order: :asc }
+          by options[:sort], { order: options[:direction] }
+        end
+      end
       search_size = options[:per].to_i
       from (page -1) * search_size
       size search_size
     end
+    rooms_search = Room.search(query).page(page)
     return rooms_search
   end
 

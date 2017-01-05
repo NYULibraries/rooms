@@ -1,9 +1,11 @@
+require 'elasticsearch/model'
+
 class Reservation < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # elasticsearch index name
-  index_name("#{Rails.env}_reservations")
+  index_name { "#{Rails.env}_reservations" }
 
   belongs_to :room
   belongs_to :user
@@ -33,20 +35,34 @@ class Reservation < ActiveRecord::Base
   scope :one_week,  -> { where("start_dt > ?", (Time.zone.now - 1.week).strftime("%Y-%m-%d %H:%M")) }
   scope :one_month, -> { where("start_dt > ?", (Time.zone.now - 1.month).strftime("%Y-%m-%d %H:%M")) }
 
-  # Tire ElasticSearch mapping
-  mapping do
-    # Map to database values
-    indexes :id, :index => :not_analyzed
-    indexes :room_id, :index => :not_analyzed
-    indexes :user_id, :index => :not_analyzed
-    indexes :title, :index => :not_analyzed
-    indexes :start_dt, :as => 'start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-    indexes :end_dt, :as => 'end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime', :index => :not_analyzed, :type => 'date', :format => "yyyy-MM-dd'T'HH:mm:ssZ"
-    indexes :is_block, :type => 'boolean'
-    indexes :deleted, :type => 'boolean'
-    # Mappings for non-database values
-    indexes :created_at_day, :as => 'created_at.in_time_zone.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
-    indexes :start_day, :as => 'start_dt.strftime("%Y-%m-%d")', :index => :not_analyzed, :type => 'date'
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: "false" do
+      indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
+      indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
+      indexes :created_at_day, type: "date", format: "yyyy-MM-dd"
+      indexes :start_day, type: "date", format: "yyyy-MM-dd"
+      indexes :room_id, type: "integer"
+      indexes :is_block, type: "boolean"
+      indexes :deleted, type: "boolean"
+      indexes :user_id, type: "integer"
+      indexes :title, type: "string"
+      indexes :id, type: "integer"
+    end
+  end
+
+  def as_indexed_json(options={})
+    {
+      id: id,
+      room_id: room_id,
+      user_id: user_id,
+      title: title,
+      start_dt: start_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime,
+      end_dt: end_dt.strftime("%Y-%m-%d %H:%M:%S").to_datetime,
+      is_block: is_block,
+      deleted: deleted,
+      created_at_day: created_at.in_time_zone.strftime("%Y-%m-%d"),
+      start_day: start_dt.strftime("%Y-%m-%d")
+    }
   end
 
   # CSV mapping
@@ -68,43 +84,62 @@ class Reservation < ActiveRecord::Base
   #
   # = Example
   #
-  #   @reservation.existing_reservations # Returns array of tire results
+  #   @reservation.existing_reservations # Returns array of elasticsearch results
   def existing_reservations
-    if !self.start_dt.blank? && !self.end_dt.blank? && !self.room.blank?
-      start_dt = self.start_dt.to_datetime.change(:offset => "+0000")
-      end_dt = self.end_dt.to_datetime.change(:offset => "+0000")
-      is_block = self.is_block?
-      room_id = self.room.id
-      results_size = (self.is_block?) ? 1000 : 1
+    start_dt = self.start_dt.try(:to_datetime).try(:change, offset: "+0000")
+    end_dt = self.end_dt.try(:to_datetime).try(:change, offset: "+0000")
+    room_id = self.room.try(:id)
+    results_size = (self.is_block?) ? 1000 : 1
 
-      existing_reservations = Reservation.tire.search do
-        query do
-          filtered do
-            filter :term, :is_block => false if is_block
-            filter :range, :end_dt => { :gte => Time.zone.now.to_datetime.change(:offset => "+0000") } if is_block
-            filter :term, :room_id => room_id
-            filter :term, :deleted => false
-            filter :or,
-              { :and => [
-                  { :range => { :start_dt => { :gte => start_dt } } },
-                  { :range => { :start_dt => { :lt => end_dt } } }
-              ]},
-              { :and => [
-                  { :range => { :end_dt => { :gt => start_dt } } },
-                  { :range => { :end_dt => { :lte => end_dt } } }
-              ]},
-              { :and => [
-                  { :range => { :start_dt => { :lte => start_dt } } },
-                  { :range => { :end_dt => { :gte => end_dt } } }
-              ]}
-          end
-        end
-        size results_size
-      end
-
-      return existing_reservations.results
-    end
-    []
+    block_query = [{ term: { is_block: false } }, { range: { end_dt: { gte: Time.zone.now.to_datetime.change(offset: "+0000") } } }]
+    query =
+    {
+      query: {
+        constant_score: {
+          filter: {
+            bool: {
+              must: [
+                { term: { room_id: room_id } },
+                { term: { deleted: false }},
+                { bool:
+                  {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { gte: start_dt } } },
+                            { range: { start_dt: { lt: end_dt } } }
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { end_dt: { gt: start_dt } } },
+                            { range: { end_dt: { lte: end_dt } } }
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { range: { start_dt: { lte: start_dt } } },
+                            { range: { end_dt: { gte: end_dt } } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      size: results_size
+    }
+    query[:query][:constant_score][:filter][:bool][:must] += block_query if self.is_block?
+    return Reservation.search(query).results
   end
 
   ##
@@ -138,19 +173,25 @@ private
     user_id = user.id
     on_day_field = on_day_field
     on_day = on_day
-    reservation_on_day ||= Reservation.tire.search :search_type => "count" do
-      query do
-        filtered do
-          filter :term, :deleted => false
-          filter :term, :is_block => false
-          filter :term, :user_id => user_id
-          query do
-            string "#{on_day_field}:#{on_day}"
-          end
-        end
-      end
-    end
-    return reservation_on_day.total > 0
+    query =
+    {
+      query: {
+        constant_score: {
+          filter: {
+            bool: {
+              must: [
+                { term: { deleted: false } },
+                { term: { is_block: false } },
+                { term: { user_id: user_id } },
+                { term: { "#{on_day_field}" => on_day }}
+              ]
+            }
+          }
+        }
+      },
+      size: 0
+    }
+    return Reservation.search(query).response.hits.total > 0
   end
 
   ##

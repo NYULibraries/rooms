@@ -33,7 +33,7 @@ module LayoutsHelper
 
   # Prepend the flash message partial before yield
   def prepend_yield
-    content_tag :div, :id => "main-flashses" do
+    content_tag :div, :id => "main-flashes" do
       render :partial => 'common/flash_msg'
     end
   end

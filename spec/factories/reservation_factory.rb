@@ -5,8 +5,16 @@ end
 FactoryGirl.define do
   factory :reservation do
     start_dt (@time = Faker::Time.forward(30, :afternoon))
-    end_dt (@time + 30.minutes)
+    end_dt (@time + 90.minutes)
     user
     room
+  end
+
+  factory :block, class: Reservation do
+    start_dt (@time = Faker::Time.forward(30, :afternoon))
+    end_dt (@time + 90.minutes)
+    user
+    room
+    is_block true
   end
 end

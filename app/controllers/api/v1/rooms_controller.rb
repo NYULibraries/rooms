@@ -15,7 +15,7 @@ module Api
         begin
           json_rooms = @rooms.as_json(only: rooms_attributes, include: { room_group: {only: :title}}) unless api_params[:include_reservations]
           json_rooms = @rooms.as_json(only: rooms_attributes, include: { room_group: {only: :title}, current_reservations: {only: [:start_dt, :end_dt]}}) if api_params[:include_reservations]
-        rescue
+        rescue StandardError => e
           json_rooms = errors.as_json
         end
 

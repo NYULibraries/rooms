@@ -31,10 +31,15 @@ window.adjust_table_grid_widths = ->
 # Show and animate progress bar
 window.animate_progress_bar = ->
   if (!$("#ajax-modal #remote_progress").is("*"))
-    $("#ajax-modal").find(".modal-header .availability_grid_desc").after($("<div />").attr({'id': 'remote_progress'}).addClass("progress progress-striped active").append($("<div />").addClass("bar").css({width: '5%'})))
+    $("#ajax-modal").find(".modal-header .availability_grid_desc").after($("<div />").attr({'id': 'remote_progress'}).addClass("progress").append($("<div />").addClass("progress-bar progress-bar-striped active").css({width: '5%'})))
     setTimeout ->
-      $("#remote_progress > div.bar").css({width: "98%"})
+      $("#remote_progress > div.progress-bar").css({width: "98%"})
     , 0
+  if ($(".ajax-loader div.progress-bar").is("*"))
+    $(".ajax-loader div.progress-bar").css({width: '5%'})
+    setTimeout ->
+      $(".ajax-loader div.progress-bar").css({width: "98%"})
+    , 500
 
 # Perform a series of actions when a time slot is clicked on
 window.select_room = (clicked_el) ->

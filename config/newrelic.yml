@@ -229,5 +229,5 @@ staging:
 
 qa:
   <<: *default_settings
-  monitor_mode: true
-  app_name: Rooms QA
+  monitor_mode: false
+  # app_name: Rooms QA

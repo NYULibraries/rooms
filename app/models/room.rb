@@ -16,15 +16,15 @@ class Room < ActiveRecord::Base
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: "false" do
-      indexes :id, type: "integer"
+      indexes :id, type: "integer", index: "not_analyzed"
       indexes :title, type: "string"
       indexes :type_of_room, type: "string"
       indexes :description, type: "string"
       indexes :size_of_room, type: "string"
-      indexes :image_link, type: "string"
+      indexes :image_link, type: "string", index: "not_analyzed"
       indexes :sort_order, type: "integer"
       indexes :sort_size_of_room, type: "integer"
-      indexes :room_group, type: "string"
+      indexes :room_group, type: "string", index: "not_analyzed"
       indexes :opens_at, type: "string"
       indexes :closes_at, type: "string"
     end

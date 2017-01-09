@@ -37,16 +37,16 @@ class Reservation < ActiveRecord::Base
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: "false" do
-      indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
-      indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ"
-      indexes :created_at_day, type: "date", format: "yyyy-MM-dd"
-      indexes :start_day, type: "date", format: "yyyy-MM-dd"
-      indexes :room_id, type: "integer"
+      indexes :start_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ", index: "not_analyzed"
+      indexes :end_dt, type: "date", format: "yyyy-MM-dd'T'HH:mm:ssZ", index: "not_analyzed"
+      indexes :created_at_day, type: "date", format: "yyyy-MM-dd", index: "not_analyzed"
+      indexes :start_day, type: "date", format: "yyyy-MM-dd", index: "not_analyzed"
+      indexes :room_id, type: "integer", index: "not_analyzed"
       indexes :is_block, type: "boolean"
       indexes :deleted, type: "boolean"
-      indexes :user_id, type: "integer"
+      indexes :user_id, type: "integer", index: "not_analyzed"
       indexes :title, type: "string"
-      indexes :id, type: "integer"
+      indexes :id, type: "integer", index: "not_analyzed"
     end
   end
 

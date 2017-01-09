@@ -229,6 +229,7 @@ GEM
     figs (2.0.3)
       git (~> 1.2.6)
       rake (~> 10.1)
+    flamegraph (0.9.5)
     font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
     gherkin (4.0.0)
@@ -263,6 +264,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    memory_profiler (0.9.7)
     method_source (0.8.2)
     mime-types (2.99.3)
     mini_portile2 (2.1.0)
@@ -316,6 +318,8 @@ GEM
       slop (~> 3.0)
     public_suffix (2.0.4)
     rack (1.6.5)
+    rack-mini-profiler (0.10.1)
+      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.7.1)
@@ -410,6 +414,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stackprof (0.2.10)
     temporal-rails (0.2.4)
       coffee-rails
       railties (>= 3.2.5, < 5)
@@ -464,6 +469,7 @@ DEPENDENCIES
   elasticsearch-rails (~> 0.1.9)
   factory_girl_rails (~> 4.5.0)
   faker
+  flamegraph
   font-awesome-rails (~> 4.2.0)
   formaggio!
   jquery-rails (~> 4.2.1)
@@ -471,6 +477,7 @@ DEPENDENCIES
   json (~> 1.8.1)
   json_spec
   kaminari (~> 0.16.1)
+  memory_profiler
   mysql2 (~> 0.3.17)
   newrelic_rpm (~> 3.16)
   nyulibraries_errors!
@@ -484,6 +491,7 @@ DEPENDENCIES
   progress_bar
   pry (~> 0.10.1)
   pry-remote
+  rack-mini-profiler
   rails (~> 4.2.0)
   rest-client (~> 1.8.0)
   rspec-its
@@ -493,6 +501,7 @@ DEPENDENCIES
   simplecov
   simplecov-rcov
   sorted (~> 1.0.1)
+  stackprof
   temporal-rails (~> 0.2.3)
   therubyracer (~> 0.12.2)
   timecop (~> 0.7.1)

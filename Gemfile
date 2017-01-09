@@ -95,3 +95,12 @@ group :test do
   gem 'selenium-webdriver'
   gem 'elasticsearch-extensions'
 end
+
+# Get feedback about slow processes
+# https://github.com/MiniProfiler/rack-mini-profiler
+group :development do
+  gem 'memory_profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
+  gem 'rack-mini-profiler', require: false
+end

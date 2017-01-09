@@ -56,7 +56,7 @@ gem 'elasticsearch-dsl', '~> 0.1.4'
 
 gem 'rest-client', '~> 1.8.0'
 
-gem 'newrelic_rpm', '~> 3.16'
+gem 'newrelic_rpm', '~> 3.17'
 
 gem 'nyulibraries_stylesheets', git: 'https://github.com/NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.0'
 gem 'nyulibraries_templates', git: 'https://github.com/NYULibraries/nyulibraries_templates', tag: 'v1.0.0'

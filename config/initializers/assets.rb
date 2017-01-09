@@ -10,7 +10,6 @@ Rails.application.config.assets.precompile += %w[
   application_ns.css
   application_nyuad.css
   application_nyush.css
-  header.png
   nyulibraries/nyu/header.png
   nyulibraries/nyush/shanghai.png
   nyulibraries/nyuad/header.png

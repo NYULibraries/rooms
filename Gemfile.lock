@@ -56,10 +56,10 @@ GIT
 
 GIT
   remote: https://github.com/NYULibraries/omniauth-nyulibraries
-  revision: 352bd2c76350483667c603c1a7e63735e4a283b8
-  tag: v2.0.0
+  revision: 35169e5796a661bf6e138d8fc88ef97a51a5cf93
+  tag: v2.1.1
   specs:
-    omniauth-nyulibraries (1.1.0)
+    omniauth-nyulibraries (2.1.1)
       omniauth-oauth2 (~> 1.2.0)
 
 GEM
@@ -285,8 +285,8 @@ GEM
     newrelic_rpm (3.17.2.327)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-    oauth2 (1.2.0)
-      faraday (>= 0.8, < 0.10)
+    oauth2 (1.3.0)
+      faraday (>= 0.8, < 0.11)
       jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)

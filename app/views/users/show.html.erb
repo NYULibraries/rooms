@@ -96,7 +96,7 @@
 			<td><a title="<%= r.id%>"></a><%= prettify_date(r.start_dt)%> &mdash; <%= prettify_date(r.end_dt)%></td>
 			<td><%= r.room.title %></td>
 			<td><%= prettify_date(r.created_at)%> <%= r.created_at_timezone %></td>
-			<td><%= link_to "Destroy", reservation_delete_path(r, :return_url => request.original_url), :method => :put, data: { confirm: "Are you sure?" } %>
+			<td><%= link_to "Destroy", reservation_delete_path(r, return_to: :user), method: :patch, data: { confirm: "Are you sure?" } %>
 		</tr>
 		<% end %>
 		</tbody>

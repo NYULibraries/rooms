@@ -64,7 +64,7 @@ class RoomsController < ApplicationController
     @room.opens_at = opens_at
     @room.closes_at = closes_at
 
-    flash[:notice] = t("rooms.create.success") if @room.save
+    flash[:success] = t("rooms.create.success") if @room.save
     respond_with(@room)
   end
 
@@ -75,7 +75,7 @@ class RoomsController < ApplicationController
     @room.opens_at = opens_at
     @room.closes_at = closes_at
 
-    flash[:notice] = t("rooms.update.success") if @room.update_attributes(update_params)
+    flash[:success] = t("rooms.update.success") if @room.update_attributes(update_params)
     respond_with(@room)
   end
 
@@ -108,7 +108,7 @@ class RoomsController < ApplicationController
       room.save
     end
 
-    flash[:notice] = t("rooms.update_sort.success")
+    flash[:success] = t("rooms.update_sort.success")
 
     respond_with(@rooms, :location => sort_rooms_url)
   end

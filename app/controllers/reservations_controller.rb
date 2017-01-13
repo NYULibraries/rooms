@@ -104,7 +104,7 @@ class ReservationsController < ApplicationController
     end
 
     respond_with(@reservation) do |format|
-      format.html { redirect_to (params[:return_url] || user_path(@user)) }
+      format.html { redirect_to user_path(@user) }
     end
   end
 

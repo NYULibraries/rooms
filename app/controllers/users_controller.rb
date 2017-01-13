@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    flash[:notice] = t('users.create.success') if @user.save
+    flash[:success] = t('users.create.success') if @user.save
 
     respond_with(@user)
   end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    flash[:notice] = t('users.update.success') if @user.update_attributes(user_params)
+    flash[:success] = t('users.update.success') if @user.update_attributes(user_params)
     respond_with(@user)
   end
 

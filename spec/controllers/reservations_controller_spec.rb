@@ -139,10 +139,9 @@ describe ReservationsController, elasticsearch: true do
     let(:user) { create(:user) }
     let(:reservation) { create(:reservation, room: room, user: user) }
     before { allow(controller).to receive(:current_user).and_return(user) }
-    let(:return_url) { nil }
 
     context 'when user is trying to delete their own reservation' do
-      before { patch :delete, reservation_id: reservation.to_param, return_url: return_url }
+      before { patch :delete, reservation_id: reservation.to_param }
       subject { response }
 
       context 'and no return url param was passed in' do
@@ -150,10 +149,6 @@ describe ReservationsController, elasticsearch: true do
           expect(flash[:success]).to eql I18n.t('reservations.delete.success')
           expect(subject).to redirect_to "http://test.host/admin/users/#{user.id}"
         end
-      end
-      context 'and a return url param was passed in' do
-        let(:return_url) { 'http://test.host' }
-        it { is_expected.to redirect_to 'http://test.host' }
       end
     end
     context 'when user is trying to delete someone else\'s reservation' do

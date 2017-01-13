@@ -110,7 +110,7 @@ describe BlocksController do
         let(:cc_admin) { true }
         let(:cc_admin_email) { Faker::Internet.email }
         it 'should delete existing reservations' do
-          expect(flash[:notice]).to eql I18n.t('blocks.destroy_existing_reservations.success')
+          expect(flash[:success]).to eql I18n.t('blocks.destroy_existing_reservations.success')
         end
         it { is_expected.to redirect_to blocks_url }
         it 'should send emails to the cancelled reservation users' do

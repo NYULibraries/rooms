@@ -127,7 +127,7 @@ describe RoomsController do
     it 'should update an existing room' do
       expect(assigns(:room)).to be_a Room
       expect(assigns(:room).title).to eql title
-      expect(flash[:notice]).to eql I18n.t('rooms.update.success')
+      expect(flash[:success]).to eql I18n.t('rooms.update.success')
     end
   end
 

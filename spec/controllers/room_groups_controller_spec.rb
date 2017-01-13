@@ -48,7 +48,7 @@ describe RoomGroupsController do
     it { is_expected.to redirect_to room_group_url(assigns(:room_group).id) }
     it 'should create a new room group' do
       expect(assigns(:room_group)).to be_a RoomGroup
-      expect(flash[:notice]).to eql I18n.t('room_groups.create.success')
+      expect(flash[:success]).to eql I18n.t('room_groups.create.success')
     end
   end
 
@@ -69,7 +69,7 @@ describe RoomGroupsController do
     it 'should create a new room group' do
       expect(assigns(:room_group)).to be_a RoomGroup
       expect(assigns(:room_group).title).to eql title
-      expect(flash[:notice]).to eql I18n.t('room_groups.update.success')
+      expect(flash[:success]).to eql I18n.t('room_groups.update.success')
     end
   end
 

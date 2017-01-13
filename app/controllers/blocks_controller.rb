@@ -31,7 +31,7 @@ class BlocksController < ApplicationController
   # DELETE /blocks/1
   def destroy
     @block = Reservation.find(params[:id])
-    flash[:notice] = t('blocks.destroy.success') if @block.destroy
+    flash[:success] = t('blocks.destroy.success') if @block.destroy
 
     respond_with(@block, :location => blocks_url)
   end

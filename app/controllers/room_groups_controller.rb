@@ -19,7 +19,7 @@ class RoomGroupsController < ApplicationController
 
   def create
     @room_group = RoomGroup.new(room_group_params)
-    flash[:notice] = t('room_groups.create.success') if @room_group.save
+    flash[:success] = t('room_groups.create.success') if @room_group.save
     respond_with(@room_group)
   end
 
@@ -30,7 +30,7 @@ class RoomGroupsController < ApplicationController
 
   def update
     @room_group = RoomGroup.find(params[:id])
-    flash[:notice] = t('room_groups.update.success') if @room_group.update_attributes(room_group_params)
+    flash[:success] = t('room_groups.update.success') if @room_group.update_attributes(room_group_params)
     respond_with(@room_group)
   end
 

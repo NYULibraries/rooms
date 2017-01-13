@@ -11,13 +11,12 @@ Rooms::Application.routes.draw do
   match 'admin' => "rooms#index", via: [:get, :post]
   scope "admin" do
     get 'rooms/sort' => "rooms#index_sort", :as => "sort_rooms"
-    put 'rooms/sort' => "rooms#update_sort"
+    patch 'rooms/sort' => "rooms#update_sort"
     delete 'blocks/destroy/:id' => "blocks#destroy", :as => :destroy_block
     post 'blocks/destroy_existing_reservations' => "blocks#destroy_existing_reservations", :as => 'destroy_existing_reservations'
     get 'blocks/index_existing_reservations' => "blocks#index_existing_reservations", :as => 'index_existing_reservations'
 
-    resources :user_sessions
-    resources :users
+    resources :users #only: [:index, :new, :create]
     resources :rooms
     resources :blocks
     resources :room_groups

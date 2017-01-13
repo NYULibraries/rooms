@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   scope :non_admin, -> { where("admin_roles_mask = 0") }
   scope :admin, -> { where("admin_roles_mask > 0") }
-  scope :inactive, -> { where("last_request_at < ?", 1.year.ago) }
+  scope :inactive, -> { where("last_login_at < ?", 1.year.ago) }
 
   acts_as_indexed :fields => [:firstname, :lastname, :username, :email]
 

@@ -11,71 +11,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028195637) do
+ActiveRecord::Schema.define(version: 20170113171255) do
 
-  create_table "reservations", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "room_id"
+  create_table "reservations", force: :cascade do |t|
+    t.integer  "user_id",             limit: 4
+    t.integer  "room_id",             limit: 4
     t.datetime "start_dt"
     t.datetime "end_dt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title"
-    t.boolean  "is_block",            default: false
-    t.string   "deleted_by"
-    t.string   "cc"
-    t.string   "config_option"
-    t.boolean  "deleted",             default: false
-    t.string   "created_at_timezone"
-    t.string   "deleted_at_timezone"
+    t.string   "title",               limit: 255
+    t.boolean  "is_block",                        default: false
+    t.string   "deleted_by",          limit: 255
+    t.string   "cc",                  limit: 255
+    t.string   "config_option",       limit: 255
+    t.boolean  "deleted",                         default: false
+    t.string   "created_at_timezone", limit: 255
+    t.string   "deleted_at_timezone", limit: 255
     t.datetime "deleted_at"
   end
 
-  create_table "room_groups", force: true do |t|
-    t.string   "title"
-    t.integer  "admin_roles_mask"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "code"
+  create_table "room_groups", force: :cascade do |t|
+    t.string   "title",            limit: 255
+    t.integer  "admin_roles_mask", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "code",             limit: 255
   end
 
-  create_table "rooms", force: true do |t|
-    t.integer  "sort_order"
-    t.string   "title"
-    t.text     "description"
+  create_table "rooms", force: :cascade do |t|
+    t.integer  "sort_order",        limit: 4
+    t.string   "title",             limit: 255
+    t.text     "description",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type_of_room"
-    t.string   "size_of_room"
-    t.string   "image_link"
-    t.text     "hours"
-    t.integer  "sort_size_of_room", default: 0
-    t.integer  "room_group_id"
-    t.string   "opens_at"
-    t.string   "closes_at"
+    t.string   "type_of_room",      limit: 255
+    t.string   "size_of_room",      limit: 255
+    t.string   "image_link",        limit: 255
+    t.text     "hours",             limit: 65535
+    t.integer  "sort_size_of_room", limit: 4,     default: 0
+    t.integer  "room_group_id",     limit: 4
+    t.string   "opens_at",          limit: 255
+    t.string   "closes_at",         limit: 255
     t.boolean  "collaborative"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "firstname"
-    t.string   "lastname"
-    t.string   "email"
+  create_table "users", force: :cascade do |t|
+    t.string   "firstname",        limit: 255
+    t.string   "lastname",         limit: 255
+    t.string   "email",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",         default: "", null: false
+    t.string   "username",         limit: 255, default: "", null: false
     t.datetime "expiration_date"
     t.datetime "refreshed_at"
-    t.integer  "admin_roles_mask"
-    t.string   "provider",         default: "", null: false
-    t.string   "aleph_id"
-    t.string   "institution_code"
-    t.string   "college"
-    t.string   "dept_code"
-    t.string   "department"
-    t.string   "major_code"
-    t.string   "major"
-    t.string   "patron_status"
-    t.string   "college_code"
+    t.integer  "admin_roles_mask", limit: 4
+    t.string   "provider",         limit: 255, default: "", null: false
+    t.string   "aleph_id",         limit: 255
+    t.string   "institution_code", limit: 255
+    t.string   "college",          limit: 255
+    t.string   "dept_code",        limit: 255
+    t.string   "department",       limit: 255
+    t.string   "major_code",       limit: 255
+    t.string   "major",            limit: 255
+    t.string   "patron_status",    limit: 255
+    t.string   "college_code",     limit: 255
+    t.datetime "last_login_at"
   end
 
   add_index "users", ["username", "provider"], name: "index_users_on_username_and_provider", unique: true, using: :btree

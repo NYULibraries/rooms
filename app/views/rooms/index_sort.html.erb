@@ -9,7 +9,7 @@
 <div id="box_container">
 
 <blockquote>
-  <%= form_tag({:controller => "rooms", :action => "update_sort"}, method: :patch, remote: true) do |f| %>
+  <%= form_tag({:controller => "rooms", :action => "update_sort"}, method: :patch) do |f| %>
 
   <ul id="list_rooms" class="sortable_list">
   <% @rooms.each do |room| %>

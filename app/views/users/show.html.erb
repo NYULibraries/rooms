@@ -30,6 +30,9 @@
 <dt>Roles:</dt>
 <dd>&nbsp;<%= @user.roles_list %>
 
+<dt>Last Login:</dt>
+<dd>&nbsp;<%= @user.last_login_at.try(:strftime, "%Y-%m-%d %H:%M%P") %>
+
 </dl>
 
 <p>

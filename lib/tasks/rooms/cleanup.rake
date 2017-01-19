@@ -8,6 +8,11 @@ namespace :rooms do
       @log.error "[#{Time.now.to_formatted_s(:db)}] #{destroyed.count} users destroyed"
     end
 
+    desc "CAREFUL! Delete all users and associated reservations"
+    tasks :delete_all_users => :environment do
+      User.destroy_all
+    end
+
     desc "Cleanup reservations from over a year ago"
     task :reservations => :environment do
       @log = Logger.new("log/destroy_deleted_reservations.log")

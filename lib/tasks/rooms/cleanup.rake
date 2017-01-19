@@ -9,7 +9,7 @@ namespace :rooms do
     end
 
     desc "CAREFUL! Delete all users and associated reservations"
-    tasks :delete_all_users => :environment do
+    task :delete_all_users => :environment do
       User.destroy_all
     end
 

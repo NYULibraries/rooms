@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113171255) do
+ActiveRecord::Schema.define(version: 20170210192752) do
 
   create_table "reservations", force: :cascade do |t|
     t.integer  "user_id",             limit: 4
@@ -57,26 +57,30 @@ ActiveRecord::Schema.define(version: 20170113171255) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "firstname",        limit: 255
-    t.string   "lastname",         limit: 255
-    t.string   "email",            limit: 255
+    t.string   "firstname",          limit: 255
+    t.string   "lastname",           limit: 255
+    t.string   "email",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",         limit: 255, default: "", null: false
+    t.string   "username",           limit: 255, default: "", null: false
     t.datetime "expiration_date"
     t.datetime "refreshed_at"
-    t.integer  "admin_roles_mask", limit: 4
-    t.string   "provider",         limit: 255, default: "", null: false
-    t.string   "aleph_id",         limit: 255
-    t.string   "institution_code", limit: 255
-    t.string   "college",          limit: 255
-    t.string   "dept_code",        limit: 255
-    t.string   "department",       limit: 255
-    t.string   "major_code",       limit: 255
-    t.string   "major",            limit: 255
-    t.string   "patron_status",    limit: 255
-    t.string   "college_code",     limit: 255
-    t.datetime "last_login_at"
+    t.integer  "admin_roles_mask",   limit: 4
+    t.string   "provider",           limit: 255, default: "", null: false
+    t.string   "aleph_id",           limit: 255
+    t.string   "institution_code",   limit: 255
+    t.string   "college",            limit: 255
+    t.string   "dept_code",          limit: 255
+    t.string   "department",         limit: 255
+    t.string   "major_code",         limit: 255
+    t.string   "major",              limit: 255
+    t.string   "patron_status",      limit: 255
+    t.string   "college_code",       limit: 255
+    t.integer  "sign_in_count",      limit: 4,   default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip", limit: 255
+    t.string   "last_sign_in_ip",    limit: 255
   end
 
   add_index "users", ["username", "provider"], name: "index_users_on_username_and_provider", unique: true, using: :btree

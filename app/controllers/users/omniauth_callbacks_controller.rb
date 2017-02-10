@@ -2,7 +2,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_filter :require_valid_omniauth, only: :nyulibraries
   def nyulibraries
     @user = find_user_with_or_without_provider.first_or_initialize(attributes_from_omniauth)
-    @user.update_attributes(attributes_from_omniauth.merge(last_login_at: Time.now))
+    @user.update_attributes(attributes_from_omniauth)
 
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication

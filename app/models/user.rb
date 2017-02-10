@@ -1,11 +1,12 @@
 class User < ActiveRecord::Base
   include Roles::Authorization
+  devise :trackable
   devise :omniauthable,:omniauth_providers => [:nyulibraries]
   has_many :reservations, :dependent => :destroy
 
   scope :non_admin, -> { where("admin_roles_mask IS NULL OR admin_roles_mask = 0") }
   scope :admin, -> { where("admin_roles_mask > 0") }
-  scope :inactive, -> { where("last_login_at IS NULL OR last_login_at < ?", 1.year.ago) }
+  scope :inactive, -> { where("last_sign_in_at IS NULL OR last_sign_in_at < ?", 1.year.ago) }
 
   acts_as_indexed :fields => [:firstname, :lastname, :username, :email]
 

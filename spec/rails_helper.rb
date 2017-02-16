@@ -2,11 +2,11 @@ require 'simplecov'
 require 'simplecov-rcov'
 require 'coveralls'
 SimpleCov.merge_timeout 3600
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   SimpleCov::Formatter::RcovFormatter,
   Coveralls::SimpleCov::Formatter
-]
+])
 SimpleCov.start
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -51,8 +51,8 @@ RSpec.configure do |config|
   # Include helpers for JSON
   config.include JsonSpec::Helpers
 
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :helper
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :helper
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

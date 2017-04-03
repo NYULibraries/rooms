@@ -23,8 +23,6 @@ dependencies:
     - elasticsearch-2.4.3
   post:
     - if [[ ! -e elasticsearch-2.4.3 ]]; then wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.3/elasticsearch-2.4.3.tar.gz && tar -xvf elasticsearch-2.4.3.tar.gz; fi
-    - elasticsearch-2.4.3/bin/elasticsearch: {background: true}
-    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:9200/
 test:
   override:
     - SERVER=launch TEST_CLUSTER_COMMAND=elasticsearch-2.4.3/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=elasticsearch-2.4.3/config/ -Des.default.path.logs=/var/log/elasticsearch/' bundle exec rake

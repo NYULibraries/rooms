@@ -1,0 +1,30 @@
+machine:
+
+  ruby:
+    version: 2.3.3
+
+  environment:
+    ROOMS_DB_USER: root
+    ROOMS_DB_DATABASE: nyu_rooms_test
+    ROOMS_DB_HOST: localhost
+    ROOMS_SECRET_TOKEN: '1234'
+    ROOMS_COOKIE_DOMAIN: .local
+    LOGIN_URL: https://dev.login.library.nyu.edu
+    SSO_LOGOUT_PATH: /logout
+
+## Customize database setup
+database:
+  override:
+    - mysql -e 'create database nyu_rooms_test;'
+    - bundle exec rake db:schema:load
+
+dependencies:
+  cache_directories:
+    - elasticsearch-2.4.3
+  post:
+    - if [[ ! -e elasticsearch-2.4.3 ]]; then wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.3/elasticsearch-2.4.3.tar.gz && tar -xvf elasticsearch-2.4.3.tar.gz; fi
+    - elasticsearch-2.4.3/bin/elasticsearch: {background: true}
+    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:9200/
+test:
+  override:
+    - SERVER=launch TEST_CLUSTER_COMMAND=elasticsearch-2.4.3/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=elasticsearch-2.4.3/etc/elasticsearch/' bundle exec rake

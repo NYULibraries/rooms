@@ -1,6 +1,6 @@
 # Rooms
 
-[![Build Status](https://travis-ci.org/NYULibraries/rooms.png?branch=master)](https://travis-ci.org/NYULibraries/rooms)
+[![CircleCI](https://circleci.com/gh/NYULibraries/rooms.svg?style=svg)](https://circleci.com/gh/NYULibraries/rooms)
 [![Dependency Status](https://gemnasium.com/NYULibraries/rooms.png)](https://gemnasium.com/NYULibraries/rooms)
 [![Code Climate](https://codeclimate.com/github/NYULibraries/rooms.png)](https://codeclimate.com/github/NYULibraries/rooms)
 [![Coverage Status](https://coveralls.io/repos/NYULibraries/rooms/badge.png?branch=master)](https://coveralls.io/r/NYULibraries/rooms)

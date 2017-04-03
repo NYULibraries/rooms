@@ -1,5 +1,9 @@
 # Change Log
 
+## 2017-04-03
+- Upgraded nokogiri for security patch
+- Added CircleCI and removed TravisCI
+
 ## 2016-12-16
 - Upgraded from retire to elasticsearch-rails
 - Upgraded ElasticSearch syntax to 2.x

@@ -11,6 +11,10 @@ module LayoutsHelper
     ENV['GOOGLE_ANALYTICS_TRACKING_CODE']
   end
 
+  def google_tag_manager_tracking_code
+    ENV['GOOGLE_TAG_MANAGER_TRACKING_CODE']
+  end
+
   def application_stylesheet
     institutional_stylesheet
   end

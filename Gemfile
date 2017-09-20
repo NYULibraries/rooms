@@ -38,7 +38,7 @@ gem 'cancancan', '~> 1.16.0'
 gem 'kaminari', '~> 1.0'
 
 # Sorted for making sortable tables
-gem 'sorted', '~> 2.1'
+gem 'sorted', '~> 1'
 
 # ActsAsIndexed for searching activemodel
 gem 'acts_as_indexed', '~> 0.8.3'

@@ -1,1 +1,1 @@
-<%= link_to submit_text, {:controller => "reservations", :action => "new", :reservation => { :start_dt => start_dt, :end_dt => end_dt }, :page => params[:page], :sort => params[:sort], :direction => params[:direction]}, remote: true %>
+<%= link_to submit_text, {:controller => "reservations", :action => "new", :reservation => { :start_dt => start_dt, :end_dt => end_dt }, :page => params[:page], :sort => params[:sort], :direction => params[:direction]}, data: { remote: true, type: 'script' } %>

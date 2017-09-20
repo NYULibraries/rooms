@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-  
+
   app:
     build: .
     volumes:
       - .:/app
     ports:
       - "3000:3000"
+    env_file:
+      - test.env
     command: "tail -f /dev/null"
-    depends_on:
-      - setup_dbs
 
   test:
     build: .
@@ -19,7 +19,8 @@ services:
     environment:
       RAILS_ENV: test
       SERVER: launch
-      ROOMS_DB_HOST: db
+    env_file:
+      - test.env
       # TEST_CLUSTER_COMMAND: 'elasticsearch-2.4.3/bin/elasticsearch'
       # TEST_CLUSTER_PARAMS: '-Des.default.path.conf=elasticsearch-2.4.3/config/ -Des.default.path.logs=/var/log/elasticsearch/'
     command: "tail -f /dev/null"
@@ -30,8 +31,8 @@ services:
     build: .
     volumes:
       - .:/app
-    environment:
-      ROOMS_DB_HOST: db
+    env_file:
+      - test.env
     command: bash -c "sleep 5; rake db:setup"
     depends_on:
       - db

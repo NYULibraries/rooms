@@ -7,7 +7,7 @@ gem 'mysql2', '~> 0.4.5'
 # Use CoffeeScript in assets and views
 gem 'coffee-rails', '~> 4.2.1'
 
-gem 'uglifier', '~> 3.2'
+gem 'uglifier', '~> 3.0.4'
 gem 'therubyracer', '~> 0.12.2'
 
 # Use Compass
@@ -20,11 +20,11 @@ gem 'temporal-rails', '~> 0.2.3'
 # Use Sass
 gem 'sass-rails', '~> 5.0.6'
 
-gem 'json', '~> 2.1'
+gem 'json', '~> 1.8'
 
 # Use jQuery
-gem 'jquery-rails', '~> 4.3'
-gem 'jquery-ui-rails', '~> 6.0'
+gem 'jquery-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
 
 # Froze this at 1.11, because 1.12 exploded my application
 # namely 'ExecJS::ProgramError: ReferenceError: CoffeeScript is not defined'
@@ -35,10 +35,10 @@ gem 'coffee-script-source', '1.11.0'
 gem 'cancancan', '~> 1.16.0'
 
 # Kaminaro for pagination
-gem 'kaminari', '~> 1.0'
+gem 'kaminari', '~> 0.16.1'
 
 # Sorted for making sortable tables
-gem 'sorted', '~> 1'
+gem 'sorted', '~> 1.0.1'
 
 # ActsAsIndexed for searching activemodel
 gem 'acts_as_indexed', '~> 0.8.3'
@@ -47,7 +47,7 @@ gem 'acts_as_indexed', '~> 0.8.3'
 gem 'dalli', '~> 2.7.4'
 
 # Comma
-gem 'comma', '~> 4.1'
+gem 'comma', '~> 4.0.0'
 
 # Elasticsearch
 gem 'elasticsearch-model', '~> 0.1.9'

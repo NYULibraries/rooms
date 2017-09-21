@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
+gem 'rails', '= 4.2.7.1'
 
 gem 'mysql2', '~> 0.4.5'
 
@@ -20,7 +20,7 @@ gem 'temporal-rails', '~> 0.2.3'
 # Use Sass
 gem 'sass-rails', '~> 5.0.6'
 
-gem 'json', '~> 2.1'
+gem 'json', '~> 1.7'
 
 # Use jQuery
 gem 'jquery-rails', '~> 4.3'

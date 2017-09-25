@@ -26,3 +26,13 @@ dependencies:
 test:
   override:
     - SERVER=launch TEST_CLUSTER_COMMAND=elasticsearch-2.4.3/bin/elasticsearch TEST_CLUSTER_PARAMS='-Des.default.path.conf=elasticsearch-2.4.3/config/ -Des.default.path.logs=/var/log/elasticsearch/' bundle exec rake
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - curl -u $JENKINS_USERNAME:$JENKINS_API_KEY -X POST http://jenkins.library.nyu.edu/view/Room%20Reservation/job/Room%20Reservation%20Production%20Deploy/build/api
+  development:
+    branch: /.+/
+    commands:
+      - curl -u $JENKINS_USERNAME:$JENKINS_API_KEY -X POST http://jenkins.library.nyu.edu/view/Room%20Reservation/job/Room%20Reservation%20Development%20Deploy/build/api

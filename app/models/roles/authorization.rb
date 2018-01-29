@@ -6,12 +6,16 @@ module Roles
     # Gets Hash of all authorized roles
     def all_auth_roles
       @auth_roles ||= YAML.load(ENV['ROOMS_ROLES_AUTHORIZED'])
+    rescue
+      {}
     end
 
     ##
     # Gets Array of all admin roles
     def all_admin_roles
       @admin_roles ||= YAML.load(ENV['ROOMS_ROLES_ADMIN'])
+    rescue
+      ['superuser']
     end
 
     ##

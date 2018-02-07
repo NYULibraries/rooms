@@ -3,6 +3,7 @@ require 'elasticsearch/model'
 class Room < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  include Elasticsearch::Model::Indexing
 
   # elasticsearch index name
   index_name { "#{Rails.env}_rooms" }
@@ -13,6 +14,10 @@ class Room < ActiveRecord::Base
   validates_presence_of :title, :opens_at, :closes_at, :room_group_id
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
+
+  after_commit on: [:update] do
+    __elasticsearch__.index_document
+  end
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: "false" do

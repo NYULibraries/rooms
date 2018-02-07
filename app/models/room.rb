@@ -3,7 +3,6 @@ require 'elasticsearch/model'
 class Room < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-  include Elasticsearch::Model::Indexing
 
   # elasticsearch index name
   index_name { "#{Rails.env}_rooms" }

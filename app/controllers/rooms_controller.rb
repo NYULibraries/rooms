@@ -76,6 +76,7 @@ class RoomsController < ApplicationController
     @room.closes_at = closes_at
 
     flash[:success] = t("rooms.update.success") if @room.update_attributes(update_params)
+    @room.save
     respond_with(@room)
   end
 

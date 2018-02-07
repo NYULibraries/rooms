@@ -12,6 +12,18 @@ services:
       - test.env
     command: "tail -f /dev/null"
 
+  setup_indices:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - test.env
+    command: >
+      bash -c "sleep 5; rake environment elasticsearch:import:model CLASS='Room' FORCE=true
+      && rake environment elasticsearch:import:model CLASS='Reservation' FORCE=true"
+    depends_on:
+      - elasticsearch
+
   test:
     build: .
     volumes:

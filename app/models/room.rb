@@ -14,6 +14,7 @@ class Room < ActiveRecord::Base
   before_create :set_sort_order
   before_save :set_sort_size_of_room, :if => :size_of_room?
 
+  # force full reindex on update since some fields not automatically reindexed
   after_commit on: [:update] do
     __elasticsearch__.index_document
   end

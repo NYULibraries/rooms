@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
+gem 'rails', '= 4.2.7.1'
 
 gem 'mysql2', '~> 0.4.5'
 
@@ -23,7 +23,7 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'json', '~> 1.8'
 
 # Use jQuery
-gem 'jquery-rails', '~> 4.2.1'
+gem 'jquery-rails', '~> 4.3.0'
 gem 'jquery-ui-rails', '~> 6.0.1'
 
 # Froze this at 1.11, because 1.12 exploded my application
@@ -47,7 +47,7 @@ gem 'acts_as_indexed', '~> 0.8.3'
 gem 'dalli', '~> 2.7.4'
 
 # Comma
-gem 'comma', '~> 4.0.0'
+gem 'comma', '~> 4.1.0'
 
 # Elasticsearch
 gem 'elasticsearch-model', '~> 0.1.9'
@@ -56,11 +56,12 @@ gem 'elasticsearch-dsl', '~> 0.1.5'
 
 gem 'rest-client', '~> 2.0.0'
 
-gem 'nyulibraries_stylesheets', github: 'NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.1'
-gem 'nyulibraries_templates', github: 'NYULibraries/nyulibraries_templates', tag: 'v1.1.0'
-gem 'nyulibraries_institutions', github: 'NYULibraries/nyulibraries_institutions', tag: 'v1.0.1'
+gem 'nyulibraries_stylesheets', github: 'NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.5'
+gem 'nyulibraries_templates', github: 'NYULibraries/nyulibraries_templates', tag: 'v1.1.2'
+gem 'nyulibraries_institutions', github: 'NYULibraries/nyulibraries_institutions', tag: 'v1.0.3'
 gem 'nyulibraries_javascripts', github: 'NYULibraries/nyulibraries_javascripts', tag: 'v1.0.0'
 gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.0.1'
+
 gem 'formaggio', github: 'NYULibraries/formaggio', tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.1.1'
 gem 'devise', '~> 4.2'
@@ -68,30 +69,30 @@ gem 'devise', '~> 4.2'
 gem 'font-awesome-rails', '~> 4.7.0'
 
 group :development, :test do
-  gem 'pry', '~> 0.10.1'
+  gem 'pry'
   # Use factory girl for creating models
-  gem 'factory_girl_rails', '~> 4.8.0'
+  gem 'factory_girl_rails', '~> 4.9'
   gem 'faker'
   gem 'pry-remote'
 end
 
 group :test do
-  gem 'json_spec'
+  gem 'json_spec', '~> 1'
   gem 'progress_bar'
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'coveralls', '~> 0.8', :require => false
-  gem 'webmock', '~> 2.3.2'
+  gem 'webmock', '~> 3.3'
   gem 'timecop', '~> 0.8'
   gem 'rspec-rails', '~> 3.5'
   gem 'rspec-its'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'phantomjs', '>= 1.9.0'
-  gem 'poltergeist', '~> 1.13.0'
+  gem 'poltergeist', '~> 1.17'
   gem 'selenium-webdriver'
-  gem 'elasticsearch-extensions'
+  gem 'elasticsearch-extensions', '~> 0.0'
 end
 
 # Get feedback about slow processes
@@ -106,4 +107,3 @@ end
 # Monitoring
 gem 'newrelic_rpm'
 gem 'rollbar'
-gem 'scout_apm'

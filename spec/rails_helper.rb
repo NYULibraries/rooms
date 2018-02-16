@@ -82,7 +82,9 @@ RSpec.configure do |config|
 
   ES_CLASSES = [Room, Reservation]
   config.before :suite do
-    Elasticsearch::Extensions::Test::Cluster.start(port: 9200) unless Elasticsearch::Extensions::Test::Cluster.running?
+    unless ENV['ROOMS_DEV_ELASTICSEARCH_URL'] == 'http://elasticsearch:9200'
+      Elasticsearch::Extensions::Test::Cluster.start(port: 9200) unless Elasticsearch::Extensions::Test::Cluster.running?
+    end
     ES_CLASSES.each do |esc|
       esc.__elasticsearch__.create_index! force: true
     end
@@ -92,7 +94,9 @@ RSpec.configure do |config|
     ES_CLASSES.each do |esc|
      esc.__elasticsearch__.client.indices.delete index: esc.index_name
     end
-    Elasticsearch::Extensions::Test::Cluster.stop(port: 9200) #if Elasticsearch::Extensions::Test::Cluster.running?
+    unless ENV['ROOMS_DEV_ELASTICSEARCH_URL'] == 'http://elasticsearch:9200'
+      Elasticsearch::Extensions::Test::Cluster.stop(port: 9200)
+    end
   end
 
   config.before(:suite) do

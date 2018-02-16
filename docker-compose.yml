@@ -20,17 +20,12 @@ services:
       - .:/app
     environment:
       RAILS_ENV: test
-      SERVER: launch
       ROOMS_DB_DATABASE: rooms_test
-      TEST_CLUSTER_COMMAND: '/usr/share/elasticsearch/bin/elasticsearch'
-      TEST_CLUSTER_PARAMS: '-Des.default.path.conf=/usr/share/elasticsearch/config/ -Des.default.path.logs=/var/log/elasticsearch/'
     env_file:
       - test.env
     command: "tail -f /dev/null"
     depends_on:
       - setup_test
-    volumes:
-      - es:/usr/share/elasticsearch
 
   setup_test:
     build: .
@@ -38,15 +33,10 @@ services:
       - .:/app
     environment:
       RAILS_ENV: test
-      SERVER: launch
       ROOMS_DB_DATABASE: rooms_test
     env_file:
       - test.env
     command: bash -c "sleep 5; rake db:setup"
-    # command: >
-      # bash -c "sleep 5; rake db:setup"
-      # && rake environment elasticsearch:import:model CLASS='Room' FORCE=true
-      # && rake environment elasticsearch:import:model CLASS='Reservation' FORCE=true"
     depends_on:
       - db
 
@@ -76,8 +66,3 @@ services:
     image: elasticsearch:2.4.3
     ports:
       - "9200:9200"
-    volumes:
-      - es:/usr/share/elasticsearch
-
-volumes:
-  es:

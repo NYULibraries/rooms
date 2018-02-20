@@ -16,8 +16,8 @@ services:
 
   test:
     build: .
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
@@ -29,8 +29,8 @@ services:
 
   setup_test:
     build: .
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test

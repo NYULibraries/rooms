@@ -71,7 +71,7 @@ gem 'font-awesome-rails', '~> 4.7.0'
 group :development, :test do
   gem 'pry'
   # Use factory girl for creating models
-  gem 'factory_girl_rails', '~> 4.9'
+  gem 'factory_bot_rails', '~> 4'
   gem 'faker'
   gem 'pry-remote'
 end

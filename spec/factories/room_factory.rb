@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :room do
     title "Room 1"
     type_of_room "One person"

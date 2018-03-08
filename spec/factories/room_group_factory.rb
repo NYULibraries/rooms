@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :room_group do
     title "Graduate"
     admin_roles_mask 1

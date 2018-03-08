@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  app:
+  dev:
     build: .
     volumes:
       - .:/app
@@ -12,12 +12,24 @@ services:
       - test.env
     command: "tail -f /dev/null"
     depends_on:
-      - setup_app
+      - setup_dev
+
+  setup_dev:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - test.env
+    command: >
+      bash -c "sleep 5; rake db:setup
+      && rake environment elasticsearch:import:model CLASS='Room' FORCE=true
+      && rake environment elasticsearch:import:model CLASS='Reservation' FORCE=true"
+    depends_on:
+      - db
 
   test:
     build: .
-    # volumes:
-    #   - .:/app
+    # image: nyulibraries/rooms
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
@@ -29,27 +41,13 @@ services:
 
   setup_test:
     build: .
-    # volumes:
-    #   - .:/app
+    # image: nyulibraries/rooms
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
     env_file:
       - test.env
     command: bash -c "sleep 5; rake db:setup"
-    depends_on:
-      - db
-
-  setup_app:
-    build: .
-    volumes:
-      - .:/app
-    env_file:
-      - test.env
-    command: >
-      bash -c "sleep 5; rake db:setup
-      && rake environment elasticsearch:import:model CLASS='Room' FORCE=true
-      && rake environment elasticsearch:import:model CLASS='Reservation' FORCE=true"
     depends_on:
       - db
 

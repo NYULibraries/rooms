@@ -1,0 +1,8 @@
+tmp
+log
+.git
+wiki
+*.sql
+coverage
+*.bak
+.DS_Store

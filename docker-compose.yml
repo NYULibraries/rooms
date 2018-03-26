@@ -29,7 +29,7 @@ services:
 
   test:
     # build: .
-    image: nyulibraries/rooms
+    image: nyulibraries/rooms:dev
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
@@ -41,7 +41,7 @@ services:
 
   setup_test:
     # build: .
-    image: nyulibraries/rooms
+    image: nyulibraries/rooms:dev
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test

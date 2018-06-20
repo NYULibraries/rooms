@@ -13,10 +13,8 @@ jobs:
       - run:
           name: Install Docker Compose
           command: |
-            set -x
-            sudo curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            apk add --no-cache python3
+            pip3 install docker-compose==1.20.1
       - run:
           name: Start container and run tests
           command: |

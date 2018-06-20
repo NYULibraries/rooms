@@ -23,6 +23,7 @@ jobs:
   deploy-dev:
     <<: *docker-defaults
     steps:
+      - setup_remote_docker
       - deploy:
           name: Deploy into development via Jenkins
           command: |
@@ -31,6 +32,7 @@ jobs:
   deploy-prod:
     <<: *docker-defaults
     steps:
+      - setup_remote_docker
       - deploy:
           name: Deploy into production via Jenkins
           command: |

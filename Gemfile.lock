@@ -39,19 +39,19 @@ GIT
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_stylesheets.git
-  revision: 7635383d77ac815f4a28219138c75f8971f680f6
-  tag: v1.0.5
+  revision: d9b05d41fadc3e23216b50f23f24137aa27cf1ef
+  tag: v1.1.0
   specs:
-    nyulibraries_stylesheets (1.0.5)
+    nyulibraries_stylesheets (1.0.6)
       bootstrap-sass (~> 3.2)
       compass (>= 1.0.1)
 
 GIT
   remote: https://github.com/NYULibraries/nyulibraries_templates.git
-  revision: 245dea4a7af547de8442c31484dd2888012298de
-  tag: v1.1.2
+  revision: 57e0540a7dca1fce4397115f2ce64e86936a209d
+  tag: v1.2.0
   specs:
-    nyulibraries_templates (1.1.2)
+    nyulibraries_templates (1.1.4)
       rails (>= 4)
 
 GIT
@@ -105,7 +105,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ansi (1.5.0)
     arel (6.0.4)
-    autoprefixer-rails (8.0.0)
+    autoprefixer-rails (9.0.0)
       execjs
     backports (3.11.1)
     bcrypt (3.1.11)
@@ -374,8 +374,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rollbar (2.15.5)
-      multi_json
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -478,14 +476,14 @@ DEPENDENCIES
   coveralls (~> 0.8)
   cucumber-rails
   dalli (~> 2.7.4)
-  database_cleaner
+  database_cleaner (~> 1.6.2)
   devise (~> 4.2)
   elasticsearch-dsl (~> 0.1.5)
   elasticsearch-extensions (~> 0.0)
   elasticsearch-model (~> 0.1.9)
   elasticsearch-rails (~> 0.1.9)
   factory_bot_rails (~> 4)
-  faker
+  faker (~> 1.8.7)
   flamegraph
   font-awesome-rails (~> 4.7.0)
   formaggio!
@@ -496,7 +494,6 @@ DEPENDENCIES
   kaminari (~> 0.16.1)
   memory_profiler
   mysql2 (~> 0.4.5)
-  newrelic_rpm
   nyulibraries_errors!
   nyulibraries_institutions!
   nyulibraries_javascripts!
@@ -505,17 +502,16 @@ DEPENDENCIES
   omniauth-nyulibraries!
   phantomjs (>= 1.9.0)
   poltergeist (~> 1.17)
-  progress_bar
-  pry
-  pry-remote
+  progress_bar (~> 1)
+  pry (~> 0.11)
+  pry-remote (~> 0.1)
   rack-mini-profiler
   rails (= 4.2.7.1)
   rest-client (~> 2.0.0)
-  rollbar
-  rspec-its
+  rspec-its (~> 1.2.0)
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0.6)
-  selenium-webdriver
+  selenium-webdriver (~> 3.9.0)
   simplecov
   simplecov-rcov
   sorted (~> 1.0.1)
@@ -528,4 +524,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.3

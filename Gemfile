@@ -56,8 +56,8 @@ gem 'elasticsearch-dsl', '~> 0.1.5'
 
 gem 'rest-client', '~> 2.0.0'
 
-gem 'nyulibraries_stylesheets', github: 'NYULibraries/nyulibraries_stylesheets', tag: 'v1.0.5'
-gem 'nyulibraries_templates', github: 'NYULibraries/nyulibraries_templates', tag: 'v1.1.2'
+gem 'nyulibraries_stylesheets', github: 'NYULibraries/nyulibraries_stylesheets', tag: 'v1.1.0'
+gem 'nyulibraries_templates', github: 'NYULibraries/nyulibraries_templates', tag: 'v1.2.0'
 gem 'nyulibraries_institutions', github: 'NYULibraries/nyulibraries_institutions', tag: 'v1.0.3'
 gem 'nyulibraries_javascripts', github: 'NYULibraries/nyulibraries_javascripts', tag: 'v1.0.0'
 gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.0.1'
@@ -69,16 +69,16 @@ gem 'devise', '~> 4.2'
 gem 'font-awesome-rails', '~> 4.7.0'
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry', '~> 0.11'
   # Use factory girl for creating models
   gem 'factory_bot_rails', '~> 4'
-  gem 'faker'
-  gem 'pry-remote'
+  gem 'faker', '~> 1.8.7'
+  gem 'pry-remote', '~> 0.1'
 end
 
 group :test do
   gem 'json_spec', '~> 1'
-  gem 'progress_bar'
+  gem 'progress_bar', '~> 1'
   #Testing coverage
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
@@ -86,12 +86,12 @@ group :test do
   gem 'webmock', '~> 3.3'
   gem 'timecop', '~> 0.8'
   gem 'rspec-rails', '~> 3.5'
-  gem 'rspec-its'
+  gem 'rspec-its', '~> 1.2.0'
   gem 'cucumber-rails', :require => false
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.6.2'
   gem 'phantomjs', '>= 1.9.0'
   gem 'poltergeist', '~> 1.17'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 3.9.0'
   gem 'elasticsearch-extensions', '~> 0.0'
 end
 
@@ -103,7 +103,3 @@ group :development do
   gem 'stackprof'
   gem 'rack-mini-profiler', require: false
 end
-
-# Monitoring
-gem 'newrelic_rpm'
-gem 'rollbar'

@@ -1,6 +1,7 @@
 module Api
   module V1
     class RoomsController < ApplicationController
+      http_basic_authenticate_with name: ENV['API_USER'], password: ENV['API_KEY']
       skip_before_filter :passive_login
       protect_from_forgery with: :null_session
       respond_to :json

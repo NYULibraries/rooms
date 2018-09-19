@@ -8,7 +8,6 @@ gem 'mysql2', '~> 0.4.5'
 gem 'coffee-rails', '~> 4.2.1'
 
 gem 'uglifier', '~> 3.0.4'
-gem 'therubyracer', '~> 0.12.2'
 
 # Use Compass
 gem 'compass-rails', '~> 3.0.2'

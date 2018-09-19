@@ -1,6 +1,6 @@
 FROM ruby:2.3.3-alpine
 
-ENV BUILD_PACKAGES bash ca-certificates git mariadb-dev nodejs tzdata
+ENV BUILD_PACKAGES bash ca-certificates fontconfig git mariadb-dev nodejs tzdata
 ENV BUILD_AND_DEL_PACKAGES build-base curl-dev linux-headers ruby-dev wget
 
 # Env
@@ -21,8 +21,9 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile Gemfile.lock ./
 RUN apk add --no-cache $BUILD_PACKAGES $BUILD_AND_DEL_PACKAGES \
   && bundle config --local github.https true \
-  && wget --no-check-certificate -q -O - https://cnpmjs.org/mirrors/phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 | tar xjC /tmp \
-  && ln -s /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin/phantomjs /usr/bin/phantomjs \
+  && wget --no-check-certificate -q -O - https://github.com/Overbryd/docker-phantomjs-alpine/releases/download/2.11/phantomjs-alpine-x86_64.tar.bz2 | tar xjC /tmp \
+  && ln -s /tmp/phantomjs/phantomjs /usr/bin/phantomjs \
+  && phantomjs --version \
   && wget --no-check-certificate -q -O - https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /tmp/wait-for-it.sh \
   && chmod a+x /tmp/wait-for-it.sh \
   && gem install bundler && bundle install --deployment --jobs 20 --retry 5 \

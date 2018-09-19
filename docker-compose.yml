@@ -1,27 +1,29 @@
-version: '3'
+version: '3.7'
 
 services:
 
   dev:
+    tty: true
+    stdin_open: true
     build: .
+    image: rooms
     volumes:
-      - .:/app
+      - ./app:/app/app
     ports:
       - "3000:3000"
     env_file:
       - test.env
-    command: "tail -f /dev/null"
+    command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
     depends_on:
       - setup_dev
 
   setup_dev:
     build: .
-    volumes:
-      - .:/app
+    image: rooms
     env_file:
       - test.env
     command: >
-      bash -c "sleep 5; rake db:setup
+      bash -c "bundle exec rake db:setup
       && rake environment elasticsearch:import:model CLASS='Room' FORCE=true
       && rake environment elasticsearch:import:model CLASS='Reservation' FORCE=true"
     depends_on:
@@ -29,23 +31,26 @@ services:
 
   test:
     build: .
+    image: rooms
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
     env_file:
       - test.env
-    command: "tail -f /dev/null"
+    command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rake"]
     depends_on:
       - setup_test
 
   setup_test:
     build: .
+    image: rooms
     environment:
       RAILS_ENV: test
       ROOMS_DB_DATABASE: rooms_test
     env_file:
       - test.env
-    command: bash -c "sleep 5; rake db:setup"
+    command: >
+      bash -c "sleep 5; rake db:setup"
     depends_on:
       - db
 

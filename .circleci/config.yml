@@ -3,6 +3,7 @@ docker-defaults: &docker-defaults
     - image: nyulibraries/circleci_docker:18.06.1-ce-git-compose-1.22.0
       environment:
         - IMAGE_NAME=rooms
+        - COMPOSE_PROJECT_NAME=rooms
   working_directory: ~/app
 
 auth_ecr: &auth_ecr
@@ -54,7 +55,7 @@ jobs:
       - run:
           name: Get Junit tests from stopped container
           when: always
-          command: docker cp app_test_run_1:/app/test-results .
+          command: docker cp rooms_test_run_1:/app/test-results .
       - store_test_results:
           path: ~/app/test-results
       - store_artifacts:

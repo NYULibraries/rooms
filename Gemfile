@@ -9,6 +9,10 @@ gem 'coffee-rails', '~> 4.2.1'
 
 gem 'uglifier', '~> 3.0.4'
 
+group :non_docker do
+  gem 'therubyracer', '~> 0.12.2'
+end
+
 # Use Compass
 gem 'compass-rails', '~> 3.0.2'
 gem 'yui-compressor', '~> 0.12.0'

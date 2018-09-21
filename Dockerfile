@@ -19,7 +19,7 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile Gemfile.lock ./
 RUN apt-get update && apt-get -y --no-install-recommends install $BUILD_PACKAGES $RUN_PACKAGES \
   && bundle config --local github.https true \
-  && gem install bundler && bundle install --jobs 20 --retry 5 \
+  && gem install bundler && bundle install --without non_docker --jobs 20 --retry 5 \
   && chown -R docker:docker $BUNDLE_PATH \
   && wget --no-check-certificate -q -O - https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /tmp/wait-for-it.sh \
   && chmod a+x /tmp/wait-for-it.sh \

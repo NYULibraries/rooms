@@ -20,7 +20,7 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile Gemfile.lock ./
 RUN apk add --no-cache $BUILD_PACKAGES $BUILD_AND_DEL_PACKAGES \
   && bundle config --local github.https true \
-  && gem install bundler && bundle install --without test development --deployment --jobs 20 --retry 5 \
+  && gem install bundler && bundle install --without non_docker test development --deployment --jobs 20 --retry 5 \
   && apk del $BUILD_AND_DEL_PACKAGES
 
 RUN chown -R docker:docker $BUNDLE_PATH

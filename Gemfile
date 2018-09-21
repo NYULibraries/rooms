@@ -86,6 +86,7 @@ group :test do
   gem 'timecop', '~> 0.8'
   gem 'rspec-rails', '~> 3.5'
   gem 'rspec-its', '~> 1.2.0'
+  gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner', '~> 1.6.2'
   gem 'phantomjs', '>= 1.9.0'

@@ -6,6 +6,8 @@ x-build-image: &build-image
       - rooms
       - $ECR_DOMAIN/rooms
       - $ECR_DOMAIN/rooms:$BRANCH_NO_SLASH
+  environment:
+    BRANCH_NO_SLASH:
 
 services:
   rooms_1:

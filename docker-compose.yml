@@ -1,15 +1,21 @@
 version: '3.7'
-x-test-env: &test-env
-  build: .
+x-build: &build
+  build:
+    context: .
+    cache_from:
+      - rooms
+      - $ECR_DOMAIN/rooms
+      - $ECR_DOMAIN/rooms:$BRANCH_NO_SLASH
   image: rooms
+x-test-env: &test-env
+  <<: *build
   environment:
     RAILS_ENV: test
     ROOMS_DB_DATABASE: rooms_test
   env_file:
     - test.env
 x-dev-env: &dev-env
-  build: .
-  image: rooms
+  <<: *build
   env_file:
     - test.env
 

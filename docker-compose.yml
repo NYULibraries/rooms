@@ -44,8 +44,6 @@ services:
 
   test:
     <<: *test-env
-    volumes:
-      - ./test-results:/app/test-results
     command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rake"]
     depends_on:
       - setup_test

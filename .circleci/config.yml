@@ -51,6 +51,7 @@ jobs:
           command: |
             export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
             docker-compose run test
+            docker cp rooms_test_run_1:/app/test-results . 
       - store_test_results:
           path: ~/app/test-results
       - store_artifacts:

@@ -30,7 +30,9 @@ services:
       - db
 
   test:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.test
     image: rooms
     environment:
       RAILS_ENV: test

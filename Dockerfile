@@ -10,7 +10,6 @@ ENV BUNDLE_PATH=/usr/local/bundle \
     GEM_HOME=/usr/local/bundle
 ENV PATH="${BUNDLE_BIN}:${PATH}"
 ENV USER docker
-ENV PHANTOMJS_VERSION 2.1.1
 
 RUN addgroup -g 2000 $USER && \
     adduser -D -h $INSTALL_PATH -u 1000 -G $USER $USER
@@ -21,16 +20,13 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile Gemfile.lock ./
 RUN apk add --no-cache $BUILD_PACKAGES $BUILD_AND_DEL_PACKAGES \
   && bundle config --local github.https true \
-  && wget --no-check-certificate -q -O - https://github.com/Overbryd/docker-phantomjs-alpine/releases/download/2.11/phantomjs-alpine-x86_64.tar.bz2 | tar xjC /tmp \
-  && ln -s /tmp/phantomjs/phantomjs /usr/bin/phantomjs \
-  && phantomjs --version \
   && wget --no-check-certificate -q -O - https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /tmp/wait-for-it.sh \
   && chmod a+x /tmp/wait-for-it.sh \
-  && gem install bundler && bundle install --deployment --jobs 20 --retry 5 \
+  && gem install bundler && bundle install --without test --deployment --jobs 20 --retry 5 \
   && apk del $BUILD_AND_DEL_PACKAGES
 
 RUN chown -R docker:docker $BUNDLE_PATH \
-    && chown -R docker:docker /usr/bin/phantomjs /tmp/wait-for-it.sh
+    && chown -R docker:docker /tmp/wait-for-it.sh
 USER $USER
 
 COPY --chown=docker:docker . .

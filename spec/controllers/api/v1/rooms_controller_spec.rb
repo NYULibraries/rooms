@@ -2,6 +2,10 @@ require 'rails_helper'
 
 describe Api::V1::RoomsController do
 
+  before do
+    @request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(ENV['API_USER'], ENV['API_KEY'])
+  end
+
   describe 'GET /api/v1/rooms' do
     before { create(:room) }
     before { get :index, format: :json }

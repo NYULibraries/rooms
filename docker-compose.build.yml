@@ -1,0 +1,30 @@
+version: '3.7'
+x-build-image: &build-image
+  build:
+    context: .
+    cache_from:
+      - rooms
+      - $ECR_DOMAIN/rooms
+      - $ECR_DOMAIN/rooms:$BRANCH_NO_SLASH
+  environment:
+    BRANCH_NO_SLASH:
+
+services:
+  rooms_1:
+    <<: *build-image
+    image: rooms
+  rooms_2:
+    <<: *build-image
+    image: "${ECR_DOMAIN}/rooms:latest"
+    depends_on:
+      - rooms_1
+  rooms_3:
+    <<: *build-image
+    image: "${ECR_DOMAIN}/rooms:${BRANCH_NO_SLASH}"
+    depends_on:
+      - rooms_2
+  rooms_4:
+    <<: *build-image
+    image: "${ECR_DOMAIN}/rooms:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}"
+    depends_on:
+      - rooms_3

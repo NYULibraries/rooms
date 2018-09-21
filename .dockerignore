@@ -6,3 +6,4 @@ wiki
 coverage
 *.bak
 .DS_Store
+test-results

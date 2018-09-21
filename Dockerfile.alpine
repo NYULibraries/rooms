@@ -1,0 +1,31 @@
+FROM ruby:2.3.3-alpine
+
+ENV BUILD_PACKAGES bash ca-certificates fontconfig git mariadb-dev nodejs tzdata
+ENV BUILD_AND_DEL_PACKAGES build-base curl-dev linux-headers ruby-dev wget
+
+# Env
+ENV INSTALL_PATH /app
+ENV BUNDLE_PATH=/usr/local/bundle \
+    BUNDLE_BIN=/usr/local/bundle/bin \
+    GEM_HOME=/usr/local/bundle
+ENV PATH="${BUNDLE_BIN}:${PATH}"
+ENV USER docker
+
+RUN addgroup -g 2000 $USER && \
+    adduser -D -h $INSTALL_PATH -u 1000 -G $USER $USER
+
+WORKDIR $INSTALL_PATH
+
+# Bundle install
+COPY Gemfile Gemfile.lock ./
+RUN apk add --no-cache $BUILD_PACKAGES $BUILD_AND_DEL_PACKAGES \
+  && bundle config --local github.https true \
+  && gem install bundler && bundle install --without non_docker test development --deployment --jobs 20 --retry 5 \
+  && apk del $BUILD_AND_DEL_PACKAGES
+
+RUN chown -R docker:docker $BUNDLE_PATH
+USER $USER
+
+COPY --chown=docker:docker . .
+
+EXPOSE 8080

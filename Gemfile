@@ -8,7 +8,10 @@ gem 'mysql2', '~> 0.4.5'
 gem 'coffee-rails', '~> 4.2.1'
 
 gem 'uglifier', '~> 3.0.4'
-gem 'therubyracer', '~> 0.12.2'
+
+group :non_docker do
+  gem 'therubyracer', '~> 0.12.2'
+end
 
 # Use Compass
 gem 'compass-rails', '~> 3.0.2'
@@ -87,10 +90,9 @@ group :test do
   gem 'timecop', '~> 0.8'
   gem 'rspec-rails', '~> 3.5'
   gem 'rspec-its', '~> 1.2.0'
+  gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner', '~> 1.6.2'
-  gem 'phantomjs', '>= 1.9.0'
-  gem 'poltergeist', '~> 1.17'
   gem 'selenium-webdriver', '~> 3.9.0'
   gem 'elasticsearch-extensions', '~> 0.0'
 end

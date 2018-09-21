@@ -12,6 +12,7 @@ x-test-env: &test-env
   environment:
     RAILS_ENV: test
     ROOMS_DB_DATABASE: rooms_test
+    BRANCH_NO_SLASH:
   env_file:
     - test.env
 x-dev-env: &dev-env

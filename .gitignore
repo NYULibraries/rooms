@@ -35,3 +35,5 @@ config/environments/*.local.yml
 wiki/
 
 lib/tasks/*.yml
+
+test-results/

@@ -50,7 +50,6 @@ jobs:
           name: Run tests
           command: |
             export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-            mkdir -p test-results
             docker-compose run test
       - store_test_results:
           path: ~/app/test-results

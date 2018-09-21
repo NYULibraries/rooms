@@ -1,14 +1,10 @@
 docker-defaults: &docker-defaults
   docker:
     - image: nyulibraries/circleci_docker:18.06.1-ce-git-compose-1.22.0
+      environment:
+        - BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+        - IMAGE_NAME=rooms
   working_directory: ~/app
-
-setup_env: &setup_env
-  run:
-    name: Setup environment vars
-    command: |
-      export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-      export IMAGE_NAME=rooms
 
 build_docker: &build_docker
   run:
@@ -44,7 +40,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - <<: *setup_env
       - <<: *auth_ecr
       - <<: *pull_docker
       - <<: *build_docker

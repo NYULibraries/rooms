@@ -20,8 +20,6 @@ Dir[Rails.root.join("features/support/helpers/**/*.rb")].each do |helper|
   end
 end
 
-require 'capybara/poltergeist'
-
 if ENV['IN_BROWSER']
   # On demand: non-headless tests via Selenium/WebDriver
   # To run the scenarios in browser (default: Firefox), use the following command line:

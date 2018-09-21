@@ -1,27 +1,33 @@
 version: '3.7'
+x-test-env: &test-env
+  build: .
+  image: rooms
+  environment:
+    RAILS_ENV: test
+    ROOMS_DB_DATABASE: rooms_test
+  env_file:
+    - test.env
+x-dev-env: &dev-env
+  build: .
+  image: rooms
+  env_file:
+    - test.env
 
 services:
-
   dev:
+    <<: *dev-env
     tty: true
     stdin_open: true
-    build: .
-    image: rooms
     volumes:
       - ./app:/app/app
     ports:
       - "3000:3000"
-    env_file:
-      - test.env
     command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
     depends_on:
       - setup_dev
 
   setup_dev:
-    build: .
-    image: rooms
-    env_file:
-      - test.env
+    <<: *dev-env
     command: >
       bash -c "bundle exec rake db:setup
       && rake environment elasticsearch:import:model CLASS='Room' FORCE=true
@@ -30,27 +36,13 @@ services:
       - db
 
   test:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-    image: rooms
-    environment:
-      RAILS_ENV: test
-      ROOMS_DB_DATABASE: rooms_test
-    env_file:
-      - test.env
+    <<: *test-env
     command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rake"]
     depends_on:
       - setup_test
 
   setup_test:
-    build: .
-    image: rooms
-    environment:
-      RAILS_ENV: test
-      ROOMS_DB_DATABASE: rooms_test
-    env_file:
-      - test.env
+    <<: *test-env
     command: >
       bash -c "sleep 5; rake db:setup"
     depends_on:

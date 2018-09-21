@@ -38,19 +38,16 @@ if ENV['IN_BROWSER']
     sleep (ENV['PAUSE'] || 0).to_i
   end
 else
-  # DEFAULT: headless tests with poltergeist/PhantomJS
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(
-    app,
-    phantomjs_options: ['--load-images=no', '--ignore-ssl-errors=yes', '--ssl-protocol=TLSv1'],
-    window_size: [1280, 1024],
-    timeout: 120#,
-    # debug: true
+  # DEFAULT: Headless tests with chrome headless
+  Capybara.register_driver :chrome_headless do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: {
+        args: %w[ no-sandbox headless disable-gpu window-size=1280,1024]
+      }
     )
+
+    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
   end
-  Capybara.default_driver    = :poltergeist
-  Capybara.javascript_driver = :poltergeist
-  # Capybara.default_wait_time = 20
 end
 
 

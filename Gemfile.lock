@@ -409,6 +409,8 @@ GEM
     selenium-webdriver (3.9.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    sentry-raven (2.7.4)
+      faraday (>= 0.7.6, < 1.0)
     simplecov (0.14.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -504,6 +506,7 @@ DEPENDENCIES
   rspec_junit_formatter (~> 0.4.1)
   sass-rails (~> 5.0.6)
   selenium-webdriver (~> 3.9.0)
+  sentry-raven (~> 2)
   simplecov
   simplecov-rcov
   sorted (~> 1.0.1)

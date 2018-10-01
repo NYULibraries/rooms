@@ -105,3 +105,5 @@ group :development do
   gem 'stackprof'
   gem 'rack-mini-profiler', require: false
 end
+
+gem "sentry-raven", '~> 2'

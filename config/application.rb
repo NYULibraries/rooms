@@ -71,3 +71,7 @@ module Rooms
     ActiveSupport::JSON::Encoding.time_precision = 0
   end
 end
+
+Raven.configure do |config|
+  config.dsn = ENV['SENTRY_DSN']
+end

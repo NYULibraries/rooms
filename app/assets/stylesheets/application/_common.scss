@@ -4,6 +4,17 @@
 @import "jquery-ui/theme";
 @import "jquery-ui-timepicker-addon";
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  flex: 0 0 50px;
+  margin-top: auto;
+}
+
 h1.page_title { margin-top: 0; }
 
 div.policies {

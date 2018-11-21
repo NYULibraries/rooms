@@ -35,6 +35,12 @@ module LayoutsHelper
     render 'common/prepend_body'
   end
 
+  # Prepend the flash message partial before yield
+  def prepend_yield
+    content_tag :div, :id => "main-flashes" do
+    end
+  end
+
   # Boolean for whether or not to show tabs
   # This application doesn't need tabs
   def show_tabs

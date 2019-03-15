@@ -4,8 +4,8 @@ x-build: &build
     context: .
     cache_from:
       - rooms
-      - $ECR_DOMAIN/rooms
-      - $ECR_DOMAIN/rooms:$BRANCH_NO_SLASH
+      - quay.io/nyulibraries/rooms
+      - quay.io/nyulibraries/rooms:$BRANCH_NO_SLASH
   image: rooms
 x-test-env: &test-env
   <<: *build

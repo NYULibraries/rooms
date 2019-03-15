@@ -25,13 +25,13 @@ services:
     <<: *dev-env
     tty: true
     stdin_open: true
-    volumes:
-      - ./app:/app/app
     ports:
       - "3000:3000"
     command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
     depends_on:
       - setup_dev
+    # volumes:
+    #   - ./:/app
 
   setup_dev:
     <<: *dev-env

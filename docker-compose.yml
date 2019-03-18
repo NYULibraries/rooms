@@ -4,8 +4,8 @@ x-build: &build
     context: .
     cache_from:
       - rooms
-      - $ECR_DOMAIN/rooms
-      - $ECR_DOMAIN/rooms:$BRANCH_NO_SLASH
+      - quay.io/nyulibraries/rooms
+      - quay.io/nyulibraries/rooms:$BRANCH_NO_SLASH
   image: rooms
 x-test-env: &test-env
   <<: *build
@@ -25,13 +25,13 @@ services:
     <<: *dev-env
     tty: true
     stdin_open: true
-    volumes:
-      - ./app:/app/app
     ports:
       - "3000:3000"
     command: ["/tmp/wait-for-it.sh", "db:3306", "elasticsearch:9200", "--", "bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
     depends_on:
       - setup_dev
+    # volumes:
+    #   - ./:/app
 
   setup_dev:
     <<: *dev-env

@@ -67,7 +67,7 @@ gem 'nyulibraries_errors', github: 'NYULibraries/nyulibraries_errors', tag: 'v1.
 
 gem 'formaggio', github: 'NYULibraries/formaggio', tag: 'v1.5.2'
 gem 'omniauth-nyulibraries', github: 'NYULibraries/omniauth-nyulibraries', tag: 'v2.1.1'
-gem 'devise', '~> 4.2'
+gem 'devise', '~> 4.6'
 
 gem 'font-awesome-rails', '~> 4.7.0'
 

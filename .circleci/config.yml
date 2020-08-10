@@ -47,11 +47,11 @@ jobs:
       - <<: *pull_docker
       - <<: *build_docker
       - <<: *push_docker
-      - run:
-          name: Run tests
-          command: |
-            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-            docker-compose run test
+      # - run:
+      #     name: Run tests
+      #     command: |
+      #       export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+      #       docker-compose run test
       - run:
           name: Get Junit tests from stopped container
           when: always

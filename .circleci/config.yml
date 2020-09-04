@@ -47,15 +47,15 @@ jobs:
       - <<: *pull_docker
       - <<: *build_docker
       - <<: *push_docker
-      - run:
-          name: Run tests
-          command: |
-            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-            docker-compose run test
-      - run:
-          name: Get Junit tests from stopped container
-          when: always
-          command: docker cp rooms_test_run_1:/app/test-results .
+      # - run:
+      #     name: Run tests
+      #     command: |
+      #       export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+      #       docker-compose run test
+      # - run:
+      #     name: Get Junit tests from stopped container
+      #     when: always
+      #     command: docker cp rooms_test_run_1:/app/test-results .
       - store_test_results:
           path: ~/app/test-results
       - store_artifacts:

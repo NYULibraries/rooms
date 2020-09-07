@@ -464,6 +464,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_indexed (~> 0.8.3)
+  bootstrap-sass (= 3.3.7)
   cancancan (~> 1.16.0)
   coffee-rails (~> 4.2.1)
   coffee-script-source (= 1.11.0)
@@ -520,4 +521,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.16.6
+   1.17.3

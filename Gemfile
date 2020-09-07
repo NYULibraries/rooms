@@ -13,6 +13,8 @@ group :non_docker do
   gem 'therubyracer', '~> 0.12.2'
 end
 
+gem 'bootstrap-sass', '= 3.3.7'
+
 # Use Compass
 gem 'compass-rails', '~> 3.0.2'
 gem 'yui-compressor', '~> 0.12.0'
